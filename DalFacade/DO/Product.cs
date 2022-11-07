@@ -34,7 +34,5 @@ public struct Product
      Price: {Price}
      Amount in stock: {InStock}
      ";
-
-
 }
 
