@@ -1,5 +1,5 @@
 ﻿
-namespace DalList
+namespace Dal
 {
     public class EnumsDal
     {
