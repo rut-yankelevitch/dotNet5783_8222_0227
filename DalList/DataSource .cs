@@ -46,7 +46,7 @@ internal static class DataSource
         for (int i = 0; i < 21; i++)
         {
             indexOrder++;
-            orderArray = new Order { ID = IDProduct, CustomerName = 'a', CustomerEmail='', CustomerAdress='' OrderDate = Da, ShipDate = i + 1, DeliveryrDate =  }
+            orderArray = new Order { ID = IDProduct, CustomerName = 'b', CustomerEmail='', CustomerAdress='' OrderDate = Da, ShipDate = i + 1, DeliveryrDate =  }
         }
 
     }
