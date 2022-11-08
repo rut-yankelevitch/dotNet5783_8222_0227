@@ -2,5 +2,9 @@
 {
     public class ProductDal
     {
+       public Add(Product  p)
+        {
+
+        }
     }
 }
