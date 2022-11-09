@@ -1,4 +1,5 @@
 ﻿
+
 namespace DO;
 /// <summary>
 ///  Structure for Enums
