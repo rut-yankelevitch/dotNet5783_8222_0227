@@ -38,7 +38,7 @@ internal static class DataSource
         for (int i = 0; i < 12; i++)
         {
             indexProduct++;
-            productArray[i] = new Product { ID = IDProduct, Name = 'a', Category = 'b', Price = i + 1, InStock = i + 2 }
+            productArray[i] = new Product { ID = IDProduct, Name = 'a', Category = '', Price = , InStock = }
         }
     }
     private static initOrderArray()
@@ -46,10 +46,20 @@ internal static class DataSource
         for (int i = 0; i < 21; i++)
         {
             indexOrder++;
-            orderArray = new Order { ID = IDProduct, CustomerName = 'b', CustomerEmail='', CustomerAdress='' OrderDate = Da, ShipDate = i + 1, DeliveryrDate =  }
+            orderArray = new Order { ID = IDProduct, CustomerName = '', CustomerEmail='', CustomerAdress='' OrderDate = Da, ShipDate = i + 1, DeliveryrDate =  }
         }
 
     }
+
+    private static initOrderItemArray()
+    {
+        for (int i = 0; i < 45; i++)
+        {
+            indexOrderItem++;
+            orderItemArray = new OrderItem { ProductID = , OrderID = , Price = , Amount =   }
+        }
+    }
+
 }
 
-    
+

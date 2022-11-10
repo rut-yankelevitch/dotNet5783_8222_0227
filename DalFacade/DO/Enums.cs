@@ -6,7 +6,7 @@ namespace DO;
 /// </summary>
 
 public struct Enums
-    {
+{
 
 }
 
