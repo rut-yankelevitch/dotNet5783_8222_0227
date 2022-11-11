@@ -1,5 +1,4 @@
 ﻿
-
 namespace DO;
 /// <summary>
 ///  Structure for Product
@@ -14,10 +13,17 @@ public struct Product
     /// Name of Product
     /// </summary>
     public string Name { get; set; }
+    ///בעיה
+    public Cat category{ get; set; }
+    public double Price { get; set; }
+    public int InStock { get; set; }
+
+
+
     public override string ToString() => $@"
      Product ID={ID}: {Name}, 
-     category - {Category}
-     Price: {Price}
+     category - {Category},
+     Price: {Price},
      Amount in stock: {InStock}
      ";
 }

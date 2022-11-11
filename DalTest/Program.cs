@@ -1,32 +1,85 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace Targil0
-{
- class Program 
-    {
-        Console.writeline("ttttt");
-        static public int main(string args[])
+namespace DalTest {
+    Enum Entities { EXIT,PRODUCT,ORDER,ORDER_ITEM};
+    Enum Options { ADD,GET,GET_ALL,UPDATE,DELETE};
+
+    public class Program { 
+        private Product p= new Product ();
+        private Order o= new Order ();
+        private OrderItem oI= new OrderItem ();
+        public void ProductEntities()
+        {   string op=Console.ReadLine ();
+            Options o=(Options)int.Parse(op)
+            switch (o)
+	        {
+                case ADD:
+                    break;
+                case GET:
+                    break;
+                case GET_ALL:
+                    break;
+                case UPDATE:
+                    break;
+                case DELETE:
+                    break;
+		        default:
+	        }
+        }
+         public void OrderEntities()
         {
-         Random rnd = new Random();
-         
-         TimeSpan timeSpent = TimeSpan.Zero;
-         
-         timeSpent += GetTimeBeforeLunch();
-         timeSpent += GetTimeAfterLunch();
-         
-         Console.WriteLine("Total time: {0}", timeSpent);
-         
-        imeSpan GetTimeBeforeLunch()
+             string op=Console.ReadLine ();
+            Options o=(Options)int.Parse(op)
+            switch (o)
+	        {
+                case ADD:
+                    break;
+                case GET:
+                    break;
+                case GET_ALL:
+                    break;
+                case UPDATE:
+                    break;
+                case DELETE:
+                    break;
+		        default:
+	        }
+        }
+        public void OrderItemEntities()
         {
-            return new TimeSpan(rnd.Next(3, 6), 0, 0);
+             string op=Console.ReadLine ();
+            Options o=(Options)int.Parse(op)
+            switch (o)
+	        {
+                case ADD:
+                    break;
+                case GET:
+                    break;
+                case GET_ALL:
+                    break;
+                case UPDATE:
+                    break;
+                case DELETE:
+                    break;
+		        default:
+	        }
         }
 
-        TimeSpan GetTimeAfterLunch()
-        {
-            return new TimeSpan(rnd.Next(3, 6), 0, 0);
-        }
+        public static void Main(string[] args) {
+            string en = Console.ReadLine();
+          e = (Entities)int.Parse(en);
+    switch (e)
+	    {
+                case EXIT:
+                     break;
+                     case PRODUCT:ProductEntities();
+                     break;
+                     case ORDER:OrderEntities();
+                     break;
+                case ORDER_ITEM:OrderItemEntities();
+                     break;
+	     	default:
+              break;
+	    }
+	}
 
-        }
-    }
 }
-
-
