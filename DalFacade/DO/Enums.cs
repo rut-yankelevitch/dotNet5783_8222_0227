@@ -5,8 +5,8 @@ namespace DO;
 ///  Structure for Enums
 /// </summary>
 
-public struct Enums
-{
-    enum Cat  {  "שואבי אבק", " מכונות קפה"," טוסטרים","מגהצים","מיקסרים"," בלנדרים"} 
+public enum Category
+{ 
+    VACUUM_CLEANER, COFFEE_MACHINE, TOASTER, IRON, MIXER, BLENDER 
 }
 

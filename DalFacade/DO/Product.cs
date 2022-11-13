@@ -1,5 +1,4 @@
-﻿
-namespace DO;
+﻿namespace DO;
 /// <summary>
 ///  Structure for Product
 /// </summary>
@@ -13,8 +12,7 @@ public struct Product
     /// Name of Product
     /// </summary>
     public string Name { get; set; }
-    ///בעיה
-    public Cat category{ get; set; }
+   public Category Category{ get; set; }
     public double Price { get; set; }
     public int InStock { get; set; }
 

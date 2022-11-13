@@ -3,7 +3,6 @@ using System.Drawing;
 using static Dal.DataSource;
 
 namespace Dal;
-{
     public class OrderDal
 {
     public int AddOrder(Order o)
@@ -12,15 +11,16 @@ namespace Dal;
         OrderArray[Config.indexOrder] = o;
         return OrderArray[Config.indexOrder++].ID;
     }
-    public void deleteOrder(int id)
+    public void DeleteOrder(int id)
     {
         int x = search(id);
         if (x != -1)
         {
-            for (int i = x + 1; i < OrderArray.lengthe; i++)
+            for (int i = x ; i <= Config.indexOrder; i++)
             {
-                OrderArray[x - 1] = OrderArray[x];
+                OrderArray[i] = OrderArray[i+1];
             }
+            Config.indexOrder--;
         }
         else
             throw new Exception(" order is not exist");
@@ -45,8 +45,8 @@ namespace Dal;
     }
     public Order[] GetAllOrder()
     {
-        Order[] o = new Order[OrderArray.Length];
-        for (int i = 0; i < OrderArray.Length; i++)
+        Order[] o = new Order[Config.indexOrder];
+        for (int i = 0; i < Config.indexOrder; i++)
         {
             o[i] = OrderArray[i];
         }
@@ -55,13 +55,13 @@ namespace Dal;
 
     private int search(int id)
     {
-        for (int i = 0; i < OrderArray.Length; i++)
+        for (int i = 0; i <= Config.indexOrder; i++)
         {
-            if (OrderArray[i].ID = id)
+            if (OrderArray[i].ID == id)
                 return i;
         }
         return -1;
     }
 }
-}
+
 

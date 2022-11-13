@@ -3,35 +3,42 @@ using System.Drawing;
 using static Dal.DataSource;
 
 namespace Dal;
-{
     public class OrderItemDal
 {
-    public int AddOrderItem(OrderItem o)
+    public int AddOrderItem(OrderItem orderItem)
     {
-        //code of order and product?
-        o.ID = Config.IDOrderItem;
-        OrderItemArray[Config.indexOrderItem] = o;
-        return OrderItemArray[Config.indexOrderItem++].ID;
+        int i;
+        for (i = 0; i < Config.indexOrder && OrderArray[i].ID != orderItem.OrderID; i++) ;
+        if (i == Config.indexOrder+1)
+            throw new Exception("order id is not exist");
+        for (i = 0; i < Config.indexProduct && ProductArray[i].ID != orderItem.OrderID; i++) ;
+        if (i == Config.indexProduct+1)
+            throw new Exception("product id is not exist");
+        int id = Config.IDOrderItem;
+        orderItem.ID = id;
+        OrderItemArray[Config.indexOrderItem++] = orderItem;
+        return id;
     }
     public void deleteOrderItem(int id)
     {
         int x = search(id);
         if (x != -1)
         {
-            for (int i = x + 1; i < OrderItemArray.lengthe; i++)
+            for (int i = x ; i <= Config.indexOrderItem; i++)
             {
-                OrderItemArray[x - 1] = OrderItemArray[x];
+                OrderItemArray[i] = OrderItemArray[i+1];
             }
+            Config.indexOrderItem--;
         }
         else
             throw new Exception(" OrderItem is not exist");
 
     }
-    public void UpdateOrderItem(OrderItem o)
+    public void UpdateOrderItem(OrderItem orderItem)
     {
-        int x = search(o.ID);
+        int x = search(orderItem.ID);
         if (x != -1)
-            OrderItemArray[x] = o;
+            OrderItemArray[x] = orderItem;
         else
             throw new Exception(" OrderItem is not exist");
 
@@ -46,21 +53,20 @@ namespace Dal;
     }
     public OrderItem[] GetAllOrderItem()
     {
-        OrderItem[] o = new OrderItem[OrderItemtArray.Length];
-        for (int i = 0; i < OrderItemArray.Length; i++)
+        OrderItem[] orderItems = new OrderItem[Config.indexOrderItem];
+        for (int i = 0; i < Config.indexOrderItem; i++)
         {
-            o[i] = OrderItemArray[i];
+            orderItems[i] = OrderItemArray[i];
         }
-        return o;
+        return orderItems;
     }
     private int search(int id)
     {
-        for (int i = 0; i < OrderItemtArray.Length; i++)
+        for (int i = 0; i <= Config.indexOrderItem; i++)
         {
-            if (OrderItemArray[i].ID = id)
+            if (OrderItemArray[i].ID == id)
                 return i;
         }
         return -1;
     }
-}
 }
