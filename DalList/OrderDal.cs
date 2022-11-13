@@ -3,20 +3,36 @@ using System.Drawing;
 using static Dal.DataSource;
 
 namespace Dal;
-    public class OrderDal
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the order array
+/// </summary>
+
+public class OrderDal
 {
-    public int AddOrder(Order o)
+    /// <summary>
+    /// add a order to the order array
+    /// </summary>
+    /// <param name="order">the new order</param>
+    /// <returns>the insert new order id</returns>
+    public int AddOrder(Order order)
     {
-        o.ID = Config.IDOrder;
-        OrderArray[Config.indexOrder] = o;
+        order.ID = Config.IDOrder;
+        OrderArray[Config.indexOrder] = order;
         return OrderArray[Config.indexOrder++].ID;
     }
+    /// <summary>
+    /// delete an order
+    /// </summary>
+    /// <param name="id">the id of the order</param>
+    /// <exception cref="Exception">if the order didnt exist</exception>
+
     public void DeleteOrder(int id)
     {
-        int x = search(id);
-        if (x != -1)
+        int index = search(id);
+        if (index != -1)
         {
-            for (int i = x ; i <= Config.indexOrder; i++)
+            for (int i = index ; i <= Config.indexOrder; i++)
             {
                 OrderArray[i] = OrderArray[i+1];
             }
@@ -26,33 +42,54 @@ namespace Dal;
             throw new Exception(" order is not exist");
 
     }
-    public void UpdateOrder(Order o)
+    /// <summary>
+    /// update an order
+    /// </summary>
+    /// <param name="order">the updated order details</param>
+    /// <exception cref="Exception">if the order doesnt exist</exception>
+
+    public void UpdateOrder(Order order)
     {
-        int x = search(o.ID);
-        if (x != -1)
-            OrderArray[x] = o;
+        int index = search(order.ID);
+        if (index != -1)
+            OrderArray[index] = order;
         else
             throw new Exception(" order is not exist");
 
     }
+    /// <summary>
+    /// get order by id
+    /// </summary>
+    /// <param name="id">the order id</param>
+    /// <returns>the order</returns>
+    /// <exception cref="Exception">if the order doesnt exist</exception>
+
     public Order GetOrder(int id)
     {
-        int x = search(id);
-        if (x != -1)
-            return OrderArray[x];
+        int index = search(id);
+        if (index != -1)
+            return OrderArray[index];
         else
             throw new Exception(" order is not exist");
     }
+    /// <summary>
+    /// get all the orders
+    /// </summary>
+    /// <returns>an array of orders</returns>
+
     public Order[] GetAllOrder()
     {
-        Order[] o = new Order[Config.indexOrder];
+        Order[] orders = new Order[Config.indexOrder];
         for (int i = 0; i < Config.indexOrder; i++)
         {
-            o[i] = OrderArray[i];
+            orders[i] = OrderArray[i];
         }
-        return o;
+        return orders;
     }
-
+    /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
     private int search(int id)
     {
         for (int i = 0; i <= Config.indexOrder; i++)

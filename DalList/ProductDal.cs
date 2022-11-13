@@ -3,11 +3,14 @@ using System.Drawing;
 using static Dal.DataSource;
 
 namespace Dal;
-
-    public class ProductDal
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the product array
+/// </summary>
+public class ProductDal
+{
+    public int AddProduct(Product product)
     {
-        public int AddProduct(Product product)
-        {
         int i;
         for (i = 0; i < Config.indexProduct && ProductArray[i].ID != product.ID; i++) ;
         if (i < Config.indexProduct)
@@ -16,56 +19,79 @@ namespace Dal;
         return product.ID;
 
     }
+    /// <summary>
+    /// delete a product 
+    /// </summary>
+    /// <param name="id">the id of the product thet need to be deleted</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
     public void DeleteProduct(int id)
+    {
+        int index = search(id);
+        if (index != -1)
         {
-            int x = search(id);
-        if (x != -1)
-        {
-            for (int i = x; i <= Config.indexProduct; i++)
+            for (int i =index; i <= Config.indexProduct; i++)
             {
-                ProductArray[i] = ProductArray[i+1];
+                ProductArray[i] = ProductArray[i + 1];
             }
             Config.indexProduct--;
         }
         else
             throw new Exception(" product is not exist");
 
-        }
-        public void UpdateProduct( Product p)
-        {
-            int x = search(p.ID);
-            if (x != -1)
-             ProductArray[x] = p;
-            else
-                throw new Exception(" product is not exist");
-
-        }
-        public Product GetProduct(int id)
-        {
-            int x = search(id);
-            if (x != -1)
-                return ProductArray[x];
-            else
-                throw new Exception(" product is not exist");
-        }
-        public Product[]  GetAllProducts()
-        {
-            Product[] products = new Product[Config.indexProduct];
-            for (int i = 0; i < Config.indexProduct; i++)
-            {
-            products[i] = ProductArray[i];
-            }
-            return products;
-        }
-
-        private int search(int id)
-        {
-            for (int i = 0; i < Config.indexProduct; i++)
-            {
-                if(ProductArray[i].ID== id )
-                    return i;
-            }
-            return -1;  
-        }
     }
+    /// <summary>
+    /// update a product
+    /// </summary>
+    /// <param name="product">the product new details</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
+    public void UpdateProduct(Product product)
+    {
+        int index = search(product.ID);
+        if (index != -1)
+            ProductArray[index] = product;
+        else
+            throw new Exception(" product is not exist");
 
+    }
+    /// <summary>
+    /// get product by id
+    /// </summary>
+    /// <param name="id">the id of the requeses product</param>
+    /// <returns>the product</returns>
+    /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
+
+    public Product GetProduct(int id)
+    {
+        int index = search(id);
+        if (index != -1)
+            return ProductArray[index];
+        else
+            throw new Exception(" product is not exist");
+    }
+    /// <summary>
+    /// get all products
+    /// </summary>
+    /// <returns>an array of all the products</returns>
+    public Product[] GetAllProducts()
+    {
+        Product[] products = new Product[Config.indexProduct];
+        for (int i = 0; i < Config.indexProduct; i++)
+        {
+            products[i] = ProductArray[i];
+        }
+        return products;
+    }
+    /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
+    private int search(int id)
+    {
+        for (int i = 0; i < Config.indexProduct; i++)
+        {
+            if (ProductArray[i].ID == id)
+                return i;
+        }
+        return -1;
+    }
+}

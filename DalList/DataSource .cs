@@ -67,7 +67,7 @@ static class DataSource
             DateTime helpE;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,12), randNum.Next(1,28), randNum.Next(1,23), randNum.Next(1,59), randNum.Next(1,59));
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,13), randNum.Next(1,29), randNum.Next(1,24), randNum.Next(1,60), randNum.Next(1,60));
             }
             while (helpE >= DateTime.Now);
             OrderArray[i].OrderDate = helpE;
@@ -88,24 +88,24 @@ static class DataSource
     private static void initOrderItemArray()
     {
         
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 39; i+=2)
             {
-                Config.indexOrderItem++;
+                Config.indexOrderItem+=2;
                 int randA = randNum.Next(12);
                 OrderItemArray[i].ID = Config.IDOrderItem;
-                OrderItemArray[i].OrderID = OrderArray[i].ID;
+                OrderItemArray[i].OrderID = OrderArray[i%21].ID;
                 OrderItemArray[i].ProductID = ProductArray[randA].ID;
                 OrderItemArray[i].Price = ProductArray[randA].Price;
-                OrderItemArray[i].Amount = randNum.Next(5);
+                OrderItemArray[i].Amount = randNum.Next(1,5);
                 int randB;
                 do
                 randB = randNum.Next(10);
                 while (randA == randB);
-                OrderItemArray[i * 2].ID = Config.IDOrderItem;
-                OrderItemArray[i * 2].OrderID = OrderArray[i].ID;
-                OrderItemArray[i * 2].ProductID = ProductArray[randB].ID;
-                OrderItemArray[i * 2].Price = ProductArray[randB].Price;
-                OrderItemArray[i * 2].Amount = randNum.Next(5);
+                OrderItemArray[i +1].ID = Config.IDOrderItem;
+                OrderItemArray[i +1].OrderID = OrderArray[i%21].ID;
+                OrderItemArray[i +1].ProductID = ProductArray[randB].ID;
+                OrderItemArray[i +1].Price = ProductArray[randB].Price;
+                OrderItemArray[i +1].Amount = randNum.Next(1,5);
             }
             }
     }

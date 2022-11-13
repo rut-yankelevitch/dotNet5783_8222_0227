@@ -3,19 +3,36 @@ using DO;
 using Dal;
 namespace DalTest
 {
+    /// <summary>
+    /// Enum of the main management input options
+    /// </summary>
     enum ManagementProgram { EXIT, PRODUCT, ORDER, ORDER_ITEM }
+    /// <summary>
+    /// Enum of the secondary menu input options
+    /// </summary>
     enum Options { ADD = 1, GET, GET_ALL, UPDATE, DELETE }
+    /// <summary>
+    /// The class of the main program
+    /// </summary>
 
     public class Program
     {
-        //static DataSource = new DataSource();
+        /// <summary>
+        /// Instances of the data access classes
+        /// </summary>
         static private OrderDal orderDal = new OrderDal();
         static private ProductDal productDal = new ProductDal();
         static private OrderItemDal orderItemDal = new OrderItemDal();
+
         static string readString;
         static int readInt;
         static double readDouble;
         static Options option;
+
+        /// <summary>
+        ///A static private function, that is called by the main program
+        ///when the user requests to perform operations on the product array
+        /// </summary>
         private static void ProductManagement()
         {
             Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
@@ -108,11 +125,16 @@ namespace DalTest
             }
 
         }
+        /// <summary>
+        /// A static private function, that is called by the main program
+        ///when the user requests to perform operations on the order array
+        /// </summary>
+
         private static void OrdersManagement()
         {
             Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
-            string op = Console.ReadLine();
-            option = (Options)int.Parse(op);
+            readString = Console.ReadLine();
+            option = (Options)int.Parse(readString);
             Order order = new Order();
             DateTime helpDateTime;
             try
@@ -197,94 +219,116 @@ namespace DalTest
                 Console.WriteLine(ex.Message);
             }
         }
+        /// <summary>
+        /// A static private function, that is called by the main program
+        ///when the user requests to perform operations on the orderItem array
+        /// </summary>
+
         private static void OrderItemsManagement()
         {
             Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
             OrderItem orderItem = new OrderItem();
-            string op = Console.ReadLine();
-            option = (Options)int.Parse(op);
-            switch (option)
+            readString = Console.ReadLine();
+            option = (Options)int.Parse(readString);
+            try
             {
-                case Options.ADD:
-                    Console.WriteLine("enter order item  details:\n order id, product id , price , amount");
-                    readString = Console.ReadLine();
-                    int.TryParse(readString, out readInt);
-                    orderItem.OrderID = readInt;
-                    readString = Console.ReadLine();
-                    int.TryParse(readString, out readInt);
-                    orderItem.ProductID = readInt;
-                    readString = Console.ReadLine();
-                    double.TryParse(readString, out readDouble);
-                    orderItem.Price = readDouble;
-                    readString = Console.ReadLine();
-                    int.TryParse(readString, out readInt);
-                    orderItem.Amount = readInt;
-                    int insertId = orderItemDal.AddOrderItem(orderItem);
-                    Console.WriteLine("insert id: " + insertId);
-                    break;
-                case Options.GET:
-                    Console.WriteLine("enter order item id:");
-                    readString = Console.ReadLine();
-                    int.TryParse(readString, out readInt);
-                    orderItem = orderItemDal.GetOrderItem(readInt);
-                    Console.WriteLine(orderItem);
-                    break;
-                case Options.GET_ALL:
-                    OrderItem[] ordersItems = orderItemDal.GetAllOrderItem();
-                    foreach (OrderItem ordItem in ordersItems)
-                        Console.WriteLine(ordItem);
-                    break;
-                case Options.UPDATE:
-                    Console.WriteLine("enter order item details:\n  order item id, order id, product id , price , amount");
-                    if (readString != "")
-                    {
-                        int.TryParse(readString, out readInt);
-                        orderItem.ID = readInt;
-                    }
-
-                    readString = Console.ReadLine();
-                    if (readString != "")
-                    {
+                switch (option)
+                {
+                    case Options.ADD:
+                        Console.WriteLine("enter order item  details:\n order id, product id , price , amount");
+                        readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
                         orderItem.OrderID = readInt;
-                    }
-                    readString = Console.ReadLine();
-                    if (readString != "")
-                    {
+                        readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
                         orderItem.ProductID = readInt;
-                    }
-                    readString = Console.ReadLine();
-                    if (readString != "")
-                    {
+                        readString = Console.ReadLine();
                         double.TryParse(readString, out readDouble);
                         orderItem.Price = readDouble;
-                    }
-                    readString = Console.ReadLine();
-                    if (readString != "")
-                    {
+                        readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
                         orderItem.Amount = readInt;
-                    }
-                    orderItemDal.UpdateOrderItem(orderItem);
+                        int insertId = orderItemDal.AddOrderItem(orderItem);
+                        Console.WriteLine("insert id: " + insertId);
+                        break;
+                    case Options.GET:
+                        Console.WriteLine("enter order item id:");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out readInt);
+                        orderItem = orderItemDal.GetOrderItem(readInt);
+                        Console.WriteLine(orderItem);
+                        break;
+                    case Options.GET_ALL:
+                        OrderItem[] ordersItems = orderItemDal.GetAllOrderItem();
+                        foreach (OrderItem ordItem in ordersItems)
+                            Console.WriteLine(ordItem);
+                        break;
+                    case Options.UPDATE:
+                        Console.WriteLine("enter order item details:\n  order item id, order id, product id , price , amount");
+                        readString = Console.ReadLine();
+                        if (readString != "")
+                        {
+                            int.TryParse(readString, out readInt);
+                            orderItem.ID = readInt;
+                        }
 
-                    break;
-                case Options.DELETE:
-                    Console.WriteLine("enter order item id to delete:");
-                    readString = Console.ReadLine();
-                    int.TryParse(readString, out readInt);
-                    orderItemDal.deleteOrderItem(readInt);
-                    break;
-                default:
-                    break;
+                        readString = Console.ReadLine();
+                        if (readString != "")
+                        {
+                            int.TryParse(readString, out readInt);
+                            orderItem.OrderID = readInt;
+                        }
+                        readString = Console.ReadLine();
+                        if (readString != "")
+                        {
+                            int.TryParse(readString, out readInt);
+                            orderItem.ProductID = readInt;
+                        }
+                        readString = Console.ReadLine();
+                        if (readString != "")
+                        {
+                            double.TryParse(readString, out readDouble);
+                            orderItem.Price = readDouble;
+                        }
+                        readString = Console.ReadLine();
+                        if (readString != "")
+                        {
+                            int.TryParse(readString, out readInt);
+                            orderItem.Amount = readInt;
+                        }
+                        orderItemDal.UpdateOrderItem(orderItem);
+
+                        break;
+                    case Options.DELETE:
+                        Console.WriteLine("enter order item id to delete:");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out readInt);
+                        orderItemDal.deleteOrderItem(readInt);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
-
-        public static void Main(string[] args)
+            /// <summary>
+            /// The main program
+            /// </summary>
+            /// <param name="args"></param>
+            public static void Main(string[] args)
         {
-            Product pro   = new Product();
-            Order or = new Order();
-            OrderItem ordei = new OrderItem();  
+            Product pro = new Product() { ID = 741852,Name = "joni", Category= Category.VACUUM_CLEANER, Price=12.5,InStock=50  };
+            productDal.AddProduct(pro);
+
+            Order or = new Order() { CustomerName = "racheli", CustomerEmail = "r97777@gmail.com", CustomerAdress = "g" };
+            orderDal.AddOrder(or);
+
+            OrderItem ordei = new OrderItem() { OrderID = 1, ProductID = 741852, Price = 12.5,Amount=50 };
+            orderItemDal.AddOrderItem(ordei);
+
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2- order\n 3- order item .");
             string choice = Console.ReadLine();
