@@ -67,7 +67,7 @@ static class DataSource
             DateTime helpE;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,13), randNum.Next(1,29), randNum.Next(1,24), randNum.Next(1,60), randNum.Next(1,60));
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,13), randNum.Next(1,29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
             }
             while (helpE >= DateTime.Now);
             OrderArray[i].OrderDate = helpE;
