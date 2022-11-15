@@ -10,7 +10,7 @@ namespace DalTest
     /// <summary>
     /// Enum of the secondary menu input options
     /// </summary>
-    enum Options { ADD = 1, GET, GET_ALL, UPDATE, DELETE }
+    enum Options { ADD = 1, GET, GET_ALL, UPDATE, DELETE, GET_BY_ORDERID, GET_BY_ORDER_PRODUCT }
     /// <summary>
     /// The class of the main program
     /// </summary>
@@ -226,7 +226,7 @@ namespace DalTest
 
         private static void OrderItemsManagement()
         {
-            Console.WriteLine("Order item menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
+            Console.WriteLine("Order item menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete \n 6- getitems by order id  \n 7- get by order id and product id ");
             OrderItem orderItem = new OrderItem();
             readString = Console.ReadLine();
             option = (Options)int.Parse(readString);
@@ -304,6 +304,26 @@ namespace DalTest
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
                         orderItemDal.deleteOrderItem(readInt);
+                        break;
+                    case Options.GET_BY_ORDERID:
+                        Console.WriteLine("enter order id:");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out readInt);
+                        OrderItem[] orderItems = orderItemDal.GetAllItemsByOrderId(readInt);
+                        foreach (OrderItem ordItem in orderItems)
+                            Console.WriteLine(ordItem);
+                        break;
+                    case Options.GET_BY_ORDER_PRODUCT:
+                        Console.WriteLine("enter order id:");
+                        int orderId;
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out orderId);
+                        Console.WriteLine("enter product id:");
+                        int prodId;
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out prodId);
+                        orderItem = orderItemDal.GetByOrderIdAndProductId(orderId, prodId);
+                        Console.WriteLine(orderItem);
                         break;
                     default:
                         break;

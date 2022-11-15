@@ -110,4 +110,47 @@ namespace Dal;
         }
         return -1;
     }
+        /// <summary>
+    /// get order item by order id and product id
+    /// </summary>
+    /// <param name="orderId">the order item orderId</param>
+    /// <param name="productId">the order item productId</param>
+    /// <returns>the order item</returns>
+    /// <exception cref="Exception">if the order item doesnt exist</exception>
+    public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
+    {
+        for (int i = 0; i < indexOrderItem; i++)
+        {
+            if (OrderItemArray[i].ProductID == productId && OrderItemArray[i].OrderID==orderId)
+                return OrderItemArray[i];
+        }
+        throw new Exception("Order item is not exist");
+    }
+
+    /// <summary>
+    /// get all order item of a specific order
+    /// </summary>
+    /// <param name="orderId">the order id</param>
+    /// <returns>an array of order items</returns>
+    /// <exception cref="Exception">if the order is not exist</exception>
+    public OrderItem[] GetAllItemsByOrderId(int orderId)
+    {
+        OrderItem[] orderItems = new OrderItem[indexOrderItem];
+        int index = 0;
+        for (int i = 0; i < indexOrderItem; i++)
+        {
+            if (OrderItemArray[i].OrderID == orderId)
+                orderItems[index++] = OrderItemArray[i];
+        }
+        OrderItem[] orderItems2 = new OrderItem[index];
+
+        for (int i = 0; i < index; i++)
+        {
+          
+                orderItems2[i] = orderItems[i];
+        }
+        if (index==0)
+            throw new Exception("Order item is not exist");
+        return orderItems2;
+    }
 }
