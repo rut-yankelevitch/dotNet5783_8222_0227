@@ -3,64 +3,95 @@ using System.Drawing;
 using static Dal.DataSource;
 
 namespace Dal;
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the product array
+/// </summary>
+public class ProductDal
 {
-    public class ProductDal
+    public int AddProduct(Product product)
     {
-        public int AddProduct(Product p)
+        int i;
+        for (i = 0; i < Config.indexProduct && ProductArray[i].ID != product.ID; i++) ;
+        if (i < Config.indexProduct)
+            throw new Exception("product id already exists");
+        ProductArray[Config.indexProduct++] = product;
+        return product.ID;
+
+    }
+    /// <summary>
+    /// delete a product 
+    /// </summary>
+    /// <param name="id">the id of the product thet need to be deleted</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
+    public void DeleteProduct(int id)
+    {
+        int index = search(id);
+        if (index != -1)
         {
-            p.ID = Config.IDProduct;
-            ProductArray[Config.indexProduct] = p;
-            return ProductArray[Config.indexProduct++].ID;
-        }
-        public void deleteProduct(int id)
-        {
-            int x = search(id);
-        if (x != -1)
-        {
-            for (int i = x + 1; i < ProductArray.lengthe; i++)
+            for (int i =index; i <= Config.indexProduct; i++)
             {
-                ProductArray[x - 1] = ProductArray[x];
+                ProductArray[i] = ProductArray[i + 1];
             }
+            Config.indexProduct--;
         }
         else
             throw new Exception(" product is not exist");
 
-        }
-        public void UpdateProduct( Product p)
-        {
-            int x = search(p.ID);
-            if (x != -1)
-             ProductArray[x] = p;
-            else
-                throw new Exception(" product is not exist");
+    }
+    /// <summary>
+    /// update a product
+    /// </summary>
+    /// <param name="product">the product new details</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
+    public void UpdateProduct(Product product)
+    {
+        int index = search(product.ID);
+        if (index != -1)
+            ProductArray[index] = product;
+        else
+            throw new Exception(" product is not exist");
 
-        }
-        public Product GetProduct(int id)
-        {
-            int x = search(id);
-            if (x != -1)
-                return ProductArray[x];
-            else
-                throw new Exception(" product is not exist");
-        }
-        public Product[]  GetAllProducts()
-        {
-            Product[] p = new Product[ProductArray.Length];
-            for (int i = 0; i < ProductArray.Length; i++)
-            {
-                p[i] = ProductArray[i];
-            }
-            return p;
-        }
+    }
+    /// <summary>
+    /// get product by id
+    /// </summary>
+    /// <param name="id">the id of the requeses product</param>
+    /// <returns>the product</returns>
+    /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
 
-        private int search(int id)
+    public Product GetProduct(int id)
+    {
+        int index = search(id);
+        if (index != -1)
+            return ProductArray[index];
+        else
+            throw new Exception(" product is not exist");
+    }
+    /// <summary>
+    /// get all products
+    /// </summary>
+    /// <returns>an array of all the products</returns>
+    public Product[] GetAllProducts()
+    {
+        Product[] products = new Product[Config.indexProduct];
+        for (int i = 0; i < Config.indexProduct; i++)
         {
-            for (int i = 0; i < ProductArray.Length; i++)
-            {
-                if(ProductArray[i].ID= id )
-                    return i;
-            }
-            return -1;  
+            products[i] = ProductArray[i];
         }
+        return products;
+    }
+    /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
+    private int search(int id)
+    {
+        for (int i = 0; i < Config.indexProduct; i++)
+        {
+            if (ProductArray[i].ID == id)
+                return i;
+        }
+        return -1;
     }
 }
