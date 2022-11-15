@@ -4,8 +4,7 @@ namespace Dal;
 static class DataSource
 {
     private static readonly Random randNum = new Random();
-    internal static class Config
-    {
+
         private const int startOrderId = 0;
         private const int startOrderItemId = 0;
         internal static int indexOrderItem  { get; set; }= 0;
@@ -16,7 +15,7 @@ static class DataSource
         internal static int IDOrder { get => ++idOrder; }
         private static int idOrderItem = startOrderItemId;
         internal static int IDOrderItem { get => ++idOrderItem; }
-    }
+
 
     internal static Product[] ProductArray = new Product[50];
     internal static Order[] OrderArray = new Order[100];
@@ -46,7 +45,7 @@ static class DataSource
 
         for (int i = 0; i < 12; i++)
         {
-            Config.indexProduct++;
+            indexProduct++;
             ProductArray[i] = new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20) };
         }
     
@@ -62,8 +61,8 @@ static class DataSource
             "Hadekel 16 Tel Aviv"};
         for (int i = 0; i < 22; i++)
         {
-            Config.indexOrder++;
-            OrderArray[i] = new Order { ID = Config.IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = EmailArray[i % 15], CustomerAdress = CitiArray[i % 15] };
+            indexOrder++;
+            OrderArray[i] = new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = EmailArray[i % 15], CustomerAdress = CitiArray[i % 15] };
             DateTime helpE;
             do
             {
@@ -90,9 +89,9 @@ static class DataSource
         
             for (int i = 0; i < 39; i+=2)
             {
-                Config.indexOrderItem+=2;
+                indexOrderItem+=2;
                 int randA = randNum.Next(12);
-                OrderItemArray[i].ID = Config.IDOrderItem;
+                OrderItemArray[i].ID = IDOrderItem;
                 OrderItemArray[i].OrderID = OrderArray[i%21].ID;
                 OrderItemArray[i].ProductID = ProductArray[randA].ID;
                 OrderItemArray[i].Price = ProductArray[randA].Price;
@@ -101,7 +100,7 @@ static class DataSource
                 do
                 randB = randNum.Next(10);
                 while (randA == randB);
-                OrderItemArray[i +1].ID = Config.IDOrderItem;
+                OrderItemArray[i +1].ID = IDOrderItem;
                 OrderItemArray[i +1].OrderID = OrderArray[i%21].ID;
                 OrderItemArray[i +1].ProductID = ProductArray[randB].ID;
                 OrderItemArray[i +1].Price = ProductArray[randB].Price;

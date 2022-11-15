@@ -19,15 +19,15 @@ namespace Dal;
     public int AddOrderItem(OrderItem orderItem)
     {
         int i;
-        for (i = 0; i <= Config.indexOrder && OrderArray[i].ID != orderItem.OrderID; i++) ;
-        if (i == Config.indexOrder+1)
+        for (i = 0; i <= indexOrder && OrderArray[i].ID != orderItem.OrderID; i++) ;
+        if (i == indexOrder+1)
             throw new Exception("order id is not exist");
-        for (i = 0; i <= Config.indexProduct && ProductArray[i].ID != orderItem.ProductID; i++) ;
-        if (i == Config.indexProduct+1)
+        for (i = 0; i <= indexProduct && ProductArray[i].ID != orderItem.ProductID; i++) ;
+        if (i == indexProduct+1)
             throw new Exception("product id is not exist");
-        int id = Config.IDOrderItem;
+        int id = IDOrderItem;
         orderItem.ID = id;
-        OrderItemArray[Config.indexOrderItem++] = orderItem;
+        OrderItemArray[indexOrderItem++] = orderItem;
         return id;
     }
     /// <summary>
@@ -41,11 +41,11 @@ namespace Dal;
         int index = search(id);
         if (index != -1)
         {
-            for (int i = index; i <= Config.indexOrderItem; i++)
+            for (int i = index; i <= indexOrderItem; i++)
             {
                 OrderItemArray[i] = OrderItemArray[i+1];
             }
-            Config.indexOrderItem--;
+            indexOrderItem--;
         }
         else
             throw new Exception(" OrderItem is not exist");
@@ -89,8 +89,8 @@ namespace Dal;
 
     public OrderItem[] GetAllOrderItem()
     {
-        OrderItem[] orderItems = new OrderItem[Config.indexOrderItem];
-        for (int i = 0; i < Config.indexOrderItem; i++)
+        OrderItem[] orderItems = new OrderItem[indexOrderItem];
+        for (int i = 0; i < indexOrderItem; i++)
         {
             orderItems[i] = OrderItemArray[i];
         }
@@ -103,7 +103,7 @@ namespace Dal;
 
     private int search(int id)
     {
-        for (int i = 0; i <= Config.indexOrderItem; i++)
+        for (int i = 0; i <= indexOrderItem; i++)
         {
             if (OrderItemArray[i].ID == id)
                 return i;

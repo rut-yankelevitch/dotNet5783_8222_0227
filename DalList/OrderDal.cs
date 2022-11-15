@@ -17,9 +17,9 @@ public class OrderDal
     /// <returns>the insert new order id</returns>
     public int AddOrder(Order order)
     {
-        order.ID = Config.IDOrder;
-        OrderArray[Config.indexOrder] = order;
-        return OrderArray[Config.indexOrder++].ID;
+        order.ID = IDOrder;
+        OrderArray[indexOrder] = order;
+        return OrderArray[indexOrder++].ID;
     }
     /// <summary>
     /// delete an order
@@ -32,11 +32,11 @@ public class OrderDal
         int index = search(id);
         if (index != -1)
         {
-            for (int i = index ; i <= Config.indexOrder; i++)
+            for (int i = index ; i <= indexOrder; i++)
             {
                 OrderArray[i] = OrderArray[i+1];
             }
-            Config.indexOrder--;
+            indexOrder--;
         }
         else
             throw new Exception(" order is not exist");
@@ -79,8 +79,8 @@ public class OrderDal
 
     public Order[] GetAllOrder()
     {
-        Order[] orders = new Order[Config.indexOrder];
-        for (int i = 0; i < Config.indexOrder; i++)
+        Order[] orders = new Order[indexOrder];
+        for (int i = 0; i < indexOrder; i++)
         {
             orders[i] = OrderArray[i];
         }
@@ -92,7 +92,7 @@ public class OrderDal
     /// <returns>returns the index of the member found</returns>
     private int search(int id)
     {
-        for (int i = 0; i <= Config.indexOrder; i++)
+        for (int i = 0; i <= indexOrder; i++)
         {
             if (OrderArray[i].ID == id)
                 return i;

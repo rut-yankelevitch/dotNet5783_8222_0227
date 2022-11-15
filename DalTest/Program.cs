@@ -132,7 +132,7 @@ namespace DalTest
 
         private static void OrdersManagement()
         {
-            Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
+            Console.WriteLine("Order menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
             readString = Console.ReadLine();
             option = (Options)int.Parse(readString);
             Order order = new Order();
@@ -226,7 +226,7 @@ namespace DalTest
 
         private static void OrderItemsManagement()
         {
-            Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
+            Console.WriteLine("Order item menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
             OrderItem orderItem = new OrderItem();
             readString = Console.ReadLine();
             option = (Options)int.Parse(readString);
@@ -320,14 +320,7 @@ namespace DalTest
             /// <param name="args"></param>
             public static void Main(string[] args)
         {
-            Product pro = new Product() { ID = 741852,Name = "joni", Category= Category.VACUUM_CLEANER, Price=12.5,InStock=50  };
-            productDal.AddProduct(pro);
-
-            Order or = new Order() { CustomerName = "racheli", CustomerEmail = "r97777@gmail.com", CustomerAdress = "g" };
-            orderDal.AddOrder(or);
-
-            OrderItem ordei = new OrderItem() { OrderID = 1, ProductID = 741852, Price = 12.5,Amount=50 };
-            orderItemDal.AddOrderItem(ordei);
+           
 
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2- order\n 3- order item .");

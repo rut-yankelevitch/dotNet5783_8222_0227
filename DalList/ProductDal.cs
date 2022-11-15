@@ -12,10 +12,10 @@ public class ProductDal
     public int AddProduct(Product product)
     {
         int i;
-        for (i = 0; i < Config.indexProduct && ProductArray[i].ID != product.ID; i++) ;
-        if (i < Config.indexProduct)
+        for (i = 0; i < indexProduct && ProductArray[i].ID != product.ID; i++) ;
+        if (i < indexProduct)
             throw new Exception("product id already exists");
-        ProductArray[Config.indexProduct++] = product;
+        ProductArray[indexProduct++] = product;
         return product.ID;
 
     }
@@ -29,11 +29,11 @@ public class ProductDal
         int index = search(id);
         if (index != -1)
         {
-            for (int i =index; i <= Config.indexProduct; i++)
+            for (int i =index; i <=indexProduct; i++)
             {
                 ProductArray[i] = ProductArray[i + 1];
             }
-            Config.indexProduct--;
+            indexProduct--;
         }
         else
             throw new Exception(" product is not exist");
@@ -74,8 +74,8 @@ public class ProductDal
     /// <returns>an array of all the products</returns>
     public Product[] GetAllProducts()
     {
-        Product[] products = new Product[Config.indexProduct];
-        for (int i = 0; i < Config.indexProduct; i++)
+        Product[] products = new Product[indexProduct];
+        for (int i = 0; i < indexProduct; i++)
         {
             products[i] = ProductArray[i];
         }
@@ -87,7 +87,7 @@ public class ProductDal
     /// <returns>returns the index of the member found</returns>
     private int search(int id)
     {
-        for (int i = 0; i < Config.indexProduct; i++)
+        for (int i = 0; i < indexProduct; i++)
         {
             if (ProductArray[i].ID == id)
                 return i;
