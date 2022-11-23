@@ -5,25 +5,22 @@ static class DataSource
 {
     private static readonly Random randNum = new Random();
 
-        private const int startOrderId = 0;
-        private const int startOrderItemId = 0;
-        internal static int indexOrderItem  { get; set; }= 0;
-        internal static int indexOrder { get; set; }= 0;
-        internal static int indexProduct  { get; set; }= 0;
+    private const int startOrderId = 0;
+    private const int startOrderItemId = 0;
 
-        private static int idOrder = startOrderId;
+    private static int idOrder = startOrderId;
         internal static int IDOrder { get => ++idOrder; }
         private static int idOrderItem = startOrderItemId;
         internal static int IDOrderItem { get => ++idOrderItem; }
 
 
-    internal static Product[] ProductArray = new Product[50];
-    internal static Order[] OrderArray = new Order[100];
-    internal static OrderItem[] OrderItemArray = new OrderItem[200];
+    internal static List<Product> ProductList = new List<Product>();
+    internal static List<Order> OrderList = new List<Order>();
+    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
 
 
 
-     static DataSource() => s_Initilize();
+    static DataSource() => s_Initilize();
 
 
 
@@ -36,17 +33,16 @@ static class DataSource
     }
     private static void initProductArray()
    {
-        int[] productID = new int[]
-      {
-            6665581,858565,747541,125478,852963,741598,458963,458796,745698,147854,147985,364152
-      };
+
         string[] nameArray = new string[] { " Samsung Dyson", "Electrolux Dyson", "Bosch Dyson", "SAMURAI mixer", "Bosch toaster", "elextrolux toaster", "Bosch iron", "TEFAL iron", "elextrolux blender", "braun blender", "Nespresso coffee machine", " Hemilton coffee machine" };
         Category[] category = new Category[] { Category.VACUUM_CLEANER, Category.VACUUM_CLEANER, Category.MIXER, Category.COFFEE_MACHINE, Category.COFFEE_MACHINE, Category.COFFEE_MACHINE, Category.TOASTER, Category.TOASTER, Category.IRON, Category.IRON, Category.BLENDER, Category.BLENDER };
-
+         int[] productID = new int[]
+{
+            6665581,858565,747541,125478,852963,741598,458963,458796,745698,147854,147985,364152
+};
         for (int i = 0; i < 12; i++)
         {
-            indexProduct++;
-            ProductArray[i] = new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20) };
+            ProductList.Add(new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20) });
         }
     
     }
@@ -61,52 +57,64 @@ static class DataSource
             "Hadekel 16 Tel Aviv"};
         for (int i = 0; i < 22; i++)
         {
-            indexOrder++;
-            OrderArray[i] = new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = EmailArray[i % 15], CustomerAdress = CitiArray[i % 15] };
             DateTime helpE;
+            TimeSpan helpC;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1,13), randNum.Next(1,29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
+                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1, 13), randNum.Next(1, 29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
             }
             while (helpE >= DateTime.Now);
-            OrderArray[i].OrderDate = helpE;
-            TimeSpan helpC;
+            DateTime OrderDate1 = helpE;
+            DateTime ShipDate1 = new DateTime ();
+            DateTime DeliveryrDate1 = new DateTime();
             if (i < 16)
             {
-                 helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                OrderArray[i].ShipDate = OrderArray[i].OrderDate + helpC;
+                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                 ShipDate1 = OrderDate1 + helpC;
 
             }
             if (i < 8)
             {
-                 helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                OrderArray[i].DeliveryrDate = OrderArray[i].OrderDate + helpC;
+                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                 DeliveryrDate1 = OrderDate1 + helpC;
             }
+
+            OrderList.Add(new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = EmailArray[i % 15], CustomerAdress = CitiArray[i % 15] , OrderDate = OrderDate1 , ShipDate = ShipDate1 , DeliveryrDate = DeliveryrDate1 });
           }       
         }
     private static void initOrderItemArray()
     {
-        
-            for (int i = 0; i < 39; i+=2)
+        foreach(Order o in OrderList)
+        {
+            int randA = randNum.Next(12);
+            double price = new double();
+            double price2= new double();
+            foreach (Product p in ProductList)
             {
-                indexOrderItem+=2;
-                int randA = randNum.Next(12);
-                OrderItemArray[i].ID = IDOrderItem;
-                OrderItemArray[i].OrderID = OrderArray[i%21].ID;
-                OrderItemArray[i].ProductID = ProductArray[randA].ID;
-                OrderItemArray[i].Price = ProductArray[randA].Price;
-                OrderItemArray[i].Amount = randNum.Next(1,5);
-                int randB;
-                do
+                if (p.ID == ProductList[randA].ID)
+                {
+                    price = p.Price;
+                    break;
+                }
+            }
+            int randB;
+            do
                 randB = randNum.Next(10);
-                while (randA == randB);
-                OrderItemArray[i +1].ID = IDOrderItem;
-                OrderItemArray[i +1].OrderID = OrderArray[i%21].ID;
-                OrderItemArray[i +1].ProductID = ProductArray[randB].ID;
-                OrderItemArray[i +1].Price = ProductArray[randB].Price;
-                OrderItemArray[i +1].Amount = randNum.Next(1,5);
+            while (randA == randB);
+            foreach (Product p in ProductList)
+            {
+                if (p.ID == ProductList[randB].ID)
+                {
+                    price2 = p.Price;
+                    break;
+                }
             }
-            }
+            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price , Amount = randNum.Next(1, 5) }) ;
+            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
+
+        }
+
+    }
     }
 
 
