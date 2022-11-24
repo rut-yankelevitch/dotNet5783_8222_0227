@@ -10,6 +10,6 @@ namespace BlApi
     {
         public IProduct Product { get; }
         public IOrder Order { get; }
-        public ICart OrderItem { get; }
+        public ICart cart { get; }
     }
 }

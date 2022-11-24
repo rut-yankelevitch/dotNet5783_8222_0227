@@ -1,14 +1,16 @@
 ﻿using System;
 using BlApi;
+using DalApi;
 
 namespace BlImplementation;
 
 /// <summary>
 /// Summary description for Class1
 /// </summary>
-internal class BOOrder
+internal class Order
 {
-	public BOOrder() : IOrder
+    private IDal Dal = new DalList.DalList();
+    public Order() : IOrder
 	{
 		//
 		// TODO: Add constructor logic here
