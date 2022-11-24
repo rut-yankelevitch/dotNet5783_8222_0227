@@ -38,7 +38,7 @@ namespace DalTest
         /// </summary>
         private static void ProductManagement()
         {
-            Console.WriteLine("Product menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
+            Console.WriteLine("Product menu: \n 1- add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
 
             readString = Console.ReadLine();
             Options.TryParse(readString, out option);
