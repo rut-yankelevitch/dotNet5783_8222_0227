@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace BlApi
 {
-    internal interface IOrder
+    public interface IOrder
     {
+    public int Add(Order order);
+	public void Update(Order order );
+	public void Delete(int id);
+	public Order GetById(int id);
+    public IEnumerable <Oredr> GetAll() ;
     }
 }
