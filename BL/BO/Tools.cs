@@ -11,6 +11,7 @@ namespace BO
     {
         public static string ToStringProperty<T>(this T t)
         {
+            //לבדוק ישויות לא שטוחות 
             string str = "";
             foreach (PropertyInfo item in t.GetType().GetProperties())
                 str += "\n" + item.Name +
