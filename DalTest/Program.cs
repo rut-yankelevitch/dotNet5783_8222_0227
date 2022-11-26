@@ -387,7 +387,6 @@ namespace DalTest
                         break;
                 }
 
-
                 Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2- order \n 3- order item .");
                 choice = Console.ReadLine();
                 ManagementProgram.TryParse(choice, out managementProgram);
