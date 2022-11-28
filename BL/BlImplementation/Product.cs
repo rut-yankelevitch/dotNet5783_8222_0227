@@ -37,7 +37,8 @@ internal class Product :IProduct
     {
         try
         {
-            
+            if (id < 1)
+                throw new BO.NegetiveException("not positive number");
             DO.Product product = dal.Product.GetById(id);
             BO.Product product1 = new BO.Product();
             product1.ID=product.ID;
@@ -59,6 +60,10 @@ internal class Product :IProduct
     {
         try
         {
+            if (product.ID <1 ||product.Name == "" || product.Price <1  || product.InStock < 0)
+            {
+                throw new BO.InvalidInputException(" Invalid input");
+            }
             DO.Product product1 = new DO.Product();
             product1.ID = product.ID;
             product1.Name = product.Name;
@@ -109,7 +114,8 @@ internal class Product :IProduct
     {
         try
         {
-            if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
+            if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0)
+                throw new BO.InvalidInputException(" Invalid input");
             {
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;   
@@ -175,6 +181,10 @@ internal class Product :IProduct
             productItem.Price = product1.Price;
             productItem.Category=(BO.Category) product1.Category;
             productItem.Amount = product1.InStock;
+            if (product1.InStock > 0)
+                productItem.Instock = true;
+            else
+                productItem.Instock = false;
             return productItem;
         }
 

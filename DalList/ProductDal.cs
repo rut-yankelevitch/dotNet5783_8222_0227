@@ -73,9 +73,9 @@ internal class ProductDal:IProduct
     public IEnumerable<Product> GetAll()
     {
         List<Product> products = new List<Product>();
-        for (int i = (ProductList.Count)-1; i >= 0; i--)
+        foreach (Product product in ProductList)
         {
-            products.Add(ProductList[i]);
+            products.Add(product);
         }
         return products;
     }

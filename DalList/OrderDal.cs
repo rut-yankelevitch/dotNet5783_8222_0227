@@ -76,9 +76,9 @@ namespace Dal;
         public IEnumerable<Order> GetAll()
         {
             List<Order> orders = new List<Order>();
-            for (int i = (OrderList.Count) - 1; i >= 0; i--)
+            foreach(Order order in OrderList)
             {
-                orders.Add(OrderList[i]);
+                orders.Add(order);
             }
             return orders;
         }

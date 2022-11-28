@@ -85,9 +85,9 @@ internal class OrderItemDal:IOrderItem
     public IEnumerable<OrderItem> GetAll()
     {
         List<OrderItem> orderItems = new List<OrderItem>();
-        for (int i = (OrderItemList.Count)-1; i >=0 ; i--)
+        foreach (OrderItem orderItem in OrderItemList)
         {
-            orderItems.Add(OrderItemList[i]);
+            orderItems.Add(orderItem);
         }
         return orderItems;
     }

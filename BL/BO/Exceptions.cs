@@ -23,10 +23,20 @@ namespace BO
     {
         public InvalidFormat(string? message) : base(message) { }
     }
+    public class InvalidInputException : Exception
+    {
+        public InvalidInputException(string? message) : base(message) { }
+    }
+
+
 
     public class NotExistException : Exception
     {
         public NotExistException(string? message) : base(message) { }
+    }
+    public class NegetiveException : Exception
+    {
+        public NegetiveException(string? message) : base(message) { }
     }
 
     //public class BLOrderSend : Exception

@@ -8,10 +8,10 @@ namespace BlImplementation;
 /// <summary>
 /// Summary description for Class1
 /// </summary>
-internal class Order
+internal class Order: BlApi.IOrder
 {
     private IDal dal = new DalList.DalList();
-    public IEnumerable<BO.OrderForList> GetOrderListForManager()
+    public IEnumerable<BO.OrderForList> GetOrderList()
     {
         List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
         IEnumerable<DO.Order> orders = dal.Order.GetAll();
