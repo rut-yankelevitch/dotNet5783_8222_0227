@@ -61,7 +61,7 @@ static class DataSource
             TimeSpan helpC;
             do
             {
-                helpE = new DateTime(randNum.Next(2000, 2022), randNum.Next(1, 13), randNum.Next(1, 29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
+                helpE = new DateTime(randNum.Next(2021, 2022), randNum.Next(1, 13), randNum.Next(1, 29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
             }
             while (helpE >= DateTime.Now);
             DateTime OrderDate1 = helpE;
@@ -69,16 +69,16 @@ static class DataSource
             DateTime DeliveryrDate1 = new DateTime();
             if (i < 16)
             {
-                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
+                helpC = new TimeSpan(randNum.Next(700,750), 0, 0, 0, 0);
                  ShipDate1 = OrderDate1 + helpC;
 
             }
             if (i < 8)
             {
-                helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                 DeliveryrDate1 = OrderDate1 + helpC;
+                helpC = new TimeSpan(randNum.Next(1,10), 0, 0, 0, 0);
+                 DeliveryrDate1 = ShipDate1 + helpC;
             }
-
+            
             OrderList.Add(new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = EmailArray[i % 15], CustomerAdress = CitiArray[i % 15] , OrderDate = OrderDate1 , ShipDate = ShipDate1 , DeliveryrDate = DeliveryrDate1 });
           }       
         }

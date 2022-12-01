@@ -2,6 +2,7 @@
 using BlApi;
 using DalApi;
 using System.Collections.Generic;
+using BO;
 
 namespace BlImplementation;
 
@@ -15,11 +16,11 @@ internal class Order: BlApi.IOrder
     {
         List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
         IEnumerable<DO.Order> orders = dal.Order.GetAll();
-        BO.OrderForList orderForList = new BO.OrderForList();
         double totalPrice = 0;
         int amount = 0;
         foreach (DO.Order order in orders)
         {
+            BO.OrderForList orderForList = new BO.OrderForList();
             IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAllItemsByOrderId(order.ID);
             foreach (DO.OrderItem item in orderitems)
             {
@@ -109,14 +110,17 @@ internal class Order: BlApi.IOrder
             BO.OrderItem orderitem = new BO.OrderItem();
             DO.Product product = new DO.Product();
             List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
-
-
             DO.Order orderDal = dal.Order.GetById(id);
             if (orderDal.ShipDate < DateTime.Now)
                 throw new BO.MistakeUpdateException("order send");
+            else
+            {
+                orderDal.ShipDate=DateTime.Now;    
+                dal.Order.Update(orderDal);
+            }
             IEnumerable<DO.OrderItem> orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
             double totalPrice = 0;
-
+             
             foreach (DO.OrderItem item in orderitemsDal)
             {
                 orderitem.ID = item.ID;
@@ -140,8 +144,6 @@ internal class Order: BlApi.IOrder
             order.TotalPrice = totalPrice;
             order.Items = orderitems;
             order.Status = BO.OrderStatus.SEND_ORDER;
-            //מה אמורים למלא? לא כתוב בתיאור הכללי
-            //order.PaymentDate=
             return order;
         }
         catch (Exception ex)
@@ -162,7 +164,12 @@ internal class Order: BlApi.IOrder
 
             DO.Order orderDal = dal.Order.GetById(id);
             if (orderDal.DeliveryrDate < DateTime.Now)
-                throw new BO.MistakeUpdateException("order Deliveryr");
+                throw new BO.MistakeUpdateException("order Delivery");
+            else
+            {
+                orderDal.DeliveryrDate = DateTime.Now;
+                dal.Order.Update(orderDal);
+            }
             IEnumerable<DO.OrderItem> orderitemsDal = dal.OrderItem.GetAllItemsByOrderId(id);
             double totalPrice = 0;
 
@@ -217,10 +224,19 @@ internal class Order: BlApi.IOrder
                     orderTracking.Status = BO.OrderStatus.CONFIRMED_ORDER;
             }
             List<Tuple<DateTime, string>> tList = new List<Tuple<DateTime, string>>
-            { new Tuple<DateTime, string>(order.OrderDate, "the order has been created"),
-              new Tuple<DateTime, string>(order.ShipDate, "the order has been sent"),
-              new Tuple<DateTime, string>(order.DeliveryrDate, "the order provided")
+            
+            { 
+                new Tuple<DateTime, string>(order.OrderDate, "the order has been created")
              };
+            if (order.ShipDate != DateTime.MinValue)
+            {
+                tList.Add(new Tuple<DateTime, string>(order.ShipDate, "the order has been sent"));
+            }
+            if (order.DeliveryrDate != DateTime.MinValue)
+            {
+                tList.Add(new Tuple<DateTime, string>(order.DeliveryrDate, "the order provided"));
+            }
+            orderTracking.Tuples = tList;
             return orderTracking;
         }
         catch(Exception ex)

@@ -47,7 +47,7 @@ namespace BLTest
         /// </summary>
         private static void ProductManagement()
         {
-            Console.WriteLine("Product menu: \n 1- add \n 2- get for manager \n 3- get for customer \n 4- get all  \n 5- update \n 6- delete");
+            Console.WriteLine("Product menu: \n 1- add \n 2- get for manager \n 3- get for customer \n 4- get list for manager \n 5- get list for customer  \n 6- update \n 7- delete");
             readString = Console.ReadLine();
             ProductOptions productOptions = (ProductOptions)int.Parse(readString);
             BO.Product product = new BO.Product();
@@ -100,7 +100,7 @@ namespace BLTest
                     case ProductOptions.GET_LIST_FOR_CUSTOMER:
                         productsItem = iBl.Product.GetProductListForCustomer();
                         foreach (ProductItem item in productsItem)
-                            Console.WriteLine(item);
+                                Console.WriteLine(item);
                         break;
                     case ProductOptions.UPDATE:
                         Console.WriteLine("enter product details:\n product id, product name, category , price ,amount");
@@ -225,7 +225,6 @@ namespace BLTest
                         int.TryParse(readString, out readInt);
                         currentCart= iBl.cart.AddProductToCart(currentCart,readInt);
                         Console.WriteLine(currentCart);
-
                         break;
                     case CartOptions.UPDATE:
                         Console.WriteLine("Enter product id: ");
@@ -248,6 +247,7 @@ namespace BLTest
                         address = Console.ReadLine();
                         currentCart.CustomerAddress = address;
                         iBl.cart.MakeOrder(currentCart, name, email, address);
+                        currentCart=new Cart();
                         break;
                     default:
                         break;
@@ -288,8 +288,6 @@ namespace BLTest
                  default:
                   break;
 	}
-
-                
                 Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order \n 3-cart ");
                 choice = Console.ReadLine();
                 ManagementProgram.TryParse(choice, out managementProgram);

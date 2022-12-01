@@ -60,7 +60,7 @@ internal class Product :IProduct
     {
         try
         {
-            if (product.ID <1 ||product.Name == "" || product.Price <1  || product.InStock < 0)
+            if (product.ID <1 ||product.Name == "" || product.Price <1  || product.InStock < 0|| (int)product.Category>5||(int)product.Category<0)
             {
                 throw new BO.InvalidInputException(" Invalid input");
             }
@@ -114,7 +114,7 @@ internal class Product :IProduct
     {
         try
         {
-            if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0)
+            if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
                 throw new BO.InvalidInputException(" Invalid input");
             {
                 DO.Product product1 = new DO.Product();
@@ -140,10 +140,10 @@ internal class Product :IProduct
         {
             //list
             IEnumerable<DO.Product> products = dal.Product.GetAll();
-            List<BO.ProductItem> productItems = new List<BO.ProductItem>();
-            BO.ProductItem productItem = new BO.ProductItem();
+            List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
             foreach (DO.Product product in products)
             {
+                BO.ProductItem productItem = new BO.ProductItem();
                 productItem.ID = product.ID;
                 productItem.Name = product.Name;
                 productItem.Price=product.Price;
@@ -158,9 +158,9 @@ internal class Product :IProduct
                     productItem.Instock = false;    
                 }
 
-                productItems.Add(productItem);
+                productsItems.Add(productItem);
             }
-            return productItems;
+            return productsItems;
         }
 
         catch (Exception exce)

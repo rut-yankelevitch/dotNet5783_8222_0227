@@ -16,10 +16,17 @@ internal class Cart : ICart
             //List<BO.OrderItem> orderItems = cart.Items;
             DO.Product product = new DO.Product();
             BO.OrderItem orderItem1 = new BO.OrderItem();
-            foreach (BO.OrderItem orderItem in cart.Items)
+            if (cart.Items!=null)
             {
-                if (orderItem.ProductID == idProduct)
-                    throw new BO.AlreadyExistException("product exist in cart");
+                foreach (BO.OrderItem orderItem in cart.Items)
+                {
+                    if (orderItem.ProductID == idProduct)
+                        throw new BO.AlreadyExistException("product exist in cart");
+                }
+            }
+            else
+            {
+                cart.Items = new List<BO.OrderItem>();
             }
             product = dal.Product.GetById(idProduct);
             if (product.InStock <= 0)
@@ -42,33 +49,48 @@ internal class Cart : ICart
     }
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int idProduct, int amount)
     {
+        bool flag=false;
         try
         {
             DO.Product product = new DO.Product();
-            BO.OrderItem orderItem1 = new BO.OrderItem();
             product = dal.Product.GetById(idProduct);
             if (product.InStock <amount)
                 throw new BO.NotExistException("product not exist in stock");
-           
-            foreach (BO.OrderItem orderItem in cart.Items)
+            if (cart.Items != null)
             {
-               
-                if (orderItem.ProductID == idProduct)
+                foreach (BO.OrderItem orderItem in cart.Items)
                 {
-                    if (amount <= 0)
+                    flag = true;
+                    if (orderItem.ProductID == idProduct)
                     {
-                        cart.TotalPrice -= orderItem.TotalPrice;
-                        cart.Items.Remove(orderItem);
-                    }
-                    else
-                    {
-                        cart.TotalPrice -= orderItem.TotalPrice;
-                        orderItem1.Amount = amount;
-                        orderItem.TotalPrice = orderItem.Price*amount;
-                        cart.TotalPrice += orderItem.TotalPrice;
+                        if (amount < 0)
+                        {
+                            throw new BO.InvalidInputException("invalid amount");
+                        }
+                        else 
+                        {
+                            if (amount == 0)
+                            {
+                                cart.TotalPrice -= orderItem.TotalPrice;
+                                cart.Items.Remove(orderItem);
+                            }
+                            else
+                            {
+                                cart.TotalPrice -= orderItem.TotalPrice;
+                                orderItem.Amount = amount;
+                                orderItem.TotalPrice = orderItem.Price * amount;
+                                cart.TotalPrice += orderItem.TotalPrice;
+                            }
+                        }
                     }
                 }
+                if (flag==false)
+                {
+                    throw new Exception("This item is not in the cart");
+                }
             }
+            else
+                throw new Exception("There are no items in the cart");
             return cart;
         }
         catch (Exception msg)
@@ -88,6 +110,9 @@ internal class Cart : ICart
             {
                 throw new BO.InvalidFormat("Invalid format");
             }
+            //איזה חריגה לעשות???
+            if (cart.Items==null)
+                throw new Exception("There are no items in the cart.");
            foreach(BO.OrderItem orderItem in cart.Items)
             {
                 if (orderItem.Amount <= 0)
