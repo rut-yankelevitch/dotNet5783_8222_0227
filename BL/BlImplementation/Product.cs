@@ -1,9 +1,9 @@
 ﻿using System;
 
 using BlApi;
-//using BO;
+
 using DalApi;
-//using DO;
+
 using IProduct = BlApi.IProduct;
 
 namespace BlImplementation;
@@ -37,8 +37,6 @@ internal class Product :IProduct
     {
         try
         {
-            if (id < 1)
-                throw new BO.NegetiveException("not positive number");
             DO.Product product = dal.Product.GetById(id);
             BO.Product product1 = new BO.Product();
             product1.ID=product.ID;
@@ -46,9 +44,7 @@ internal class Product :IProduct
             product1.Price=product.Price;
             product1.Category = (BO.Category)product.Category;
             product1.InStock=product.InStock;   
-
             return product1;
-
         }
         catch (Exception msg)
         {
@@ -82,16 +78,12 @@ internal class Product :IProduct
     {
         try
         {
-            //זריקות ריקות
-            //למה הדר 
-            // האם אפשר דריקה ספציפית למוצר
-
             IEnumerable<DO.OrderItem> orderstems = dal.OrderItem.GetAll();
             foreach (DO.OrderItem orderItem in orderstems)
             {
                 if (orderItem.ProductID == id)
                 {
-                    throw new BO.AlreadyExistException("product exist in order");
+                    throw new BO.ImpossibleActionException("product exist in order");
                 }
             }
             dal.Product.Delete(id);
@@ -138,7 +130,7 @@ internal class Product :IProduct
     {
         try
         {
-            //list
+            
             IEnumerable<DO.Product> products = dal.Product.GetAll();
             List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
             foreach (DO.Product product in products)

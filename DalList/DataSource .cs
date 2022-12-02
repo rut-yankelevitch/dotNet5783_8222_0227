@@ -69,7 +69,7 @@ static class DataSource
             DateTime DeliveryrDate1 = new DateTime();
             if (i < 16)
             {
-                helpC = new TimeSpan(randNum.Next(700,750), 0, 0, 0, 0);
+                helpC = new TimeSpan(randNum.Next(10,370), 0, 0, 0, 0);
                  ShipDate1 = OrderDate1 + helpC;
 
             }

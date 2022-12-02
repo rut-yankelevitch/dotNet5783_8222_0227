@@ -14,5 +14,6 @@ namespace BlApi
         public Order UpdateSendOrderByManager(int id);
         public Order UpdateSupplyOrderByManager(int id);
         public OrderTracking TrackingOrder (int id);
+        public OrderItem UpdateAmountOfOProductInOrder(int idOrder,int idProduct,int amount);
     }
 }

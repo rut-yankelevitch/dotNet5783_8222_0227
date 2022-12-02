@@ -13,7 +13,7 @@ namespace BLTest
     /// Enum of the secondary menu input options
     /// </summary>
     enum ProductOptions { ADD = 1, GET_FOR_MANAGER,GET_FOR_CUSTOMER, GET_LIST_FOR_MANAGER, GET_LIST_FOR_CUSTOMER, UPDATE, DELETE }
-    enum OrderOptions { GET=1, GET_ALL, UPDATE_SHIPPING_ORDER,UPDATE_DELIVERY_ORDER , ORDER_TRACKING,BONUS }
+    enum OrderOptions { GET=1, GET_ALL, UPDATE_SHIPPING_ORDER,UPDATE_DELIVERY_ORDER , ORDER_TRACKING,UPDATE_AMOUNT_OF_PRODUCT_IN_ORDER }
     enum CartOptions { ADD = 1, UPDATE, MAKE_ORDER }
 
 
@@ -34,6 +34,8 @@ namespace BLTest
 
         static string readString;
         static int readInt;
+        static int orderId;
+        static int productId;
         static int readInt1;
         static double readDouble;
         static private IBl iBl = new Bl();
@@ -81,15 +83,15 @@ namespace BLTest
                     case ProductOptions.GET_FOR_MANAGER:
                         Console.WriteLine("Enter id product:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        product = iBl.Product.GetProductByIdForManager(readInt);
+                        int.TryParse(readString, out productId);
+                        product = iBl.Product.GetProductByIdForManager(productId);
                         Console.WriteLine(product);
                         break;
                     case ProductOptions.GET_FOR_CUSTOMER:
                         Console.WriteLine("Enter id product:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        productItem = iBl.Product.GetProductByIdForCustomer(readInt);
+                        int.TryParse(readString, out productId);
+                        productItem = iBl.Product.GetProductByIdForCustomer(productId);
                         Console.WriteLine(productItem);
                         break;
                     case ProductOptions.GET_LIST_FOR_MANAGER:
@@ -105,8 +107,8 @@ namespace BLTest
                     case ProductOptions.UPDATE:
                         Console.WriteLine("enter product details:\n product id, product name, category , price ,amount");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        product.ID = readInt;
+                        int.TryParse(readString, out productId);
+                        product.ID = productId;
                         product.Name = Console.ReadLine();
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
@@ -123,8 +125,8 @@ namespace BLTest
                     case ProductOptions.DELETE:
                         Console.WriteLine("Enter id product:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        iBl.Product.DeleteProduct(readInt);
+                        int.TryParse(readString, out productId);
+                        iBl.Product.DeleteProduct(productId);
                         break;
                     default:
                         break;
@@ -142,10 +144,11 @@ namespace BLTest
 
         private static void OrdersManagement()
         {
-            Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- bonus");
+            Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
             readString = Console.ReadLine();
             OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
             Order order = new Order();
+            OrderItem orderItem= new OrderItem();
            OrderTracking orderTracking = new OrderTracking();   
             List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();   
             try
@@ -155,8 +158,8 @@ namespace BLTest
                     case OrderOptions.GET:
                         Console.WriteLine("Enter id oreder:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        order = iBl.Order.GetOrderById(readInt);
+                        int.TryParse(readString, out orderId);
+                        order = iBl.Order.GetOrderById(orderId);
                         Console.WriteLine(order);
                         break;
                     case OrderOptions.GET_ALL:
@@ -170,25 +173,36 @@ namespace BLTest
                     case OrderOptions.UPDATE_SHIPPING_ORDER:
                         Console.WriteLine("Enter id order:");
                         readString= Console.ReadLine();
-                        int.TryParse(readString,out readInt);   
-                        order=iBl.Order.UpdateSendOrderByManager(readInt);
+                        int.TryParse(readString,out orderId);   
+                        order=iBl.Order.UpdateSendOrderByManager(orderId);
                         Console.WriteLine(order);
                         break;
                     case OrderOptions.UPDATE_DELIVERY_ORDER:
                         Console.WriteLine("Enter id order:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        order = iBl.Order.UpdateSupplyOrderByManager(readInt);
+                        int.TryParse(readString, out orderId);
+                        order = iBl.Order.UpdateSupplyOrderByManager(orderId);
                         Console.WriteLine(order);
                         break;
                     case OrderOptions.ORDER_TRACKING:
                         Console.WriteLine("Enter id order:");
                         readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        orderTracking = iBl.Order.TrackingOrder(readInt);
+                        int.TryParse(readString, out orderId);
+                        orderTracking = iBl.Order.TrackingOrder(orderId);
                         Console.WriteLine(orderTracking);
                         break;
-                    case OrderOptions.BONUS:
+                    case OrderOptions.UPDATE_AMOUNT_OF_PRODUCT_IN_ORDER:
+                        Console.WriteLine("Enter id order: ");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out orderId);
+                        Console.WriteLine("Enter id product: ");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out productId);
+
+                        Console.WriteLine("Enter amount of product: ");
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out readInt);
+                        orderItem = iBl.Order.UpdateAmountOfOProductInOrder(orderId,productId,readInt);
                         break;
                     default:
                         break;

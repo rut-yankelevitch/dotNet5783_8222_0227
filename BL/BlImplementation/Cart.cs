@@ -1,7 +1,9 @@
 ﻿using System;
 using BlApi;
+using BO;
 using DalApi;
 namespace BlImplementation;
+
 
 /// <summary>
 /// Summary description for Class1
@@ -9,6 +11,7 @@ namespace BlImplementation;
 internal class Cart : ICart
 {
     private IDal dal = new DalList.DalList();
+
     public BO.Cart AddProductToCart(BO.Cart cart, int idProduct)
     {
         try
@@ -30,9 +33,7 @@ internal class Cart : ICart
             }
             product = dal.Product.GetById(idProduct);
             if (product.InStock <= 0)
-                throw new BO.NotExistException("product not exist in stock");
-            //מאיפה לדעת כמות??
-            //orderItem1.ID= מאיפה ID
+                throw new BO.ImpossibleActionException("product not exist in stock");
             orderItem1.Name = product.Name;
             orderItem1.ProductID = idProduct;
             orderItem1.Amount = 1;
@@ -55,7 +56,7 @@ internal class Cart : ICart
             DO.Product product = new DO.Product();
             product = dal.Product.GetById(idProduct);
             if (product.InStock <amount)
-                throw new BO.NotExistException("product not exist in stock");
+                throw new BO.ImpossibleActionException("product not exist in stock");
             if (cart.Items != null)
             {
                 foreach (BO.OrderItem orderItem in cart.Items)
@@ -86,11 +87,11 @@ internal class Cart : ICart
                 }
                 if (flag==false)
                 {
-                    throw new Exception("This item is not in the cart");
+                    throw new NotExistException("This item is not in the cart");
                 }
             }
             else
-                throw new Exception("There are no items in the cart");
+                throw new ImpossibleActionException("There are no items in the cart");
             return cart;
         }
         catch (Exception msg)
@@ -108,18 +109,17 @@ internal class Cart : ICart
             DO.Product product=new DO.Product();
             if (customerName == "" || customerEmail == "" || customerAddress == "")
             {
-                throw new BO.InvalidFormat("Invalid format");
+                throw new BO.InvalidInputException("Invalid format");
             }
-            //איזה חריגה לעשות???
             if (cart.Items==null)
-                throw new Exception("There are no items in the cart.");
+                throw new ImpossibleActionException("There are no items in the cart.");
            foreach(BO.OrderItem orderItem in cart.Items)
             {
                 if (orderItem.Amount <= 0)
-                    throw new BO.InvalidFormat("invalid amount");
+                    throw new BO.InvalidInputException("invalid amount");
                 product = dal.Product.GetById(orderItem.ProductID);
                 if (product.InStock < orderItem.Amount)
-                    throw new BO.NotExistException("amount not in stock ");
+                    throw new BO.ImpossibleActionException("amount not in stock ");
             }
             order.CustomerName=customerName;
             order.CustomerEmail=customerEmail;

@@ -14,45 +14,51 @@ internal class Order: BlApi.IOrder
     private IDal dal = new DalList.DalList();
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
-        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
-        IEnumerable<DO.Order> orders = dal.Order.GetAll();
-        double totalPrice = 0;
-        int amount = 0;
-        foreach (DO.Order order in orders)
+        try
         {
-            BO.OrderForList orderForList = new BO.OrderForList();
-            IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAllItemsByOrderId(order.ID);
-            foreach (DO.OrderItem item in orderitems)
+            List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
+            IEnumerable<DO.Order> orders = dal.Order.GetAll();
+            double totalPrice = 0;
+            int amount = 0;
+            foreach (DO.Order order in orders)
             {
-                totalPrice += item.Amount * item.Price;
-                amount += item.Amount;
-            }
-            orderForList.ID = order.ID;
-            orderForList.CustomerName = order.CustomerName;
-            orderForList.AmountOfItems = amount;
-            orderForList.TotalPrice = totalPrice;
+                BO.OrderForList orderForList = new BO.OrderForList();
+                IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAllItemsByOrderId(order.ID);
+                foreach (DO.OrderItem item in orderitems)
+                {
+                    totalPrice += item.Amount * item.Price;
+                    amount += item.Amount;
+                }
+                orderForList.ID = order.ID;
+                orderForList.CustomerName = order.CustomerName;
+                orderForList.AmountOfItems = amount;
+                orderForList.TotalPrice = totalPrice;
 
 
-            if (order.DeliveryrDate < DateTime.Now)
-                orderForList.Status = BO.OrderStatus.PROVIDED_ORDER;
-            else
-            {
-                if (order.ShipDate < DateTime.Now)
-                    orderForList.Status = BO.OrderStatus.SEND_ORDER;
+                if (order.DeliveryrDate < DateTime.Now && order.DeliveryrDate != DateTime.MinValue)
+                    orderForList.Status = BO.OrderStatus.PROVIDED_ORDER;
                 else
-                    orderForList.Status = BO.OrderStatus.CONFIRMED_ORDER;
+                {
+                    if (order.ShipDate < DateTime.Now && order.ShipDate != DateTime.MinValue)
+                        orderForList.Status = BO.OrderStatus.SEND_ORDER;
+                    else
+                        orderForList.Status = BO.OrderStatus.CONFIRMED_ORDER;
+                }
+                ordersForList.Add(orderForList);
             }
-            ordersForList.Add(orderForList);
-        }
 
-        return ordersForList;
+            return ordersForList;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
     public BO.Order GetOrderById(int id)
     {
         try
         {
             BO.Order order = new BO.Order();
-            BO.OrderItem orderitem = new BO.OrderItem();
             DO.Product product = new DO.Product();
             List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
             DO.Order orderDal = dal.Order.GetById(id);
@@ -61,6 +67,7 @@ internal class Order: BlApi.IOrder
 
             foreach (DO.OrderItem item in orderitemsDal)
             {
+                BO.OrderItem orderitem = new BO.OrderItem();
                 orderitem.ID = item.ID;
                 orderitem.ProductID = item.ProductID;
                 orderitem.Price = item.Price;
@@ -81,19 +88,15 @@ internal class Order: BlApi.IOrder
             order.DeliveryDate = orderDal.DeliveryrDate;
             order.TotalPrice = totalPrice;
             order.Items = orderitems;
-            if (orderDal.DeliveryrDate < DateTime.Now)
+            if (orderDal.DeliveryrDate < DateTime.Now&& orderDal.DeliveryrDate!=DateTime.MinValue)
                 order.Status = BO.OrderStatus.PROVIDED_ORDER;
             else
             {
-                if (order.ShipDate < DateTime.Now)
+                if (order.ShipDate < DateTime.Now&&orderDal.ShipDate != DateTime.MinValue)
                     order.Status = BO.OrderStatus.SEND_ORDER;
                 else
                     order.Status = BO.OrderStatus.CONFIRMED_ORDER;
             }
-            //מה אמורים למלא? לא כתוב בתיאור הכללי
-            //order.PaymentDate=
-
-
             return order;
         }
         catch (Exception ex)
@@ -107,12 +110,11 @@ internal class Order: BlApi.IOrder
         try
         {
             BO.Order order = new BO.Order();
-            BO.OrderItem orderitem = new BO.OrderItem();
             DO.Product product = new DO.Product();
             List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
             DO.Order orderDal = dal.Order.GetById(id);
-            if (orderDal.ShipDate < DateTime.Now)
-                throw new BO.MistakeUpdateException("order send");
+            if (orderDal.ShipDate < DateTime.Now&&orderDal.ShipDate!=DateTime.MinValue)
+                throw new BO.ImpossibleActionException("order send");
             else
             {
                 orderDal.ShipDate=DateTime.Now;    
@@ -123,6 +125,7 @@ internal class Order: BlApi.IOrder
              
             foreach (DO.OrderItem item in orderitemsDal)
             {
+                BO.OrderItem orderitem = new BO.OrderItem();
                 orderitem.ID = item.ID;
                 orderitem.ProductID = item.ProductID;
                 orderitem.Price = item.Price;
@@ -157,16 +160,17 @@ internal class Order: BlApi.IOrder
         try
         {
             BO.Order order = new BO.Order();
-            BO.OrderItem orderitem = new BO.OrderItem();
             DO.Product product = new DO.Product();
             List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
 
 
             DO.Order orderDal = dal.Order.GetById(id);
-            if (orderDal.DeliveryrDate < DateTime.Now)
-                throw new BO.MistakeUpdateException("order Delivery");
+            if (orderDal.DeliveryrDate < DateTime.Now&& orderDal.DeliveryrDate != DateTime.MinValue)
+                throw new BO.ImpossibleActionException("order Delivery");
             else
             {
+                if (orderDal.ShipDate >DateTime.Now)
+                    throw new BO.ImpossibleActionException("It is not possible to update a delivery date before a shipping date");
                 orderDal.DeliveryrDate = DateTime.Now;
                 dal.Order.Update(orderDal);
             }
@@ -175,6 +179,7 @@ internal class Order: BlApi.IOrder
 
             foreach (DO.OrderItem item in orderitemsDal)
             {
+                BO.OrderItem orderitem = new BO.OrderItem();
                 orderitem.ID = item.ID;
                 orderitem.ProductID = item.ProductID;
                 orderitem.Price = item.Price;
@@ -196,8 +201,6 @@ internal class Order: BlApi.IOrder
             order.TotalPrice = totalPrice;
             order.Items = orderitems;
             order.Status = BO.OrderStatus.PROVIDED_ORDER;
-            //מה אמורים למלא? לא כתוב בתיאור הכללי
-            //order.PaymentDate=
             return order;
         }
         catch (Exception ex)
@@ -214,11 +217,11 @@ internal class Order: BlApi.IOrder
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             order = dal.Order.GetById(id);
             orderTracking.ID = order.ID;
-            if (order.DeliveryrDate < DateTime.Now)
+            if (order.DeliveryrDate < DateTime.Now&&order.DeliveryrDate!=DateTime.MinValue)
                 orderTracking.Status = BO.OrderStatus.PROVIDED_ORDER;
             else
             {
-                if (order.ShipDate < DateTime.Now)
+                if (order.ShipDate < DateTime.Now&&order.ShipDate!=DateTime.MinValue)
                     orderTracking.Status = BO.OrderStatus.SEND_ORDER;
                 else
                     orderTracking.Status = BO.OrderStatus.CONFIRMED_ORDER;
@@ -243,11 +246,49 @@ internal class Order: BlApi.IOrder
         {
             throw new BO.NotExistException(ex.Message);
         }
-
-
-        
-
-
+    }
+    //?????????????????????
+    public BO.OrderItem UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount)
+    {
+        try
+        {
+            DO.OrderItem item = new DO.OrderItem();
+            item = dal.OrderItem.GetByOrderIdAndProductId(idOrder, idProduct);
+            DO.Order order = new DO.Order();
+            order = dal.Order.GetById(idOrder);
+            DO.Product product = new DO.Product();
+            BO.OrderItem orderItem = new BO.OrderItem();
+            if (order.ShipDate!=DateTime.MinValue&&order.ShipDate < DateTime.Now)
+            {
+                throw new BO.ImpossibleActionException("It is not possible to update an order after it has been sent");
+            }
+            if (amount < 0)
+                throw new BO.InvalidInputException("invalid amount");
+            
+            product = dal.Product.GetById(item.ProductID);
+            product.InStock += item.Amount;
+            item.Amount = amount;
+            dal.OrderItem.Update(item);
+            product.InStock-=amount;
+            dal.Product.Update(product);
+            //????????????????????????????
+            if (amount == 0)
+            {
+                dal.OrderItem.Delete(item.ID);
+                throw new Exception("The product remove from the order");
+            }
+                orderItem.ID = item.ID;
+                orderItem.Amount = amount;
+                orderItem.Price = item.Price;
+                orderItem.TotalPrice = amount * item.Price;
+                orderItem.ProductID = idProduct;
+                orderItem.Name = product.Name;
+                return orderItem;
+        }
+        catch (Exception ex)
+        {
+            throw new BO.NotExistException(ex.Message);
+        }
     }
 
 }
