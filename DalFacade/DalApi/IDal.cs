@@ -6,11 +6,22 @@ using System.Threading.Tasks;
 using DO;
 
 namespace DalApi;
-
-    public interface IDal
+/// <summary>
+/// A main interface that centers all the interfaces of the data layer
+/// </summary>
+public interface IDal
     {
-        public IOrder Order { get;}
-        public IOrderItem OrderItem { get;}
-        public IProduct Product { get;}
+    /// <summary>
+    /// A property that returns the IOrder entity
+    /// </summary>
+    public IOrder Order { get;}
+    /// <summary>
+    /// A property that returns the IOrderItem entity
+    /// </summary>
+    public IOrderItem OrderItem { get;}
+    /// <summary>
+    /// A property that returns the IProduct entity
+    /// </summary>
+    public IProduct Product { get;}
     }
 

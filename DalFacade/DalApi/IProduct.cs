@@ -1,7 +1,10 @@
 ﻿
 using DO;
 namespace DalApi;
-    public interface IProduct:ICrud<Product>
+/// <summary>
+/// An interface that implements the icrud interface
+/// </summary>
+public interface IProduct:ICrud<Product>
     {
 
     }

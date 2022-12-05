@@ -1,7 +1,9 @@
 ﻿using DO;
 namespace DalApi;
-
-    public interface IOrder : ICrud <Order>
+/// <summary>
+/// An interface that implements the icrud interface
+/// </summary>
+public interface IOrder : ICrud <Order>
     {
     }
 

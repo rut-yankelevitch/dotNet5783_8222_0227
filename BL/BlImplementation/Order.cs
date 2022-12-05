@@ -15,7 +15,7 @@ internal class Order : BlApi.IOrder
     /// <summary>
     /// function that returns all orders
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of orders</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
@@ -66,7 +66,7 @@ internal class Order : BlApi.IOrder
     /// function that returns order by id
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Order GetOrderById(int id)
     {
@@ -143,7 +143,7 @@ internal class Order : BlApi.IOrder
     /// function that update the send order
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>update order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLMistakeUpdateException"></exception>
@@ -226,7 +226,7 @@ internal class Order : BlApi.IOrder
     ///  function that update the supply order
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>update order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     public BO.Order UpdateSupplyOrderByManager(int id)
@@ -314,7 +314,7 @@ internal class Order : BlApi.IOrder
     /// function that tracks the order
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>order tracking</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.OrderTracking TrackingOrder(int id)
     {
@@ -360,7 +360,7 @@ internal class Order : BlApi.IOrder
     /// <param name="idOrder"></param>
     /// <param name="idProduct"></param>
     /// <param name="amount"></param>
-    /// <returns></returns>
+    /// <returns>update order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLInvalidInputException"></exception>

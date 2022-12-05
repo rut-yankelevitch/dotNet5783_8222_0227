@@ -15,7 +15,7 @@ internal class Cart : ICart
     /// </summary>
     /// <param name="cart"></param>
     /// <param name="idProduct"></param>
-    /// <returns></returns>
+    /// <returns>update cart</returns>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Cart AddProductToCart(BO.Cart cart, int idProduct)
@@ -59,7 +59,7 @@ internal class Cart : ICart
     /// <param name="cart"></param>
     /// <param name="idProduct"></param>
     /// <param name="amount"></param>
-    /// <returns></returns>
+    /// <returns>update curt</returns>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BLImpossibleActionException"></exception>

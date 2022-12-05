@@ -10,28 +10,25 @@ namespace BLTest
     /// </summary>
     enum ManagementProgram { EXIT, PRODUCT, ORDER, CART }
     /// <summary>
-    /// Enum of the secondary menu input options
+    /// Enum of the product options
     /// </summary>
     enum ProductOptions { ADD = 1, GET_FOR_MANAGER,GET_FOR_CUSTOMER, GET_LIST_FOR_MANAGER, GET_LIST_FOR_CUSTOMER, UPDATE, DELETE }
+    /// <summary>
+    /// Enum of the order options
+    /// </summary>
     enum OrderOptions { GET=1, GET_ALL, UPDATE_SHIPPING_ORDER,UPDATE_DELIVERY_ORDER , ORDER_TRACKING,UPDATE_AMOUNT_OF_PRODUCT_IN_ORDER }
+    /// <summary>
+    /// Enum of the cart options
+    /// </summary>
     enum CartOptions { ADD = 1, UPDATE, MAKE_ORDER }
 
 
     /// <summary>
     /// The class of the main program
     /// </summary>
-
     public class Program
     {
-        /// <summary>
-        /// Instances of the data access classes
-        /// </summary>
-
         static private DalList.DalList dalList = new DalList.DalList();
-        //static private OrderDal orderDal = new OrderDal();
-        //static private ProductDal productDal = new ProductDal();
-        //static private OrderItemDal orderItemDal = new OrderItemDal();
-
         static string readString;
         static int readInt;
         static int orderId;
@@ -40,9 +37,6 @@ namespace BLTest
         static double readDouble;
         static private IBl iBl = new Bl();
         static private Cart currentCart = new Cart();
-
-
-
         /// <summary>
         ///A static private function, that is called by the main program
         ///when the user requests to perform operations on  product 
@@ -56,8 +50,6 @@ namespace BLTest
             BO.ProductItem productItem = new BO.ProductItem();
             IEnumerable<BO.ProductForList> productsForList= new List<BO.ProductForList>();
             IEnumerable<BO.ProductItem> productsItem = new List<BO.ProductItem>();
-
-
             try
             {
                 switch (productOptions)
@@ -163,7 +155,6 @@ namespace BLTest
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on  order 
         /// </summary>
-
         private static void OrdersManagement()
         {
             Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
@@ -262,7 +253,6 @@ namespace BLTest
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on cart 
         /// </summary>
-
         private static void CartManagement()
         {
 
@@ -335,8 +325,6 @@ namespace BLTest
             /// <param name="args"></param>
             public static void Main(string[] args)
         {
-           
-
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order\n 3-cart");
             string choice = Console.ReadLine();

@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DO;
+/// <summary>
+/// Throws class for non-existent items
+/// </summary>
 [Serializable]
 public class DalDoesNotExistException:Exception
 {
@@ -19,13 +22,8 @@ public class DalDoesNotExistException:Exception
 
         public DalDoesNotExistException(int id, string name,string message,Exception innerException):base(message,innerException) 
     { EntityId=id;EntityName=name; }
-    //public DalDoesNotExistException(string name,string message) : base()
-    //{ EntityName = name; }
-
         public DalDoesNotExistException(string? message):base(message) 
     { }
-
-
     public override string ToString() 
     {
         if( EntityId==-1)
@@ -35,6 +33,9 @@ public class DalDoesNotExistException:Exception
          return $"id:{EntityId} of type {EntityName} is not exist.";
      }
 }
+/// <summary>
+/// Throws class for items that exist in duplicates
+/// </summary>
 [Serializable]
 public class DalAlreadyExistException : Exception
 {

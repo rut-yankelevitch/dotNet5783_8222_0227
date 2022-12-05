@@ -11,7 +11,7 @@ internal class Product : IProduct
     /// <summary>
     /// function that returns a product by id for the manager
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of product</returns>
     public IEnumerable<BO.ProductForList> GetProductListForManager()
     {
         IEnumerable<DO.Product> products = dal.Product.GetAll();
@@ -31,7 +31,7 @@ internal class Product : IProduct
     /// function that returns a product by id for the manager
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>product</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Product GetProductByIdForManager(int id)
     {
@@ -56,7 +56,7 @@ internal class Product : IProduct
     /// function that add a product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns></returns>
+    /// <returns>product</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLAlreadyExistException"></exception>
     public BO.Product AddProduct(BO.Product product)
@@ -110,7 +110,7 @@ internal class Product : IProduct
     /// function that update a product
     /// </summary>
     /// <param name="product"></param>
-    /// <returns></returns>
+    /// <returns>update product</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Product UpdateProduct(BO.Product product)
@@ -138,7 +138,7 @@ internal class Product : IProduct
     /// <summary>
     /// function that returns a list of all products for the customer
     /// </summary>
-    /// <returns></returns>
+    /// <returns>list of product</returns>
     public IEnumerable<BO.ProductItem> GetProductListForCustomer()
     {
         IEnumerable<DO.Product> products = dal.Product.GetAll();
@@ -167,7 +167,7 @@ internal class Product : IProduct
     /// function that returns a product by id for the customer
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>product</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.ProductItem GetProductByIdForCustomer(int id)
     {
