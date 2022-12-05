@@ -22,10 +22,10 @@ internal class OrderItemDal:IOrderItem
         int i;
         for (i = 0; i <OrderList.Count && OrderList[i].ID != orderItem.OrderID; i++) ;
         if (i == OrderList.Count)
-            throw new DalDoesNotExistException("order id is not exist");
+            throw new DalDoesNotExistException(orderItem.OrderID,"order");
         for (i = 0; i <ProductList.Count && ProductList[i].ID != orderItem.ProductID; i++) ;
         if (i == ProductList.Count)
-            throw new DalDoesNotExistException("product id is not exist");
+            throw new DalDoesNotExistException(orderItem.ProductID,"product");
         orderItem.ID = IDOrderItem;
         OrderItemList.Add(orderItem);
         return orderItem.ID;
@@ -44,7 +44,7 @@ internal class OrderItemDal:IOrderItem
             OrderItemList.RemoveAt(index);
         }
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DalDoesNotExistException(id,"orderItem");
     }
     /// <summary>
     /// update an order item
@@ -58,7 +58,7 @@ internal class OrderItemDal:IOrderItem
         if (index != -1)
             OrderItemList[index] = orderItem;
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DalDoesNotExistException(orderItem.ID,"orderItem");
 
     }
     /// <summary>
@@ -75,7 +75,7 @@ internal class OrderItemDal:IOrderItem
         if (index != -1)
             return OrderItemList[index];
         else
-            throw new DalDoesNotExistException(" OrderItem is not exist");
+            throw new DalDoesNotExistException(id,"OrderItem");
     }
     /// <summary>
     /// get all the order items
@@ -114,11 +114,7 @@ internal class OrderItemDal:IOrderItem
     /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
     {
-        //for (int i = 0; i <OrderItemList.Count; i++)
-        //{
-        //    if (OrderItemList[i].ProductID == productId && OrderItemList[i].OrderID==orderId)
-        //        return OrderItemList[i];
-        //}
+
         foreach(OrderItem orderItem in OrderItemList)
         {
             if(orderItem.ProductID==productId&&orderItem.OrderID==orderId)
@@ -126,7 +122,7 @@ internal class OrderItemDal:IOrderItem
                 return orderItem;
             }
         }
-        throw new DalDoesNotExistException("Order item is not exist");
+        throw new DalDoesNotExistException(-1, "Order or product");
     }
 
     /// <summary>
@@ -135,38 +131,11 @@ internal class OrderItemDal:IOrderItem
     /// <param name="orderId">the order id</param>
     /// <returns>an array of order items</returns>
     /// <exception cref="Exception">if the order is not exist</exception>
-    //public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId)
-    //{
-    //    List<OrderItem> orderItems = new List<OrderItem>();
-    //    int index = 0;
-    //    for (int i = (OrderItemList.Count)-1; i >=0; i++)
-    //    {
-    //        if (OrderItem[i].OrderID == orderId)
-    //            orderItems[index++] = OrderItemArray[i];
-    //    }
-    //    OrderItem[] orderItems2 = new OrderItem[index];
-
-    //    for (int i = 0; i < index; i++)
-    //    {
-
-    //            orderItems2[i] = orderItems[i];
-    //    }
-    //    if (index==0)
-    //        throw new DalDoesNotExistException("Order item is not exist");
-    //    return orderItems2;
-    //}
     public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId)
     {
         List<OrderItem> orderItems = new List<OrderItem>();
         bool flag = false;
-        //for (int i = (OrderItemList.Count) - 1; i >= 0; i--)
-        //{
-        //    if (OrderItemList[i].OrderID == orderId)
-        //    {
-        //        flag = true;
-        //        orderItems.Add(OrderItemList[i]);
-        //    }
-        //}
+     
         foreach(OrderItem item in OrderItemList)
         {
             if(item.OrderID == orderId)
@@ -176,7 +145,7 @@ internal class OrderItemDal:IOrderItem
             }
         }
         if (flag == false)
-            throw new DalDoesNotExistException("Order item is not exist");
+            throw new DalDoesNotExistException(orderId,"order");
         return orderItems;
     }
 }

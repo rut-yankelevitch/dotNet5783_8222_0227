@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace BO
 {
@@ -17,14 +14,14 @@ namespace BO
             foreach (PropertyInfo item in t.GetType().GetProperties())
             {
                 var enumerable = item.GetValue(t, null);
-                
+
                 if ((enumerable is IEnumerable) && !(enumerable is string))
                 {
-              IEnumerable e=enumerable as IEnumerable;
+                    IEnumerable e = enumerable as IEnumerable;
                     foreach (var a in e)
                     {
-                            str+=a.ToStringProperty();
-                        
+                        str += a.ToStringProperty();
+
                     }
                 }
                 else
@@ -35,14 +32,13 @@ namespace BO
             }
             return str;
         }
-        public static void ToStringPropertyToIEnumerable(IEnumerable collection,string str)
-        {
-            foreach (var item in collection)
-            {
+    //    public static AutoMapper()
+    //{
+    //    var config = new MapperConfiguration(cfg => cfg.CreateMap<UserEntity, UserDTO>());
+    //    var mapper = config.CreateMapper();
+    //    UserDTO userDTO = mapper.Map<UserDTO>(user);
 
-                str+=item;
-            }   
-        }
+    //}
     }
 
 }

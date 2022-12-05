@@ -24,7 +24,7 @@ internal class Cart : ICart
                 foreach (BO.OrderItem orderItem in cart.Items)
                 {
                     if (orderItem.ProductID == idProduct)
-                        throw new BO.AlreadyExistException("product exist in cart");
+                        throw new BO.BLImpossibleActionException("product exist in cart");
                 }
             }
             else
@@ -33,7 +33,7 @@ internal class Cart : ICart
             }
             product = dal.Product.GetById(idProduct);
             if (product.InStock <= 0)
-                throw new BO.ImpossibleActionException("product not exist in stock");
+                throw new BO.BLImpossibleActionException("product not exist in stock");
             orderItem1.Name = product.Name;
             orderItem1.ProductID = idProduct;
             orderItem1.Amount = 1;
@@ -43,9 +43,9 @@ internal class Cart : ICart
             cart.TotalPrice += orderItem1.TotalPrice;
             return cart;
         }
-        catch (Exception msg)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(msg.Message);
+            throw new BO.BLDoesNotExistException("product dosent exsit",ex);
         }
     }
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int idProduct, int amount)
@@ -56,17 +56,18 @@ internal class Cart : ICart
             DO.Product product = new DO.Product();
             product = dal.Product.GetById(idProduct);
             if (product.InStock <amount)
-                throw new BO.ImpossibleActionException("product not exist in stock");
+                throw new BO.BLImpossibleActionException("product not exist in stock");
             if (cart.Items != null)
             {
                 foreach (BO.OrderItem orderItem in cart.Items)
                 {
-                    flag = true;
+
                     if (orderItem.ProductID == idProduct)
                     {
+                        flag = true;
                         if (amount < 0)
                         {
-                            throw new BO.InvalidInputException("invalid amount");
+                            throw new BO.BLInvalidInputException("invalid amount");
                         }
                         else 
                         {
@@ -87,63 +88,77 @@ internal class Cart : ICart
                 }
                 if (flag==false)
                 {
-                    throw new NotExistException("This item is not in the cart");
+                    throw new BLImpossibleActionException("This item is not in the cart");
                 }
             }
             else
-                throw new ImpossibleActionException("There are no items in the cart");
+                throw new BLImpossibleActionException("There are no items in the cart");
             return cart;
         }
-        catch (Exception msg)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(msg.Message);
+            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
         }
 
     }
-    //void?????
-    public void MakeOrder(BO.Cart cart, string customerName, string customerEmail, string customerAddress)
+
+    public void MakeOrder(BO.Cart cart)
     {
         try
         {
             DO.Order order = new DO.Order();
             DO.Product product=new DO.Product();
-            if (customerName == "" || customerEmail == "" || customerAddress == "")
+            if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
             {
-                throw new BO.InvalidInputException("Invalid format");
+                throw new BO.BLInvalidInputException("Invalid details");
             }
             if (cart.Items==null)
-                throw new ImpossibleActionException("There are no items in the cart.");
-           foreach(BO.OrderItem orderItem in cart.Items)
-            {
-                if (orderItem.Amount <= 0)
-                    throw new BO.InvalidInputException("invalid amount");
-                product = dal.Product.GetById(orderItem.ProductID);
-                if (product.InStock < orderItem.Amount)
-                    throw new BO.ImpossibleActionException("amount not in stock ");
-            }
-            order.CustomerName=customerName;
-            order.CustomerEmail=customerEmail;
-            order.CustomerAdress=customerAddress;
+                throw new BLImpossibleActionException("There are no items in the cart.");
             order.OrderDate=DateTime.Now;
             order.ShipDate = new DateTime();
             order.DeliveryrDate=new DateTime();
             int id = dal.Order.Add(order);
             foreach (BO.OrderItem orderItem in cart.Items)
             {
+                try
+                {
+                    product = dal.Product.GetById(orderItem.ProductID);
+                }
+                catch (DO.DalDoesNotExistException ex)
+                {
+                    throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+                }
+                if (orderItem.Amount <= 0)
+                    throw new BO.BLImpossibleActionException("invalid amount");
+                if (product.InStock < orderItem.Amount)
+                    throw new BO.BLImpossibleActionException("amount not in stock ");
                 DO.OrderItem orderItem1 = new DO.OrderItem();
                 orderItem1.OrderID = id;
                 orderItem1.ProductID=orderItem.ProductID;
                 orderItem1.Amount=orderItem.Amount;
                 orderItem1.Price=orderItem.Price;
-                product = dal.Product.GetById(orderItem1.ProductID);
                 product.InStock-= orderItem.Amount;
-                dal.Product.Update(product);
-                dal.OrderItem.Add(orderItem1);  
+                try
+                {
+                    dal.Product.Update(product);
+                }
+                catch(DO.DalDoesNotExistException ex)
+                {
+                    throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+                }
+                try
+                {
+                    dal.OrderItem.Add(orderItem1);
+                }
+                catch (DO.DalDoesNotExistException ex)
+                {
+                    throw new BO.BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
+                }
             }
         }
-        catch (Exception msg)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(msg.Message);
+            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
         }
 
     }

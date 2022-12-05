@@ -35,7 +35,7 @@ namespace Dal;
                 OrderList.RemoveAt(index);
             }
             else
-                throw new DalDoesNotExistException("order is not exist");
+                throw new DalDoesNotExistException(id,"order");
 
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace Dal;
             if (index != -1)
                 OrderList[index] = order;
             else
-                throw new DalDoesNotExistException("order is not exist");
+                throw new DalDoesNotExistException(order.ID,"order");
 
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace Dal;
             if (index != -1)
                 return OrderList[index];
             else
-                throw new DalDoesNotExistException("order is not exist");
+                throw new DalDoesNotExistException(id,"order");
         }
         /// <summary>
         /// get all the orders

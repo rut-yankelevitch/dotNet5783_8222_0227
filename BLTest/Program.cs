@@ -132,6 +132,28 @@ namespace BLTest
                         break;
                 }
             }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLAlreadyExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLMistakeUpdateException ex)
+            {
+                Console.WriteLine(ex);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -150,7 +172,7 @@ namespace BLTest
             Order order = new Order();
             OrderItem orderItem= new OrderItem();
            OrderTracking orderTracking = new OrderTracking();   
-            List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();   
+            List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();
             try
             {
                 switch (orderOptions)
@@ -165,16 +187,16 @@ namespace BLTest
                     case OrderOptions.GET_ALL:
                         IEnumerable<BO.OrderForList> orders = new List<BO.OrderForList>();
                         orders = iBl.Order.GetOrderList();
-                        foreach(BO.OrderForList o in orders)
+                        foreach (BO.OrderForList o in orders)
                         {
                             Console.WriteLine(o);
                         }
                         break;
                     case OrderOptions.UPDATE_SHIPPING_ORDER:
                         Console.WriteLine("Enter id order:");
-                        readString= Console.ReadLine();
-                        int.TryParse(readString,out orderId);   
-                        order=iBl.Order.UpdateSendOrderByManager(orderId);
+                        readString = Console.ReadLine();
+                        int.TryParse(readString, out orderId);
+                        order = iBl.Order.UpdateSendOrderByManager(orderId);
                         Console.WriteLine(order);
                         break;
                     case OrderOptions.UPDATE_DELIVERY_ORDER:
@@ -202,12 +224,34 @@ namespace BLTest
                         Console.WriteLine("Enter amount of product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        orderItem = iBl.Order.UpdateAmountOfOProductInOrder(orderId,productId,readInt);
+                        orderItem = iBl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
                         break;
                     default:
                         break;
                 }
 
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLAlreadyExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLMistakeUpdateException ex)
+            {
+                Console.WriteLine(ex);
             }
             catch (Exception ex)
             {
@@ -225,9 +269,9 @@ namespace BLTest
             Console.WriteLine("cart menu: \n 1- add \n 2- update  \n 3- make order ");
             readString = Console.ReadLine();
             CartOptions cartOptions = (CartOptions)int.Parse(readString);
-            string name;
-            string email;
-            string address;
+            currentCart.CustomerName="david coen";
+            currentCart.CustomerEmail="davidcoen@gmail.com";
+            currentCart.CustomerAddress="micael 15 petach tikva";
             Order order = new Order();
             try
             {
@@ -251,21 +295,34 @@ namespace BLTest
                         Console.WriteLine(currentCart);
                         break;
                     case CartOptions.MAKE_ORDER:
-                        Console.WriteLine("Enter your name: ");
-                        name = Console.ReadLine();
-                        currentCart.CustomerName = name;
-                        Console.WriteLine("Enter your email:");
-                        email = Console.ReadLine();
-                        currentCart.CustomerEmail = email;
-                        Console.WriteLine("Enter your address:");
-                        address = Console.ReadLine();
-                        currentCart.CustomerAddress = address;
-                        iBl.cart.MakeOrder(currentCart, name, email, address);
+                        iBl.cart.MakeOrder(currentCart);
                         currentCart=new Cart();
                         break;
                     default:
                         break;
                 }
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLAlreadyExistException ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.InnerException?.ToString());
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (BO.BLMistakeUpdateException ex)
+            {
+                Console.WriteLine(ex);
             }
             catch (Exception ex)
             {

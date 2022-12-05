@@ -6,25 +6,37 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class AlreadyExistException : Exception
-    {
-        public AlreadyExistException(string? message) : base(message) { }
-    }
-    public class MistakeUpdateException : Exception
-    {
-        public MistakeUpdateException(string? message) : base(message) { }
+
+ [Serializable]
+public class BLDoesNotExistException:Exception
+{
+    public BLDoesNotExistException(string message, Exception innerException):base(message,innerException) 
+    { }
+
+    public override string ToString()=> base.ToString()+$"Entity is not exist";
+}
+
+[Serializable]
+public class BLAlreadyExistException : Exception
+{
+        public BLAlreadyExistException(string message, Exception innerException) : base(message, innerException)
+        { }
+
+        public override string ToString() => base.ToString() + $"Entity is already exist";
     }
 
-    public class InvalidInputException : Exception
+    public class BLMistakeUpdateException : Exception
     {
-        public InvalidInputException(string? message) : base(message) { }
+        public BLMistakeUpdateException(string? message) : base(message) { }
     }
-    public class NotExistException : Exception
+
+    public class BLInvalidInputException : Exception
     {
-        public NotExistException(string? message) : base(message) { }
+        public BLInvalidInputException(string? message) : base(message) { }
     }
-    public class ImpossibleActionException : Exception
+
+    public class BLImpossibleActionException : Exception
     {
-        public ImpossibleActionException(string? message) : base(message) { }
+        public BLImpossibleActionException(string? message) : base(message) { }
 }
 }

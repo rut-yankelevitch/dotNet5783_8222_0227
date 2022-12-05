@@ -16,7 +16,7 @@ internal class ProductDal:IProduct
         foreach (Product p in ProductList)
         {
             if (p.ID == product.ID)
-                throw new DalAlreadyExistException("product id already exists");
+                throw new DalAlreadyExistException(product.ID,"product");
         }
 
         ProductList.Add(product);
@@ -35,7 +35,7 @@ internal class ProductDal:IProduct
             ProductList.RemoveAt(index);
         }
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DalDoesNotExistException(id,"product");
     }
     /// <summary>
     /// update a product
@@ -48,7 +48,7 @@ internal class ProductDal:IProduct
         if (index != -1)
             ProductList[index] = product;
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DalDoesNotExistException(product.ID,"product");
 
     }
     /// <summary>
@@ -64,7 +64,7 @@ internal class ProductDal:IProduct
         if (index != -1)
             return ProductList[index];
         else
-            throw new DalDoesNotExistException("product is not exist");
+            throw new DalDoesNotExistException(id,"product");
     }
     /// <summary>
     /// get all products

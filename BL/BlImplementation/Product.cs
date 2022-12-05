@@ -46,9 +46,9 @@ internal class Product :IProduct
             product1.InStock=product.InStock;   
             return product1;
         }
-        catch (Exception msg)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(msg.Message);
+            throw new BO.BLDoesNotExistException ("product does not exist",ex);
         }
 
     }
@@ -58,7 +58,7 @@ internal class Product :IProduct
         {
             if (product.ID <1 ||product.Name == "" || product.Price <1  || product.InStock < 0|| (int)product.Category>5||(int)product.Category<0)
             {
-                throw new BO.InvalidInputException(" Invalid input");
+                throw new BO.BLInvalidInputException("Invalid input");
             }
             DO.Product product1 = new DO.Product();
             product1.ID = product.ID;
@@ -69,9 +69,9 @@ internal class Product :IProduct
             dal.Product.Add(product1);
             return product;
         }
-        catch(Exception exce)
+        catch(DO.DalAlreadyExistException ex)
         {
-            throw new BO.AlreadyExistException(exce.Message);
+            throw new BO.BLAlreadyExistException("product already exist",ex);
         }
     }
     public void DeleteProduct(int id)
@@ -83,31 +83,22 @@ internal class Product :IProduct
             {
                 if (orderItem.ProductID == id)
                 {
-                    throw new BO.ImpossibleActionException("product exist in order");
+                    throw new BO.BLImpossibleActionException("product exist in order");
                 }
             }
             dal.Product.Delete(id);
         }
-        catch (Exception exce)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(exce.Message);
+            throw new BO.BLDoesNotExistException("prouct does not exist",ex);
         }
-        //IEnumerable<DO.Order> orders = dal.Order.GetAll();
-        //int orderID;
-        //DO.OrderItem item;
-        //foreach (DO.Order order in orders)
-        //{
-        //    orderID = order.ID;
-        //    item= dal.OrderItem.GetById(orderID); 
-        //}
-        //throw new BO.AlreadyExistException("product exsit");
     }
     public BO.Product UpdateProduct(BO.Product product)
     {
         try
         {
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
-                throw new BO.InvalidInputException(" Invalid input");
+                throw new BO.BLInvalidInputException(" Invalid input");
             {
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;   
@@ -120,16 +111,15 @@ internal class Product :IProduct
 
             return product;
         }
-        catch (Exception exce)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.NotExistException(exce.Message);
+            throw new BO.BLDoesNotExistException("product does not exist",ex);
         }
 
     }
     public IEnumerable<BO.ProductItem> GetProductListForCustomer() 
     {
-        try
-        {
+
             
             IEnumerable<DO.Product> products = dal.Product.GetAll();
             List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
@@ -153,21 +143,23 @@ internal class Product :IProduct
                 productsItems.Add(productItem);
             }
             return productsItems;
-        }
+        
 
-        catch (Exception exce)
-        {
-            throw new BO.NotExistException(exce.Message);
-        }
       
     }
     public BO.ProductItem GetProductByIdForCustomer(int id)
     {
-        try
-        {
+
             BO.ProductItem productItem = new BO.ProductItem();
             DO.Product product1= new DO.Product();
-            product1 = dal.Product.GetById(id);
+            try
+            {
+                product1 = dal.Product.GetById(id);
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BO.BLDoesNotExistException("product does not exist", ex);
+            }
             productItem.ID = product1.ID;
             productItem.Name = product1.Name;
             productItem.Price = product1.Price;
@@ -180,9 +172,5 @@ internal class Product :IProduct
             return productItem;
         }
 
-        catch(Exception exce)
-        {
-            throw new BO.NotExistException(exce.Message);
-        }
     }
-}
+
