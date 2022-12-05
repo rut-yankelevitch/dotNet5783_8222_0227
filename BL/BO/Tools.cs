@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace BO
 {
+    /// <summary>
+    /// class for exteonsion method
+    /// </summary>
     static class Tools
     {
+        /// <summary>
+        /// A method that prints attributes of entities
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns>string</returns>
         public static string ToStringProperty<T>(this T t)
         {
 
@@ -32,13 +39,6 @@ namespace BO
             }
             return str;
         }
-    //    public static AutoMapper()
-    //{
-    //    var config = new MapperConfiguration(cfg => cfg.CreateMap<UserEntity, UserDTO>());
-    //    var mapper = config.CreateMapper();
-    //    UserDTO userDTO = mapper.Map<UserDTO>(user);
-
-    //}
     }
 
 }

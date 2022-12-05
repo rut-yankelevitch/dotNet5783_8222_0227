@@ -7,6 +7,9 @@ using DO;
 
 namespace BO
 {
+    /// <summary>
+    /// A class for a logical entity:product item
+    /// </summary>
     public class ProductItem
     {
         public int ID { get; set; }

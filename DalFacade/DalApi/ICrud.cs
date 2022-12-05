@@ -7,7 +7,6 @@ public interface ICrud<T>
 	public void Update(T obj);
 	public void Delete(int id);
 	public T GetById(int id);
-	//לשאול
     public IEnumerable<T> GetAll() ;
 	
 

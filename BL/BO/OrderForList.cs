@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// A class for a logical entity:order for list
+    /// </summary>
     public class OrderForList
     {
         public int ID { get; set; } 

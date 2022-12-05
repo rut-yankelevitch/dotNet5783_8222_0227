@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// A class for enums
+    /// </summary>
 
-        public enum Category
+    public enum Category
         {
             VACUUM_CLEANER, COFFEE_MACHINE, TOASTER, IRON, MIXER, BLENDER
         }
