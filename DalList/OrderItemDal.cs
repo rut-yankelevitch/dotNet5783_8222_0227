@@ -20,10 +20,10 @@ internal class OrderItemDal:IOrderItem
     public int Add(OrderItem orderItem)
     {
         int i;
-        for (i = 0; i <OrderList.Count && OrderList[i].ID != orderItem.OrderID; i++) ;
+        for (i = 0; i <OrderList.Count && OrderList[i]?.ID != orderItem.OrderID; i++) ;
         if (i == OrderList.Count)
             throw new DalDoesNotExistException(orderItem.OrderID,"order");
-        for (i = 0; i <ProductList.Count && ProductList[i].ID != orderItem.ProductID; i++) ;
+        for (i = 0; i <ProductList.Count && ProductList[i]?.ID != orderItem.ProductID; i++) ;
         if (i == ProductList.Count)
             throw new DalDoesNotExistException(orderItem.ProductID,"product");
         orderItem.ID = IDOrderItem;
@@ -73,7 +73,8 @@ internal class OrderItemDal:IOrderItem
     {
         int index = search(id);
         if (index != -1)
-            return OrderItemList[index];
+            //??
+            return (OrderItem)OrderItemList[index];
         else
             throw new DalDoesNotExistException(id,"OrderItem");
     }
@@ -82,7 +83,7 @@ internal class OrderItemDal:IOrderItem
     /// </summary>
     /// <returns>an array of all the order items</returns>
 
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? predicate)
     {
         List<OrderItem> orderItems = new List<OrderItem>();
         foreach (OrderItem orderItem in OrderItemList)
@@ -100,7 +101,7 @@ internal class OrderItemDal:IOrderItem
     {
         for (int i = 0; i <OrderItemList.Count; i++)
         {
-            if (OrderItemList[i].ID == id)
+            if (OrderItemList[i]?.ID == id)
                 return i;
         }
         return -1;
@@ -131,7 +132,7 @@ internal class OrderItemDal:IOrderItem
     /// <param name="orderId">the order id</param>
     /// <returns>an array of order items</returns>
     /// <exception cref="Exception">if the order is not exist</exception>
-    public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId)
+    public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId, Func<OrderItem, bool>? predicate)
     {
         List<OrderItem> orderItems = new List<OrderItem>();
         bool flag = false;

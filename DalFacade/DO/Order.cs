@@ -33,17 +33,17 @@ public struct Order
     /// the create order date
     /// </summary>
 
-    public DateTime OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
     /// <summary>
     /// the shipping date
     /// </summary>
 
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
     /// <summary>
     /// the delivery date
     /// </summary>
 
-    public DateTime DeliveryrDate { get; set; }
+    public DateTime? DeliveryrDate { get; set; }
     /// <summary>
     /// to string function to the order struct
     /// </summary>

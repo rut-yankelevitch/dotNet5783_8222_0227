@@ -16,7 +16,8 @@ public struct Product
     /// the category of the product
     /// </summary>
 
-    public Category Category{ get; set; }
+    //זה נכון לעשות ?
+    public Category? Category{ get; set; }
     /// <summary>
     /// price per unit
     /// </summary>

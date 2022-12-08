@@ -16,7 +16,7 @@ namespace BlApi
         /// Definition of a function that returns a list of all products for the manager
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductForList> GetProductListForManager();
+        public IEnumerable<ProductForList?> GetProductListForManager();
         /// <summary>
         /// Definition of a function that returns a product by id for the manager
         /// </summary>
@@ -44,7 +44,7 @@ namespace BlApi
         /// Definition of a function that returns a list of all products for the customer
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductItem> GetProductListForCustomer();
+        public IEnumerable<ProductItem?> GetProductListForCustomer();
         /// <summary>
         /// Definition of a function that returns a product by id for the customer
         /// </summary>

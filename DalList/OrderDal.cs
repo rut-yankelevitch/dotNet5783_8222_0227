@@ -64,16 +64,15 @@ namespace Dal;
         {
             int index = search(id);
             if (index != -1)
-                return OrderList[index];
+                return (Order)OrderList[index];
             else
                 throw new DalDoesNotExistException(id,"order");
         }
-        /// <summary>
-        /// get all the orders
-        /// </summary>
-        /// <returns>an array of orders</returns>
-
-        public IEnumerable<Order> GetAll()
+    /// <summary>
+    /// get all the orders
+    /// </summary>
+    /// <returns>an array of orders</returns>
+        public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
         {
             List<Order> orders = new List<Order>();
             foreach(Order order in OrderList)
@@ -90,7 +89,7 @@ namespace Dal;
         {
             for (int i = 0; i < OrderList.Count; i++)
             {
-                if (OrderList[i].ID == id)
+                if (OrderList[i]?.ID == id)
                     return i;
             }
             return -1;

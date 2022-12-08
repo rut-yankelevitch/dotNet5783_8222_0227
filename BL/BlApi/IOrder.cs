@@ -15,7 +15,7 @@ namespace BlApi
         /// Definition of a function that returns all orders
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<OrderForList> GetOrderList();
+        public IEnumerable<OrderForList?> GetOrderList();
         /// <summary>
         /// Definition of a function that returns order by id
         /// </summary>

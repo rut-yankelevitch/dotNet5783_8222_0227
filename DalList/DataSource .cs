@@ -9,14 +9,14 @@ static class DataSource
     private const int startOrderItemId = 0;
 
     private static int idOrder = startOrderId;
-        internal static int IDOrder { get => ++idOrder; }
-        private static int idOrderItem = startOrderItemId;
-        internal static int IDOrderItem { get => ++idOrderItem; }
+    internal static int IDOrder { get => ++idOrder; }
+    private static int idOrderItem = startOrderItemId;
+    internal static int IDOrderItem { get => ++idOrderItem; }
 
 
-    internal static List<Product> ProductList = new List<Product>();
-    internal static List<Order> OrderList = new List<Order>();
-    internal static List<OrderItem> OrderItemList = new List<OrderItem>();
+    internal static List<Product?> ProductList=new List<Product?>();
+    internal static List<Order?> OrderList =new List<Order?>();
+    internal static List<OrderItem?> OrderItemList = new List<OrderItem?>();
 
 
 
@@ -91,7 +91,7 @@ static class DataSource
             double price2= new double();
             foreach (Product p in ProductList)
             {
-                if (p.ID == ProductList[randA].ID)
+                if (p.ID == ProductList[randA]?.ID)
                 {
                     price = p.Price;
                     break;
@@ -103,14 +103,15 @@ static class DataSource
             while (randA == randB);
             foreach (Product p in ProductList)
             {
-                if (p.ID == ProductList[randB].ID)
+                if (p.ID == ProductList[randB]?.ID)
                 {
                     price2 = p.Price;
                     break;
                 }
             }
-            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = ProductList[randA].ID, Price = price , Amount = randNum.Next(1, 5) }) ;
-            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = ProductList[randB].ID, Price = price2, Amount = randNum.Next(1, 5) });
+            //?
+            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = (int)ProductList[randA]?.ID, Price = price , Amount = randNum.Next(1, 5) }) ;
+            OrderItemList.Add(new OrderItem { ID = IDOrderItem, OrderID = o.ID, ProductID = (int)ProductList[randB]?.ID, Price = price2, Amount = randNum.Next(1, 5) });
 
         }
 

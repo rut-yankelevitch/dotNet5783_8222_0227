@@ -31,7 +31,8 @@ public interface ICrud<T>
     /// A function that defines returning a list of data entities
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<T> GetAll() ;
+    public IEnumerable<T?> GetAll(Func<T?,bool>?predicate) ;
+    
 	
 
 }

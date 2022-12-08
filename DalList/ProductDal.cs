@@ -62,7 +62,7 @@ internal class ProductDal:IProduct
     {
         int index = search(id);
         if (index != -1)
-            return ProductList[index];
+            return (Product)ProductList[index];
         else
             throw new DalDoesNotExistException(id,"product");
     }
@@ -70,7 +70,7 @@ internal class ProductDal:IProduct
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product> GetAll(Func<Product, bool>? predicate)
     {
         List<Product> products = new List<Product>();
         foreach (Product product in ProductList)
@@ -87,7 +87,7 @@ internal class ProductDal:IProduct
     {
         for (int i = 0; i < ProductList.Count; i++)
         {
-            if (ProductList[i].ID == id)
+            if (ProductList[i]?.ID == id)
                 return i;
         }
         return -1;
