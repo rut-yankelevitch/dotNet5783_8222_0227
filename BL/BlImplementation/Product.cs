@@ -37,7 +37,7 @@ internal class Product : IProduct
     {
         try
         {
-            DO.Product product = dal.Product.GetById(id);
+            DO.Product product = dal.Product.GetByCondition(product2=>product2.ID==id);
             BO.Product product1 = new BO.Product();
             product1.ID = product.ID;
             product1.Name = product.Name;
@@ -175,7 +175,7 @@ internal class Product : IProduct
         DO.Product product1 = new DO.Product();
         try
         {
-            product1 = dal.Product.GetById(id);
+            product1 = dal.Product.GetByCondition(product2=>product2.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {

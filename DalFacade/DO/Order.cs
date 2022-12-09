@@ -18,22 +18,22 @@ public struct Order
     /// the name of the ordering
     /// </summary>
 
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     /// the email of the client
     /// </summary>
 
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     /// mailing adress 
     /// </summary>
 
-    public string CustomerAdress { get; set; }
+    public string? CustomerAdress { get; set; }
     /// <summary>
     /// the create order date
     /// </summary>
 
-    public DateTime? OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; } 
     /// <summary>
     /// the shipping date
     /// </summary>

@@ -57,25 +57,42 @@ internal class ProductDal:IProduct
     /// <param name="id">the id of the requeses product</param>
     /// <returns>the product</returns>
     /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
+    //***********************************************************************************************
+    //public Product GetById(int id)
+    //{
+    //    int index = search(id);
+    //    if (index != -1)
+    //        return (Product)ProductList[index];
+    //    else
+    //        throw new DalDoesNotExistException(id, "product");
+    //}
+    //********************************************************************************************
 
-    public Product GetById(int id)
-    {
-        int index = search(id);
-        if (index != -1)
-            return (Product)ProductList[index];
-        else
-            throw new DalDoesNotExistException(id,"product");
-    }
+
+
     /// <summary>
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>
-    public IEnumerable<Product> GetAll(Func<Product, bool>? predicate)
+    public IEnumerable<Product> GetAll(Func<Product, bool>? predicate=null)
     {
         List<Product> products = new List<Product>();
-        foreach (Product product in ProductList)
+        if (predicate != null)
         {
-            products.Add(product);
+            foreach (Product product in ProductList)
+            {
+                if (predicate(product))
+                {
+                    products.Add(product);
+                }
+            }
+        }
+        else
+        {
+            foreach (Product product in ProductList)
+            {
+                products.Add(product);
+            }
         }
         return products;
     }
@@ -91,5 +108,14 @@ internal class ProductDal:IProduct
                 return i;
         }
         return -1;
+    }
+    public Product GetByCondition(Func<Product, bool>? predicate)
+    {
+        foreach (Product product in ProductList)
+        {
+            if (predicate(product))
+                return product;
+        }
+        throw new DalDoesNotExistException("There is no product that meets the condition");
     }
 }

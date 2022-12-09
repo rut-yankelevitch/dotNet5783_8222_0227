@@ -64,9 +64,9 @@ static class DataSource
                 helpE = new DateTime(randNum.Next(2022, 2023), randNum.Next(1, 13), randNum.Next(1, 29), randNum.Next(24), randNum.Next(60), randNum.Next(60));
             }
             while (helpE >= DateTime.Now);
-            DateTime OrderDate1 = helpE;
-            DateTime ShipDate1 = new DateTime ();
-            DateTime DeliveryrDate1 = new DateTime();
+            DateTime? OrderDate1 = helpE;
+            DateTime? ShipDate1 =null;
+            DateTime? DeliveryrDate1 =null;
             if (i < 16)
             {
                 helpC = new TimeSpan(randNum.Next(10,370), 0, 0, 0, 0);

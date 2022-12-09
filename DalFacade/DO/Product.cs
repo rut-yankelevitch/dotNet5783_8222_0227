@@ -11,7 +11,7 @@ public struct Product
     /// <summary>
     /// Name of Product
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     /// <summary>
     /// the category of the product
     /// </summary>
