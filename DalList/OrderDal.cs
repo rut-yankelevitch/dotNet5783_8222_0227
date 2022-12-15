@@ -1,9 +1,9 @@
 ﻿using DO;
-using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
 
 namespace Dal;
+
 /// <summary>
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the order array
@@ -21,12 +21,13 @@ internal class OrderDal : IOrder
         OrderList.Add(order);
         return order.ID;
     }
+
+
     /// <summary>
     /// delete an order
     /// </summary>
     /// <param name="id">the id of the order</param>
     /// <exception cref="Exception">if the order didnt exist</exception>
-
     public void Delete(int id)
     {
         int index = search(id);
@@ -36,14 +37,14 @@ internal class OrderDal : IOrder
         }
         else
             throw new DalDoesNotExistException(id, "order");
-
     }
+
+
     /// <summary>
     /// update an order
     /// </summary>
     /// <param name="order">the updated order details</param>
     /// <exception cref="Exception">if the order doesnt exist</exception>
-
     public void Update(Order order)
     {
         int index = search(order.ID);
@@ -51,8 +52,9 @@ internal class OrderDal : IOrder
             OrderList[index] = order;
         else
             throw new DalDoesNotExistException(order.ID, "order");
-
     }
+
+
     /// <summary>
     /// get order by id
     /// </summary>
@@ -60,8 +62,6 @@ internal class OrderDal : IOrder
     /// <returns>the order</returns>
     /// <exception cref="Exception">if the order doesnt exist</exception>
     /// 
-
-
     //************************************************************************************************
     //public Order GetById(int id)
     //{
@@ -72,7 +72,6 @@ internal class OrderDal : IOrder
     //        throw new DalDoesNotExistException(id, "order");
     //}
     //*********************************************************************************************
-
 
 
     /// <summary>
@@ -89,6 +88,23 @@ internal class OrderDal : IOrder
         }
         return orders;
     }
+
+
+    /// <summary>
+    /// get order by codition
+    /// </summary>
+    /// <returns>the order</returns>
+    public Order GetByCondition(Func<Order, bool>? predicate)
+    {
+    foreach(Order order in OrderList)
+        {
+            if (predicate(order))
+                return order;
+        }
+        throw new DalDoesNotExistException("There is no order that meets the condition");
+    }
+
+
     /// <summary>
     ///search function
     /// </summary>
@@ -102,16 +118,6 @@ internal class OrderDal : IOrder
         }
         return -1;
     }
-    public Order GetByCondition(Func<Order, bool>? predicate)
-    {
-    foreach(Order order in OrderList)
-        {
-            if (predicate(order))
-                return order;
-        }
-        throw new DalDoesNotExistException("There is no order that meets the condition");
-    }
-
 }
 
 
