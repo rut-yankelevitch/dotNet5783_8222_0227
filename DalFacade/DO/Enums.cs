@@ -7,6 +7,6 @@ namespace DO;
 
 public enum Category
 { 
-    VACUUM_CLEANER, COFFEE_MACHINE, TOASTER, IRON, MIXER, BLENDER 
+    VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender 
 }
 

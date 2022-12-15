@@ -26,12 +26,13 @@ public interface ICrud<T>
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public T GetById(int id);
+    //public T GetById(int id);
     /// <summary>
     /// A function that defines returning a list of data entities
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<T?> GetAll(Func<T?,bool>?predicate) ;
+    public IEnumerable<T?> GetAll(Func<T?,bool>?predicate=null) ;
+    public T GetByCondition(Func<T?, bool>? predicate);
     
 	
 
