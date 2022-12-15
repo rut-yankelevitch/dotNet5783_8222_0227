@@ -1,4 +1,7 @@
 ﻿using DalApi;
+using System.Collections.Generic;
+using BO;
+
 namespace BlImplementation;
 
 /// <summary>
@@ -21,10 +24,12 @@ internal class Order : BlApi.IOrder
             IEnumerable<DO.Order> orders = dal.Order.GetAll();
             double totalPrice = 0;
             int amount = 0;
+
             foreach (DO.Order order in orders)
             {
                 BO.OrderForList orderForList = new BO.OrderForList();
                 IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAll(orderitem2=>orderitem2.OrderID==order.ID);
+
 
                 foreach (DO.OrderItem item in orderitems)
                 {
@@ -71,6 +76,8 @@ internal class Order : BlApi.IOrder
         DO.Order orderDal = new DO.Order();
         List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
         IEnumerable<DO.OrderItem> orderitemsDal;
+        double totalPrice = 0;
+
         try
         {
             orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
@@ -88,7 +95,6 @@ internal class Order : BlApi.IOrder
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
 
-        double totalPrice = 0;
 
         foreach (DO.OrderItem item in orderitemsDal)
         {
@@ -151,7 +157,6 @@ internal class Order : BlApi.IOrder
 
         List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
         IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
-
         try
         {
             orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
@@ -167,7 +172,6 @@ internal class Order : BlApi.IOrder
         {
             if (orderDal.ShipDate == null)
                 throw new BO.BLMistakeUpdateException("No shipping date");
-            orderDal.ShipDate = DateTime.Now;
             try
             {
                 dal.Order.Update(orderDal);
@@ -325,6 +329,11 @@ internal class Order : BlApi.IOrder
     {
         DO.Order order = new DO.Order();
         BO.OrderTracking orderTracking = new BO.OrderTracking();
+        List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
+            {
+                new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
+             };
+
         try
         {
             order = dal.Order.GetByCondition(order2=>order2.ID==id);
@@ -345,9 +354,10 @@ internal class Order : BlApi.IOrder
                 orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
         List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
-        {
-            new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
-        };
+            {
+                new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
+             };
+
 
         if (order.ShipDate != null)
         {
@@ -375,6 +385,8 @@ internal class Order : BlApi.IOrder
     /// <exception cref="Exception"></exception>
     public BO.OrderItem UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount)
     {
+        DO.Product product = new DO.Product();
+        BO.OrderItem orderItem = new BO.OrderItem();
         DO.OrderItem item = new DO.OrderItem();
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();

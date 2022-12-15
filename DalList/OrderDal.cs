@@ -79,21 +79,10 @@ internal class OrderDal : IOrder
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
-    public IEnumerable<Order> GetAll(Func<Order, bool>? predicate=null)
-    {
-        List<Order> orders = new List<Order>();
-        if (predicate != null)
+        public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
         {
-
-            foreach (Order order in OrderList)
-            {
-                if (predicate(order))
-                    orders.Add(order);
-            }
-        }
-        else
-        {
-            foreach (Order order in OrderList)
+            List<Order> orders = new List<Order>();
+            foreach(Order order in OrderList)
             {
                 orders.Add(order);
             }

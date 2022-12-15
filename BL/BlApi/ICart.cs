@@ -27,6 +27,7 @@ namespace BlApi
         /// <param name="idProduct"></param>
         /// <param name="amount"></param>
         /// <returns>cart</returns>
+         
         public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount);
 
         /// <summary>
