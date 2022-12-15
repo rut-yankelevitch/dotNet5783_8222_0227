@@ -12,6 +12,7 @@ namespace BlImplementation;
 internal class Order : BlApi.IOrder
 {
     private IDal dal = new DalList.DalList();
+
     /// <summary>
     /// function that returns all orders
     /// </summary>
@@ -44,13 +45,13 @@ internal class Order : BlApi.IOrder
 
 
                 if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
-                    orderForList.Status = BO.OrderStatus.PROVIDED_ORDER;
+                    orderForList.Status = BO.OrderStatus.ProvidedOrder;
                 else
                 {
                     if (order.ShipDate != null&&order.ShipDate < DateTime.Now)
-                        orderForList.Status = BO.OrderStatus.SEND_ORDER;
+                        orderForList.Status = BO.OrderStatus.SendOrder;
                     else
-                        orderForList.Status = BO.OrderStatus.CONFIRMED_ORDER;
+                        orderForList.Status = BO.OrderStatus.ConfirmedOrder;
                 }
                 ordersForList.Add(orderForList);
             }
@@ -62,6 +63,8 @@ internal class Order : BlApi.IOrder
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
     }
+
+
     /// <summary>
     /// function that returns order by id
     /// </summary>
@@ -126,19 +129,21 @@ internal class Order : BlApi.IOrder
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
         if (orderDal.DeliveryrDate != null&&orderDal.DeliveryrDate < DateTime.Now)
-            order.Status = BO.OrderStatus.PROVIDED_ORDER;
+            order.Status = BO.OrderStatus.ProvidedOrder;
         else
         {
             if (orderDal.ShipDate != null&&order.ShipDate < DateTime.Now)
-                order.Status = BO.OrderStatus.SEND_ORDER;
+                order.Status = BO.OrderStatus.SendOrder;
             else
-                order.Status = BO.OrderStatus.CONFIRMED_ORDER;
+                order.Status = BO.OrderStatus.ConfirmedOrder;
         }
         return order;
 
 
 
     }
+
+
     /// <summary>
     /// function that update the send order
     /// </summary>
@@ -219,9 +224,11 @@ internal class Order : BlApi.IOrder
         order.DeliveryDate = orderDal.DeliveryrDate;
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
-        order.Status = BO.OrderStatus.SEND_ORDER;
+        order.Status = BO.OrderStatus.SendOrder;
         return order;
     }
+
+
     /// <summary>
     ///  function that update the supply order
     /// </summary>
@@ -306,10 +313,11 @@ internal class Order : BlApi.IOrder
         order.DeliveryDate = orderDal.DeliveryrDate;
         order.TotalPrice = totalPrice;
         order.Items = orderitems;
-        order.Status = BO.OrderStatus.PROVIDED_ORDER;
+        order.Status = BO.OrderStatus.ProvidedOrder;
         return order;
-
     }
+
+
     /// <summary>
     /// function that tracks the order
     /// </summary>
@@ -330,13 +338,13 @@ internal class Order : BlApi.IOrder
         }
         orderTracking.ID = order.ID;
         if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
-            orderTracking.Status = BO.OrderStatus.PROVIDED_ORDER;
+            orderTracking.Status = BO.OrderStatus.ProvidedOrder;
         else
         {
             if (order.ShipDate != null&&order.ShipDate < DateTime.Now)
-                orderTracking.Status = BO.OrderStatus.SEND_ORDER;
+                orderTracking.Status = BO.OrderStatus.SendOrder;
             else
-                orderTracking.Status = BO.OrderStatus.CONFIRMED_ORDER;
+                orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
         List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
             {
@@ -356,6 +364,8 @@ internal class Order : BlApi.IOrder
         return orderTracking;
 
     }
+
+
     /// <summary>
     /// Bonus:function that updates the quantity of a product in the order
     /// </summary>

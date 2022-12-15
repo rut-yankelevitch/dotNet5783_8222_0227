@@ -15,10 +15,13 @@ public interface IDal
     /// A property that returns the IOrder entity
     /// </summary>
     public IOrder Order { get;}
+
     /// <summary>
     /// A property that returns the IOrderItem entity
     /// </summary>
+    /// 
     public IOrderItem OrderItem { get;}
+
     /// <summary>
     /// A property that returns the IProduct entity
     /// </summary>

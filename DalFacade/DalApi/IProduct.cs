@@ -6,6 +6,5 @@ namespace DalApi;
 /// </summary>
 public interface IProduct:ICrud<Product>
     {
-
     }
 

@@ -22,6 +22,7 @@ internal class ProductDal:IProduct
         ProductList.Add(product);
         return product.ID;
     }
+
     /// <summary>
     /// delete a product 
     /// </summary>
@@ -37,6 +38,7 @@ internal class ProductDal:IProduct
         else
             throw new DalDoesNotExistException(id,"product");
     }
+
     /// <summary>
     /// update a product
     /// </summary>
@@ -51,6 +53,7 @@ internal class ProductDal:IProduct
             throw new DalDoesNotExistException(product.ID,"product");
 
     }
+
     /// <summary>
     /// get product by id
     /// </summary>
@@ -96,6 +99,7 @@ internal class ProductDal:IProduct
         }
         return products;
     }
+
     /// <summary>
     ///search function
     /// </summary>

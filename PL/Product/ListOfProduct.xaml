@@ -6,18 +6,54 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         Title="ListOfProduct" Height="640" Width="800">
-    <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+	<Grid Name="MainGrid">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40*"/>
+			<RowDefinition Height="500*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
 VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-        </Grid>
-    </Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+
+			</Grid.ColumnDefinitions >
+
+		</Grid>
+		<ComboBox x:Name="CategorySelector" Margin="583,5,7,6" RenderTransformOrigin="1.486,0.776" SelectionChanged="ComboBox_SelectionChanged">
+			<ComboBox.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform Angle="-0.413"/>
+					<TranslateTransform X="0.129" Y="-1.632"/>
+				</TransformGroup>
+			</ComboBox.RenderTransform>
+			<ComboBox.Items>
+				<ComboBoxItem Content="VACUUM_CLEANER" />
+				<ComboBoxItem Content="COFFEE_MACHINE" />
+				<ComboBoxItem Content="TOASTER" />
+				<ComboBoxItem Content="IRON" />
+				<ComboBoxItem Content="MIXER" />
+				<ComboBoxItem Content="BLENDER" />
+			</ComboBox.Items>
+		</ComboBox>
+		<Label x:Name="category" Grid.Column="0" FontSize="25" Content="category" HorizontalAlignment="Left" Margin="22,-1,0,575" Width="117" RenderTransformOrigin="0.5,0.5" Background="#00000000" Grid.RowSpan="2">
+			<Label.BorderBrush>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="Black"/>
+					<GradientStop Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}" Offset="1"/>
+				</LinearGradientBrush>
+			</Label.BorderBrush>
+			<Label.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform Angle="0.344"/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</Label.RenderTransform>
+		</Label>
+	</Grid>
 </Window>

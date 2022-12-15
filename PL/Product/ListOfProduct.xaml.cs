@@ -23,5 +23,20 @@ namespace PL.Product
         {
             InitializeComponent();
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonToListOfProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

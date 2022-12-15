@@ -12,10 +12,10 @@ namespace BO
 
     public enum Category
         {
-            VACUUM_CLEANER, COFFEE_MACHINE, TOASTER, IRON, MIXER, BLENDER
+            VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender
         }
         public enum OrderStatus
         {
-         CONFIRMED_ORDER,SEND_ORDER,PROVIDED_ORDER
+         ConfirmedOrder,SendOrder,ProvidedOrder
         }
 }
