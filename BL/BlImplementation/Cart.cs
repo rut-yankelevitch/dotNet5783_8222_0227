@@ -10,6 +10,8 @@ internal class Cart : ICart
     /// A class that implements the icart interface
     /// </summary>
     private IDal dal = new DalList.DalList();
+
+
     /// <summary>
     ///function that adds a product to the cart
     /// </summary>
@@ -40,6 +42,7 @@ internal class Cart : ICart
 
             if (product.InStock <= 0)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
+
             orderItem1.Name = product.Name;
             orderItem1.ProductID = idProduct;
             orderItem1.Amount = 1;
@@ -54,6 +57,8 @@ internal class Cart : ICart
             throw new BO.BLDoesNotExistException("product dosent exsit", ex);
         }
     }
+
+
     /// <summary>
     ///function that update the amount of product in the cart
     /// </summary>
@@ -118,6 +123,8 @@ internal class Cart : ICart
         }
 
     }
+
+
     /// <summary>
     /// function that confirms an order
     /// </summary>

@@ -9,19 +9,21 @@ namespace BLTest
     /// Enum of the main management input options
     /// </summary>
     enum ManagementProgram { EXIT, PRODUCT, ORDER, CART }
+
     /// <summary>
     /// Enum of the product options
     /// </summary>
     enum ProductOptions { ADD = 1, GET_FOR_MANAGER,GET_FOR_CUSTOMER, GET_LIST_FOR_MANAGER, GET_LIST_FOR_CUSTOMER, UPDATE, DELETE }
+    
     /// <summary>
     /// Enum of the order options
     /// </summary>
     enum OrderOptions { GET=1, GET_ALL, UPDATE_SHIPPING_ORDER,UPDATE_DELIVERY_ORDER , ORDER_TRACKING,UPDATE_AMOUNT_OF_PRODUCT_IN_ORDER }
+    
     /// <summary>
     /// Enum of the cart options
     /// </summary>
     enum CartOptions { ADD = 1, UPDATE, MAKE_ORDER }
-
 
     /// <summary>
     /// The class of the main program
@@ -37,6 +39,7 @@ namespace BLTest
         static double readDouble;
         static private IBl iBl = new Bl();
         static private Cart currentCart = new Cart();
+
         /// <summary>
         ///A static private function, that is called by the main program
         ///when the user requests to perform operations on  product 
@@ -151,6 +154,7 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
         /// <summary>
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on  order 
@@ -162,7 +166,7 @@ namespace BLTest
             OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
             Order order = new Order();
             OrderItem orderItem= new OrderItem();
-           OrderTracking orderTracking = new OrderTracking();   
+            OrderTracking orderTracking = new OrderTracking();   
             List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();
             try
             {
@@ -220,7 +224,6 @@ namespace BLTest
                     default:
                         break;
                 }
-
             }
             catch (BO.BLDoesNotExistException ex)
             {
@@ -249,13 +252,13 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
         /// <summary>
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on cart 
         /// </summary>
         private static void CartManagement()
         {
-
             Console.WriteLine("cart menu: \n 1- add \n 2- update  \n 3- make order ");
             readString = Console.ReadLine();
             CartOptions cartOptions = (CartOptions)int.Parse(readString);
@@ -319,12 +322,13 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
             /// <summary>
             /// The main program
             /// </summary>
             /// <param name="args"></param>
             public static void Main(string[] args)
-        {
+            {
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order\n 3-cart");
             string choice = Console.ReadLine();
@@ -350,7 +354,6 @@ namespace BLTest
                 Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order \n 3-cart ");
                 choice = Console.ReadLine();
                 ManagementProgram.TryParse(choice, out managementProgram);
-
             }
         }
     }

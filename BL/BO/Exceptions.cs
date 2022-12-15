@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-
-
-
     /// <summary>
     /// Throws class for non-existent items
     /// </summary>
@@ -21,6 +18,7 @@ namespace BO
         public override string ToString()=> base.ToString()+$"Entity is not exist";
     }
 
+
     /// <summary>
     /// Throws class for items that exist in duplicates
     /// </summary>
@@ -31,6 +29,8 @@ namespace BO
             { }
             public override string ToString() => base.ToString() + $"Entity is already exist";
     }
+
+
     /// <summary>
     /// Throws class for mistake update
     /// </summary>
@@ -38,6 +38,8 @@ namespace BO
     {
         public BLMistakeUpdateException(string? message) : base(message) { }
     }
+
+
     /// <summary>
     /// Throws class for invalid input
     /// </summary>
@@ -45,6 +47,8 @@ namespace BO
     {
         public BLInvalidInputException(string? message) : base(message) { }
     }
+
+
     /// <summary>
     /// Throws class for impossible action
     /// </summary>
