@@ -1,16 +1,20 @@
 ﻿using DO;
-using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
-
-
 namespace Dal;
+
 /// <summary>
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the product array
 /// </summary>
 internal class ProductDal:IProduct
 {
+    /// <summary>
+    /// add a product to the array
+    /// </summary>
+    /// <param name="product">the new product item </param>
+    /// <returns>the id of the new product</returns>
+    /// <exception cref="Exception">if the product does not exist</exception>
     public int Add(Product product)
     {
         foreach (Product p in ProductList)
@@ -18,10 +22,10 @@ internal class ProductDal:IProduct
             if (p.ID == product.ID)
                 throw new DalAlreadyExistException(product.ID,"product");
         }
-
         ProductList.Add(product);
         return product.ID;
     }
+
 
     /// <summary>
     /// delete a product 
@@ -39,6 +43,7 @@ internal class ProductDal:IProduct
             throw new DalDoesNotExistException(id,"product");
     }
 
+
     /// <summary>
     /// update a product
     /// </summary>
@@ -51,8 +56,8 @@ internal class ProductDal:IProduct
             ProductList[index] = product;
         else
             throw new DalDoesNotExistException(product.ID,"product");
-
     }
+
 
     /// <summary>
     /// get product by id
@@ -72,9 +77,8 @@ internal class ProductDal:IProduct
     //********************************************************************************************
 
 
-
     /// <summary>
-    /// get all products
+    /// get all products by codition
     /// </summary>
     /// <returns>an array of all the products</returns>
     public IEnumerable<Product> GetAll(Func<Product, bool>? predicate=null)
@@ -100,6 +104,7 @@ internal class ProductDal:IProduct
         return products;
     }
 
+
     /// <summary>
     ///search function
     /// </summary>
@@ -113,6 +118,12 @@ internal class ProductDal:IProduct
         }
         return -1;
     }
+
+
+    /// <summary>
+    /// get product by codition
+    /// </summary>
+    /// <returns>a product</returns>
     public Product GetByCondition(Func<Product, bool>? predicate)
     {
         foreach (Product product in ProductList)

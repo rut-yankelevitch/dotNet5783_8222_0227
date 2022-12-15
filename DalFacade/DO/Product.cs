@@ -8,25 +8,26 @@ public struct Product
     /// Unique ID of Product
     /// </summary>
     public int ID { get; set; }
+
     /// <summary>
     /// Name of Product
     /// </summary>
     public string? Name { get; set; }
+
     /// <summary>
     /// the category of the product
     /// </summary>
-
     //זה נכון לעשות ?
     public Category? Category{ get; set; }
+
     /// <summary>
     /// price per unit
     /// </summary>
-
     public double Price { get; set; }
+
     /// <summary>
     /// amount available
     /// </summary>
-
     public int InStock { get; set; }
 
     /// <summary>

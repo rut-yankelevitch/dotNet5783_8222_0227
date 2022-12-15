@@ -44,6 +44,7 @@ namespace DO
             }
             return str;
         }
+
         public static void ToStringPropertyToIEnumerable(IEnumerable collection, string str)
         {
             foreach (var item in collection)
@@ -53,5 +54,4 @@ namespace DO
             }
         }
     }
-
 }

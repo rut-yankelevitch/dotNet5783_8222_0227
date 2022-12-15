@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DO;
 
-namespace DO;
+
 /// <summary>
 /// Throws class for non-existent items
 /// </summary>
@@ -24,6 +19,7 @@ public class DalDoesNotExistException:Exception
     { EntityId=id;EntityName=name; }
         public DalDoesNotExistException(string? message):base(message) 
     { }
+
     public override string ToString() 
     {
         if( EntityId==-1)
@@ -33,6 +29,8 @@ public class DalDoesNotExistException:Exception
          return $"id:{EntityId} of type {EntityName} is not exist.";
      }
 }
+
+
 /// <summary>
 /// Throws class for items that exist in duplicates
 /// </summary>
