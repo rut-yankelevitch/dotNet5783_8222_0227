@@ -1,6 +1,5 @@
 ﻿namespace DO;
 
-
 /// <summary>
 /// Throws class for non-existent items
 /// </summary>
@@ -9,6 +8,7 @@ public class DalDoesNotExistException:Exception
 {
     public int EntityId ;
     public string EntityName;
+
     public DalDoesNotExistException(int id, string name):base() 
     { EntityId=id;EntityName=name;}
 
@@ -19,7 +19,6 @@ public class DalDoesNotExistException:Exception
     { EntityId=id;EntityName=name; }
         public DalDoesNotExistException(string? message):base(message) 
     { }
-
     public override string ToString() 
     {
         if( EntityId==-1)

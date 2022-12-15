@@ -1,4 +1,6 @@
 ﻿using DalApi;
+using System.Collections.Generic;
+using BO;
 
 namespace BlImplementation;
 
@@ -26,18 +28,19 @@ internal class Order : BlApi.IOrder
             foreach (DO.Order order in orders)
             {
                 BO.OrderForList orderForList = new BO.OrderForList();
-
                 IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAll(orderitem2=>orderitem2.OrderID==order.ID);
+
+
                 foreach (DO.OrderItem item in orderitems)
                 {
                     totalPrice += item.Amount * item.Price;
                     amount += item.Amount;
                 }
+
                 orderForList.ID = order.ID;
                 orderForList.CustomerName = order.CustomerName;
                 orderForList.AmountOfItems = amount;
                 orderForList.TotalPrice = totalPrice;
-
 
                 if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
                     orderForList.Status = BO.OrderStatus.ProvidedOrder;
@@ -68,7 +71,6 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Order GetOrderById(int id)
     {
-
         BO.Order order = new BO.Order();
         DO.Product product = new DO.Product();
         DO.Order orderDal = new DO.Order();
@@ -115,6 +117,7 @@ internal class Order : BlApi.IOrder
             totalPrice += orderitem.TotalPrice;
 
         }
+
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
         order.CustomerAddress = orderDal.CustomerAdress;
@@ -150,11 +153,10 @@ internal class Order : BlApi.IOrder
         BO.Order order = new BO.Order();
         DO.Product product = new DO.Product();
         DO.Order orderDal = new DO.Order();
-        List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
-        IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
-        orderDal.ShipDate = DateTime.Now;
         double totalPrice = 0;
 
+        List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
+        IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
         try
         {
             orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
@@ -163,6 +165,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order does not exist", ex);
         }
+
         if (orderDal.ShipDate != null&&orderDal.ShipDate < DateTime.Now)
             throw new BO.BLImpossibleActionException("order send");
         else
@@ -195,6 +198,7 @@ internal class Order : BlApi.IOrder
             orderitem.Price = item.Price;
             orderitem.Amount = item.Amount;
             orderitem.TotalPrice = item.Amount * item.Price;
+
             try
             {
                 product = dal.Product.GetByCondition(product2=>product2.ID==orderitem.ProductID);
@@ -209,6 +213,7 @@ internal class Order : BlApi.IOrder
             totalPrice += orderitem.TotalPrice;
 
         }
+
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
         order.CustomerAddress = orderDal.CustomerAdress;
@@ -236,6 +241,7 @@ internal class Order : BlApi.IOrder
         DO.Product product = new DO.Product();
         List<BO.OrderItem> orderitems = new List<BO.OrderItem>();
         DO.Order orderDal = new DO.Order();
+        double totalPrice = 0;
         IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
 
         try
@@ -246,6 +252,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
+
         if (orderDal.DeliveryrDate != null&&orderDal.DeliveryrDate < DateTime.Now)
             throw new BO.BLImpossibleActionException("order Delivery");
         else
@@ -276,7 +283,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
-        double totalPrice = 0;
+
         foreach (DO.OrderItem item in orderitemsDal)
         {
             BO.OrderItem orderitem = new BO.OrderItem();
@@ -296,8 +303,8 @@ internal class Order : BlApi.IOrder
             orderitem.Name = product.Name;
             orderitems.Add(orderitem);
             totalPrice += orderitem.TotalPrice;
-
         }
+
         order.ID = orderDal.ID;
         order.CustomerName = orderDal.CustomerName;
         order.CustomerAddress = orderDal.CustomerAdress;
@@ -335,6 +342,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
+
         orderTracking.ID = order.ID;
         if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
             orderTracking.Status = BO.OrderStatus.ProvidedOrder;
@@ -345,6 +353,12 @@ internal class Order : BlApi.IOrder
             else
                 orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
+        List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
+            {
+                new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
+             };
+
+
         if (order.ShipDate != null)
         {
             tList.Add(new Tuple<DateTime?, string>(order.ShipDate, "the order has been sent"));
@@ -355,7 +369,6 @@ internal class Order : BlApi.IOrder
         }
         orderTracking.Tuples = tList;
         return orderTracking;
-
     }
 
 
@@ -375,6 +388,8 @@ internal class Order : BlApi.IOrder
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
         DO.OrderItem item = new DO.OrderItem();
+        DO.Product product = new DO.Product();
+        BO.OrderItem orderItem = new BO.OrderItem();
         try
         {
             item = dal.OrderItem.GetByCondition(item=>(item.OrderID==idOrder&&item.ProductID==idProduct));
@@ -425,6 +440,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException(" product does not exist", ex);
         }
+
         if (amount == 0)
         {
             try
@@ -437,6 +453,7 @@ internal class Order : BlApi.IOrder
             }
             throw new Exception("The product remove from the order");
         }
+
         orderItem.ID = item.ID;
         orderItem.Amount = amount;
         orderItem.Price = item.Price;

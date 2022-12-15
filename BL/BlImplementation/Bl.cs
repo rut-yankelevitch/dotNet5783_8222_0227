@@ -15,10 +15,12 @@ namespace BlImplementation
         /// A method that returns the Product entity
         /// </summary>
         public IProduct Product =>  new Product();
+
         /// <summary>
         /// A method that returns the order entity
         /// </summary>
         public IOrder Order =>  new Order();
+
         /// <summary>
         /// A method that returns the cart entity
         /// </summary>

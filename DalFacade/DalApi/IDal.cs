@@ -11,7 +11,6 @@ namespace DalApi;
 /// </summary>
 public interface IDal
     {
-
     /// <summary>
     /// A property that returns the IOrder entity
     /// </summary>
@@ -20,7 +19,6 @@ public interface IDal
     /// <summary>
     /// A property that returns the IOrderItem entity
     /// </summary>
-    /// 
     public IOrderItem OrderItem { get;}
 
     /// <summary>

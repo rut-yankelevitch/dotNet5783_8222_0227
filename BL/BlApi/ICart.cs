@@ -29,6 +29,7 @@ namespace BlApi
         /// <returns>cart</returns>
          
         public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount);
+
         /// <summary>
         /// Definition of a function that confirms an order
         /// </summary>

@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿
+/// <summary>
 /// icrud generic interface that defines functions on the data entities
 /// </summary>
 /// <typeparam name="T"></typeparam>
@@ -31,14 +32,17 @@ public interface ICrud<T>
     //public T GetById(int id);
 
     /// <summary>
-    /// A function that defines returning a list of data entities
+    /// A function that defines returning a list of data entities by condition
     /// </summary>
     /// <returns></returns>
     public IEnumerable<T?> GetAll(Func<T?,bool>?predicate=null) ;
 
     /// <summary>
-    /// A function that defines returning a entity
+    /// A function that defines returning aentitie by condition
     /// </summary>
     /// <returns></returns>
     public T GetByCondition(Func<T?, bool>? predicate);
+    
+	
+
 }

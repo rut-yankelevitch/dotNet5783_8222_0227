@@ -21,7 +21,6 @@ namespace DO
         /// <returns>a string describing the entity</returns>
         public static string ToStringProperty<T>(this T t)
         {
-
             string str = "";
             foreach (PropertyInfo item in t.GetType().GetProperties())
             {
@@ -33,7 +32,6 @@ namespace DO
                     foreach (var a in e)
                     {
                         str += a.ToStringProperty();
-
                     }
                 }
                 else
@@ -44,6 +42,7 @@ namespace DO
             }
             return str;
         }
+
 
         public static void ToStringPropertyToIEnumerable(IEnumerable collection, string str)
         {
