@@ -10,10 +10,11 @@ namespace BO
     /// A class for enums
     /// </summary>
 
-    public enum Category
+        public enum Category
         {
             VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender
         }
+
         public enum OrderStatus
         {
          ConfirmedOrder,SendOrder,ProvidedOrder

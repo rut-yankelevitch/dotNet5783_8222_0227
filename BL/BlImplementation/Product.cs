@@ -8,6 +8,7 @@ namespace BlImplementation;
 internal class Product : IProduct
 {
     private IDal dal = new DalList.DalList();
+
     /// <summary>
     /// function that returns a product by id for the manager
     /// </summary>
@@ -27,6 +28,8 @@ internal class Product : IProduct
         }
         return productsForList;
     }
+
+
     /// <summary>
     /// function that returns a product by id for the manager
     /// </summary>
@@ -52,6 +55,8 @@ internal class Product : IProduct
         }
 
     }
+
+
     /// <summary>
     /// function that add a product
     /// </summary>
@@ -81,6 +86,8 @@ internal class Product : IProduct
             throw new BO.BLAlreadyExistException("product already exist", ex);
         }
     }
+
+
     /// <summary>
     /// function that delete a product
     /// </summary>
@@ -106,6 +113,8 @@ internal class Product : IProduct
             throw new BO.BLDoesNotExistException("prouct does not exist", ex);
         }
     }
+
+
     /// <summary>
     /// function that update a product
     /// </summary>
@@ -135,6 +144,8 @@ internal class Product : IProduct
             throw new BO.BLDoesNotExistException("product does not exist", ex);
         }
     }
+
+
     /// <summary>
     /// function that returns a list of all products for the customer
     /// </summary>
@@ -163,6 +174,8 @@ internal class Product : IProduct
         }
         return productsItems;
     }
+
+
     /// <summary>
     /// function that returns a product by id for the customer
     /// </summary>

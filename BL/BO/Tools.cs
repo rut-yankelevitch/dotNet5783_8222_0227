@@ -8,6 +8,7 @@ namespace BO
     /// </summary>
     static class Tools
     {
+
         /// <summary>
         /// A method that prints attributes of entities
         /// </summary>
@@ -16,8 +17,8 @@ namespace BO
         /// <returns>string</returns>
         public static string ToStringProperty<T>(this T t)
         {
-
             string str = "";
+
             foreach (PropertyInfo item in t.GetType().GetProperties())
             {
                 var enumerable = item.GetValue(t, null);
@@ -40,5 +41,4 @@ namespace BO
             return str;
         }
     }
-
 }

@@ -37,19 +37,20 @@ namespace BLTest
         static double readDouble;
         static private IBl iBl = new Bl();
         static private Cart currentCart = new Cart();
+
         /// <summary>
         ///A static private function, that is called by the main program
         ///when the user requests to perform operations on  product 
         /// </summary>
         private static void ProductManagement()
         {
+            BO.Product product = new BO.Product();
+            BO.ProductItem productItem = new BO.ProductItem();
+            IEnumerable<BO.ProductForList> productsForList = new List<BO.ProductForList>();
+            IEnumerable<BO.ProductItem> productsItem = new List<BO.ProductItem>();
             Console.WriteLine("Product menu: \n 1- add \n 2- get for manager \n 3- get for customer \n 4- get list for manager \n 5- get list for customer  \n 6- update \n 7- delete");
             readString = Console.ReadLine();
             ProductOptions productOptions = (ProductOptions)int.Parse(readString);
-            BO.Product product = new BO.Product();
-            BO.ProductItem productItem = new BO.ProductItem();
-            IEnumerable<BO.ProductForList> productsForList= new List<BO.ProductForList>();
-            IEnumerable<BO.ProductItem> productsItem = new List<BO.ProductItem>();
             try
             {
                 switch (productOptions)
@@ -151,19 +152,22 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
+
         /// <summary>
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on  order 
         /// </summary>
         private static void OrdersManagement()
         {
+            Order order = new Order();
+            OrderItem orderItem = new OrderItem();
+            OrderTracking orderTracking = new OrderTracking();
+            List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
             Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
             readString = Console.ReadLine();
             OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
-            Order order = new Order();
-            OrderItem orderItem= new OrderItem();
-           OrderTracking orderTracking = new OrderTracking();   
-            List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();
+
             try
             {
                 switch (orderOptions)
@@ -220,7 +224,6 @@ namespace BLTest
                     default:
                         break;
                 }
-
             }
             catch (BO.BLDoesNotExistException ex)
             {
@@ -249,6 +252,8 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
+
         /// <summary>
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on cart 
@@ -319,6 +324,8 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
+
+
             /// <summary>
             /// The main program
             /// </summary>
