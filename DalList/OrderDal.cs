@@ -74,6 +74,7 @@ namespace Dal;
     /// <returns>an array of orders</returns>
         public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
         {
+
             List<Order> orders = new List<Order>();
             foreach(Order order in OrderList)
             {
