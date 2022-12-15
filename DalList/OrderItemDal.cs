@@ -1,9 +1,9 @@
 ﻿using DO;
+using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
+
 namespace Dal;
-
-
 /// <summary>
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the orderItem array
@@ -22,11 +22,11 @@ internal class OrderItemDal:IOrderItem
         for (i = 0; i <OrderList.Count && OrderList[i]?.ID != orderItem.OrderID; i++) ;
         if (i == OrderList.Count)
             throw new DalDoesNotExistException(orderItem.OrderID,"order");
-        
+
         for (i = 0; i <ProductList.Count && ProductList[i]?.ID != orderItem.ProductID; i++) ;
         if (i == ProductList.Count)
             throw new DalDoesNotExistException(orderItem.ProductID,"product");
-        
+
         orderItem.ID = IDOrderItem;
         OrderItemList.Add(orderItem);
         return orderItem.ID;
@@ -62,6 +62,7 @@ internal class OrderItemDal:IOrderItem
             OrderItemList[index] = orderItem;
         else
             throw new DalDoesNotExistException(orderItem.ID,"orderItem");
+
     }
 
 
@@ -82,16 +83,12 @@ internal class OrderItemDal:IOrderItem
     //    else
     //        throw new DalDoesNotExistException(id,"OrderItem");
     //}
+   
+    
     /// <summary>
-    /// get all the order items
+    /// get all the order items by condition
     /// </summary>
     /// <returns>an array of all the order items</returns>
-
-
-    /// <summary>
-    /// get all orderItems by codition
-    /// </summary>
-    /// <returns>an array of all the orderItems</returns>
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? predicate=null)
     {
         List<OrderItem> orderItems = new List<OrderItem>();
@@ -117,12 +114,29 @@ internal class OrderItemDal:IOrderItem
 
 
     /// <summary>
+    ///search function
+    /// </summary>
+    /// <returns>returns the index of the member found</returns>
+    private int search(int id)
+    {
+        for (int i = 0; i < OrderItemList.Count; i++)
+        {
+            if (OrderItemList[i]?.ID == id)
+                return i;
+        }
+        return -1;
+    }
+
+
+    /// <summary>
     /// get order item by order id and product id
     /// </summary>
     /// <param name="orderId">the order item orderId</param>
     /// <param name="productId">the order item productId</param>
     /// <returns>the order item</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
+
+
     /// **********************************************************************************************************************
     //public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
     //{
@@ -145,6 +159,8 @@ internal class OrderItemDal:IOrderItem
     /// <param name="orderId">the order id</param>
     /// <returns>an array of order items</returns>
     /// <exception cref="Exception">if the order is not exist</exception>
+
+
     //*******************************************************************************************************************
     //public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId, Func<OrderItem, bool>? predicate)
     //{
@@ -177,12 +193,14 @@ internal class OrderItemDal:IOrderItem
     //    return orderItems;
     //}
     //*****************************************************************************************************************************************
-
-
+   
+    
     /// <summary>
-    /// get all orderItem by codition
+    /// get order by id
     /// </summary>
-    /// <returns> the orderItem</returns>
+    /// <param name="predicate">the order id</param>
+    /// <returns>the orderItem</returns>
+    /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetByCondition(Func<OrderItem, bool>? predicate)
     {
         foreach (OrderItem orderItem in OrderItemList)
@@ -191,19 +209,5 @@ internal class OrderItemDal:IOrderItem
                 return orderItem;
         }
         throw new DalDoesNotExistException("There is no order item that meets the condition");
-    }
-
-    /// <summary>
-    ///search function
-    /// </summary>
-    /// <returns>returns the index of the member found</returns>
-    private int search(int id)
-    {
-        for (int i = 0; i < OrderItemList.Count; i++)
-        {
-            if (OrderItemList[i]?.ID == id)
-                return i;
-        }
-        return -1;
     }
 }

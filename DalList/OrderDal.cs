@@ -1,9 +1,9 @@
 ﻿using DO;
+using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
 
 namespace Dal;
-
 /// <summary>
 /// A department that performs operations: 
 /// adding, updating, repeating and deleting on the order array
@@ -52,6 +52,7 @@ internal class OrderDal : IOrder
             OrderList[index] = order;
         else
             throw new DalDoesNotExistException(order.ID, "order");
+
     }
 
 
@@ -102,9 +103,11 @@ internal class OrderDal : IOrder
 
 
     /// <summary>
-    /// get order by codition
+    /// get order by condition
     /// </summary>
+    /// <param name="predicate">the order id</param>
     /// <returns>the order</returns>
+    /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetByCondition(Func<Order, bool>? predicate)
     {
     foreach(Order order in OrderList)
