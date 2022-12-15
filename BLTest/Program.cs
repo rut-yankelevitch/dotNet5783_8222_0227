@@ -252,8 +252,6 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
-
-
         /// <summary>
         /// A static private function, that is called by the main program
         ///when the user requests to perform operations on cart 
@@ -324,8 +322,6 @@ namespace BLTest
                 Console.WriteLine(ex.Message);
             }
         }
-
-
             /// <summary>
             /// The main program
             /// </summary>
