@@ -19,10 +19,10 @@ public struct Product
     /// </summary>
     //זה נכון לעשות ?
     public Category? Category{ get; set; }
-
     /// <summary>
     /// price per unit
     /// </summary>
+
     public double Price { get; set; }
 
     /// <summary>

@@ -1,11 +1,15 @@
-﻿namespace DO;
+﻿
+
+using System.Diagnostics;
+using System.Xml.Linq;
+
+namespace DO;
 /// <summary>
 ///  Structure for Order
 /// </summary>
 
 public struct Order
     {
-
     /// <summary>
     /// Unique ID of Order
     /// </summary>
