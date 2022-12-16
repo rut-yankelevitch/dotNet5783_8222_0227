@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-	<Grid>
-		<ListBox d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBox_SelectionChanged"/>
-		<Button x:Name="ButtonToListOfProduct" Content="Button" Margin="220,148,455,217"/>
+    <Grid >
+        <Button x:Name="ShowProductsBotton" Content="Button" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Click="ShowProductsBotton_Click" Height="65" Width="155"/>
 
-	</Grid>
+
+    </Grid>
 </Window>

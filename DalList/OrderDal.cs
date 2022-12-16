@@ -79,16 +79,16 @@ internal class OrderDal : IOrder
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
-        public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
+    public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
+    {
+        List<Order> orders = new List<Order>();
+        foreach (Order order in OrderList)
         {
-            List<Order> orders = new List<Order>();
-            foreach(Order order in OrderList)
-            {
-                orders.Add(order);
-            }
+            orders.Add(order);
         }
         return orders;
     }
+
 
 
     /// <summary>
@@ -99,7 +99,7 @@ internal class OrderDal : IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetByCondition(Func<Order, bool>? predicate)
     {
-    foreach(Order order in OrderList)
+        foreach (Order order in OrderList)
         {
             if (predicate(order))
                 return order;
@@ -121,6 +121,7 @@ internal class OrderDal : IOrder
         }
         return -1;
     }
+
 }
 
 

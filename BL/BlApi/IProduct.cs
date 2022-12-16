@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace BlApi
         /// Definition of a function that returns a list of all products for the manager
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductForList?> GetProductListForManager();
+        public IEnumerable<ProductForList?> GetProductListForManager(Filter filter1=BO.Filter.None, object? filterValue=null);
 
         /// <summary>
         /// Definition of a function that returns a product by id for the manager

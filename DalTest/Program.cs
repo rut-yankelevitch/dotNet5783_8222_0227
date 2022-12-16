@@ -71,7 +71,7 @@ namespace DalTest
                         Console.WriteLine("Enter id product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        product = dalList.Product.GetById(readInt);
+                        product = dalList.Product.(readInt);
                         Console.WriteLine(product);
                         break;
                     case Options.GET_ALL:

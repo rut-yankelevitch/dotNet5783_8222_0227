@@ -167,10 +167,11 @@ namespace BLTest
             Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
             readString = Console.ReadLine();
             OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
-            Order order = new Order();
-            OrderItem orderItem= new OrderItem();
-           OrderTracking orderTracking = new OrderTracking();   
-            List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();
+            //כנראה צריך למחוק
+            //Order order = new Order();
+            //OrderItem orderItem= new OrderItem();
+            //OrderTracking orderTracking = new OrderTracking();   
+            //List<BO.OrderForList> ordersForList= new List<BO.OrderForList>();
             try
             {
                 switch (orderOptions)

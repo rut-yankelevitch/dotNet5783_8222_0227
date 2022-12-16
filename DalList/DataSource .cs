@@ -31,7 +31,7 @@ static class DataSource
         Category[] category = new Category[] { Category.VacumCleaner, Category.VacumCleaner, Category.Mixer, Category.CofeeMachine, Category.CofeeMachine, Category.CofeeMachine, Category.Toaster, Category.Toaster, Category.Iron, Category.Iron, Category.Blender, Category.Blender };
         int[] productID = new int[]
            {
-            6665581,858565,747541,125478,852963,741598,458963,458796,745698,147854,147985,364152
+            666581,858565,747541,125478,852963,741598,458963,458796,745698,147854,147985,364152
            };
 
         for (int i = 0; i < 12; i++)

@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -13,9 +14,24 @@ internal class Product : IProduct
     /// function that returns a product by id for the manager
     /// </summary>
     /// <returns>list of product</returns>
-    public IEnumerable<BO.ProductForList> GetProductListForManager()
+    public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1=BO.Filter.None , object? filterValue=null )
     {
-        IEnumerable<DO.Product> products = dal.Product.GetAll();
+        IEnumerable<DO.Product> products; ;
+        //= dal.Product.GetAll();
+        Filter filter=filter1;
+        switch (filter)
+        {
+            case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : DO.Category.None));
+                break;
+            //case Filter.FilterByBiggerThanPrice:
+            //    break;
+            //case Filter.FilterBySmallerThanPrice:
+            //    break;
+            case Filter.None:products=dal.Product.GetAll();
+                break;
+            default:products = dal.Product.GetAll();
+                break;
+        }
         List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
         foreach (DO.Product product in products)
         {

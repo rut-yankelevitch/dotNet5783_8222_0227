@@ -353,12 +353,6 @@ internal class Order : BlApi.IOrder
             else
                 orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
-        List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
-            {
-                new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
-             };
-
-
         if (order.ShipDate != null)
         {
             tList.Add(new Tuple<DateTime?, string>(order.ShipDate, "the order has been sent"));
@@ -388,8 +382,9 @@ internal class Order : BlApi.IOrder
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
         DO.OrderItem item = new DO.OrderItem();
-        DO.Product product = new DO.Product();
-        BO.OrderItem orderItem = new BO.OrderItem();
+        //צריך כנראה למחוק
+        //DO.Product product = new DO.Product();
+        //BO.OrderItem orderItem = new BO.OrderItem();
         try
         {
             item = dal.OrderItem.GetByCondition(item=>(item.OrderID==idOrder&&item.ProductID==idProduct));
