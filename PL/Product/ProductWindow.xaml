@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="Product" Height="450" Width="800">
+        Title="Product" Height="450" Width="800" Icon="C:\Users\user\source\repos\racheli-shafran\dotNet5783_8222_0227\img\icon.ico">
     <Grid>
 
         <TextBox x:Name="idInput" HorizontalAlignment="Left" Margin="170,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
@@ -19,6 +19,8 @@
         <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
         <Button x:Name="confirmation_btn" Content="" HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="confirmation_btn_Click" IsEnabled="False"/>
+        <Button x:Name="delete_button" Content="delete" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Visibility="Hidden"  Click="delete_button_Click"/>
+
 
     </Grid>
 </Window>

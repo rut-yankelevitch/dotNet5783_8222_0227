@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ListOfProduct" Height="640" Width="800">
+        Title="ListOfProduct" Height="640" Width="800" Icon="C:\Users\user\source\repos\racheli-shafran\dotNet5783_8222_0227\img\icon.ico">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>

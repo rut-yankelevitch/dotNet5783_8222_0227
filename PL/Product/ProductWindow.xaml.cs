@@ -18,51 +18,101 @@ namespace PL.Product
         public ProductWindow()
         {
             InitializeComponent();
-            categorySelector.ItemsSource =Enum.GetValues(typeof(BO.Category));
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             confirmation_btn.Content = "add";
-            
+
         }
         public ProductWindow(int id)
         {
-            InitializeComponent();
-            BO.Product product= new BO.Product();
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            confirmation_btn.Content = "update";
-            product =bl.Product.GetProductByIdForManager(id);
+            try
+            {
+                InitializeComponent();
+                BO.Product product = new BO.Product();
+                categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+                confirmation_btn.Content = "update";
+                delete_button.Visibility = Visibility.Visible;
+                try
+                {
+                    product = bl.Product.GetProductByIdForManager(id);
+                }
+                catch (BO.BLDoesNotExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
 
-            idInput.Text =product.ID.ToString();
-            idInput.IsEnabled = false;
-            nameInput.Text = product.Name;
-            nameInput.IsEnabled = false;
-            categorySelector.SelectedValue=product.Category;
-            categorySelector.IsEnabled = false;
-            priceInput.Text = product.Price.ToString();
-            instockInput.Text=product.InStock.ToString();
+                idInput.Text = product.ID.ToString();
+                idInput.IsEnabled = false;
+                nameInput.Text = product.Name;
+                nameInput.IsEnabled = false;
+                categorySelector.SelectedValue = product.Category;
+                categorySelector.IsEnabled = false;
+                priceInput.Text = product.Price.ToString();
+                instockInput.Text = product.InStock.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void confirmation_btn_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product();
             int varInt;
             double varDouble;
-            int.TryParse(idInput.Text,out varInt);
+            int.TryParse(idInput.Text, out varInt);
             product.ID = varInt;
-            product.Name=nameInput.Text;
+            product.Name = nameInput.Text;
             double.TryParse(priceInput.Text, out varDouble);
-            product.Price= varDouble;
+            product.Price = varDouble;
             product.Category = ((BO.Category)categorySelector.SelectedItem);
             int.TryParse(instockInput.Text, out varInt);
-            product.InStock=varInt;
+            product.InStock = varInt;
 
             if (confirmation_btn.Content == "add")
             {
-                bl.Product.AddProduct(product);
+                try
+                {
+                    bl.Product.AddProduct(product);
+                    ProductListWindow productListWindow = new ProductListWindow();
+                    productListWindow.Show();
+                    this.Close();
+                }
+                catch (BO.BLAlreadyExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (BO.BLInvalidInputException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
             }
             else
             {
-                bl.Product.UpdateProduct(product);
+                try
+                {
+                    bl.Product.UpdateProduct(product);
+                    ProductListWindow productListWindow = new ProductListWindow();
+                    productListWindow.Show();
+                    this.Close();
+                }
+                catch (BO.BLAlreadyExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (BO.BLInvalidInputException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            ProductListWindow productListWindow = new ProductListWindow();
-            productListWindow.Show();
         }
 
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -91,8 +141,12 @@ namespace PL.Product
 
         private void priceInput_TextChanged(object sender, TextChangedEventArgs e)
         {
+
             if (priceInput.Text.Length > 0)
+            {
+
                 invalidCheck();
+            }
             else
                 confirmation_btn.IsEnabled = false;
         }
@@ -108,14 +162,14 @@ namespace PL.Product
 
         private void invalidCheck()
         {
-            if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null 
+            if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null
                 && priceInput.Text.Length > 0 && instockInput.Text.Length > 0)
             {
                 confirmation_btn.IsEnabled = true;
             }
             else
             {
-                confirmation_btn.IsEnabled = false; 
+                confirmation_btn.IsEnabled = false;
             }
 
         }
@@ -132,8 +186,8 @@ namespace PL.Product
             if (e.Key == Key.Escape || e.Key == Key.Back || e.Key == Key.Delete ||
             e.Key == Key.CapsLock || e.Key == Key.LeftShift || e.Key == Key.Home
             || e.Key == Key.End || e.Key == Key.Insert || e.Key == Key.Down || e.Key == Key.Right
-            ||e.Key==Key.NumPad0|| e.Key == Key.NumPad1|| e.Key == Key.NumPad2|| e.Key == Key.NumPad3|| e.Key == Key.NumPad4
-            || e.Key == Key.NumPad5|| e.Key == Key.NumPad6|| e.Key == Key.NumPad7|| e.Key == Key.NumPad8|| e.Key == Key.NumPad9|)
+            || e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4
+            || e.Key == Key.NumPad5 || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9)
                 return;
             char c = (char)KeyInterop.VirtualKeyFromKey(e.Key);
             //allow control system keys
@@ -147,6 +201,32 @@ namespace PL.Product
             return;
         }
 
+
+        private void delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int id;
+                int.TryParse(idInput.Text, out id);
+                bl.Product.DeleteProduct(id);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+                Close();
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+        }
     }
 }
 

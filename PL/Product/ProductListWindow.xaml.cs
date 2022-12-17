@@ -38,7 +38,7 @@ namespace PL.Product
             
             if (category == BO.Category.None)
             {
-                productListView.ItemsSource = bl.Product.GetProductListForManager();
+                productListView.ItemsSource = bl.Product.GetProductListForManager(BO.Filter.FilterByCategory);
 
             }
             else
@@ -47,7 +47,11 @@ namespace PL.Product
             }
         }
 
-        private void addProductButton_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+        private void addProductButton_Click(object sender, RoutedEventArgs e) 
+        { 
+            new ProductWindow().Show();
+            Close();
+        }
 
         private void productListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -56,6 +60,8 @@ namespace PL.Product
                 int varInt = product.ID;
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
+            Close();
+
         }
     }
 }

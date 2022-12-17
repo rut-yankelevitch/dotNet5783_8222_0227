@@ -6,6 +6,6 @@ namespace DO;
 /// </summary>
 public enum Category
 { 
-    VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender,None
+    VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender
 }
 

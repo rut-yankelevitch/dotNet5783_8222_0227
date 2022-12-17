@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Icon="C:\Users\user\source\repos\racheli-shafran\dotNet5783_8222_0227\img\icon.ico" >
     <Grid >
         <Button x:Name="ShowProductsBotton" Content="Button" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Click="ShowProductsBotton_Click" Height="65" Width="155"/>
 

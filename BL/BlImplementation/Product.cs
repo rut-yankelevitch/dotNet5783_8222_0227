@@ -17,11 +17,10 @@ internal class Product : IProduct
     public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1=BO.Filter.None , object? filterValue=null )
     {
         IEnumerable<DO.Product> products; ;
-        //= dal.Product.GetAll();
         Filter filter=filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : DO.Category.None));
+            case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
                 break;
             //case Filter.FilterByBiggerThanPrice:
             //    break;
@@ -119,7 +118,7 @@ internal class Product : IProduct
             {
                 if (orderItem.ProductID == id)
                 {
-                    throw new BO.BLImpossibleActionException("product exist in order");
+                    throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem.OrderID}");
                 }
             }
             dal.Product.Delete(id);
