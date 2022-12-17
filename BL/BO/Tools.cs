@@ -40,5 +40,38 @@ namespace BO
             }
             return str;
         }
+
+        //public static L BOToDO<T, L>(this T t, L l)
+        //{
+
+        //    foreach (PropertyInfo item in t.GetType().GetProperties())
+        //    {
+
+                
+        //    }
+        //    //    string str = "";
+
+        //    //    foreach (PropertyInfo item in t.GetType().GetProperties())
+        //    //    {
+        //    //        var enumerable = item.GetValue(t, null);
+
+        //    //        if ((enumerable is IEnumerable) && !(enumerable is string))
+        //    //        {
+        //    //            IEnumerable e = enumerable as IEnumerable;
+        //    //            foreach (var a in e)
+        //    //            {
+        //    //                str += a.ToStringProperty();
+
+        //    //            }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            str += "\n" + item.Name +
+        //    //       ": " + item.GetValue(t, null);
+        //    //        }
+        //    //    }
+        //    //    return str;
+        //    //
+        //}
     }
 }

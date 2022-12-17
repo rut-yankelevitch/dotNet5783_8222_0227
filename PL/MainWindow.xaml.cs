@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BlApi;
+using BlImplementation;
+using PL.Product;
 
 namespace PL
 {
@@ -20,6 +24,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IBl bl = new Bl();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,5 +34,14 @@ namespace PL
         {
 
         }
+        
+        private void ShowProductsBotton_Click(object sender, RoutedEventArgs e)
+        {
+            ProductListWindow productListWindow = new ProductListWindow();
+            productListWindow.Show();
+            Close();
+        }
+
+
     }
 }

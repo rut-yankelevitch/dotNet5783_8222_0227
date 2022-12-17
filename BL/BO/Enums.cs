@@ -10,13 +10,17 @@ namespace BO
     /// A class for enums
     /// </summary>
 
-        public enum Category
-        {
-            VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender
-        }
+    public enum Category
+    {
+        VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender, None
+    }
 
-        public enum OrderStatus
-        {
-         ConfirmedOrder,SendOrder,ProvidedOrder
-        }
+    public enum OrderStatus
+    {
+        ConfirmedOrder, SendOrder, ProvidedOrder, None
+    }
+    public enum Filter
+    {
+        FilterByCategory,FilterByBiggerThanPrice,FilterBySmallerThanPrice,None
+    }
 }
