@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         Background="Bisque"
-        Title="ListOfProduct" Height="640" Width="800" Icon="C:\Users\User\source\repos\rut-yankelevitch\dotNet5783_8222_0227\img\icon.ico">
+        Title="ListOfProduct" Height="640" Width="800" Icon="C:\Users\user\Source\Repos\racheli-shafran\dotNet5783_8222_0227\img\icon.ico">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
