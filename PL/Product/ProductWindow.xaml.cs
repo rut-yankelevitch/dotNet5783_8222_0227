@@ -8,13 +8,16 @@ using BlImplementation;
 namespace PL.Product
 {
     /// <summary>
-    /// Interaction logic for Product.xaml
+    ///  product  window class
     /// </summary>
     public partial class ProductWindow : Window
     {
-        //???
+
         IBl bl = new Bl();
 
+        /// <summary>
+        /// ProductListWindow constructor
+        /// </summary>
         public ProductWindow()
         {
             InitializeComponent();
@@ -22,6 +25,11 @@ namespace PL.Product
             confirmation_btn.Content = "add";
 
         }
+
+
+        /// <summary>
+        /// ProductWindow constructor that accepts a product ID
+        /// </summary>
         public ProductWindow(int id)
         {
             try
@@ -54,6 +62,11 @@ namespace PL.Product
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+        /// <summary>
+        /// A function is called when the confirmation button is clicked
+        /// </summary>
         private void confirmation_btn_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product();
@@ -115,6 +128,10 @@ namespace PL.Product
             }
         }
 
+
+        /// <summary>
+        /// A function is called when idInput text changed
+        /// </summary>
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (idInput.Text.Length == 6)
@@ -123,6 +140,10 @@ namespace PL.Product
                 confirmation_btn.IsEnabled = false;
         }
 
+
+        /// <summary>
+        /// A function is called when category-selector selection changed
+        /// </summary>
         private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (categorySelector.SelectedItem != null)
@@ -131,6 +152,10 @@ namespace PL.Product
                 confirmation_btn.IsEnabled = false;
         }
 
+
+        /// <summary>
+        /// A function is called when name input text changed
+        /// </summary>
         private void nameInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (nameInput.Text.Length > 0)
@@ -139,6 +164,10 @@ namespace PL.Product
                 confirmation_btn.IsEnabled = false;
         }
 
+
+        /// <summary>
+        /// A function is called when price input text changed
+        /// </summary>
         private void priceInput_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -152,6 +181,9 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// A function is called when instock input text changed
+        /// </summary>
         private void instockInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (instockInput.Text.Length > 0)
@@ -160,6 +192,10 @@ namespace PL.Product
                 confirmation_btn.IsEnabled = false;
         }
 
+
+        /// <summary>
+        /// invalid check function
+        /// </summary>
         private void invalidCheck()
         {
             if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null
@@ -174,6 +210,10 @@ namespace PL.Product
 
         }
 
+
+        /// <summary>
+        /// Numerical input function 
+        /// </summary>
         private void idInput_onlyNumber_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             TextBox text = sender as TextBox;
@@ -202,6 +242,8 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// A function is called when delete button Clicked
         private void delete_button_Click(object sender, RoutedEventArgs e)
         {
             try

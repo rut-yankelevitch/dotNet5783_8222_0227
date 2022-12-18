@@ -18,12 +18,15 @@ using BO;
 namespace PL.Product
 {
     /// <summary>
-    /// Interaction logic for ListOfProduct.xaml
+    /// product list window calss
     /// </summary>
     public partial class ProductListWindow : Window
     {
         private IBl bl = new Bl();
 
+        /// <summary>
+        ///ProductListWindow constructor
+        /// </summary>
         public ProductListWindow()
         {
             InitializeComponent();
@@ -32,6 +35,10 @@ namespace PL.Product
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
+
+        /// <summary>
+        /// A function is called when a selection is changed in the category selector combobox
+        /// </summary>
         private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
              BO.Category? category= categorySelector.SelectedItem as BO.Category?;
@@ -47,12 +54,20 @@ namespace PL.Product
             }
         }
 
+
+        /// <summary>
+        /// A function is called when the add product button is clicked
+        /// </summary>
         private void addProductButton_Click(object sender, RoutedEventArgs e) 
         { 
             new ProductWindow().Show();
             Close();
         }
 
+
+        /// <summary>
+        /// A function is called when a product is clicked
+        /// </summary>
         private void productListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
                 BO.ProductForList product = ((BO.ProductForList)productListView.SelectedItem);

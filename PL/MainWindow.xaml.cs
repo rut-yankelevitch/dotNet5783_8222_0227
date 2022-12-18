@@ -20,11 +20,15 @@ using PL.Product;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// main  window class
     /// </summary>
     public partial class MainWindow : Window
     {
         private IBl bl = new Bl();
+
+        /// <summary>
+        /// MainWindow constractor 
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +38,11 @@ namespace PL
         {
 
         }
-        
+
+
+        /// <summary>
+        /// A function is called when Show-Products Botton Clicked
+        /// </summary>
         private void ShowProductsBotton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();
