@@ -150,6 +150,7 @@ internal class Product : IProduct
                 product1.Price = product.Price;
                 product1.InStock = product.InStock;
                 product1.Category = (DO.Category)product.Category;
+                
                 dal.Product.Update(product1);
             }
             return product;
