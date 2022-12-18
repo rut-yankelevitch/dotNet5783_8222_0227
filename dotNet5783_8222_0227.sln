@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D33CDB0-5A71-4862-AEAE-F3526936015A}"
 	ProjectSection(SolutionItems) = preProject
+		img\icon.ico = img\icon.ico
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -25,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{3628
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLTest", "BLTest\BLTest.csproj", "{A805A5FD-B6F9-44E6-A5BE-E59768CBCEB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{F9CBA1BF-B6B8-4F04-84FC-322F60F52089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{F9CBA1BF-B6B8-4F04-84FC-322F60F52089}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
