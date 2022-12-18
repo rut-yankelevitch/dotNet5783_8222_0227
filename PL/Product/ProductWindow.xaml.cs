@@ -92,11 +92,11 @@ namespace PL.Product
                 }
                 catch (BO.BLAlreadyExistException ex)
                 {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show( ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (BO.BLInvalidInputException ex)
                 {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
