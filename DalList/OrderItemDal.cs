@@ -67,25 +67,6 @@ internal class OrderItemDal:IOrderItem
 
 
     /// <summary>
-    /// get order item by order id and product id
-    /// </summary>
-    /// <param name="orderId">the order item orderId</param>
-    /// <param name="productId">the order item productId</param>
-    /// <returns>the order item</returns>
-    /// <exception cref="Exception">if the order item doesnt exist</exception>
-    //******************************************************************************************************************************
-    //public OrderItem GetById(int id)
-    //{
-    //    int index = search(id);
-    //    if (index != -1)
-    //        //??
-    //        return (OrderItem)OrderItemList[index];
-    //    else
-    //        throw new DalDoesNotExistException(id,"OrderItem");
-    //}
-   
-    
-    /// <summary>
     /// get all the order items by condition
     /// </summary>
     /// <returns>an array of all the order items</returns>
@@ -127,73 +108,6 @@ internal class OrderItemDal:IOrderItem
         return -1;
     }
 
-
-    /// <summary>
-    /// get order item by order id and product id
-    /// </summary>
-    /// <param name="orderId">the order item orderId</param>
-    /// <param name="productId">the order item productId</param>
-    /// <returns>the order item</returns>
-    /// <exception cref="Exception">if the order item doesnt exist</exception>
-
-
-    /// **********************************************************************************************************************
-    //public OrderItem GetByOrderIdAndProductId(int orderId , int productId)
-    //{
-
-    //    foreach(OrderItem orderItem in OrderItemList)
-    //    {
-    //        if(orderItem.ProductID==productId&&orderItem.OrderID==orderId)
-    //        { 
-    //            return orderItem;
-    //        }
-    //    }
-    //    throw new DalDoesNotExistException(-1, "Order or product");
-    //}
-    //*****************************************************************************************************************
-
-
-    /// <summary>
-    /// get all order item of a specific order
-    /// </summary>
-    /// <param name="orderId">the order id</param>
-    /// <returns>an array of order items</returns>
-    /// <exception cref="Exception">if the order is not exist</exception>
-
-
-    //*******************************************************************************************************************
-    //public IEnumerable<OrderItem> GetAllItemsByOrderId(int orderId, Func<OrderItem, bool>? predicate)
-    //{
-    //    List<OrderItem> orderItems = new List<OrderItem>();
-    //    bool flag = false;
-    //    if (predicate != null)
-    //    {
-    //        foreach (OrderItem item in OrderItemList)
-    //        {
-    //            if (item.OrderID == orderId&&predicate(item))
-    //            {
-    //                flag = true;
-    //                orderItems.Add(item);
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        foreach (OrderItem item in OrderItemList)
-    //        {
-    //            if (item.OrderID == orderId)
-    //            {
-    //                flag = true;
-    //                orderItems.Add(item);
-    //            }
-    //        }
-    //    }
-    //    if (flag == false)
-    //        throw new DalDoesNotExistException(orderId,"order");
-    //    return orderItems;
-    //}
-    //*****************************************************************************************************************************************
-   
     
     /// <summary>
     /// get order by id

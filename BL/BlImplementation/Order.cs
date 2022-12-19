@@ -382,9 +382,6 @@ internal class Order : BlApi.IOrder
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
         DO.OrderItem item = new DO.OrderItem();
-        //צריך כנראה למחוק
-        //DO.Product product = new DO.Product();
-        //BO.OrderItem orderItem = new BO.OrderItem();
         try
         {
             item = dal.OrderItem.GetByCondition(item=>(item.OrderID==idOrder&&item.ProductID==idProduct));

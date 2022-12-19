@@ -20,7 +20,6 @@ namespace BO
         public DateTime? DeliveryDate { get; set; }  
         public List<OrderItem?>? Items { get; set; }
         public double TotalPrice { get; set; } 
-        //זה נכון לעשות ?
         public OrderStatus? Status { get; set; }
         public override string ToString() => this.ToStringProperty();
 

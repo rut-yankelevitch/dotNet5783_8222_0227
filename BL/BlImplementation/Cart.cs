@@ -57,6 +57,8 @@ internal class Cart : ICart
             throw new BO.BLDoesNotExistException("product dosent exsit", ex);
         }
     }
+
+
     /// <summary>
     ///function that update the amount of product in the cart
     /// </summary>
@@ -123,6 +125,8 @@ internal class Cart : ICart
         }
 
     }
+
+
     /// <summary>
     /// function that confirms an order
     /// </summary>

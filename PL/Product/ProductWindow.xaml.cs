@@ -92,7 +92,11 @@ namespace PL.Product
                 }
                 catch (BO.BLAlreadyExistException ex)
                 {
-                    MessageBox.Show( ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    ProductListWindow productListWindow = new ProductListWindow();
+                    productListWindow.Show();
+                    Close();
+
                 }
                 catch (BO.BLInvalidInputException ex)
                 {
@@ -101,7 +105,8 @@ namespace PL.Product
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                    ProductListWindow productListWindow = new ProductListWindow();
+                    productListWindow.Show();
                 }
             }
             else
@@ -119,7 +124,7 @@ namespace PL.Product
                 }
                 catch (BO.BLInvalidInputException ex)
                 {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (Exception ex)
                 {
@@ -266,8 +271,6 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
         }
     }
 }

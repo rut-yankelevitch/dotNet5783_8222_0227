@@ -16,16 +16,18 @@ internal class Product : IProduct
     /// <returns>list of product</returns>
     public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1=BO.Filter.None , object? filterValue=null )
     {
-        IEnumerable<DO.Product> products; ;
+        IEnumerable<DO.Product> products; 
         Filter filter=filter1;
         switch (filter)
         {
             case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
                 break;
-            //case Filter.FilterByBiggerThanPrice:
-            //    break;
-            //case Filter.FilterBySmallerThanPrice:
-            //    break;
+            case Filter.FilterByBiggerThanPrice:
+                products = dal.Product.GetAll(product => product.Price > (filterValue!=null? (int)filterValue :0 ));
+                break;
+            case Filter.FilterBySmallerThanPrice:
+                products = dal.Product.GetAll(product => product.Price < (filterValue != null ? (int)filterValue : (product.Price)+1));
+                break;
             case Filter.None:products=dal.Product.GetAll();
                 break;
             default:products = dal.Product.GetAll();

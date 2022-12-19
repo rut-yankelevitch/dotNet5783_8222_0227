@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Background="Bisque"
-        Title="MainWindow" Height="450" Width="800" Icon="C:\Users\user\Source\Repos\racheli-shafran\dotNet5783_8222_0227\img\icon.ico" >
+        Title="MainWindow" Height="450" Width="800" >
     <Grid >
         <Button x:Name="ShowProductsBotton" Content="show products" Background="OrangeRed" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Click="ShowProductsBotton_Click" Height="65" Width="155"/>
         

@@ -57,24 +57,6 @@ internal class ProductDal:IProduct
 
 
     /// <summary>
-    /// get product by id
-    /// </summary>
-    /// <param name="id">the id of the requeses product</param>
-    /// <returns>the product</returns>
-    /// <exception cref="Exception">if the product didnt exist throw exeption</exception>
-    //***********************************************************************************************
-    //public Product GetById(int id)
-    //{
-    //    int index = search(id);
-    //    if (index != -1)
-    //        return (Product)ProductList[index];
-    //    else
-    //        throw new DalDoesNotExistException(id, "product");
-    //}
-    //********************************************************************************************
-
-
-    /// <summary>
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>

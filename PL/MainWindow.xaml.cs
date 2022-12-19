@@ -33,13 +33,6 @@ namespace PL
         {
             InitializeComponent();
         }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
         /// <summary>
         /// A function is called when Show-Products Botton Clicked
         /// </summary>

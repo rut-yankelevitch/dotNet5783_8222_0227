@@ -57,25 +57,6 @@ internal class OrderDal : IOrder
 
 
     /// <summary>
-    /// get order by id
-    /// </summary>
-    /// <param name="id">the order id</param>
-    /// <returns>the order</returns>
-    /// <exception cref="Exception">if the order doesnt exist</exception>
-    /// 
-    //************************************************************************************************
-    //public Order GetById(int id)
-    //{
-    //    int index = search(id);
-    //    if (index != -1)
-    //        return (Order)OrderList[index];
-    //    else
-    //        throw new DalDoesNotExistException(id, "order");
-    //}
-    //*********************************************************************************************
-
-
-    /// <summary>
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
@@ -88,7 +69,6 @@ internal class OrderDal : IOrder
         }
         return orders;
     }
-
 
 
     /// <summary>
