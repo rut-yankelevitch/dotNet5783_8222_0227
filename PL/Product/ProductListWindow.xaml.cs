@@ -20,7 +20,7 @@ namespace PL.Product
         public ProductListWindow()
         {
             InitializeComponent();
-            productListView.ItemsSource = bl.Product.GetProductListForManager();
+            productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
             
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
@@ -35,12 +35,12 @@ namespace PL.Product
             
             if (category == BO.Category.None)
             {
-                productListView.ItemsSource = bl.Product.GetProductListForManager(BO.Filter.FilterByCategory);
+                productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
 
             }
             else
             {
-                productListView.ItemsSource=bl.Product.GetProductListForManager(BO.Filter.FilterByCategory,category);
+                productListView.ItemsSource=bl.Product.GetProductListForManagerByCategory(category);
             }
         }
 
@@ -66,7 +66,6 @@ namespace PL.Product
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
             Close();
-
         }
     }
 }
