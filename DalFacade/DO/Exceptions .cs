@@ -52,3 +52,11 @@ public class DalAlreadyExistException : Exception
 
     public override string ToString()=>$"id:{EntityId} of type {EntityName} is already exist.";
 }
+
+
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+}

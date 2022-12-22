@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 namespace BlImplementation
 {
     /// <summary>
     /// A class that implements the ibl interface and returns all the main logical entities
     /// </summary>
-    sealed public class Bl : IBl
+    sealed internal class Bl : IBl
     {
         /// <summary>
         /// A method that returns the Product entity

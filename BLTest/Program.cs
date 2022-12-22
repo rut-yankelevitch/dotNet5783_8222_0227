@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BlApi;
-using BlImplementation;
 using BO;
+using DalApi;
 
 namespace BLTest
 {
@@ -30,14 +30,13 @@ namespace BLTest
     /// </summary>
     public class Program
     {
-        static private DalList.DalList dalList = new DalList.DalList();
         static string readString;
         static int readInt;
         static int orderId;
         static int productId;
         static int readInt1;
         static double readDouble;
-        static private IBl iBl = new Bl();
+        static private BlApi.IBl iBl = BlApi.Factory.Get();
         static private Cart currentCart = new Cart();
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace BLTest
                         Console.WriteLine(productItem);
                         break;
                     case ProductOptions.GET_LIST_FOR_MANAGER:
-                        productsForList= iBl.Product.GetProductListForManager();
+                        productsForList= iBl.Product.GetProductListForManagerNoFilter();
                         foreach(ProductForList productForList in productsForList) 
                             Console.WriteLine(productForList);
                         break;

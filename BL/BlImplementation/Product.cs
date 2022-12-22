@@ -1,5 +1,4 @@
 ﻿using BO;
-using DalApi;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -8,8 +7,7 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : IProduct
 {
-    private IDal dal = new DalList.DalList();
-
+    private DalApi.IDal? dal = DalApi.Factory.Get();
 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager

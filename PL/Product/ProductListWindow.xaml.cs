@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BlApi;
-using BlImplementation;
+using DalApi;
 
 namespace PL.Product
 {
@@ -12,7 +11,7 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl = new Bl();
+        private BlApi.IBl? bl =BlApi.Factory.Get();
 
         /// <summary>
         ///ProductListWindow constructor
