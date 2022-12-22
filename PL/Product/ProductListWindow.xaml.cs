@@ -40,7 +40,7 @@ namespace PL.Product
             }
             else
             {
-                productListView.ItemsSource=bl.Product.GetProductListForManager(BO.Filter.FilterByCategory,category);
+                productListView.ItemsSource = bl.Product.GetProductListForManager(BO.Filter.FilterByCategory, category);
             }
         }
 
