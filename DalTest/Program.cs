@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DO;
 using Dal;
+using DalApi;
 //using DalList;
 namespace DalTest
 {
@@ -22,7 +23,7 @@ namespace DalTest
         /// Instances of the data access classes
         /// </summary>
 
-        static private DalList.DalList dalList = new DalList.DalList();
+        static private IDal dalList = DalApi.Factory.Get();
         //static private OrderDal orderDal = new OrderDal();
         //static private ProductDal productDal = new ProductDal();
         //static private OrderItemDal orderItemDal = new OrderItemDal();
@@ -71,7 +72,7 @@ namespace DalTest
                         Console.WriteLine("Enter id product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        product = dalList.Product.(readInt);
+                        product = dalList.Product.GetByCondition(item=>item.ID==readInt);
                         Console.WriteLine(product);
                         break;
                     case Options.GET_ALL:
@@ -159,7 +160,7 @@ namespace DalTest
                         Console.WriteLine("enter order id: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        order = dalList.Order.GetById(readInt);
+                        order = dalList.Order.GetByCondition(item=>item.ID==readInt);
                         Console.WriteLine(order);
                         break;
                     case Options.GET_ALL:
@@ -259,7 +260,7 @@ namespace DalTest
                         Console.WriteLine("enter order item id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        orderItem = dalList.OrderItem.GetById(readInt);
+                        orderItem = dalList.OrderItem.GetByCondition(item=>item.ID==readInt);
                         Console.WriteLine(orderItem);
                         break;
                     case Options.GET_ALL:
@@ -312,7 +313,7 @@ namespace DalTest
                         Console.WriteLine("enter order id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        IEnumerable<OrderItem> orderItems = dalList.OrderItem.GetAllItemsByOrderId(readInt);
+                        IEnumerable<OrderItem> orderItems = dalList.OrderItem.GetAll(item=>item.OrderID==readInt);
                         foreach (OrderItem ordItem in orderItems)
                             Console.WriteLine(ordItem);
                         break;
@@ -325,7 +326,7 @@ namespace DalTest
                         int prodId;
                         readString = Console.ReadLine();
                         int.TryParse(readString, out prodId);
-                        orderItem = dalList.OrderItem.GetByOrderIdAndProductId(orderId, prodId);
+                        orderItem = dalList.OrderItem.GetByCondition(item=>item.OrderID==orderId&&item.ProductID==prodId);
                         Console.WriteLine(orderItem);
                         break;
                     default:

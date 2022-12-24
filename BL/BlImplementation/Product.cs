@@ -1,5 +1,4 @@
 ﻿using BO;
-using DalApi;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -8,12 +7,35 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : IProduct
 {
-    private IDal dal = new DalList.DalList();
+    private DalApi.IDal? dal = DalApi.Factory.Get();
 
     /// <summary>
-    /// function that returns a product by id for the manager
+    /// Definition of a function that returns a list of product by category for the manager
     /// </summary>
-    /// <returns>list of product</returns>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductForList> GetProductListForManagerByCategory(BO.Category? category)
+    {
+        return GetProductListForManager(BO.Filter.FilterByCategory, category);
+    }
+
+
+    /// <summary>
+    /// Definition of a function that returns the list of product for manager
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
+    {
+        return GetProductListForManager();    
+    }
+
+
+    /// <summary>
+    /// a help function that return a list of product by filter
+    /// </summary>
+    /// <param name="filter1"></param>
+    /// <param name="filterValue"></param>
+    /// <returns></returns>
     public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1=BO.Filter.None , object? filterValue=null )
     {
         IEnumerable<DO.Product> products; 
@@ -22,17 +44,13 @@ internal class Product : IProduct
         {
             case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
                 break;
-            case Filter.FilterByBiggerThanPrice:
-                products = dal.Product.GetAll(product => product.Price > (filterValue!=null? (int)filterValue :0 ));
-                break;
-            case Filter.FilterBySmallerThanPrice:
-                products = dal.Product.GetAll(product => product.Price < (filterValue != null ? (int)filterValue : (product.Price)+1));
-                break;
-            case Filter.None:products=dal.Product.GetAll();
+            case Filter.None:
+                products=dal.Product.GetAll();
                 break;
             default:products = dal.Product.GetAll();
                 break;
         }
+
         List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
         foreach (DO.Product product in products)
         {

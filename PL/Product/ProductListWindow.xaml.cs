@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BlApi;
-using BlImplementation;
+using DalApi;
 
 namespace PL.Product
 {
@@ -12,7 +11,7 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl = new Bl();
+        private BlApi.IBl? bl =BlApi.Factory.Get();
 
         /// <summary>
         ///ProductListWindow constructor
@@ -20,7 +19,7 @@ namespace PL.Product
         public ProductListWindow()
         {
             InitializeComponent();
-            productListView.ItemsSource = bl.Product.GetProductListForManager();
+            productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
             
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
@@ -35,12 +34,12 @@ namespace PL.Product
             
             if (category == BO.Category.None)
             {
-                productListView.ItemsSource = bl.Product.GetProductListForManager(BO.Filter.FilterByCategory);
+                productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
 
             }
             else
             {
-                productListView.ItemsSource = bl.Product.GetProductListForManager(BO.Filter.FilterByCategory, category);
+                productListView.ItemsSource=bl.Product.GetProductListForManagerByCategory(category);
             }
         }
 
@@ -66,7 +65,6 @@ namespace PL.Product
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
             Close();
-
         }
     }
 }

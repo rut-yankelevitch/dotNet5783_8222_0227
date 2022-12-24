@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using BO;
 
 namespace BlApi
@@ -14,10 +9,17 @@ namespace BlApi
     public interface IProduct
     {
         /// <summary>
-        /// Definition of a function that returns a list of all products for the manager
+        /// Definition of a function that returns the list of product for manager
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductForList?> GetProductListForManager(Filter filter1=BO.Filter.None, object? filterValue=null);
+        public IEnumerable<ProductForList?> GetProductListForManagerNoFilter();
+
+        /// <summary>
+        /// Definition of a function that returns a list of product by category for the manager
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public IEnumerable<ProductForList?> GetProductListForManagerByCategory(BO.Category? category);
 
         /// <summary>
         /// Definition of a function that returns a product by id for the manager

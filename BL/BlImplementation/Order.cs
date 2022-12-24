@@ -1,15 +1,11 @@
-﻿using DalApi;
-using System.Collections.Generic;
-using BO;
-
-namespace BlImplementation;
+﻿namespace BlImplementation;
 
 /// <summary>
 /// A class that implements the iorder interface
 /// </summary>
 internal class Order : BlApi.IOrder
 {
-    private IDal dal = new DalList.DalList();
+    private DalApi.IDal? dal =  DalApi.Factory.Get();
 
     /// <summary>
     /// function that returns all orders
@@ -24,11 +20,11 @@ internal class Order : BlApi.IOrder
             IEnumerable<DO.Order> orders = dal.Order.GetAll();
             double totalPrice = 0;
             int amount = 0;
-
+            
             foreach (DO.Order order in orders)
             {
                 BO.OrderForList orderForList = new BO.OrderForList();
-                IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAll(orderitem2=>orderitem2.OrderID==order.ID);
+                IEnumerable<DO.OrderItem> orderitems = dal.OrderItem.GetAll(orderitem2 => orderitem2.OrderID == order.ID);
 
 
                 foreach (DO.OrderItem item in orderitems)
@@ -42,11 +38,11 @@ internal class Order : BlApi.IOrder
                 orderForList.AmountOfItems = amount;
                 orderForList.TotalPrice = totalPrice;
 
-                if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
+                if (order.DeliveryrDate != null && order.DeliveryrDate < DateTime.Now)
                     orderForList.Status = BO.OrderStatus.ProvidedOrder;
                 else
                 {
-                    if (order.ShipDate != null&&order.ShipDate < DateTime.Now)
+                    if (order.ShipDate != null && order.ShipDate < DateTime.Now)
                         orderForList.Status = BO.OrderStatus.SendOrder;
                     else
                         orderForList.Status = BO.OrderStatus.ConfirmedOrder;

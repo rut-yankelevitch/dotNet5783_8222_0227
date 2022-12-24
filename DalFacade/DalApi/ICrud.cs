@@ -12,11 +12,13 @@ public interface ICrud<T>
     /// <returns></returns>
     public int Add(T obj);
 
+
     /// <summary>
     /// A function that defines update a data entity
     /// </summary>
     /// <param name="obj"></param>
     public void Update(T obj);
+
 
     /// <summary>
     /// A function that defines delete a data entity
@@ -24,18 +26,13 @@ public interface ICrud<T>
     /// <param name="id"></param>
     public void Delete(int id);
 
-    /// <summary>
-    /// A function that defines a data entity return by id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    //public T GetById(int id);
 
     /// <summary>
     /// A function that defines returning a list of data entities by condition
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<T?> GetAll(Func<T?,bool>?predicate=null) ;
+    public IEnumerable<T?> GetAll(Func<T?,bool>? predicate=null) ;
+
 
     /// <summary>
     /// A function that defines returning aentitie by condition

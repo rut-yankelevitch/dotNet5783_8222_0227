@@ -1,16 +1,12 @@
-﻿using System;
-using BlApi;
+﻿using BlApi;
 using BO;
-using DalApi;
 namespace BlImplementation;
 
 internal class Cart : ICart
 {
-    /// <summary>
-    /// A class that implements the icart interface
-    /// </summary>
+    private DalApi.IDal? dal =DalApi.Factory.Get();
 
-    private IDal dal = new DalList.DalList();
+
     /// <summary>
     ///function that adds a product to the cart
     /// </summary>
@@ -33,6 +29,7 @@ internal class Cart : ICart
                     if (orderItem.ProductID == idProduct)
                         throw new BO.BLImpossibleActionException("product exist in cart");
                 }
+
             }
             else
             {

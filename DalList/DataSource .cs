@@ -1,7 +1,4 @@
 ﻿using DO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using System.Globalization;
 namespace Dal;
 static class DataSource
 {
