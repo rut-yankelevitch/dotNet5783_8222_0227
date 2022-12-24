@@ -30,7 +30,7 @@ public static class Factory
         }
 
         Type? type = Type.GetType($"{namespaceDal}.{classDal}, {dal}")
-            ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
+            ?? throw new DalConfigException($"Class {namespaceDal}.{classDal} was not found in {dal}.dll");
 
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
                    .GetValue(null) as IDal
