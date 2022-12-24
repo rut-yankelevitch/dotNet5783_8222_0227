@@ -2,6 +2,8 @@
 using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
+using System.Linq;
+
 namespace Dal;
 
 /// <summary>
@@ -12,14 +14,19 @@ internal class ProductDal:IProduct
 {
     public int Add(Product product)
     {
-        foreach (Product p in ProductList)
-        {
-            if (p.ID == product.ID)
-                throw new DalAlreadyExistException(product.ID,"product");
-        }
-
-        ProductList.Add(product);
+        if (CheckIfExist(product.ID))
+            throw new DalAlreadyExistException(product.ID, "product");
+        ProductList.Add(product);   
         return product.ID;
+
+        //foreach (Product p in ProductList)
+        //{
+        //    if (p.ID == product.ID)
+        //        throw new DalAlreadyExistException(product.ID, "product");
+        //}
+
+        //ProductList.Add(product);
+        //return product.ID;
     }
 
 
@@ -30,13 +37,17 @@ internal class ProductDal:IProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Delete(int id)
     {
-        int index = search(id);
-        if (index != -1)
-        {
-            ProductList.RemoveAt(index);
-        }
-        else
+        int count = ProductList.RemoveAll(prod => prod?.ID == id);
+        if (count == 0)
             throw new DalDoesNotExistException(id,"product");
+
+        //int index = search(id);
+        //if (index != -1)
+        //{
+        //    ProductList.RemoveAt(index);
+        //}
+        //else
+        //    throw new DalDoesNotExistException(id,"product");
     }
 
 
@@ -47,12 +58,16 @@ internal class ProductDal:IProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Update(Product product)
     {
-        int index = search(product.ID);
-        if (index != -1)
-            ProductList[index] = product;
-        else
-            throw new DalDoesNotExistException(product.ID,"product");
+        int count = ProductList.RemoveAll(prod => prod?.ID == product.ID);
+        if (count == 0)
+                throw new DalDoesNotExistException(product.ID,"product");
+            ProductList.Add(product);
 
+        //int index = search(product.ID);
+        //if (index != -1)
+        //    ProductList[index] = product;
+        //else
+        //    throw new DalDoesNotExistException(product.ID,"product");
     }
 
 
@@ -105,13 +120,19 @@ internal class ProductDal:IProduct
     ///search function
     /// </summary>
     /// <returns>returns the index of the member found</returns>
-    private int search(int id)
+    //private int search(int id)
+    //{
+    //    for (int i = 0; i < ProductList.Count; i++)
+    //    {
+    //        if (ProductList[i]?.ID == id)
+    //            return i;
+    //    }
+    //    return -1;
+    //}
+
+
+    public bool CheckIfExist(int id)
     {
-        for (int i = 0; i < ProductList.Count; i++)
-        {
-            if (ProductList[i]?.ID == id)
-                return i;
-        }
-        return -1;
+        return ProductList.Any(item => item?.ID == id);
     }
 }

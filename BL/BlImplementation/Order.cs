@@ -5,7 +5,8 @@
 /// </summary>
 internal class Order : BlApi.IOrder
 {
-    private DalApi.IDal? dal =  DalApi.Factory.Get();
+    //??
+    private DalApi.IDal? dal =  DalApi.Factory.Get() ?? throw new Exception("Cannot connect");
 
     /// <summary>
     /// function that returns all orders
@@ -17,7 +18,7 @@ internal class Order : BlApi.IOrder
         try
         {
             List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
-            IEnumerable<DO.Order> orders = dal.Order.GetAll();
+            IEnumerable<DO.Order> orders = dal!.Order.GetAll();
             double totalPrice = 0;
             int amount = 0;
             
@@ -76,7 +77,7 @@ internal class Order : BlApi.IOrder
 
         try
         {
-            orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
+            orderDal = dal!.Order.GetByCondition(order2=>order2.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -155,7 +156,7 @@ internal class Order : BlApi.IOrder
         IEnumerable<DO.OrderItem> orderitemsDal = new List<DO.OrderItem>();
         try
         {
-            orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
+            orderDal = dal!.Order.GetByCondition(order2=>order2.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -242,7 +243,7 @@ internal class Order : BlApi.IOrder
 
         try
         {
-            orderDal = dal.Order.GetByCondition(order2=>order2.ID==id);
+            orderDal = dal!.Order.GetByCondition(order2=>order2.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -332,7 +333,7 @@ internal class Order : BlApi.IOrder
 
         try
         {
-            order = dal.Order.GetByCondition(order2=>order2.ID==id);
+            order = dal!.Order.GetByCondition(order2=>order2.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -380,7 +381,7 @@ internal class Order : BlApi.IOrder
         DO.OrderItem item = new DO.OrderItem();
         try
         {
-            item = dal.OrderItem.GetByCondition(item=>(item.OrderID==idOrder&&item.ProductID==idProduct));
+            item = dal!.OrderItem.GetByCondition(item=>(item.OrderID==idOrder&&item.ProductID==idProduct));
         }
         catch (DO.DalDoesNotExistException ex)
         {

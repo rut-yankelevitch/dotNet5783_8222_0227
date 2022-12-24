@@ -1,7 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using DO;
-using Dal;
-using DalApi;
 //using DalList;
 namespace DalTest
 {
@@ -23,12 +21,9 @@ namespace DalTest
         /// Instances of the data access classes
         /// </summary>
 
-        static private IDal dalList = DalApi.Factory.Get();
-        //static private OrderDal orderDal = new OrderDal();
-        //static private ProductDal productDal = new ProductDal();
-        //static private OrderItemDal orderItemDal = new OrderItemDal();
+        static private DalApi.IDal? dalList = DalApi.Factory.Get();
 
-        static string readString;
+        static string? readString;
         static int readInt;
         static double readDouble;
         static Options option;
@@ -348,7 +343,7 @@ namespace DalTest
 
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2- order\n 3- order item .");
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
             ManagementProgram.TryParse(choice, out managementProgram);
 
             while (managementProgram != ManagementProgram.EXIT)

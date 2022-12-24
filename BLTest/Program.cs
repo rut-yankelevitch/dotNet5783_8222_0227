@@ -30,7 +30,7 @@ namespace BLTest
     /// </summary>
     public class Program
     {
-        static string readString;
+        static string? readString;
         static int readInt;
         static int orderId;
         static int productId;
@@ -328,7 +328,7 @@ namespace BLTest
             {
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2-order\n 3-cart");
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
             ManagementProgram.TryParse(choice, out managementProgram);
             
             while (managementProgram != ManagementProgram.EXIT)

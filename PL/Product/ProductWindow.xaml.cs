@@ -79,7 +79,8 @@ namespace PL.Product
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
 
-            if (confirmation_btn.Content == "add")
+           // ??
+            if ((string)confirmation_btn.Content == "add")
             {
                 try
                 {
@@ -219,7 +220,7 @@ namespace PL.Product
         /// </summary>
         private void idInput_onlyNumber_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            TextBox text = sender as TextBox;
+            TextBox? text = sender as TextBox;
             if (text == null) return;
             if (e == null) return;
             //allow get out of the text box
