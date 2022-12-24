@@ -5,7 +5,7 @@ namespace BlImplementation;
 internal class Cart : ICart
 {
     //??
-    private DalApi.IDal? dal =DalApi.Factory.Get() ?? throw new Exception("Cannot connect");
+    private DalApi.IDal dal =DalApi.Factory.Get();
 
 
     /// <summary>
@@ -36,7 +36,7 @@ internal class Cart : ICart
             {
                 cart.Items = new List<BO.OrderItem>();
             }
-            product = dal!.Product.GetByCondition(product2 => product2.ID==idProduct);
+            product = dal.Product.GetByCondition(product2 => product2.ID==idProduct);
 
             if (product.InStock <= 0)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
@@ -74,7 +74,7 @@ internal class Cart : ICart
         try
         {
             DO.Product product = new DO.Product();
-            product = dal!.Product.GetByCondition(product2=>product2.ID==idProduct);
+            product = dal.Product.GetByCondition(product2=>product2.ID==idProduct);
 
             if (product.InStock < amount)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
@@ -150,7 +150,7 @@ internal class Cart : ICart
             order.OrderDate = DateTime.Now;
             order.ShipDate = null;
             order.DeliveryrDate =null;
-            int id = dal!.Order.Add(order);
+            int id = dal.Order.Add(order);
 
             foreach (BO.OrderItem orderItem in cart.Items)
             {
