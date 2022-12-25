@@ -8,7 +8,7 @@ namespace BlImplementation;
 internal class Product : IProduct
 {
     //??
-    private DalApi.IDal? dal = DalApi.Factory.Get()??throw new Exception("Cannot connect");
+    private DalApi.IDal dal = DalApi.Factory.Get();
 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
@@ -43,12 +43,12 @@ internal class Product : IProduct
         Filter filter=filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory:products = dal!.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
+            case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
                 break;
             case Filter.None:
                 products=dal.Product.GetAll();
                 break;
-            default:products = dal!.Product.GetAll();
+            default:products = dal.Product.GetAll();
                 break;
         }
 
