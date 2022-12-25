@@ -98,7 +98,6 @@ static class DataSource
                     break;
                 }
             }
-
             do
             {
                 randB = randNum.Next(10);

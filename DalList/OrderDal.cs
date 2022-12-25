@@ -30,12 +30,15 @@ internal class OrderDal : IOrder
     /// <exception cref="Exception">if the order didnt exist</exception>
     public void Delete(int id)
     {
-        int index = search(id);
-        if (index != -1)
-        {
-            OrderList.RemoveAt(index);
-        }
-        else
+        //int index = search(id);
+        //if (index != -1)
+        //{
+        //    OrderList.RemoveAt(index);
+        //}
+        //else
+        //    throw new DalDoesNotExistException(id, "order");
+        int count = OrderList.RemoveAll(order => order?.ID == id);
+        if (count == 0)
             throw new DalDoesNotExistException(id, "order");
     }
 
@@ -47,11 +50,16 @@ internal class OrderDal : IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public void Update(Order order)
     {
-        int index = search(order.ID);
-        if (index != -1)
-            OrderList[index] = order;
-        else
+        //int index = search(order.ID);
+        //if (index != -1)
+        //    OrderList[index] = order;
+        //else
+        //    throw new DalDoesNotExistException(order.ID, "order");
+
+        int count = OrderList.RemoveAll(ord => ord?.ID == order.ID);
+        if (count == 0)
             throw new DalDoesNotExistException(order.ID, "order");
+        OrderList.Add(order);
 
     }
 
@@ -68,6 +76,10 @@ internal class OrderDal : IOrder
             orders.Add(order);
         }
         return orders;
+
+        //List<Order?> orders = OrderList.Select(item => item).ToList();
+        //return orders;
+
     }
 
 
@@ -85,6 +97,13 @@ internal class OrderDal : IOrder
                 return order;
         }
         throw new DalDoesNotExistException("There is no order that meets the condition");
+
+        //Order? order = OrderList.FirstOrDefault(ord => predicate((Order)ord));
+        //if (order==null)
+        //{
+        //    throw new DalDoesNotExistException("There is no order that meets the condition");
+        //}
+        //return order;
     }
 
 
@@ -92,16 +111,15 @@ internal class OrderDal : IOrder
     ///search function
     /// </summary>
     /// <returns>returns the index of the member found</returns>
-    private int search(int id)
-    {
-        for (int i = 0; i < OrderList.Count; i++)
-        {
-            if (OrderList[i]?.ID == id)
-                return i;
-        }
-        return -1;
-    }
-
+    //private int search(int id)
+    //{
+    //    for (int i = 0; i < OrderList.Count; i++)
+    //    {
+    //        if (OrderList[i]?.ID == id)
+    //            return i;
+    //    }
+    //    return -1;
+    //}
 }
 
 

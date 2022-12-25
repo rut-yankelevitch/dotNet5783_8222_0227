@@ -130,7 +130,7 @@ internal class ProductDal:IProduct
     //    return -1;
     //}
 
-
+    //private???
     public bool CheckIfExist(int id)
     {
         return ProductList.Any(item => item?.ID == id);
