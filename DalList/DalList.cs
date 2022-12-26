@@ -8,8 +8,9 @@ namespace Dal
     /// </summary>
     sealed internal class DalList : IDal
     {
-        public IOrder Order => new OrderDal();
-        public IProduct Product => new ProductDal();
-        public IOrderItem OrderItem => new OrderItemDal();
+        public IOrder Order { get;} = new Dal.OrderDal();
+        public IProduct Product { get;}= new Dal.ProductDal();
+        public IOrderItem OrderItem {get;} new Dal.OrderItemDal();
+
     }
 }

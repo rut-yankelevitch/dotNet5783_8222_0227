@@ -9,16 +9,16 @@ namespace BlImplementation
         /// <summary>
         /// A method that returns the Product entity
         /// </summary>
-        public IProduct Product =>  new Product();
+        public IProduct Product {get;}=new BlImplementation.Product();
 
         /// <summary>
         /// A method that returns the order entity
         /// </summary>
-        public IOrder Order =>  new Order();
+        public IOrder Order {get;}=new BlImplementation.Order();
 
         /// <summary>
         /// A method that returns the cart entity
         /// </summary>
-        public ICart cart =>  new Cart();
+        public ICart cart {get;}= new BlImplementation.Cart();
     }
 }
