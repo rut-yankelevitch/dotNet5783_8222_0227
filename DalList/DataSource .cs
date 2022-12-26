@@ -83,6 +83,7 @@ static class DataSource
 
     private static void initOrderItemArray()
     {
+
         foreach (Order o in OrderList)
         {
             int randA = randNum.Next(12);

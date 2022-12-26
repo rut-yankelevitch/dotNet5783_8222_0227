@@ -1,6 +1,7 @@
 ﻿using DO;
 using static Dal.DataSource;
 using DalApi;
+using System.Linq;
 
 namespace Dal;
 /// <summary>
@@ -85,34 +86,37 @@ internal class OrderItemDal:IOrderItem
     /// get all the order items by condition
     /// </summary>
     /// <returns>an array of all the order items</returns>
-    public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? predicate=null)
-    {
-        List<OrderItem> orderItems = new List<OrderItem>();
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predicate = null) =>
 
-        //List<OrderItem?> orderItems = new List<OrderItem?>();
-        if (predicate != null)
-        {
-            foreach (OrderItem orderItem in OrderItemList)
-            {
-                if (predicate(orderItem))
-                {
-                    orderItems.Add(orderItem);
-                }
-            }
-            //orderItems = OrderItemList.Where(item => predicate((OrderItem)item)).Select(item => item).ToList();
+        (predicate == null ? OrderItemList.Select(item => item)
+                           : OrderItemList.Where(predicate!))??
+        throw new DO.DalDoesNotExistException("orderItem missing");
+         
 
-        }
-        else 
-        {
-            foreach (OrderItem orderItem in OrderItemList)
-            {
-                orderItems.Add(orderItem);
-            }
+        ////List<OrderItem> orderItems = new List<OrderItem>();
 
-            //orderItems = OrderItemList.Select(item => item).ToList();
-        }
-        return orderItems;
-    }
+        //if (predicate != null)
+        //{
+        //    //foreach (OrderItem orderItem in OrderItemList)
+        //    //{
+        //    //    if (predicate(orderItem))
+        //    //    {
+        //    //        orderItems.Add(orderItem);
+        //    //    }
+        //    //}
+
+        //    orderItems = OrderItemList.Where(predicate!);
+        //}
+        //else 
+        //{
+        //    //foreach (OrderItem orderItem in OrderItemList)
+        //    //{
+        //    //    orderItems.Add(orderItem);
+        //    //}
+        //    orderItems = OrderItemList.Select(item => item);
+        //}
+        //return orderItems;
+    
 
 
 
@@ -138,20 +142,23 @@ internal class OrderItemDal:IOrderItem
     /// <param name="predicate">the order id</param>
     /// <returns>the orderItem</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
-    public OrderItem GetByCondition(Func<OrderItem, bool>? predicate)
-    {
-        foreach (OrderItem orderItem in OrderItemList)
-        {
-            if (predicate(orderItem))
-                return orderItem;
-        }
+    public OrderItem GetByCondition(Func<OrderItem?, bool> predicate)=>
+        OrderItemList.FirstOrDefault(predicate!) ?? 
         throw new DalDoesNotExistException("There is no order item that meets the condition");
 
-        //OrderItem? orderItem = OrderItemList.FirstOrDefault(ordItem => predicate((OrderItem)ordItem));
+    //{
+        //foreach (OrderItem orderItem in OrderItemList)
+        //{
+        //    if (predicate(orderItem))
+        //        return orderItem;
+        //}
+        //throw new DalDoesNotExistException("There is no order item that meets the condition");
+
+        //OrderItem orderItem = OrderItemList.FirstOrDefault(predicate!);
         //if (orderItem == null)
         //{
         //    throw new DalDoesNotExistException("There is no order item that meets the condition");
         //}
         //return orderItem;
-    }
+    //}
 }

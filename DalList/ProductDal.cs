@@ -75,28 +75,30 @@ internal class ProductDal:IProduct
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>
-    public IEnumerable<Product> GetAll(Func<Product, bool>? predicate=null)
-    {
-        List<Product> products = new List<Product>();
-        if (predicate != null)
-        {
-            foreach (Product product in ProductList)
-            {
-                if (predicate(product))
-                {
-                    products.Add(product);
-                }
-            }
-        }
-        else
-        {
-            foreach (Product product in ProductList)
-            {
-                products.Add(product);
-            }
-        }
-        return products;
-    }
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? predicate = null) =>
+    (predicate == null ? ProductList.Select(item => item) : ProductList.Where(predicate!)) ??
+        throw new DO.DalDoesNotExistException("product missing");
+    //{
+    //    List<Product> products = new List<Product>();
+    //    if (predicate != null)
+    //    {
+    //        foreach (Product product in ProductList)
+    //        {
+    //            if (predicate(product))
+    //            {
+    //                products.Add(product);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        foreach (Product product in ProductList)
+    //        {
+    //            products.Add(product);
+    //        }
+    //    }
+    //    return products;
+    //}
 
     /// <summary>
     /// get product by predicate
@@ -105,15 +107,18 @@ internal class ProductDal:IProduct
     /// <returns>the product</returns>
     /// <exception cref="Exception">if the product doesnt exist</exception>
 
-    public Product GetByCondition(Func<Product, bool>? predicate)
-    {
-        foreach (Product product in ProductList)
-        {
-            if (predicate(product))
-                return product;
-        }
-        throw new DalDoesNotExistException("There is no product that meets the condition");
-    }
+    public Product GetByCondition(Func<Product?, bool> predicate)=>
+        ProductList.FirstOrDefault(predicate!)??
+        throw new DalDoesNotExistException("There is no order item that meets the condition");
+
+    //{
+    //    foreach (Product product in ProductList)
+    //    {
+    //        if (predicate(product))
+    //            return product;
+    //    }
+    //    throw new DalDoesNotExistException("There is no product that meets the condition");
+    //}
 
 
     /// <summary>

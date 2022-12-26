@@ -3,7 +3,7 @@
 /// icrud generic interface that defines functions on the data entities
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface ICrud<T>
+public interface ICrud<T>where T:struct
 {
     /// <summary>
     /// A function that defines adding a data entity
@@ -38,7 +38,7 @@ public interface ICrud<T>
     /// A function that defines returning aentitie by condition
     /// </summary>
     /// <returns></returns>
-    public T GetByCondition(Func<T?, bool>? predicate);
+    public T GetByCondition(Func<T?, bool> predicate);
     
 	
 

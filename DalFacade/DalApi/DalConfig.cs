@@ -18,8 +18,8 @@ static class DalConfig
         var packages = dalConfig?.Element("dal-packages")?.Elements()
             ?? throw new DalConfigException("<dal-packages> element is missing");
         s_dalPackages = packages.ToDictionary(p => "" + p.Name, p => p.Value);
-        s_dalNamespaces = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x=>x.Name=="namespace").Value);
-        s_dalClasses = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x=>x.Name=="class").Value);
+        s_dalNamespaces = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x=>x.Name=="namespace")!.Value);
+        s_dalClasses = packages.ToDictionary(p => "" + p.Name, p => p.Attributes().FirstOrDefault(x=>x.Name=="class")!.Value);
 
     }
 }

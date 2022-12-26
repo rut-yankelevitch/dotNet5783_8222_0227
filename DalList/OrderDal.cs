@@ -37,6 +37,7 @@ internal class OrderDal : IOrder
         //}
         //else
         //    throw new DalDoesNotExistException(id, "order");
+       
         int count = OrderList.RemoveAll(order => order?.ID == id);
         if (count == 0)
             throw new DalDoesNotExistException(id, "order");
@@ -68,19 +69,18 @@ internal class OrderDal : IOrder
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
-    public IEnumerable<Order> GetAll(Func<Order, bool>? predicate)
-    {
-        List<Order> orders = new List<Order>();
-        foreach (Order order in OrderList)
-        {
-            orders.Add(order);
-        }
-        return orders;
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? predicate) =>
+       (predicate == null ? OrderList.Select(item => item) : OrderList.Where(predicate)) ??
+        throw new DO.DalDoesNotExistException("order missing");
 
-        //List<Order?> orders = OrderList.Select(item => item).ToList();
-        //return orders;
+    //{
+    //List<Order> orders = new List<Order>();
+    //foreach (Order order in OrderList)
+    //{
+    //    orders.Add(order);
+    //}
 
-    }
+    //}
 
 
     /// <summary>
@@ -89,22 +89,24 @@ internal class OrderDal : IOrder
     /// <param name="predicate">the order id</param>
     /// <returns>the order</returns>
     /// <exception cref="Exception">if the order doesnt exist</exception>
-    public Order GetByCondition(Func<Order, bool>? predicate)
-    {
-        foreach (Order order in OrderList)
-        {
-            if (predicate(order))
-                return order;
-        }
+    public Order GetByCondition(Func<Order?, bool> predicate)=>
+        OrderList.FirstOrDefault(predicate!) ??
         throw new DalDoesNotExistException("There is no order that meets the condition");
+    //{
+    //foreach (Order order in OrderList)
+    //{
+    //    if (predicate(order))
+    //        return order;
+    //}
+    //throw new DalDoesNotExistException("There is no order that meets the condition");
 
-        //Order? order = OrderList.FirstOrDefault(ord => predicate((Order)ord));
-        //if (order==null)
-        //{
-        //    throw new DalDoesNotExistException("There is no order that meets the condition");
-        //}
-        //return order;
-    }
+    //Order? order = OrderList.FirstOrDefault(ord => predicate((Order)ord));
+    //if (order==null)
+    //{
+    //    throw new DalDoesNotExistException("There is no order that meets the condition");
+    //}
+    //return order;
+    //}
 
 
     /// <summary>

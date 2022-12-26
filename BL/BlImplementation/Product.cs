@@ -37,32 +37,37 @@ internal class Product : IProduct
     /// <param name="filter1"></param>
     /// <param name="filterValue"></param>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1=BO.Filter.None , object? filterValue=null )
+    public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1 = BO.Filter.None, object? filterValue = null)
     {
-        IEnumerable<DO.Product> products; 
-        Filter filter=filter1;
+        IEnumerable<DO.Product?> products;
+        Filter filter = filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory:products = dal.Product.GetAll(product => product.Category == (filterValue != null ? (DO.Category)filterValue : product.Category));
+            case Filter.FilterByCategory: products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
                 break;
             case Filter.None:
-                products=dal.Product.GetAll();
+                products = dal.Product.GetAll();
                 break;
-            default:products = dal.Product.GetAll();
+            default: products = dal.Product.GetAll();
                 break;
         }
 
-        List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
-        foreach (DO.Product product in products)
-        {
-            BO.ProductForList productForList = new BO.ProductForList();
-            productForList.ID = product.ID;
-            productForList.Name = product.Name;
-            productForList.Price = product.Price;
-            productForList.Category = (BO.Category)product.Category;
-            productsForList.Add(productForList);
-        }
-        return productsForList;
+        //IEnumerable<BO.ProductForList?> productsForList;
+        //???
+        return products.Where(item => item != null).Select(item => new ProductForList { ID = ((DO.Product)item!).ID,
+            Name = ((DO.Product)item!).Name, Price = ((DO.Product)item!).Price,
+            Category = (BO.Category)((DO.Product)item!).Category
+        });
+
+        //foreach (DO.Product product in products)
+        //{
+        //    BO.ProductForList productForList = new BO.ProductForList();
+        //    productForList.ID = product.ID;
+        //    productForList.Name = product.Name;
+        //    productForList.Price = product.Price;
+        //    productForList.Category = (BO.Category)product.Category;
+        //    productsForList.Add(productForList);
+        //}
     }
 
 
@@ -76,7 +81,7 @@ internal class Product : IProduct
     {
         try
         {
-            DO.Product product = dal.Product.GetByCondition(product2=>product2.ID==id);
+            DO.Product product = dal.Product.GetByCondition(product2=>product2?.ID==id);
             BO.Product product1 = new BO.Product();
             product1.ID = product.ID;
             product1.Name = product.Name;
@@ -134,14 +139,22 @@ internal class Product : IProduct
     {
         try
         {
-            IEnumerable<DO.OrderItem> orderstems = dal.OrderItem.GetAll();
-            foreach (DO.OrderItem orderItem in orderstems)
-            {
-                if (orderItem.ProductID == id)
-                {
-                    throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem.OrderID}");
-                }
-            }
+
+
+           
+            IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
+          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => (item != null) && ((DO.OrderItem)item!).ProductID == id);
+            if(orderItem!=null)
+                throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
+
+            //orderItems.Where(item => (item!=null)&&((DO.OrderItem)item!).ProductID == id).Select(item=>throw new BO.BLImpossibleActionException($"product {id} exist in order {((DO.OrderItem)item!).OrderID}")
+            //foreach (DO.OrderItem orderItem in orderItems)
+            //{
+            //    if (orderItem.ProductID == id)
+            //    {
+            //        throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem.OrderID}");
+            //    }
+            //}
             dal.Product.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -189,27 +202,38 @@ internal class Product : IProduct
     /// <returns>list of product</returns>
     public IEnumerable<BO.ProductItem> GetProductListForCustomer()
     {
-        IEnumerable<DO.Product> products = dal.Product.GetAll();
-        List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
-        foreach (DO.Product product in products)
+        IEnumerable<DO.Product?> products = dal.Product.GetAll();
+        return products.Where(item => item != null).Select(item => new ProductItem
         {
-            BO.ProductItem productItem = new BO.ProductItem();
-            productItem.ID = product.ID;
-            productItem.Name = product.Name;
-            productItem.Price = product.Price;
-            productItem.Category = (BO.Category)product.Category;
-            productItem.Amount = product.InStock;
-            if (product.InStock > 0)
-            {
-                productItem.Instock = true;
-            }
-            else
-            {
-                productItem.Instock = false;
-            }
-            productsItems.Add(productItem);
-        }
-        return productsItems;
+            ID = ((DO.Product)item!).ID,
+            Name = ((DO.Product)item!).Name,
+            Price = ((DO.Product)item!).Price,
+            Category = (BO.Category)((DO.Product)item!).Category,
+            Amount = ((DO.Product)item!).InStock,
+            Instock = ((DO.Product)item!).InStock > 0 ? true : false 
+        });
+        
+        //IEnumerable<DO.Product?> products = dal.Product.GetAll();
+        //List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
+        //foreach (DO.Product product in products)
+        //{
+        //    BO.ProductItem productItem = new BO.ProductItem();
+        //    productItem.ID = product.ID;
+        //    productItem.Name = product.Name;
+        //    productItem.Price = product.Price;
+        //    productItem.Category = (BO.Category)product.Category;
+        //    productItem.Amount = product.InStock;
+        //    if (product.InStock > 0)
+        //    {
+        //        productItem.Instock = true;
+        //    }
+        //    else
+        //    {
+        //        productItem.Instock = false;
+        //    }
+        //    productsItems.Add(productItem);
+        //}
+        //return productsItems;
     }
 
 
@@ -225,7 +249,7 @@ internal class Product : IProduct
         DO.Product product1 = new DO.Product();
         try
         {
-            product1 = dal.Product.GetByCondition(product2=>product2.ID==id);
+            product1 = dal.Product.GetByCondition(product2=>product2?.ID==id);
         }
         catch (DO.DalDoesNotExistException ex)
         {

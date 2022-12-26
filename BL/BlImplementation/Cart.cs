@@ -36,7 +36,7 @@ internal class Cart : ICart
             {
                 cart.Items = new List<BO.OrderItem>();
             }
-            product = dal.Product.GetByCondition(product2 => product2.ID==idProduct);
+            product = dal.Product.GetByCondition(product2 => product2?.ID==idProduct);
 
             if (product.InStock <= 0)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
@@ -74,7 +74,7 @@ internal class Cart : ICart
         try
         {
             DO.Product product = new DO.Product();
-            product = dal.Product.GetByCondition(product2=>product2.ID==idProduct);
+            product = dal.Product.GetByCondition(product2=>product2?.ID==idProduct);
 
             if (product.InStock < amount)
                 throw new BO.BLImpossibleActionException("product not exist in stock");
@@ -156,7 +156,7 @@ internal class Cart : ICart
             {
                 try
                 {
-                    product = dal.Product.GetByCondition(product2=>product2.ID==orderItem.ProductID);
+                    product = dal.Product.GetByCondition(product2=>product2?.ID==orderItem.ProductID);
                 }
                 catch (DO.DalDoesNotExistException ex)
                 {
