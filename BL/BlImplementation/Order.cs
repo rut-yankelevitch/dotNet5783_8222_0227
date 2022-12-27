@@ -19,21 +19,20 @@ internal class Order : BlApi.IOrder
         try
         {
            IEnumerable<DO.Order?> orders = dal.Order.GetAll();
-           var ordersForList = from order in orders
-                            let orderItems = dal.OrderItem.GetAll(orderitem2 => orderitem2?.OrderID == order?.ID)
-                            let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
-                            let price = orderItems.Sum(o => ((DO.OrderItem)o!).Price)
-                            select new BO.OrderForList
-                            { 
-                                ID = ((DO.Order)order!).ID,
-                                CustomerName=((DO.Order)order!).CustomerName,
-                                AmountOfItems = amount,
-                                TotalPrice = amount*price,
-                                Status = (((DO.Order)order!).DeliveryrDate != null && ((DO.Order)order!).DeliveryrDate < DateTime.Now) ?
+            var ordersForList = from order in orders
+                                let orderItems = dal.OrderItem.GetAll(orderitem2 => orderitem2?.OrderID == order?.ID)
+                                let amount = orderItems.Sum(o => ((DO.OrderItem)o!).Amount)
+                                let price = orderItems.Sum(o => ((DO.OrderItem)o!).Amount*((DO.OrderItem)o!).Price)
+                                select new BO.OrderForList
+                                {
+                                    ID = ((DO.Order)order!).ID,
+                                    CustomerName = ((DO.Order)order!).CustomerName,
+                                    AmountOfItems = amount,
+                                    TotalPrice = price,
+                                    Status = (((DO.Order)order!).DeliveryrDate != null && ((DO.Order)order!).DeliveryrDate < DateTime.Now) ?
                                                 BO.OrderStatus.ProvidedOrder : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
                                                 BO.OrderStatus.SendOrder : BO.OrderStatus.ConfirmedOrder
-                            }; 
-
+                                };
             //foreach (DO.Order order in orders)
             //{
             //    //foreach (DO.OrderItem item in orderitems)
@@ -185,12 +184,13 @@ internal class Order : BlApi.IOrder
             throw new BO.BLDoesNotExistException("order does not exist", ex);
         }
 
-        if (orderDal.ShipDate != null&&orderDal.ShipDate < DateTime.Now)
+        if (orderDal.ShipDate != null&& orderDal.ShipDate < DateTime.Now)
             throw new BO.BLImpossibleActionException("order send");
         else
         {
-            if (orderDal.ShipDate == null)
-                throw new BO.BLMistakeUpdateException("No shipping date");
+            //לא נכון
+            //if (orderDal.ShipDate == null)
+            //    throw new BO.BLMistakeUpdateException("No shipping date");
             try
             {
                 dal.Order.Update(orderDal);

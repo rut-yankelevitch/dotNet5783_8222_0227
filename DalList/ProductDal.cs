@@ -108,7 +108,7 @@ internal class ProductDal:IProduct
     /// <exception cref="Exception">if the product doesnt exist</exception>
 
     public Product GetByCondition(Func<Product?, bool> predicate)=>
-        ProductList.FirstOrDefault(predicate!)??
+        ProductList.FirstOrDefault(predicate)??
         throw new DalDoesNotExistException("There is no order item that meets the condition");
 
     //{
