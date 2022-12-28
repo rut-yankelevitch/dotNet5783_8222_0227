@@ -81,6 +81,7 @@ internal class Cart : ICart
 
             if (cart.Items != null)
             {
+
                 foreach (BO.OrderItem orderItem in cart.Items)
                 {
 
