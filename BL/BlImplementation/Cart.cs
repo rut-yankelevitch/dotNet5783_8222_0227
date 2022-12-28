@@ -1,5 +1,9 @@
-﻿using BlApi;
+﻿using System.Security.Cryptography;
+using BlApi;
 using BO;
+using DalApi;
+using DO;
+
 namespace BlImplementation;
 
 internal class Cart : ICart
@@ -23,19 +27,17 @@ internal class Cart : ICart
             DO.Product product = new DO.Product();
             BO.OrderItem orderItem1 = new BO.OrderItem();
 
-            if (cart.Items != null)
-            {
-                foreach (BO.OrderItem orderItem in cart.Items)
+//            if (cart.Items != null)
+//          {
+                if(cart.Items?.FirstOrDefault(item=>item?.ProductID==idProduct)!=null)
                 {
-                    if (orderItem.ProductID == idProduct)
-                        throw new BO.BLImpossibleActionException("product exist in cart");
+                    throw new BO.BLImpossibleActionException("product exist in cart");
                 }
-
-            }
-            else
-            {
-                cart.Items = new List<BO.OrderItem>();
-            }
+            //}
+            //else
+            //{
+            //    cart.Items = new List<BO.OrderItem>();
+            //}
             product = dal.Product.GetByCondition(product2 => product2?.ID==idProduct);
 
             if (product.InStock <= 0)
@@ -46,7 +48,7 @@ internal class Cart : ICart
             orderItem1.Amount = 1;
             orderItem1.Price = product.Price;
             orderItem1.TotalPrice = orderItem1.Price * orderItem1.Amount;
-            cart.Items.Add(orderItem1);
+            cart.Items?.Add(orderItem1);
             cart.TotalPrice += orderItem1.TotalPrice;
             return cart;
         }
@@ -81,33 +83,57 @@ internal class Cart : ICart
 
             if (cart.Items != null)
             {
-                foreach (BO.OrderItem orderItem in cart.Items)
+                if (amount < 0)
+                    throw new BO.BLInvalidInputException("invalid amount");
+                var sum = cart.Items.Where(item => item?.ProductID == idProduct).Sum(item => item?.TotalPrice)??
+                    throw new BLImpossibleActionException("This item is not in the cart");
+                cart.TotalPrice -= (double)sum!;
+     
+                if (amount == 0)
                 {
-
-                    if (orderItem.ProductID == idProduct)
-                    {
-                        flag = true;
-                        if (amount < 0)
-                        {
-                            throw new BO.BLInvalidInputException("invalid amount");
-                        }
-                        else
-                        {
-                            if (amount == 0)
-                            {
-                                cart.TotalPrice -= orderItem.TotalPrice;
-                                cart.Items.Remove(orderItem);
-                            }
-                            else
-                            {
-                                cart.TotalPrice -= orderItem.TotalPrice;
-                                orderItem.Amount = amount;
-                                orderItem.TotalPrice = orderItem.Price * amount;
-                                cart.TotalPrice += orderItem.TotalPrice;
-                            }
-                        }
-                    }
+                    cart.Items.RemoveAll(item => item?.ProductID == idProduct);
                 }
+                else
+                {
+              //cart.Items.Select(item => item.Amount = amount &&item.TotalPrice=item.Price*amount);
+                }
+                
+
+                //foreach (BO.OrderItem orderItem in cart.Items)
+                //{
+
+                //        if (orderItem.ProductID == idProduct)
+                //    {
+                //        flag = true;
+                //        if (amount < 0)
+                //        {
+                //            throw new BO.BLInvalidInputException("invalid amount");
+                //        }
+                //        else
+                //        {
+                //            if (amount == 0)
+                //            {
+                //                cart.TotalPrice -= orderItem.TotalPrice;
+                //                cart.Items.Remove(orderItem);
+                //            }
+                //            else
+                //            {
+                //                cart.TotalPrice -= orderItem.TotalPrice;
+                //                orderItem.Amount = amount;
+                //                orderItem.TotalPrice = orderItem.Price * amount;
+                //                cart.TotalPrice += orderItem.TotalPrice;
+                //            }
+                //        }
+                //    }
+                //}
+                
+                   
+                    
+                    
+
+
+
+
                 if (flag == false)
                 {
                     throw new BLImpossibleActionException("This item is not in the cart");
@@ -162,7 +188,7 @@ internal class Cart : ICart
                 {
                     throw new BO.BLDoesNotExistException("product dosent exsit", ex);
                 }
-                if (orderItem.Amount <= 0)
+                if (orderItem?.Amount <= 0)
                     throw new BO.BLImpossibleActionException("invalid amount");
                 if (product.InStock < orderItem.Amount)
                     throw new BO.BLImpossibleActionException("amount not in stock ");

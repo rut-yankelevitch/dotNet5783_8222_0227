@@ -155,7 +155,7 @@ internal class Product : IProduct
 
            
             IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
-          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => (item != null) && ((DO.OrderItem)item!).ProductID == id);
+          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item =>((DO.OrderItem)item!).ProductID == id);
             if(orderItem!=null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
 
