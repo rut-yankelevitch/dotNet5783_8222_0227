@@ -143,7 +143,7 @@ internal class OrderItemDal:IOrderItem
     /// <returns>the orderItem</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate)=>
-        OrderItemList.FirstOrDefault(predicate!) ?? 
+        OrderItemList.FirstOrDefault(predicate) ?? 
         throw new DalDoesNotExistException("There is no order item that meets the condition");
 
     //{

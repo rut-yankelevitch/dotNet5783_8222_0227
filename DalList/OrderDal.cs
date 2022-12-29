@@ -90,7 +90,7 @@ internal class OrderDal : IOrder
     /// <returns>the order</returns>
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetByCondition(Func<Order?, bool> predicate)=>
-        OrderList.FirstOrDefault(predicate!) ??
+        OrderList.FirstOrDefault(predicate) ??
         throw new DalDoesNotExistException("There is no order that meets the condition");
     //{
     //foreach (Order order in OrderList)

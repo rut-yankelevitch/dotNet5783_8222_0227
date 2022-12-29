@@ -1,4 +1,7 @@
-﻿using BO;
+﻿using System.Data;
+using System.Net;
+using System.Security.Cryptography;
+using BO;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -54,10 +57,19 @@ internal class Product : IProduct
 
         //IEnumerable<BO.ProductForList?> productsForList;
         //???
-        return products.Where(item => item != null).Select(item => new ProductForList { ID = ((DO.Product)item!).ID,
-            Name = ((DO.Product)item!).Name, Price = ((DO.Product)item!).Price,
-            Category = (BO.Category)((DO.Product)item!).Category
-        });
+        return from pro in products 
+               let product = (DO.Product)pro
+               select new ProductForList
+               {
+                   ID = product.ID,
+                   Name = product.Name,
+                   Price = product.Price,
+                   Category = (BO.Category)product.Category,
+               };
+        //return products.Where(item => item != null).Select(item => new ProductForList { ID = ((DO.Product)item!).ID,
+        //    Name = ((DO.Product)item!).Name, Price = ((DO.Product)item!).Price,
+        //    Category = (BO.Category)((DO.Product)item!).Category
+        //});
 
         //foreach (DO.Product product in products)
         //{
@@ -143,7 +155,7 @@ internal class Product : IProduct
 
            
             IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
-          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => (item != null) && ((DO.OrderItem)item!).ProductID == id);
+          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item =>((DO.OrderItem)item!).ProductID == id);
             if(orderItem!=null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
 
@@ -203,16 +215,27 @@ internal class Product : IProduct
     public IEnumerable<BO.ProductItem> GetProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetAll();
-        return products.Where(item => item != null).Select(item => new ProductItem
-        {
-            ID = ((DO.Product)item!).ID,
-            Name = ((DO.Product)item!).Name,
-            Price = ((DO.Product)item!).Price,
-            Category = (BO.Category)((DO.Product)item!).Category,
-            Amount = ((DO.Product)item!).InStock,
-            Instock = ((DO.Product)item!).InStock > 0 ? true : false 
-        });
-        
+        return from pro in products
+          let product =(DO.Product)pro!
+          select new ProductItem
+          {
+              ID = product.ID,
+              Name = product.Name,
+              Price = product.Price,
+              Category = (BO.Category)product.Category,
+              Amount = product.InStock,
+              Instock = product.InStock > 0 ? true : false
+          };
+        //return products.Select(item => new ProductItem
+        //{
+        //    ID = ((DO.Product)item!).ID,
+        //    Name = ((DO.Product)item!).Name,
+        //    Price = ((DO.Product)item!).Price,
+        //    Category = (BO.Category)((DO.Product)item!).Category,
+        //    Amount = ((DO.Product)item!).InStock,
+        //    Instock = ((DO.Product)item!).InStock > 0 ? true : false
+        //});
+
         //IEnumerable<DO.Product?> products = dal.Product.GetAll();
         //List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
         //foreach (DO.Product product in products)
