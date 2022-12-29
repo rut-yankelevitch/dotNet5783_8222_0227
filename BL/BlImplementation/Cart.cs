@@ -172,8 +172,6 @@ internal class Cart : ICart
         try
         {
             DO.Order order = new DO.Order();
-            //DO.Product product = new DO.Product();
-
             if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
             {
                 throw new BO.BLInvalidInputException("Invalid details");
@@ -190,55 +188,25 @@ internal class Cart : ICart
                     where product.InStock >= ordItem.Amount
                     select new
                     {
-                        orderItemId =dal.OrderItem.Add(new DO.OrderItem { OrderID = id, ProductID = ordItem.ProductID, Amount = ordItem.Amount, Price = ordItem.Price })
-                        /*להוסיף זריקה*/,
+
+                        orderItemId =dal.OrderItem.Add(new DO.OrderItem { OrderID = id, ProductID = ordItem.ProductID, Amount = ordItem.Amount, Price = ordItem?.Price ?? 0 })
+                        ,
                         product2 = new DO.Product { Price = product.Price, Category = product.Category, ID = product.ID, Name = product.Name, InStock = (product.InStock) - ordItem.Amount }
                     };
-             a.ToList().ForEach(a => dal.Product.Update(a.product2));/*להוסיף זריקה*/
+            try
+            {
 
+                a.ToList().ForEach(a => dal.Product.Update(a.product2));
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+            }
 
-            //foreach (BO.OrderItem orderItem in cart.Items)
-            //{
-            //    try
-            //    {
-            //        product = dal.Product.GetByCondition(product2=>product2?.ID==orderItem.ProductID);
-            //    }
-            //    catch (DO.DalDoesNotExistException ex)
-            //    {
-            //        throw new BO.BLDoesNotExistException("product dosent exsit", ex);
-            //    }
-            //////    if (orderItem?.Amount <= 0)
-            //////        throw new BO.BLImpossibleActionException("invalid amount");
-            //    if (product.InStock < orderItem.Amount)
-            //        throw new BO.BLImpossibleActionException("amount not in stock ");
-
-            //    DO.OrderItem orderItem1 = new DO.OrderItem();
-            //    orderItem1.OrderID = id;
-            //    orderItem1.ProductID = orderItem.ProductID;
-            //    orderItem1.Amount = orderItem.Amount;
-            //    orderItem1.Price = orderItem.Price;
-            //    product.InStock -= orderItem.Amount;
-            //    try
-            //    {
-            //        dal.Product.Update(product);
-            //    }
-            //    catch (DO.DalDoesNotExistException ex)
-            //    {
-            //        throw new BO.BLDoesNotExistException("product dosent exsit", ex);
-            //    }
-            //    try
-            //    {
-            //        dal.OrderItem.Add(orderItem1);
-            //    }
-            //    catch (DO.DalDoesNotExistException ex)
-            //    {
-            //        throw new BO.BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
-            //    }
-            //}
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.BLDoesNotExistException("product dosent exsit", ex);
+            throw new BO.BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
         }
 
     }
