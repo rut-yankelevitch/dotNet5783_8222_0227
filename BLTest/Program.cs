@@ -47,11 +47,11 @@ namespace BLTest
         {
             BO.Product product = new BO.Product();
             BO.ProductItem productItem = new BO.ProductItem();
-            IEnumerable<BO.ProductForList> productsForList = new List<BO.ProductForList>();
-            IEnumerable<BO.ProductItem> productsItem = new List<BO.ProductItem>();
+            IEnumerable<BO.ProductForList?> productsForList = new List<BO.ProductForList?>();
+            IEnumerable<BO.ProductItem?> productsItem = new List<BO.ProductItem?>();
             Console.WriteLine("Product menu: \n 1- add \n 2- get for manager \n 3- get for customer \n 4- get list for manager \n 5- get list for customer  \n 6- update \n 7- delete");
             readString = Console.ReadLine();
-            ProductOptions productOptions = (ProductOptions)int.Parse(readString);
+            ProductOptions productOptions = (ProductOptions)int.Parse(readString!);
             try
             {
                 switch (productOptions)
@@ -90,12 +90,12 @@ namespace BLTest
                         break;
                     case ProductOptions.GET_LIST_FOR_MANAGER:
                         productsForList= iBl.Product.GetProductListForManagerNoFilter();
-                        foreach(ProductForList productForList in productsForList) 
+                        foreach(ProductForList? productForList in productsForList) 
                             Console.WriteLine(productForList);
                         break;
                     case ProductOptions.GET_LIST_FOR_CUSTOMER:
                         productsItem = iBl.Product.GetProductListForCustomer();
-                        foreach (ProductItem item in productsItem)
+                        foreach (ProductItem? item in productsItem)
                                 Console.WriteLine(item);
                         break;
                     case ProductOptions.UPDATE:
@@ -165,7 +165,7 @@ namespace BLTest
             List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
             Console.WriteLine("Order menu: \n 1- get \n 2- get all \n 3- update shipping order \n 4- update delivery order  \n 5- order tracking \n 6- update amount of product in order");
             readString = Console.ReadLine();
-            OrderOptions orderOptions = (OrderOptions)int.Parse(readString);
+            OrderOptions orderOptions = (OrderOptions)int.Parse(readString!);
 
             try
             {
@@ -179,9 +179,9 @@ namespace BLTest
                         Console.WriteLine(order);
                         break;
                     case OrderOptions.GET_ALL:
-                        IEnumerable<BO.OrderForList> orders = new List<BO.OrderForList>();
+                        IEnumerable<BO.OrderForList?> orders = new List<BO.OrderForList>();
                         orders = iBl.Order.GetOrderList();
-                        foreach (BO.OrderForList o in orders)
+                        foreach (BO.OrderForList? o in orders)
                         {
                             Console.WriteLine(o);
                         }
@@ -259,7 +259,7 @@ namespace BLTest
         {
             Console.WriteLine("cart menu: \n 1- add \n 2- update  \n 3- make order ");
             readString = Console.ReadLine();
-            CartOptions cartOptions = (CartOptions)int.Parse(readString);
+            CartOptions cartOptions = (CartOptions)int.Parse(readString!);
             currentCart.CustomerName="david coen";
             currentCart.CustomerEmail="davidcoen@gmail.com";
             currentCart.CustomerAddress="micael 15 petach tikva";

@@ -33,34 +33,6 @@ internal class Order : BlApi.IOrder
                                                 BO.OrderStatus.SendOrder : BO.OrderStatus.ConfirmedOrder
                                 };
 
-
-
-            //foreach (DO.Order order in orders)
-            //{
-            //    //foreach (DO.OrderItem item in orderitems)
-            //    //{
-            //    //    totalPrice += item.Amount * item.Price;
-            //    //    amount += item.Amount;
-            //    //}
-                
-                              
-            //    orderForList.ID = order.ID;
-            //    orderForList.CustomerName = order.CustomerName;
-            //    orderForList.AmountOfItems = amount;
-            //    orderForList.TotalPrice = totalPrice;
-
-            //    if (order.DeliveryrDate != null && order.DeliveryrDate < DateTime.Now)
-            //        orderForList.Status = BO.OrderStatus.ProvidedOrder;
-            //    else
-            //    {
-            //        if (order.ShipDate != null && order.ShipDate < DateTime.Now)
-            //            orderForList.Status = BO.OrderStatus.SendOrder;
-            //        else
-            //            orderForList.Status = BO.OrderStatus.ConfirmedOrder;
-            //    }
-            //    ordersForList.Add(orderForList);
-            //}
-
             return ordersForList;
         }
         catch (DO.DalDoesNotExistException ex)
@@ -263,11 +235,6 @@ internal class Order : BlApi.IOrder
 
             if (orderDal.ShipDate > DateTime.Now)
                 throw new BO.BLImpossibleActionException("It is not possible to update a delivery date before a shipping date");
-            //else
-            //{
-            //    if (orderDal.DeliveryrDate == null)
-            //        throw new BO.BLImpossibleActionException(" No delivery date");
-            //}
             orderDal.DeliveryrDate = DateTime.Now;
             try
             {

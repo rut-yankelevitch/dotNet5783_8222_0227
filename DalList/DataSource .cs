@@ -105,6 +105,7 @@ static class DataSource
             }
             while (randA == randB);
 
+
             foreach (Product p in ProductList)
             {
                 if (p.ID == ProductList[randB]?.ID)

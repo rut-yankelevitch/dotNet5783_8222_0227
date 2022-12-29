@@ -21,7 +21,6 @@ namespace PL.Product
             InitializeComponent();
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             confirmation_btn.Content = "add";
-
         }
 
 
@@ -45,7 +44,6 @@ namespace PL.Product
                 {
                     MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
                 idInput.Text = product.ID.ToString();
                 idInput.IsEnabled = false;
                 nameInput.Text = product.Name;
@@ -79,7 +77,6 @@ namespace PL.Product
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
 
-           // ??
             if ((string)confirmation_btn.Content == "add")
             {
                 try
@@ -211,7 +208,6 @@ namespace PL.Product
             {
                 confirmation_btn.IsEnabled = false;
             }
-
         }
 
 

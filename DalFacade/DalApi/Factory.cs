@@ -19,7 +19,6 @@ public static class Factory
         string classDal = s_dalClasses[dalType]
             ?? throw new DalConfigException($"class for {dalType} is not found in classes list");
 
-
         try
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));

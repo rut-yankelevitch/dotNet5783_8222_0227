@@ -20,7 +20,6 @@ namespace PL.Product
         {
             InitializeComponent();
             productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
-            
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
@@ -34,12 +33,11 @@ namespace PL.Product
             
             if (category == BO.Category.None)
             {
-                productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
-
+                productListView.ItemsSource = bl?.Product.GetProductListForManagerNoFilter();
             }
             else
             {
-                productListView.ItemsSource=bl.Product.GetProductListForManagerByCategory(category);
+                productListView.ItemsSource=bl?.Product.GetProductListForManagerByCategory(category);
             }
         }
 

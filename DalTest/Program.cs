@@ -59,7 +59,7 @@ namespace DalTest
                             readString = Console.ReadLine();
                             int.TryParse(readString, out readInt);
                             product.InStock = readInt;
-                            int insertId = dalList.Product.Add(product);
+                            int insertId = dalList!.Product.Add(product);
                             Console.WriteLine("insert id: " + insertId);
                         }
                         break;
@@ -67,12 +67,12 @@ namespace DalTest
                         Console.WriteLine("Enter id product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        product = dalList.Product.GetByCondition(item=>item?.ID==readInt);
+                        product = dalList!.Product.GetByCondition(item=>item?.ID==readInt);
                         Console.WriteLine(product);
                         break;
                     case Options.GET_ALL:
-                        IEnumerable<Product?> products = dalList.Product.GetAll();
-                        foreach (Product product1 in products)
+                        IEnumerable<Product?> products = dalList!.Product.GetAll();
+                        foreach (Product? product1 in products)
                         {
                             Console.WriteLine(product1);
                         }
@@ -106,13 +106,13 @@ namespace DalTest
                             int.TryParse(readString, out readInt);
                             product.InStock = readInt;
                         }
-                        dalList.Product.Update(product);
+                        dalList!.Product.Update(product);
                         break;
                     case Options.DELETE:
                         Console.WriteLine("enter product id to delete:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        dalList.Product.Delete(readInt);
+                        dalList!.Product.Delete(readInt);
                         break;
                     default:
                         break;
@@ -133,7 +133,7 @@ namespace DalTest
         {
             Console.WriteLine("Order menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete");
             readString = Console.ReadLine();
-            option = (Options)int.Parse(readString);
+            option = (Options)int.Parse(readString!);
             Order order = new Order();
             DateTime helpDateTime;
             try
@@ -148,19 +148,19 @@ namespace DalTest
                         order.OrderDate = DateTime.Now;
                         order.ShipDate = DateTime.MinValue;
                         order.DeliveryrDate = DateTime.MinValue;
-                        int insertId = dalList.Order.Add(order);
+                        int insertId = dalList!.Order.Add(order);
                         Console.WriteLine("insert id: " + insertId);
                         break;
                     case Options.GET:
                         Console.WriteLine("enter order id: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        order = dalList.Order.GetByCondition(item=>item?.ID==readInt);
+                        order = dalList!.Order.GetByCondition(item=>item?.ID==readInt);
                         Console.WriteLine(order);
                         break;
                     case Options.GET_ALL:
-                        IEnumerable<Order?> orders = dalList.Order.GetAll();
-                        foreach (Order o in orders)
+                        IEnumerable<Order?> orders = dalList!.Order.GetAll();
+                        foreach (Order? o in orders)
                         {
                             Console.WriteLine(o);
                         }
@@ -201,13 +201,13 @@ namespace DalTest
                             DateTime.TryParse(readString, out helpDateTime);
                             order.DeliveryrDate = helpDateTime;
                         }
-                        dalList.Order.Update(order);
+                        dalList!.Order.Update(order);
                         break;
                     case Options.DELETE:
                         Console.WriteLine("enter order id to delete:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        dalList.Order.Delete(readInt);
+                        dalList!.Order.Delete(readInt);
 
                         break;
                     default:
@@ -228,7 +228,7 @@ namespace DalTest
             Console.WriteLine("Order item menu: \n 1-add \n 2- get by id \n 3- get all  \n 4- update \n 5- delete \n 6- getitems by order id  \n 7- get by order id and product id ");
             OrderItem orderItem = new OrderItem();
             readString = Console.ReadLine();
-            option = (Options)int.Parse(readString);
+            option = (Options)int.Parse(readString!);
             try
             {
                 switch (option)
@@ -247,7 +247,7 @@ namespace DalTest
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
                         orderItem.Amount = readInt;
-                        int insertId = dalList.OrderItem.Add(orderItem);
+                        int insertId = dalList!.OrderItem.Add(orderItem);
 
                         Console.WriteLine("insert id: " + insertId);
                         break;
@@ -255,12 +255,12 @@ namespace DalTest
                         Console.WriteLine("enter order item id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        orderItem = dalList.OrderItem.GetByCondition(item=>item?.ID==readInt);
+                        orderItem = dalList!.OrderItem.GetByCondition(item=>item?.ID==readInt);
                         Console.WriteLine(orderItem);
                         break;
                     case Options.GET_ALL:
-                       IEnumerable<OrderItem?> ordersItems = dalList.OrderItem.GetAll();
-                        foreach (OrderItem ordItem in ordersItems)
+                       IEnumerable<OrderItem?> ordersItems = dalList!.OrderItem.GetAll();
+                        foreach (OrderItem? ordItem in ordersItems)
                             Console.WriteLine(ordItem);
                         break;
                     case Options.UPDATE:
@@ -296,20 +296,20 @@ namespace DalTest
                             int.TryParse(readString, out readInt);
                             orderItem.Amount = readInt;
                         }
-                        dalList.OrderItem.Update(orderItem);
+                        dalList!.OrderItem.Update(orderItem);
                         break;
                     case Options.DELETE:
                         Console.WriteLine("enter order item id to delete:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        dalList.OrderItem.Delete(readInt);
+                        dalList!.OrderItem.Delete(readInt);
                         break;
                     case Options.GET_BY_ORDERID:
                         Console.WriteLine("enter order id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        IEnumerable<OrderItem?> orderItems = dalList.OrderItem.GetAll(item=>item?.OrderID==readInt);
-                        foreach (OrderItem ordItem in orderItems)
+                        IEnumerable<OrderItem?> orderItems = dalList!.OrderItem.GetAll(item=>item?.OrderID==readInt);
+                        foreach (OrderItem? ordItem in orderItems)
                             Console.WriteLine(ordItem);
                         break;
                     case Options.GET_BY_ORDER_PRODUCT:
@@ -321,7 +321,7 @@ namespace DalTest
                         int prodId;
                         readString = Console.ReadLine();
                         int.TryParse(readString, out prodId);
-                        orderItem = dalList.OrderItem.GetByCondition(item=>item?.OrderID==orderId&&item?.ProductID==prodId);
+                        orderItem = dalList!.OrderItem.GetByCondition(item=>item?.OrderID==orderId&&item?.ProductID==prodId);
                         Console.WriteLine(orderItem);
                         break;
                     default:
