@@ -8,7 +8,9 @@
         Background="Bisque"
         Title="MainWindow" Height="450" Width="800" >
     <Grid >
-        <Button x:Name="ShowProductsBotton" Content="show products" Background="OrangeRed" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Click="ShowProductsBotton_Click" Height="65" Width="155"/>
+        <Button x:Name="ShowOrderTraking" Content=" תצוגת מעקב הזמנות" Background="OrangeRed" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
+        <Button x:Name="ShowManager" Content=" תצוגת מנהל" Background="OrangeRed" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
+        <Button x:Name="ShowNewOrder" Content=" תצוגת הזמנה חדשה" Background="OrangeRed" HorizontalAlignment="Left" Margin="500,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowNewOrder_Click"/>
         
 
     </Grid>

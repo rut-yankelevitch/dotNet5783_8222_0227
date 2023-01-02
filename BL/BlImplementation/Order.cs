@@ -5,7 +5,7 @@
 /// </summary>
 internal class Order : BlApi.IOrder
 {
-    //??
+
     private DalApi.IDal dal =  DalApi.Factory.Get();
 
     /// <summary>
@@ -106,29 +106,6 @@ internal class Order : BlApi.IOrder
         catch (DO.DalDoesNotExistException ex)
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
-        }
-
-        {
-
-            //foreach (DO.OrderItem item in orderitemsDal)
-            //{
-            //    BO.OrderItem orderitem = new BO.OrderItem();
-            //    orderitem.ID = item.ID;
-            //    orderitem.ProductID = item.ProductID;
-            //    orderitem.Price = item.Price;
-            //    orderitem.Amount = item.Amount;
-            //    orderitem.TotalPrice = item.Amount * item.Price;
-            //    try
-            //    {
-            //        product = dal.Product.GetByCondition(product2=>product2?.ID==orderitem.ProductID);
-            //    }
-            //    catch (DO.DalDoesNotExistException ex)
-            //    {
-            //        throw new BO.BLDoesNotExistException("order does not exist", ex);
-            //    }
-            //    orderitem.Name = product.Name;
-            //    orderitems.Add(orderitem);
-            //    totalPrice += orderitem.TotalPrice;
         }
     }
 

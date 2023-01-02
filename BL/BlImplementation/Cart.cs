@@ -45,6 +45,7 @@ internal class Cart : ICart
         }
     }
 
+
     /// <summary>
     ///function that update the amount of product in the cart
     /// </summary>

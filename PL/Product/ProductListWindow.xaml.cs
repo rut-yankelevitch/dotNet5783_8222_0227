@@ -11,7 +11,7 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private BlApi.IBl? bl =BlApi.Factory.Get();
+        private BlApi.IBl bl =BlApi.Factory.Get();
 
         /// <summary>
         ///ProductListWindow constructor

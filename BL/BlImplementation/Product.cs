@@ -10,7 +10,6 @@ namespace BlImplementation;
 /// </summary>
 internal class Product : IProduct
 {
-    //??
     private DalApi.IDal dal = DalApi.Factory.Get();
 
     /// <summary>
@@ -66,20 +65,6 @@ internal class Product : IProduct
                    Price = product.Price,
                    Category = (BO.Category)product.Category,
                };
-        //return products.Where(item => item != null).Select(item => new ProductForList { ID = ((DO.Product)item!).ID,
-        //    Name = ((DO.Product)item!).Name, Price = ((DO.Product)item!).Price,
-        //    Category = (BO.Category)((DO.Product)item!).Category
-        //});
-
-        //foreach (DO.Product product in products)
-        //{
-        //    BO.ProductForList productForList = new BO.ProductForList();
-        //    productForList.ID = product.ID;
-        //    productForList.Name = product.Name;
-        //    productForList.Price = product.Price;
-        //    productForList.Category = (BO.Category)product.Category;
-        //    productsForList.Add(productForList);
-        //}
     }
 
 
@@ -151,22 +136,10 @@ internal class Product : IProduct
     {
         try
         {
-
-
-           
             IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
           DO.OrderItem? orderItem = orderItems.FirstOrDefault(item =>((DO.OrderItem)item!).ProductID == id);
             if(orderItem!=null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
-
-            //orderItems.Where(item => (item!=null)&&((DO.OrderItem)item!).ProductID == id).Select(item=>throw new BO.BLImpossibleActionException($"product {id} exist in order {((DO.OrderItem)item!).OrderID}")
-            //foreach (DO.OrderItem orderItem in orderItems)
-            //{
-            //    if (orderItem.ProductID == id)
-            //    {
-            //        throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem.OrderID}");
-            //    }
-            //}
             dal.Product.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -226,37 +199,6 @@ internal class Product : IProduct
               Amount = product.InStock,
               Instock = product.InStock > 0 ? true : false
           };
-        //return products.Select(item => new ProductItem
-        //{
-        //    ID = ((DO.Product)item!).ID,
-        //    Name = ((DO.Product)item!).Name,
-        //    Price = ((DO.Product)item!).Price,
-        //    Category = (BO.Category)((DO.Product)item!).Category,
-        //    Amount = ((DO.Product)item!).InStock,
-        //    Instock = ((DO.Product)item!).InStock > 0 ? true : false
-        //});
-
-        //IEnumerable<DO.Product?> products = dal.Product.GetAll();
-        //List<BO.ProductItem> productsItems = new List<BO.ProductItem>();
-        //foreach (DO.Product product in products)
-        //{
-        //    BO.ProductItem productItem = new BO.ProductItem();
-        //    productItem.ID = product.ID;
-        //    productItem.Name = product.Name;
-        //    productItem.Price = product.Price;
-        //    productItem.Category = (BO.Category)product.Category;
-        //    productItem.Amount = product.InStock;
-        //    if (product.InStock > 0)
-        //    {
-        //        productItem.Instock = true;
-        //    }
-        //    else
-        //    {
-        //        productItem.Instock = false;
-        //    }
-        //    productsItems.Add(productItem);
-        //}
-        //return productsItems;
     }
 
 
