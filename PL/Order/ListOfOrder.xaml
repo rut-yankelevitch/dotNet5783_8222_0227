@@ -3,31 +3,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Order"
+        xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ListOfOrder" Height="450" Width="800">
-    <Grid Name="MainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >-->
-            <!--<ComboBox x:Name="categorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>-->
-            <!--<Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>-->
-        </Grid>
-        <ListView x:Name="listViewOrders"  Background="Azure"  Grid.Row="1" ItemsSource="{Binding}"   >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <!--<Button x:Name="addProductButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>-->
-    </Grid>
+        DataContext="{Binding Orders, RelativeSource={RelativeSource Mode=Self}}"
+        Title="OrderForListWindow" Height="640" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="CustomerName:" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=CustomerName}" />
+                <TextBlock Grid.Column="2" Text="Status:" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Status}" />
+                <TextBlock Grid.Column="4" Text="AmountOfItems:"/>
+                <TextBlock Grid.Column="5" Text="{Binding Path=AmountOfItems}" />
+                <TextBlock Grid.Column="6" Text="TotalPrice:"/>
+                <TextBlock Grid.Column="7" Text="{Binding Path=TotalPrice}" />
+
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <StackPanel>
+        <ListBox x:Name="OrdersListview" ItemsSource="{Binding}" ItemTemplate="{StaticResource MyDataTemplate}"
+           HorizontalContentAlignment="Stretch" />
+    </StackPanel>
 </Window>
