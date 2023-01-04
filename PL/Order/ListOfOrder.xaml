@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        DataContext="{Binding Orders, RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding Orders, RelativeSource={RelativeSource Mode=Self} }"
         Title="OrderForListWindow" Height="640" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">

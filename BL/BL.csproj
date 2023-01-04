@@ -18,8 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
+    <ProjectReference Include="..\DalFacade\DalFacade.csproj" >
+		<PrivatAssets>all</PrivatAssets>
+	  </ProjectReference>
 		<ProjectReference Include="..\DalList\DalList.csproj" />
-  </ItemGroup>
+  
+</ItemGroup>
 
 </Project>
