@@ -14,12 +14,14 @@ namespace PL
             InitializeComponent();
         }
 
+
         private void ShowProductsBotton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();
             productListWindow.Show();
             Close();
         }
+
 
         private void ShowOrdersBotton_Click(object sender, RoutedEventArgs e)
         {

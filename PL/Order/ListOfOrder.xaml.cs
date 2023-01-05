@@ -14,7 +14,7 @@ namespace PL.Order;
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
         public ObservableCollection<BO.OrderForList?> Orders
-    {
+        {
             get { return (ObservableCollection<BO.OrderForList?>)GetValue(OrdersProperty); }
             set { SetValue(OrdersProperty, value); }
         }
@@ -23,7 +23,6 @@ namespace PL.Order;
         public static readonly DependencyProperty OrdersProperty =
             DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
 
-        //private ObservableCollection<BO.OrderForList?>? orders= new ObservableCollection<BO.OrderForList?>();
         public ListOfOrder()
         {
             InitializeComponent();

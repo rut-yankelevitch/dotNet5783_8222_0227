@@ -29,7 +29,7 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
     {
-        return GetProductListForManager();    
+        return GetProductListForManager();
     }
 
 
@@ -45,18 +45,17 @@ internal class Product : IProduct
         Filter filter = filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory: products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
+            case Filter.FilterByCategory:
+                products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
                 break;
             case Filter.None:
                 products = dal.Product.GetAll();
                 break;
-            default: products = dal.Product.GetAll();
+            default:
+                products = dal.Product.GetAll();
                 break;
         }
-
-        //IEnumerable<BO.ProductForList?> productsForList;
-        //???
-        return from pro in products 
+        return from pro in products
                let product = (DO.Product)pro
                select new ProductForList
                {
@@ -78,7 +77,7 @@ internal class Product : IProduct
     {
         try
         {
-            DO.Product product = dal.Product.GetByCondition(product2=>product2?.ID==id);
+            DO.Product product = dal.Product.GetByCondition(product2 => product2?.ID == id);
             BO.Product product1 = new BO.Product();
             product1.ID = product.ID;
             product1.Name = product.Name;
@@ -137,8 +136,8 @@ internal class Product : IProduct
         try
         {
             IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
-          DO.OrderItem? orderItem = orderItems.FirstOrDefault(item =>((DO.OrderItem)item!).ProductID == id);
-            if(orderItem!=null)
+            DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => ((DO.OrderItem)item!).ProductID == id);
+            if (orderItem != null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
             dal.Product.Delete(id);
         }
@@ -169,7 +168,7 @@ internal class Product : IProduct
                 product1.Price = product.Price;
                 product1.InStock = product.InStock;
                 product1.Category = (DO.Category)product.Category;
-                
+
                 dal.Product.Update(product1);
             }
             return product;
@@ -189,16 +188,16 @@ internal class Product : IProduct
     {
         IEnumerable<DO.Product?> products = dal.Product.GetAll();
         return from pro in products
-          let product =(DO.Product)pro!
-          select new ProductItem
-          {
-              ID = product.ID,
-              Name = product.Name,
-              Price = product.Price,
-              Category = (BO.Category)product.Category,
-              Amount = product.InStock,
-              Instock = product.InStock > 0 ? true : false
-          };
+               let product = (DO.Product)pro!
+               select new ProductItem
+               {
+                   ID = product.ID,
+                   Name = product.Name,
+                   Price = product.Price,
+                   Category = (BO.Category)product.Category,
+                   Amount = product.InStock,
+                   Instock = product.InStock > 0 ? true : false
+               };
     }
 
 
@@ -214,7 +213,7 @@ internal class Product : IProduct
         DO.Product product1 = new DO.Product();
         try
         {
-            product1 = dal.Product.GetByCondition(product2=>product2?.ID==id);
+            product1 = dal.Product.GetByCondition(product2 => product2?.ID == id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -232,4 +231,6 @@ internal class Product : IProduct
         return productItem;
     }
 }
+
+
 

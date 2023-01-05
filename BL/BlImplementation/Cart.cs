@@ -114,40 +114,65 @@ internal class Cart : ICart
         {
             if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
                 throw new BLInvalidInputException("Invalid details");
+
             if (cart.Items == null)
                 throw new BLImpossibleActionException("There are no items in the cart.");
+
             int id = dal.Order.Add(
                 new DO.Order
                 {
-                    OrderDate = DateTime.Now,
+                    OrderDate= DateTime.Now,
                     ShipDate = null,
                     DeliveryrDate = null
                 });
+
             IEnumerable<DO.Product?> products = dal.Product.GetAll();
 
+            //return a list of tuples that everyone ave a orderItem to add and a updated product
             var result = from item in cart.Items
-                         join product in products on item.ProductID equals product?.ID into empdept
+                         join prod in products on item.ProductID equals prod?.ID into empdept
                          from ed in empdept.DefaultIfEmpty()
+                         let product = ed ?? throw new BLImpossibleActionException("product does not exist")
+                         let orderItem = item!
                          select new
                          {
-                             orderItem = dal.OrderItem.Add(
-                             new DO.OrderItem
+                             orderItem = new DO.OrderItem
                              {
                                  OrderID = id,
-                                 ProductID = item?.ProductID ?? 0,
-                                 Amount = item?.Amount > 0 ? item?.Amount ?? 0 : throw new BLImpossibleActionException("invalid amount"),
-                                 Price = item?.Price ?? 0
-                             }),
+                                 ProductID = item.ProductID,
+                                 Amount = item.Amount > 0 ? item.Amount : throw new BLImpossibleActionException("invalid amount"),
+                                 Price = item.Price
+                             },
                              prod = new DO.Product
                              {
-                                 ID = ed == null ? throw new BLImpossibleActionException("product does not exist") : item?.ProductID ?? 0,
-                                 Price = ed?.Price ?? 0,
-                                 Category = ed?.Category ?? 0,
-                                 InStock = ed?.InStock > item?.Amount ? ed?.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
-                                 Name = ed?.Name
+                                 ID = product.ID,
+                                 Price = product.Price,
+                                 Category = product.Category,
+                                 InStock = product.InStock > item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
+                                 Name = product.Name
                              }
                          };
-            result.ToList().ForEach(res => dal.Product.Update(res.prod));
+
+            //for each tuple we update the product list and add a orderItem to the order Item list
+            result.ToList().ForEach(res =>
+            {
+                try
+                {
+                    dal.Product.Update(res.prod);
+                }
+                catch (DO.DalDoesNotExistException ex)
+                {
+                    throw new BLDoesNotExistException("product update failes", ex);
+                }
+                try
+                {
+                    dal.OrderItem.Add(res.orderItem);
+                }
+                catch (DO.DalAlreadyExistException ex)
+                {
+                    throw new BLAlreadyExistException("order Item alredy exist ", ex);
+                }
+            });
         }
         catch (DO.DalDoesNotExistException ex)
         {
