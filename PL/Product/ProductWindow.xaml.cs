@@ -57,34 +57,7 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            //try
-            //{
-            ////    InitializeComponent();
-            // //  BO.Product product = new BO.Product();
-            // //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            // //confirmation_btn.Content = "update";
-            // //   delete_button.Visibility = Visibility.Visible;
-            // //   try
-            // //   {
-            // //       product = bl.Product.GetProductByIdForManager(id);
-            // //   }
-            // //   catch (BO.BLDoesNotExistException ex)
-            // //   {
-            // //      MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-            // //   }
-            // //   idInput.Text = product.ID.ToString();
-            //    idInput.IsEnabled = false;
-            // //   nameInput.Text = product.Name;
-            //    nameInput.IsEnabled = false;
-            // //   categorySelector.SelectedValue = product.Category;
-            //    categorySelector.IsEnabled = false;
-            // //   priceInput.Text = product.Price.ToString();
-            // //   instockInput.Text = product.InStock.ToString();
-            ////}
-            ////catch (Exception ex)
-            ////{
-            ////    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            ////}
+            
         }
 
 

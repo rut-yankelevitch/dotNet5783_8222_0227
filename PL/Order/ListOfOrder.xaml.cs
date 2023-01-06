@@ -3,13 +3,13 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Input;
 
 namespace PL.Order;
 
-    /// <summary>
-    /// Interaction logic for ListOfOrder.xaml
-    /// </summary>
+/// <summary>
+/// Interaction logic for ListOfOrder.xaml
+/// </summary>
     public partial class ListOfOrder : Window
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
@@ -29,5 +29,14 @@ namespace PL.Order;
             var temp = bl.Order.GetOrderList();
             Orders = (temp == null) ? new() : new(temp);
         }
+
+    public void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        BO.OrderForList order = ((BO.OrderForList)OrdersListview.SelectedItem);
+        int varInt = order.ID;
+        OrderWindow orderWindow = new OrderWindow(varInt);
+        orderWindow.Show();
+        Close();
     }
+}
 

@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
+﻿using System.Windows;
 namespace PL.Order
 {
     /// <summary>
     /// Interaction logic for Order.xaml
     /// </summary>
-    public partial class Order : Window
+    public partial class OrderWindow : Window
     {
 
         private BlApi.IBl bl = BlApi.Factory.Get();
@@ -32,10 +19,10 @@ namespace PL.Order
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
 
-        public Order(int id) 
+        public OrderWindow(int id)
         {
             InitializeComponent();
-            OrderData= bl.Order.GetOrderById(id);
+            OrderData = bl.Order.GetOrderById(id);
         }
     }
 }

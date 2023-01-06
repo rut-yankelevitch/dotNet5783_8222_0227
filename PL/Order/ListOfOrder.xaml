@@ -9,7 +9,7 @@
         Title="OrderForListWindow" Height="640" Width="800">
 
     <Window.Resources >
-        <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
+        <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -36,7 +36,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <ListView x:Name="OrdersListview" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource MyDataTemplate}"/>
+            <ListView x:Name="OrdersListview" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource MyDataTemplate}" MouseDoubleClick="OrdersListview_MouseDoubleClick"/>
         </StackPanel>
     </Grid>
 
