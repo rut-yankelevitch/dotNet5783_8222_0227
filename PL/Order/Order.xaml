@@ -6,7 +6,23 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
-    <Grid>
+        <Grid>
+            <!--<TextBox x:Name="idInput" HorizontalAlignment="Left" Margin="170,95,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
+            <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="categorySelector_SelectionChanged"/>
+            <TextBox x:Name="nameInput" HorizontalAlignment="Left" Margin="170,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="nameInput_TextChanged"/>
+            <TextBox x:Name="priceInput" HorizontalAlignment="Left" Margin="170,260,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="priceInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
+            <TextBox x:Name="instockInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="instockInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
+            <Label x:Name="lbId" Content="id" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbCategory" Content="category" HorizontalAlignment="Left" Margin="100,145,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbName" Content="name" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="confirmation_btn" Content="" HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="confirmation_btn_Click" IsEnabled="False"/>
+            <Button x:Name="delete_button" Content="delete" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Visibility="Hidden"  Click="delete_button_Click"/>-->
+        <Label Content="CustomerName" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="50" Margin="100,255,0,0"/>
+        <Label Content="Status" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="50" Margin="150,255,0,0"/>
+        <Label Content="AmountOfItems" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="50" Margin="100,255,0,0"/>
+        <Label Content="TotalPrice" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="50" Margin="100,255,0,0"/>
         
     </Grid>
 </Window>

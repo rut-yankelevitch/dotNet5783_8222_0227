@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,14 +13,25 @@ namespace PL.Product
     public partial class ProductListWindow : Window
     {
         private BlApi.IBl bl =BlApi.Factory.Get();
+        public ObservableCollection<BO.ProductForList?> Products
+        {
+            get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
+            set { SetValue(ProductsProperty, value); }
+        }
 
+        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProductsProperty =
+        DependencyProperty.Register("Products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
+
+        
         /// <summary>
         ///ProductListWindow constructor
         /// </summary>
         public ProductListWindow()
         {
             InitializeComponent();
-            productListView.ItemsSource = bl.Product.GetProductListForManagerNoFilter();
+            var temp = bl.Product.GetProductListForManagerNoFilter();
+            Products = (temp == null) ? new() : new(temp);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
@@ -33,11 +45,13 @@ namespace PL.Product
             
             if (category == BO.Category.None)
             {
-                productListView.ItemsSource = bl?.Product.GetProductListForManagerNoFilter();
+                var temp = bl.Product.GetProductListForManagerNoFilter();
+                Products = (temp == null) ? new() : new(temp);
             }
             else
             {
-                productListView.ItemsSource=bl?.Product.GetProductListForManagerByCategory(category);
+                var temp = bl.Product.GetProductListForManagerByCategory(category);
+                Products = (temp == null) ? new() : new(temp);
             }
         }
 
@@ -48,7 +62,9 @@ namespace PL.Product
         private void addProductButton_Click(object sender, RoutedEventArgs e) 
         { 
             new ProductWindow().Show();
+            //
             Close();
+            //
         }
 
 
@@ -58,7 +74,6 @@ namespace PL.Product
         private void productListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
                 BO.ProductForList product = ((BO.ProductForList)productListView.SelectedItem);
-
                 int varInt = product.ID;
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();

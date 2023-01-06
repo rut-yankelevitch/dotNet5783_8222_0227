@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace PL.Product
@@ -13,50 +15,76 @@ namespace PL.Product
 
         BlApi.IBl bl =  BlApi.Factory.Get();
 
-        /// <summary>
-        /// ProductListWindow constructor
-        /// </summary>
-        public ProductWindow()
+
+        public BO.Product ProductData
         {
-            InitializeComponent();
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            confirmation_btn.Content = "add";
+            get { return (BO.Product)GetValue(ProductDataProperty); }
+            set { SetValue(ProductDataProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProductDataProperty =
+        DependencyProperty.Register("ProductData", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
+
 
 
         /// <summary>
         /// ProductWindow constructor that accepts a product ID
         /// </summary>
-        public ProductWindow(int id)
+        public ProductWindow(int id = -1)
         {
             try
             {
                 InitializeComponent();
-                BO.Product product = new BO.Product();
                 categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                confirmation_btn.Content = "update";
-                delete_button.Visibility = Visibility.Visible;
-                try
+                if (id == -1)
+                    confirmation_btn.Content = "add";
+                else
                 {
-                    product = bl.Product.GetProductByIdForManager(id);
+                    confirmation_btn.Content = "update";
+                    delete_button.Visibility = Visibility.Visible;
+                    try
+                    {
+                        ProductData = bl.Product.GetProductByIdForManager(id);
+                    }
+                    catch (BO.BLDoesNotExistException ex)
+                    {
+                        MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                catch (BO.BLDoesNotExistException ex)
-                {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                idInput.Text = product.ID.ToString();
-                idInput.IsEnabled = false;
-                nameInput.Text = product.Name;
-                nameInput.IsEnabled = false;
-                categorySelector.SelectedValue = product.Category;
-                categorySelector.IsEnabled = false;
-                priceInput.Text = product.Price.ToString();
-                instockInput.Text = product.InStock.ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            //try
+            //{
+            ////    InitializeComponent();
+            // //  BO.Product product = new BO.Product();
+            // //categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            // //confirmation_btn.Content = "update";
+            // //   delete_button.Visibility = Visibility.Visible;
+            // //   try
+            // //   {
+            // //       product = bl.Product.GetProductByIdForManager(id);
+            // //   }
+            // //   catch (BO.BLDoesNotExistException ex)
+            // //   {
+            // //      MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            // //   }
+            // //   idInput.Text = product.ID.ToString();
+            //    idInput.IsEnabled = false;
+            // //   nameInput.Text = product.Name;
+            //    nameInput.IsEnabled = false;
+            // //   categorySelector.SelectedValue = product.Category;
+            //    categorySelector.IsEnabled = false;
+            // //   priceInput.Text = product.Price.ToString();
+            // //   instockInput.Text = product.InStock.ToString();
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            ////}
         }
 
 
