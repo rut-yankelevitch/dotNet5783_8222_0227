@@ -11,14 +11,15 @@
     <Window.Resources>
         <local:ConvertIntToBool x:Key="ConvertIntToBool"/>
     </Window.Resources>
-    
+
+
     <Grid>
-        <TextBox x:Name="idInput" HorizontalAlignment="Left" Margin="170,95,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown" IsEnabled="{Binding ID ,Converter={StaticResource ConvertIntToBool}}"/>
+        <TextBox x:Name="idInput" HorizontalAlignment="Left"  SelectionLength="6" Margin="170,95,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120" TextChanged="idInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown" IsEnabled="{Binding ID ,Converter={StaticResource ConvertIntToBool}}"/>
         <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" SelectionChanged="categorySelector_SelectionChanged" IsEnabled="{Binding ID ,Converter={StaticResource ConvertIntToBool}}"/>
         <TextBox x:Name="nameInput" HorizontalAlignment="Left" Margin="170,205,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120" TextChanged="nameInput_TextChanged" IsEnabled="{Binding ID ,Converter={StaticResource ConvertIntToBool}}"/>
         <TextBox x:Name="priceInput" HorizontalAlignment="Left" Margin="170,260,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" TextChanged="priceInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
         <!--<TextBox.Text>-->
-                <!--<Binding Path="Price">
+        <!--<Binding Path="Price">
                     <Binding.ValidationRules>
                         <jas:RegexValidationRule
           RegexText="^[A-Z]{3}\.[0-9]{3}$"
@@ -27,7 +28,7 @@
           />
                     </Binding.ValidationRules>
                 </Binding>-->
-            <!--</TextBox.Text>
+        <!--</TextBox.Text>
         </TextBox>-->
         <TextBox x:Name="instockInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" TextChanged="instockInput_TextChanged" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
         <Label x:Name="lbId" Content="id" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
@@ -35,7 +36,7 @@
         <Label x:Name="lbName" Content="name" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="confirmation_btn" Content="" HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="confirmation_btn_Click" IsEnabled="False"/>
+        <Button x:Name="add" Content="add"   HorizontalAlignment="Left" Margin="635,359,0,0"  VerticalAlignment="Top" Height="40" Width="95"  IsEnabled="False" Click="add_Click"/>        <Button x:Name="update" Content="update" HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95" IsEnabled="False" Click="update_Click"/>
         <Button x:Name="delete_button" Content="delete" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Visibility="Hidden"  Click="delete_button_Click"/>
     </Grid>
 </Window>

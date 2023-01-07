@@ -13,7 +13,7 @@ namespace PL.Product
     public partial class ProductWindow : Window
     {
 
-        BlApi.IBl bl =  BlApi.Factory.Get();
+        BlApi.IBl bl = BlApi.Factory.Get();
 
 
         public BO.Product ProductData
@@ -38,10 +38,11 @@ namespace PL.Product
                 InitializeComponent();
                 categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
                 if (id == -1)
-                    confirmation_btn.Content = "add";
+                    //confirmation_btn.Content = "add";
+                    add.Visibility = Visibility.Visible;
                 else
                 {
-                    confirmation_btn.Content = "update";
+                    //confirmation_btn.Content = "update";
                     delete_button.Visibility = Visibility.Visible;
                     try
                     {
@@ -57,78 +58,13 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
+
         }
 
 
         /// <summary>
         /// A function is called when the confirmation button is clicked
         /// </summary>
-        private void confirmation_btn_Click(object sender, RoutedEventArgs e)
-        {
-            BO.Product product = new BO.Product();
-            int varInt;
-            double varDouble;
-            int.TryParse(idInput.Text, out varInt);
-            product.ID = varInt;
-            product.Name = nameInput.Text;
-            double.TryParse(priceInput.Text, out varDouble);
-            product.Price = varDouble;
-            product.Category = ((BO.Category)categorySelector.SelectedItem);
-            int.TryParse(instockInput.Text, out varInt);
-            product.InStock = varInt;
-
-            if ((string)confirmation_btn.Content == "add")
-            {
-                try
-                {
-                    bl.Product.AddProduct(product);
-                    ProductListWindow productListWindow = new ProductListWindow();
-                    productListWindow.Show();
-                    this.Close();
-                }
-                catch (BO.BLAlreadyExistException ex)
-                {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                    ProductListWindow productListWindow = new ProductListWindow();
-                    productListWindow.Show();
-                    Close();
-
-                }
-                catch (BO.BLInvalidInputException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    ProductListWindow productListWindow = new ProductListWindow();
-                    productListWindow.Show();
-                }
-            }
-            else
-            {
-                try
-                {
-                    bl.Product.UpdateProduct(product);
-                    ProductListWindow productListWindow = new ProductListWindow();
-                    productListWindow.Show();
-                    this.Close();
-                }
-                catch (BO.BLAlreadyExistException ex)
-                {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (BO.BLInvalidInputException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
 
 
         /// <summary>
@@ -136,10 +72,10 @@ namespace PL.Product
         /// </summary>
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (idInput.Text.Length == 6)
+            //if (idInput.Text.Length == 6)
                 invalidCheck();
-            else
-                confirmation_btn.IsEnabled = false;
+            //else
+            //    confirmation_btn.IsEnabled = false;
         }
 
 
@@ -150,8 +86,9 @@ namespace PL.Product
         {
             if (categorySelector.SelectedItem != null)
                 invalidCheck();
-            else
-                confirmation_btn.IsEnabled = false;
+            //else
+            //    add.IsEnabled = false;
+            //    update.IsEnabled = false;
         }
 
 
@@ -258,10 +195,84 @@ namespace PL.Product
             }
             catch (BO.BLImpossibleActionException ex)
             {
-                MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductListWindow productListWindow = new ProductListWindow();
                 productListWindow.Show();
                 Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+            BO.Product product = new BO.Product();
+            int varInt;
+            double varDouble;
+            int.TryParse(idInput.Text, out varInt);
+            product.ID = varInt;
+            product.Name = nameInput.Text;
+            double.TryParse(priceInput.Text, out varDouble);
+            product.Price = varDouble;
+            product.Category = ((BO.Category)categorySelector.SelectedItem);
+            int.TryParse(instockInput.Text, out varInt);
+            product.InStock = varInt;
+            try
+            {
+                bl.Product.AddProduct(product);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+                Close();
+            }
+            catch (BO.BLAlreadyExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+                Close();
+
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+            }
+        }
+
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
+            BO.Product product = new BO.Product();
+            int varInt;
+            double varDouble;
+            int.TryParse(idInput.Text, out varInt);
+            product.ID = varInt;
+            product.Name = nameInput.Text;
+            double.TryParse(priceInput.Text, out varDouble);
+            product.Price = varDouble;
+            product.Category = ((BO.Category)categorySelector.SelectedItem);
+            int.TryParse(instockInput.Text, out varInt);
+            product.InStock = varInt;
+            try
+            {
+                bl.Product.UpdateProduct(product);
+                ProductListWindow productListWindow = new ProductListWindow();
+                productListWindow.Show();
+                this.Close();
+            }
+            catch (BO.BLAlreadyExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {

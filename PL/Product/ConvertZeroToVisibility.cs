@@ -5,19 +5,19 @@ using System.Windows.Data;
 
 namespace PL.Product;
 
-public class ConvertIntTobool : IValueConverter
+public class ConvertZeroToVisibility : IValueConverter
 {
     //convert from source property type to target property type
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         int intValue = (int)value;
-        if (intValue == 0)
+        if (intValue==0)
         {
-            return true; 
+            return Visibility.Hidden; //Visibility.Collapsed;
         }
         else
         {
-            return false;
+            return Visibility.Visible;
         }
     }
     //convert from target property type to source property type
