@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-
 namespace PL.Product
 {
     /// <summary>
@@ -37,13 +36,8 @@ namespace PL.Product
             {
                 InitializeComponent();
                 categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-                if (id == -1)
-                    //confirmation_btn.Content = "add";
-                    add.Visibility = Visibility.Visible;
-                else
+                if (id != -1)
                 {
-                    //confirmation_btn.Content = "update";
-                    delete_button.Visibility = Visibility.Visible;
                     try
                     {
                         ProductData = bl.Product.GetProductByIdForManager(id);
@@ -99,8 +93,8 @@ namespace PL.Product
         {
             if (nameInput.Text.Length > 0)
                 invalidCheck();
-            else
-                confirmation_btn.IsEnabled = false;
+            //else
+            //    confirmation_btn.IsEnabled = false;
         }
 
 
@@ -115,8 +109,8 @@ namespace PL.Product
 
                 invalidCheck();
             }
-            else
-                confirmation_btn.IsEnabled = false;
+            //else
+                //confirmation_btn.IsEnabled = false;
         }
 
 
@@ -127,8 +121,8 @@ namespace PL.Product
         {
             if (instockInput.Text.Length > 0)
                 invalidCheck();
-            else
-                confirmation_btn.IsEnabled = false;
+            //else
+                //confirmation_btn.IsEnabled = false;
         }
 
 
@@ -140,11 +134,11 @@ namespace PL.Product
             if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null
                 && priceInput.Text.Length > 0 && instockInput.Text.Length > 0)
             {
-                confirmation_btn.IsEnabled = true;
+                //confirmation_btn.IsEnabled = true;
             }
             else
             {
-                confirmation_btn.IsEnabled = false;
+                //confirmation_btn.IsEnabled = false;
             }
         }
 
