@@ -8,8 +8,28 @@
         DataContext="{Binding Products, RelativeSource={RelativeSource Mode=Self} }"
         Background="Bisque"
         Title="ListOfProduct" Height="640" Width="800">
+    <Window.Resources >
+        <DataTemplate x:Key="ProductTemplate" DataType="local:object" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Path=ID}" />
+                <TextBlock Grid.Column="1" Text="{Binding Path=Name}" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Category}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Price}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
@@ -23,13 +43,20 @@ VerticalAlignment="Top" Width="auto">
             <ComboBox x:Name="categorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <ListView Background="Azure" x:Name="productListView" Grid.Row="1" ItemsSource="{Binding}" MouseDoubleClick="productListView_MouseDoubleClick"  >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="addProductButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
+        <Grid Name="titel" Grid.Row="1" Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="ID" Grid.Column="0" />
+            <Label Content="Name" Grid.Column="1" />
+            <Label Content="Category" Grid.Column="2" />
+            <Label Content="Price" Grid.Column="3" />
+        </Grid>
+        <ListView Background="Azure" x:Name="productListView" Grid.Row="2" Width="800" HorizontalContentAlignment="Stretch" ItemsSource="{Binding}" ItemTemplate="{StaticResource ProductTemplate}" MouseDoubleClick="productListView_MouseDoubleClick"/>
+        <Button x:Name="addProductButton" Content="Add new Product" Grid.Row="3" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
+  
     </Grid>
 </Window>

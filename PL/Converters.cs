@@ -13,7 +13,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            
+
             if (value == null)
             {
                 return true;
@@ -59,20 +59,29 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    public class ConvertMany : IValueConverter
-    {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value!= null)
-            { 
 
+    //public class ConvertMany : IValueConverter
+    //{
 
-           
-            }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    //    public static object Convert(object? value1, object? value2, object? value3, object? value4, object? value5, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        if (value1 != null && value2 != null && value3 != null && value4 != null && value5 != null)
+    //        {
+    //            int id = (int)value1;
+    //            //BO.Category category = (BO.Category)value2;
+    //            //string name=(string)value3;
+    //            float price = (float)value4;
+    //            int instock = (int)value5;
+    //            //if(id)
+    //            return true;
+    //        }
+    //        else 
+    //            return false;
+    //    }
+    //        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //        {
+    //            throw new NotImplementedException();
+    //        }
+    //    }
+
     }
-
-}

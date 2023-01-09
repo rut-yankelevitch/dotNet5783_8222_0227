@@ -66,10 +66,13 @@ namespace PL.Product
         /// </summary>
         private void idInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //if (idInput.Text.Length == 6)
+            if (idInput.Text.Length == 6)
                 invalidCheck();
-            //else
-            //    confirmation_btn.IsEnabled = false;
+            else
+            {
+                update.IsEnabled = false;
+                add.IsEnabled = false;
+            }
         }
 
 
@@ -80,9 +83,11 @@ namespace PL.Product
         {
             if (categorySelector.SelectedItem != null)
                 invalidCheck();
-            //else
-            //    add.IsEnabled = false;
-            //    update.IsEnabled = false;
+            else
+            {
+                add.IsEnabled = false;
+                update.IsEnabled = false;
+            }
         }
 
 
@@ -93,8 +98,11 @@ namespace PL.Product
         {
             if (nameInput.Text.Length > 0)
                 invalidCheck();
-            //else
-            //    confirmation_btn.IsEnabled = false;
+            else
+            {
+                add.IsEnabled = false;
+                update.IsEnabled = false;
+            }
         }
 
 
@@ -109,8 +117,11 @@ namespace PL.Product
 
                 invalidCheck();
             }
-            //else
-                //confirmation_btn.IsEnabled = false;
+            else
+            {
+                add.IsEnabled = false;
+                update.IsEnabled = false;
+            }
         }
 
 
@@ -121,8 +132,11 @@ namespace PL.Product
         {
             if (instockInput.Text.Length > 0)
                 invalidCheck();
-            //else
-                //confirmation_btn.IsEnabled = false;
+            else
+            {
+                add.IsEnabled = false;
+                update.IsEnabled = false;
+            }
         }
 
 
@@ -134,11 +148,13 @@ namespace PL.Product
             if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null
                 && priceInput.Text.Length > 0 && instockInput.Text.Length > 0)
             {
-                //confirmation_btn.IsEnabled = true;
+                add.IsEnabled = true;
+                update.IsEnabled = true;
             }
             else
             {
-                //confirmation_btn.IsEnabled = false;
+                add.IsEnabled = false;
+                update.IsEnabled = false;
             }
         }
 

@@ -23,21 +23,29 @@
                 <TextBlock Grid.Column="0" Text="{Binding Path=CustomerName}" />
                 <TextBlock Grid.Column="1" Text="{Binding Path=Status}" />
                 <TextBlock Grid.Column="2" Text="{Binding Path=AmountOfItems}" />
-                <TextBlock Grid.Column="4" Text="{Binding Path=TotalPrice}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=TotalPrice}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
     <Grid x:Name="mainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*" />
+            <RowDefinition Height="40*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <StackPanel>
-            <ListView x:Name="OrdersListview" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource MyDataTemplate}" MouseDoubleClick="OrdersListview_MouseDoubleClick"/>
+            <Grid Name="titel" Grid.Row="0" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Customer name" Grid.Column="0" />
+                <Label Content="Status" Grid.Column="1" />
+                <Label Content="Amount of items" Grid.Column="2" />
+                <Label Content="Total price" Grid.Column="3" />
+            </Grid>
+            <ListView x:Name="OrdersListview" Grid.Row="1" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource MyDataTemplate}" MouseDoubleClick="OrdersListview_MouseDoubleClick"/>
         </StackPanel>
     </Grid>
-
 </Window>
