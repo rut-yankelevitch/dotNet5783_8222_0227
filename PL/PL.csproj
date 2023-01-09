@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Syncfusion.OlapShared.WPF" Version="20.4.0.42" />
   </ItemGroup>
 
   <ItemGroup>

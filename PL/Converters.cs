@@ -59,6 +59,28 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    public class ConvertShipDateToTrue : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DateTime shipDate;
+            if (value != null)
+            {
+                shipDate = (DateTime)value;
+                if (shipDate < DateTime.Now)
+
+                   return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
     //public class ConvertMany : IValueConverter
     //{
@@ -84,4 +106,4 @@ namespace PL
     //        }
     //    }
 
-    }
+}
