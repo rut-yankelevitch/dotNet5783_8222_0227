@@ -32,6 +32,7 @@ namespace PL.Order
 
             var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
             Status.ItemsSource= filterStatus;
+
         }
 
         private void UpdateStatus_Click(object sender, RoutedEventArgs e)
