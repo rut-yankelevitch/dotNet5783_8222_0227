@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Order" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         
         DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }"
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
-        <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue" />
-            <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData" >
+        <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
+        <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -25,7 +25,7 @@
                 <TextBlock Grid.Column="0" Text="{Binding Path=Name}" />
                 <TextBlock Grid.Column="1" Text="{Binding Path=ProductID}" />
                 <TextBox  Grid.Column="2" Text="{Binding Path=Price}" />
-                <TextBlock Grid.Column="3" Text="{Binding Path=Amount}" IsEnabled="{Binding ShipDate, Converter={StaticResource ConvertShipDateToTrue}}" />
+                <TextBlock Grid.Column="3" Text="{Binding Path=Amount}" IsEnabled="{Binding Status, Converter={StaticResource ConvertShipDateToTrue}}" />
                 <!--<syncfusion:UpDown Name="upDown" Height="23" Value="10" Width="85"/>-->
                 <TextBlock Grid.Column="4" Text="{Binding Path=TotalPrice}" />
             </Grid>
@@ -65,7 +65,8 @@
         <Label x:Name="CustomerEmail" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding CustomerEmail}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerAddress"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding CustomerAddress}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="OrderDate" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left"  Content="{Binding OrderDate}" VerticalAlignment="Top" Width="200" />
-        <ComboBox x:Name="Status" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"  ItemsSource="{Binding Status}" VerticalAlignment="Top" Width="200" />
+        <ComboBox x:Name="Status" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"    SelectedValue="{Binding Status}"   VerticalAlignment="Top" Width="200" />
+        <Button  Content="Update status"  Grid.Row="5" Grid.Column="1" Margin="250,0,0,0" HorizontalAlignment="Left"  Padding="5" Click="UpdateStatus_Click" />
         <Label x:Name="ShipDate" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding ShipDate}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="DeliveryDate" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding DeliveryDate}" VerticalAlignment="Top" Width="200" />
         <Grid Name="titel" Grid.Row="8" Grid.Column="1" Background="AliceBlue">

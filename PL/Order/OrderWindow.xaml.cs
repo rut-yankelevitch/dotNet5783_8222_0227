@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 
 namespace PL.Order
 {
@@ -24,6 +28,47 @@ namespace PL.Order
         {
             InitializeComponent();
             OrderData = bl.Order.GetOrderById(id);
+            IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
+
+            var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
+            Status.ItemsSource= filterStatus;
         }
-    }
+
+        private void UpdateStatus_Click(object sender, RoutedEventArgs e)
+        {
+            BO.OrderStatus? status = Status.SelectedItem as BO.OrderStatus?;
+            BO.Order? order;
+
+                    if (status == BO.OrderStatus.SendOrder)
+                    {
+                        try
+                        {
+                            order = bl.Order.UpdateSendOrderByManager(OrderData.ID);
+                        }
+                        catch (BO.BLDoesNotExistException ex)
+                        {
+                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        catch (BO.BLImpossibleActionException ex)
+                        {
+                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            order = bl.Order.UpdateSupplyOrderByManager(OrderData.ID);
+                        }
+                        catch (BO.BLDoesNotExistException ex)
+                        {
+                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        catch (BO.BLImpossibleActionException ex)
+                        {
+                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+            }
 }
