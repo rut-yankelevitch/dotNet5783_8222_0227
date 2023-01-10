@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using BO;
+using PL.Order;
 
 namespace PL
 {
@@ -19,7 +21,9 @@ namespace PL
 
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)
         {
-
+            OrderTrackingWindow orderTracking = new ();
+            orderTracking.Show ();
+            
         }
 
 
@@ -31,9 +35,10 @@ namespace PL
         }
 
 
-        private void ShowNewOrder_Click(object sender, RoutedEventArgs e)
+        private void ShowCatalog_Click(object sender, RoutedEventArgs e)
         {
-
+            CatalogWindow catalog = new CatalogWindow();
+            catalog.Show();
         }
     }
 }

@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        
         DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }"
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
@@ -25,14 +24,13 @@
                 <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="{Binding Path=Name}" />
                 <TextBlock Grid.Column="1" HorizontalAlignment="Center"  Text="{Binding Path=ProductID}" />
                 <TextBlock Grid.Column="2" HorizontalAlignment="Center"  Text="{Binding Path=Price}" />
-                <Button  Content="Update amount"  Grid.Column="3" Height="20" Width="60" Margin="100,0,0,0"   HorizontalAlignment="Left"  Padding="5"  />
+                <!--<Button  Content="Update amount"  Grid.Column="3" Height="20" Width="60" Margin="100,0,0,0"   HorizontalAlignment="Left"  Padding="5"   />-->
                 <TextBox Grid.Column="3" HorizontalAlignment="Center"  Text="{Binding Path=Amount}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1},Path=DataContext,Converter={StaticResource ConvertShipDateToTrue}}"  />
-                <!--<syncfusion:UpDown Name="upDown" Height="23" Value="10" Width="85"/>-->
+                <!--<syncfusion:UpDown Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="95,11,0,0" NullValueText="Enter your weight:" Grid.Row="6" UseNullOption="True" Value="50.25" VerticalAlignment="Top" Width="120"/>-->
                 <TextBlock Grid.Column="4" HorizontalAlignment="Center"  Text="{Binding  Path=TotalPrice}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

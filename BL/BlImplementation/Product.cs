@@ -230,6 +230,63 @@ internal class Product : IProduct
             productItem.Instock = false;
         return productItem;
     }
+    /// <summary>
+    /// Definition of a function that returns a list of product by category for the catalog
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetProducItemForCategory(BO.Category? category)
+    {
+        return GetProductItemForCatalog(BO.Filter.FilterByCategory, category);
+    }
+
+
+    /// <summary>
+    /// Definition of a function that returns the list of product for catalog
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetProductItemForCatalogNoFilter()
+    {
+        return GetProductItemForCatalog();
+    }
+
+
+
+    /// <summary>
+    /// a help function that return a list of product by filter
+    /// </summary>
+    /// <param name="filter1"></param>
+    /// <param name="filterValue"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetProductItemForCatalog(Filter filter1 = BO.Filter.None, object? filterValue = null)
+    {
+        IEnumerable<DO.Product?> products;
+        Filter filter = filter1;
+        switch (filter)
+        {
+            case Filter.FilterByCategory:
+                products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
+                break;
+            case Filter.None:
+                products = dal.Product.GetAll();
+                break;
+            default:
+                products = dal.Product.GetAll();
+                break;
+        }
+        return from pro in products
+               let product = (DO.Product)pro
+               select new ProductItem
+               {
+                   ID = product.ID,
+                   Name = product.Name,
+                   Price = product.Price,
+                   Category = (BO.Category)product.Category,
+                   Amount = product.InStock,
+                   Instock = product.InStock > 0
+               };
+    }
+
 }
 
 
