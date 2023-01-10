@@ -44,7 +44,7 @@ namespace PL.Order
                     {
                         try
                         {
-                            order = bl.Order.UpdateSendOrderByManager(OrderData.ID);
+                            order = bl.Order.UpdateSendOrderByManager(OrderData!.ID);
                         }
                         catch (BO.BLDoesNotExistException ex)
                         {
@@ -59,7 +59,7 @@ namespace PL.Order
                     {
                         try
                         {
-                            order = bl.Order.UpdateSupplyOrderByManager(OrderData.ID);
+                            order = bl.Order.UpdateSupplyOrderByManager(OrderData!.ID);
                         }
                         catch (BO.BLDoesNotExistException ex)
                         {

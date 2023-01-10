@@ -60,26 +60,43 @@ namespace PL
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime shipDate;
-            if (value == null)
+            BO.Order? order;
+            if (value != null)
             {
-                return true;
-            }
-            else
-            {
-                shipDate = (DateTime)value;
-                if (shipDate < DateTime.Now)
+                order = (BO.Order?)value;
+                if (order?.ShipDate < DateTime.Now)
 
-                    return true;
-                else
                     return false;
+                else
+                    return true;
             }
+            return false;
+            
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+    //public class ConvertOrderDataToItems : IValueConverter
+    //{
+    //    public object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        BO.Order? order;
+    //        if (value != null)
+    //        {
+    //            order = (BO.Order?)value;
+    //            return order?.Items;
+    //        }
+    //        return null;
+    //    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+
 
     //public class ConvertMany : IValueConverter
     //{

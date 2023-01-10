@@ -25,9 +25,10 @@
                 <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="{Binding Path=Name}" />
                 <TextBlock Grid.Column="1" HorizontalAlignment="Center"  Text="{Binding Path=ProductID}" />
                 <TextBlock Grid.Column="2" HorizontalAlignment="Center"  Text="{Binding Path=Price}" />
-                <TextBox Grid.Column="3" HorizontalAlignment="Center"  Text="{Binding Path=Amount}"  IsEnabled="{Binding Converter={StaticResource ConvertShipDateToTrue}}" />
+                <Button  Content="Update amount"  Grid.Column="3" Height="20" Width="60" Margin="100,0,0,0"   HorizontalAlignment="Left"  Padding="5"  />
+                <TextBox Grid.Column="3" HorizontalAlignment="Center"  Text="{Binding Path=Amount}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1},Path=DataContext,Converter={StaticResource ConvertShipDateToTrue}}"  />
                 <!--<syncfusion:UpDown Name="upDown" Height="23" Value="10" Width="85"/>-->
-                <TextBlock Grid.Column="4" HorizontalAlignment="Center"  Text="{Binding Path=TotalPrice}" />
+                <TextBlock Grid.Column="4" HorizontalAlignment="Center"  Text="{Binding  Path=TotalPrice}" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
