@@ -37,8 +37,6 @@ namespace PL.Order
         public CatalogWindow()
         {
             InitializeComponent();
-            var temp=bl.Product.prod
-            ProductsItem=bl
         }
     }
 }
