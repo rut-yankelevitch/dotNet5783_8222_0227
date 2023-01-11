@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using BO;
 using DalApi;
 
 namespace PL.Product
@@ -23,7 +24,8 @@ namespace PL.Product
         public static readonly DependencyProperty ProductsProperty =
         DependencyProperty.Register("Products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
 
-        
+        public Category Category { get; set; } = Category.None;
+
         /// <summary>
         ///ProductListWindow constructor
         /// </summary>
@@ -32,7 +34,7 @@ namespace PL.Product
             InitializeComponent();
             var temp = bl.Product.GetProductListForManagerNoFilter();
             Products = (temp == null) ? new() : new(temp);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
         }
 
 

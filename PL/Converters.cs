@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Navigation;
 
 namespace PL
 {
@@ -9,117 +10,66 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            if (value == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return value == null ? true : false;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertZeroToVisible : IValueConverter
     {
-        //convert from source property type to target property type
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-
-            if (value == null)
-                return Visibility.Visible;
-            else
-                return Visibility.Hidden;
+            return value==null? Visibility.Visible: Visibility.Hidden;
         }
-        //convert from target property type to source property type
         public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertZeroToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return Visibility.Hidden;
-            else
-                return Visibility.Visible;
+            return value == null ? Visibility.Hidden : Visibility.Visible;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+
+
+    public class EnumToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            BO.Category category = (BO.Category)value;
+            return category.ToString().Replace('_', ' ');
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
 
     public class ConvertShipDateToTrue : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            BO.Order? order;
-            if (value != null)
-            {
-                order = (BO.Order?)value;
-                if (order?.ShipDate < DateTime.Now)
-
-                    return false;
-                else
-                    return true;
-            }
-            return false;
-            
+            return value!=null?((((BO.Order?)value)?.ShipDate<DateTime.Now)?false:true):false;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
-    //public class ConvertOrderDataToItems : IValueConverter
-    //{
-    //    public object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        BO.Order? order;
-    //        if (value != null)
-    //        {
-    //            order = (BO.Order?)value;
-    //            return order?.Items;
-    //        }
-    //        return null;
-    //    }
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-
-
-    //public class ConvertMany : IValueConverter
-    //{
-
-    //    public static object Convert(object? value1, object? value2, object? value3, object? value4, object? value5, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        if (value1 != null && value2 != null && value3 != null && value4 != null && value5 != null)
-    //        {
-    //            int id = (int)value1;
-    //            //BO.Category category = (BO.Category)value2;
-    //            //string name=(string)value3;
-    //            float price = (float)value4;
-    //            int instock = (int)value5;
-    //            //if(id)
-    //            return true;
-    //        }
-    //        else 
-    //            return false;
-    //    }
-    //        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //        {
-    //            throw new NotImplementedException();
-    //        }
-    //    }
-
 }
