@@ -52,7 +52,7 @@ namespace BlApi
         /// Definition of a function that returns a list of all products for the customer
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ProductItem?> GetProductListForCustomer();
+        //public IEnumerable<ProductItem?> GetProductListForCustomer();
 
         ///// <summary>
         ///// Definition of a function that returns a list of product by category for the customer
@@ -67,5 +67,8 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         public ProductItem GetProductByIdForCustomer(int id);
+
+        public IEnumerable<BO.ProductItem?> GetProducItemForCatalogByCategory(BO.Category? category);
+        public IEnumerable<BO.ProductItem?> GetProductItemForCatalogNoFilter();
     }
 }

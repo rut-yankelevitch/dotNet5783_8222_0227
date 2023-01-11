@@ -12,7 +12,7 @@ namespace PL
         private BlApi.IBl bl = BlApi.Factory.Get();
 
         /// <summary>
-        /// MainWindow constractor 
+        /// MainWindow constractor
         /// </summary>
         public MainWindow()
         {

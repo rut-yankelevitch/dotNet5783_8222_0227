@@ -28,9 +28,10 @@ namespace PL.Order
         public CatalogWindow()
         {
             InitializeComponent();
-            var temp = bl.Product.GetProductListForCustomer();
+            var temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(Category));
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
         }
 
         private void categorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -41,12 +42,12 @@ namespace PL.Order
 
                 if (category == BO.Category.None)
                 {
-                    var temp = bl.Product.GetProductListForCustomer();
+                    var temp = bl.Product.GetProductItemForCatalogNoFilter();
                     ProductsItem = (temp == null) ? new() : new(temp!);
                 }
                 else
                 {
-                    var temp = bl.Product.GetProductListForCustomer();
+                    var temp = bl.Product.GetProducItemForCatalogByCategory(category);
                     ProductsItem = (temp == null) ? new() : new(temp!);
                 }
             }
