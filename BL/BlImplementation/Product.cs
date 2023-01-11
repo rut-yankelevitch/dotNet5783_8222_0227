@@ -2,6 +2,7 @@
 using System.Net;
 using System.Security.Cryptography;
 using BO;
+using DO;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -184,7 +185,7 @@ internal class Product : IProduct
     /// function that returns a list of all products for the customer
     /// </summary>
     /// <returns>list of product</returns>
-    public IEnumerable<BO.ProductItem> GetProductListForCustomer()
+    public IEnumerable<ProductItem?> GetProductListForCustomer()
     {
         IEnumerable<DO.Product?> products = dal.Product.GetAll();
         return from pro in products
@@ -234,21 +235,30 @@ internal class Product : IProduct
     /// Definition of a function that returns a list of product by category for the catalog
     /// </summary>
     /// <param name="category"></param>
-    /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetProducItemForCategory(BO.Category? category)
-    {
-        return GetProductItemForCatalog(BO.Filter.FilterByCategory, category);
-    }
+    ///// <returns></returns>
+    //public IEnumerable<BO.ProductItem> GetListOfProductItemsForCustomerByCategory(BO.Category? category)
+    //{
+    //    return GetListOfProductItemsForCustomer(BO.Filter.FilterByCategory, category);
+    //}
 
+    // /// <summary>
+    //     /// Definition of a function that returns a list of product by category for the catalog
+    //     /// </summary>
+    //     /// <param name="category"></param>
+    //     /// <returns></returns>
+    //public IEnumerable<BO.ProductItem> GetListOfProductItemsForCustomerNoFiler()
+    //{
+    //    return GetListOfProductItemsForCustomer();
+    //}
 
     /// <summary>
     /// Definition of a function that returns the list of product for catalog
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetProductItemForCatalogNoFilter()
-    {
-        return GetProductItemForCatalog();
-    }
+    //public IEnumerable<BO.ProductItem> GetProductItemForCatalogNoFilter()
+    //{
+    //    return GetProductItemForCatalog();
+    //}
 
 
 
@@ -258,34 +268,34 @@ internal class Product : IProduct
     /// <param name="filter1"></param>
     /// <param name="filterValue"></param>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetProductItemForCatalog(Filter filter1 = BO.Filter.None, object? filterValue = null)
-    {
-        IEnumerable<DO.Product?> products;
-        Filter filter = filter1;
-        switch (filter)
-        {
-            case Filter.FilterByCategory:
-                products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
-                break;
-            case Filter.None:
-                products = dal.Product.GetAll();
-                break;
-            default:
-                products = dal.Product.GetAll();
-                break;
-        }
-        return from pro in products
-               let product = (DO.Product)pro
-               select new ProductItem
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (BO.Category)product.Category,
-                   Amount = product.InStock,
-                   Instock = product.InStock > 0
-               };
-    }
+    //private IEnumerable<BO.ProductItem>GetListOfProductItemsForCustomer(Filter filter1 = BO.Filter.None, object? filterValue = null)
+    //{
+    //    IEnumerable<DO.Product?> products;
+    //    Filter filter = filter1;
+    //    switch (filter)
+    //    {
+    //        case Filter.FilterByCategory:
+    //            products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
+    //            break;
+    //        case Filter.None:
+    //            products = dal.Product.GetAll();
+    //            break;
+    //        default:
+    //            products = dal.Product.GetAll();
+    //            break;
+    //    }
+    //    return from pro in products
+    //          let product = (DO.Product)pro!
+    //           select new ProductItem
+    //          {
+    //              ID = product.ID,
+    //              Name = product.Name,
+    //              Price = product.Price,
+    //              Category = (BO.Category)product.Category,
+    //              Amount = product.InStock,
+    //              Instock = product.InStock > 0 ? true : false
+    //          };
+    //}
 
 }
 

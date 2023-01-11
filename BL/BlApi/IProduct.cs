@@ -54,6 +54,13 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<ProductItem?> GetProductListForCustomer();
 
+        ///// <summary>
+        ///// Definition of a function that returns a list of product by category for the customer
+        ///// </summary>
+        ///// <param name="category"></param>
+        ///// <returns></returns>
+        //public IEnumerable<ProductItem?> GetListOfProductItemsForCustomerByCategory(BO.Category? category);
+
         /// <summary>
         /// Definition of a function that returns a product by id for the customer
         /// </summary>
