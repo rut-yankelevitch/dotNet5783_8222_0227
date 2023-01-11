@@ -73,16 +73,12 @@ namespace PL.Product
         /// </summary>
         private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductForList? product = Product.SelectedItem as BO.ProductForList;
-                int varInt = product!.ID;
-                ProductWindow productWindow = new ProductWindow(varInt);
-                productWindow.Show();
+            BO.ProductForList? product = ((BO.ProductForList)((DataGrid)sender).SelectedItem);
+            int varInt = product!.ID;
+            ProductWindow productWindow = new ProductWindow(varInt);
+            productWindow.Show();
             Close();
         }
 
-        private void DGProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        DataContext="{Binding OrderTracking, RelativeSource={RelativeSource Mode=Self} }"
+        DataContext="{Binding TrackingOrder, RelativeSource={RelativeSource Mode=Self} }"
         Title="OrderTrackingWindow" Height="450" Width="800">
     <Grid>
-
-        <TextBlock Text="{Binding Tuples,Converter={}}"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding ID}" Grid.Row="0" FontSize="20" />
+        <TextBlock Text="{Binding Status}" Grid.Row="1" FontSize="20"/>
+        <ListView ItemsSource="{Binding Tuples}"  Grid.Row="2" FontSize="20"/>
+        
     </Grid>
 </Window>

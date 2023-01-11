@@ -144,20 +144,16 @@ internal class Order : BlApi.IOrder
     {
         DO.Order order = new DO.Order();
         BO.OrderTracking orderTracking = new BO.OrderTracking();
-        List<Tuple<DateTime?, string>> tList = new List<Tuple<DateTime?, string>>
-            {
-                new Tuple<DateTime?, string>(order.OrderDate, "the order has been created")
-             };
-
+        List<Tuple<DateTime?, string>> tList = new ();
         try
         {
             order = dal.Order.GetByCondition(order2=>order2?.ID==id);
+
         }
         catch (DO.DalDoesNotExistException ex)
         {
             throw new BO.BLDoesNotExistException("order doesnot exist", ex);
         }
-
         orderTracking.ID = order.ID;
         if (order.DeliveryrDate != null&&order.DeliveryrDate < DateTime.Now)
             orderTracking.Status = BO.OrderStatus.ProvidedOrder;
@@ -168,6 +164,7 @@ internal class Order : BlApi.IOrder
             else
                 orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
+
         if (order.ShipDate != null)
         {
             tList.Add(new Tuple<DateTime?, string>(order.ShipDate, "the order has been sent"));

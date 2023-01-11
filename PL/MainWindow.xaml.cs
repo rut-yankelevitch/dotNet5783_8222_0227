@@ -21,7 +21,9 @@ namespace PL
 
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)
         {
-            OrderTrackingWindow orderTracking = new ();
+            int orderId;
+            int.TryParse(OrderId.Text, out orderId);
+            OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
             orderTracking.Show ();
             
         }

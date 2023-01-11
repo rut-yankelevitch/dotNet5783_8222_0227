@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using BO;
+using PL.Product;
 
 namespace PL.Order
 {
@@ -28,7 +30,7 @@ namespace PL.Order
         public CatalogWindow()
         {
             InitializeComponent();
-            var temp = bl.Product.GetProductItemForCatalogNoFilter();
+            var temp = bl.Product.GetProductListForCustomer();
             ProductsItem = (temp == null) ? new() : new(temp!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
@@ -40,17 +42,18 @@ namespace PL.Order
             {
                 BO.Category? category = categorySelector.SelectedItem as BO.Category?;
 
-                if (category == BO.Category.None)
-                {
-                    var temp = bl.Product.GetProductItemForCatalogNoFilter();
-                    ProductsItem = (temp == null) ? new() : new(temp!);
-                }
-                else
-                {
-                    var temp = bl.Product.GetProducItemForCatalogByCategory(category);
-                    ProductsItem = (temp == null) ? new() : new(temp!);
-                }
+                var temp = bl.Product.GetProductListForCustomer();
+                ProductsItem = (temp == null) ? new() : new(temp!);
             }
+        }
+
+        private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductItem? product = Product.SelectedItem as BO.ProductItem;
+            int varInt = product!.ID;
+            ProductWindow productWindow = new ProductWindow(varInt);
+            productWindow.Show();
+            Close();
         }
     }
 }
