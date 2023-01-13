@@ -32,30 +32,14 @@ namespace PL.Product
         public ProductListWindow()
         {
             InitializeComponent();
-            var temp = bl.Product.GetProductListForManagerNoFilter();
-            Products = (temp == null) ? new() : new(temp);
-
+            changeProductList();
         }
-
+        private void Product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
 
         /// <summary>
         /// A function is called when a selection is changed in the category selector combobox
         /// </summary>
-        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-             BO.Category? category= categorySelector.SelectedItem as BO.Category?;
-            
-            if (category == BO.Category.None)
-            {
-                var temp = bl.Product.GetProductListForManagerNoFilter();
-                Products = (temp == null) ? new() : new(temp);
-            }
-            else
-            {
-                var temp = bl.Product.GetProductListForManagerByCategory(category);
-                Products = (temp == null) ? new() : new(temp);
-            }
-        }
+        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => changeProductList();
 
 
         /// <summary>
@@ -64,11 +48,10 @@ namespace PL.Product
         private void addProductButton_Click(object sender, RoutedEventArgs e) 
         { 
             new ProductWindow().Show();
-            //
-            Close();
-            //
+            ////
+            //Close();
+            ////
         }
-
 
         /// <summary>
         /// A function is called when a product is clicked
@@ -79,7 +62,14 @@ namespace PL.Product
             int varInt = product!.ID;
             ProductWindow productWindow = new ProductWindow(varInt);
             productWindow.Show();
-            Close();
+            //Close();
+        }
+        private void changeProductList()
+        {
+            var temp = Category == Category.None ?
+               bl.Product.GetProductListForManagerNoFilter()
+              : bl.Product.GetProductListForManagerByCategory(Category);
+            Products = (temp == null) ? new() : new(temp);
         }
 
     }

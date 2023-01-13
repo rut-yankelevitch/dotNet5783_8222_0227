@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using System.Linq;
+
+namespace BlImplementation;
 
 /// <summary>
 /// A class that implements the iorder interface
@@ -164,7 +166,7 @@ internal class Order : BlApi.IOrder
             else
                 orderTracking.Status = BO.OrderStatus.ConfirmedOrder;
         }
-
+        tList.Add(new Tuple<DateTime?, string>(order.OrderDate, "the order has been created"));
         if (order.ShipDate != null)
         {
             tList.Add(new Tuple<DateTime?, string>(order.ShipDate, "the order has been sent"));
@@ -303,7 +305,7 @@ internal class Order : BlApi.IOrder
                 ShipDate = orderDal.ShipDate,
                 DeliveryDate = orderDal.DeliveryrDate,
                 TotalPrice = orderItems.Sum(item => item.TotalPrice),
-                Items = (List<BO.OrderItem?>)orderItems,
+                Items = orderItems.ToList(),
                 Status = BO.OrderStatus.ProvidedOrder
             };
         }

@@ -9,7 +9,9 @@
         <loc:ConvertZeroToBool x:Key="ConvertZeroToBool"/>
         <loc:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
         <loc:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
-        
+        <loc:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
+        <loc:ConverIntToString x:Key="ConverIntToString"/>
+        <loc:ConverDoubleToString x:Key="ConverDoubleToString"/>
+
     </Application.Resources>
 </Application>
-

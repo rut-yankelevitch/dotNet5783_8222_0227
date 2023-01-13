@@ -4,6 +4,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Activated="Product_List_Window_Activated" 
+
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
@@ -21,14 +23,24 @@ VerticalAlignment="Top" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox x:Name="categorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"
-             ItemsSource="{Binding Source= {StaticResource Categorys}}" Text="{Binding Category , Mode=TwoWay , NotifyOnValidationError=True}">
+            <ComboBox Name="CategorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.ColumnSpan="2"
+             ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+
+
+            <!--<ComboBox x:Name="categorySelector"  SelectionChanged="categorySelector_SelectionChanged"
+              Text="{Binding Category , Mode=TwoWay , NotifyOnValidationError=True}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>-->
             <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
         </Grid>
         <DataGrid CanUserAddRows="False" Name="Product" Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="Product_MouseDoubleClick" >

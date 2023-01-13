@@ -24,7 +24,6 @@ namespace PL.Order
             InitializeComponent();
             var temp = bl.Order.TrackingOrder(id);
             TrackingOrder = (temp == null) ? new() : temp;
-
         }
     }
 }

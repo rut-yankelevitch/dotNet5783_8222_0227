@@ -34,7 +34,7 @@ namespace PL.Order;
     {
         BO.OrderForList order = ((BO.OrderForList)OrdersListview.SelectedItem);
         int varInt = order.ID;
-        OrderWindow orderWindow = new OrderWindow(varInt);
+        OrderWindow orderWindow = new OrderWindow(varInt,true);
         orderWindow.Show();
         Close();
     }

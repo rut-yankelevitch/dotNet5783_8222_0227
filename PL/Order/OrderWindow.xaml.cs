@@ -24,8 +24,10 @@ namespace PL.Order
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
 
-        public OrderWindow(int id)
+        public bool StatusWindow { get; set; } = true;
+        public OrderWindow(int id,bool statusWindow)
         {
+            StatusWindow=statusWindow;
             InitializeComponent();
             OrderData = bl.Order.GetOrderById(id);
             IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));

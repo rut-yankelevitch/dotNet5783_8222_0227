@@ -57,109 +57,6 @@ namespace PL.Product
 
 
         /// <summary>
-        /// A function is called when the confirmation button is clicked
-        /// </summary>
-
-
-        /// <summary>
-        /// A function is called when idInput text changed
-        /// </summary>
-        private void idInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (idInput.Text.Length == 6)
-                invalidCheck();
-            else
-            {
-                update.IsEnabled = false;
-                add.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
-        /// A function is called when category-selector selection changed
-        /// </summary>
-        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (categorySelector.SelectedItem != null)
-                invalidCheck();
-            else
-            {
-                add.IsEnabled = false;
-                update.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
-        /// A function is called when name input text changed
-        /// </summary>
-        private void nameInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (nameInput.Text.Length > 0)
-                invalidCheck();
-            else
-            {
-                add.IsEnabled = false;
-                update.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
-        /// A function is called when price input text changed
-        /// </summary>
-        private void priceInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            if (priceInput.Text.Length > 0)
-            {
-
-                invalidCheck();
-            }
-            else
-            {
-                add.IsEnabled = false;
-                update.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
-        /// A function is called when instock input text changed
-        /// </summary>
-        private void instockInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (instockInput.Text.Length > 0)
-                invalidCheck();
-            else
-            {
-                add.IsEnabled = false;
-                update.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
-        /// invalid check function
-        /// </summary>
-        private void invalidCheck()
-        {
-            if (idInput.Text.Length == 6 && nameInput.Text.Length > 0 && categorySelector.SelectedItem != null
-                && priceInput.Text.Length > 0 && instockInput.Text.Length > 0)
-            {
-                add.IsEnabled = true;
-                update.IsEnabled = true;
-            }
-            else
-            {
-                add.IsEnabled = false;
-                update.IsEnabled = false;
-            }
-        }
-
-
-        /// <summary>
         /// Numerical input function 
         /// </summary>
         private void idInput_onlyNumber_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -200,14 +97,12 @@ namespace PL.Product
                 int.TryParse(idInput.Text, out id);
                 bl.Product.DeleteProduct(id);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
                 Close();
             }
             catch (BO.BLImpossibleActionException ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
                 Close();
             }
             catch (Exception ex)
@@ -233,14 +128,12 @@ namespace PL.Product
             {
                 bl.Product.AddProduct(product);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
                 Close();
             }
             catch (BO.BLAlreadyExistException ex)
             {
                 MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
                 Close();
 
             }
@@ -252,7 +145,6 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
             }
         }
 
@@ -273,7 +165,7 @@ namespace PL.Product
             {
                 bl.Product.UpdateProduct(product);
                 ProductListWindow productListWindow = new ProductListWindow();
-                productListWindow.Show();
+
                 this.Close();
             }
             catch (BO.BLAlreadyExistException ex)

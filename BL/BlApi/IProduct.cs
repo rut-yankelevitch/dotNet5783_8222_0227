@@ -48,12 +48,7 @@ namespace BlApi
         /// <returns></returns>
         public Product UpdateProduct(Product product);
 
-        /// <summary>
-        /// Definition of a function that returns a list of all products for the customer
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ProductItem?> GetProductListForCustomer();
-
+ 
         ///// <summary>
         ///// Definition of a function that returns a list of product by category for the customer
         ///// </summary>
@@ -70,5 +65,6 @@ namespace BlApi
 
         public IEnumerable<BO.ProductItem?> GetProducItemForCatalogByCategory(BO.Category? category);
         public IEnumerable<BO.ProductItem?> GetProductItemForCatalogNoFilter();
+
     }
 }

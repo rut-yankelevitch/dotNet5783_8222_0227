@@ -25,7 +25,6 @@ namespace PL
             int.TryParse(OrderId.Text, out orderId);
             OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
             orderTracking.Show ();
-            
         }
 
 

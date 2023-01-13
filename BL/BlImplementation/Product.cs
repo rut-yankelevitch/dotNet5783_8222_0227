@@ -180,27 +180,7 @@ internal class Product : IProduct
         }
     }
 
-
-    /// <summary>
-    /// function that returns a list of all products for the customer
-    /// </summary>
-    /// <returns>list of product</returns>
-    public IEnumerable<ProductItem?> GetProductListForCustomer()
-    {
-        IEnumerable<DO.Product?> products = dal.Product.GetAll();
-        return from pro in products
-               let product = (DO.Product)pro!
-               select new ProductItem
-               {
-                   ID = product.ID,
-                   Name = product.Name,
-                   Price = product.Price,
-                   Category = (BO.Category)product.Category,
-                   Amount =0,
-                   Instock = product.InStock > 0 ? true : false
-               };
-    }
-
+ 
     /// <summary>
     /// Definition of a function that returns a list of product by category for the catalog
     /// </summary>
@@ -218,7 +198,7 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductItem?> GetProductItemForCatalogNoFilter()
     {
-        return GetProductItemForCatalog();
+       return GetProductItemForCatalog();
     }
 
 
@@ -289,6 +269,9 @@ internal class Product : IProduct
             productItem.Instock = false;
         return productItem;
     }
+
+
+
     /// <summary>
     /// Definition of a function that returns a list of product by category for the catalog
     /// </summary>

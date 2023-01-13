@@ -94,9 +94,9 @@ namespace BLTest
                             Console.WriteLine(productForList);
                         break;
                     case ProductOptions.GET_LIST_FOR_CUSTOMER:
-                        productsItem = iBl.Product.GetListOfProductItemsForCustomer();
-                        foreach (ProductItem? item in productsItem)
-                                Console.WriteLine(item);
+                       // productsItem = iBl.Product.GetListOfProductItemsForCustomer();
+                      //  foreach (ProductItem? item in productsItem)
+                      //          Console.WriteLine(item);
                         break;
                     case ProductOptions.UPDATE:
                         Console.WriteLine("enter product details:\n product id, product name, category , price ,amount");
