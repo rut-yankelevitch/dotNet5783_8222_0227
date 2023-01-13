@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        DataContext="{Binding OrderData,  RelativeSource={RelativeSource Mode=Self} }"        
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self} }"        
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
         <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
         <DataTemplate  x:Key="MyDataTemplate" DataType="local:MyData" >
-            <Grid>
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -83,7 +83,7 @@
             <Label Content="Amount" HorizontalAlignment="Center"  Grid.Column="3" />
             <Label Content="TotalPrice" HorizontalAlignment="Center"  Grid.Column="4" />
         </Grid>
-        <ListView x:Name="ItemsListview" Grid.Row="9" Grid.Column="1" ItemsSource="{Binding Items }" ItemTemplate="{StaticResource MyDataTemplate}" HorizontalContentAlignment="Stretch"  />
+        <ListView x:Name="ItemsListview" Grid.Row="9" Grid.Column="1" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=-1},Path= }" ItemTemplate="{StaticResource MyDataTemplate}" HorizontalContentAlignment="Stretch"  />
         <Label x:Name="TptalPrice" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding TotalPrice}" VerticalAlignment="Top" Width="200" />
     </Grid>
 </Window>
