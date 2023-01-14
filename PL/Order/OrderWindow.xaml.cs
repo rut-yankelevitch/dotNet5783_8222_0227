@@ -24,16 +24,16 @@ namespace PL.Order
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
 
-        public bool StatusWindow { get; set; } = true;
-        public OrderWindow(int id,bool statusWindow)
+      public OrderWindow(int id,bool statusWindow)
         {
-            StatusWindow=statusWindow;
+            //StatusWindow=statusWindow;
             InitializeComponent();
             OrderData = bl.Order.GetOrderById(id);
             IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
 
             var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
             Status.ItemsSource= filterStatus;
+
 
         }
 
