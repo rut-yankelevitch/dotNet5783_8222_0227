@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
+        DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }"        
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
@@ -49,6 +49,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Label Content="Order ID" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
         <Label Content="Customer Name"  Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
@@ -60,13 +61,12 @@
         <Label Content="Delivery Date"   Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
         <Label Content="Items"  Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
         <Label Content="Total Price"  Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label x:Name="Id"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding Id}" VerticalAlignment="Top" Width="200" />
+        <Label x:Name="Id"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding ID}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerName"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding CustomerName}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerEmail" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding CustomerEmail}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerAddress"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding CustomerAddress}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="OrderDate" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left"  Content="{Binding OrderDate}" VerticalAlignment="Top" Width="200" />
-        <ComboBox x:Name="Status" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"    SelectedValue="{Binding Status}"   VerticalAlignment="Top" Width="200" />
-        <Button  Content="Update status"  Grid.Row="5" Grid.Column="1" Margin="250,0,0,0" HorizontalAlignment="Left"  Padding="5" Click="UpdateStatus_Click" />
+        <ComboBox x:Name="ComboBoxStatus" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"    SelectedValue="{Binding Status}"   VerticalAlignment="Top" Width="200" />
         <Label x:Name="ShipDate" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding ShipDate}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="DeliveryDate" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding DeliveryDate}" VerticalAlignment="Top" Width="200" />
         <Grid Name="titel" Grid.Row="8" Grid.Column="1" Background="AliceBlue">
@@ -82,8 +82,11 @@
             <Label Content="Price" HorizontalAlignment="Center"  Grid.Column="2" />
             <Label Content="Amount" HorizontalAlignment="Center"  Grid.Column="3" />
             <Label Content="TotalPrice" HorizontalAlignment="Center"  Grid.Column="4" />
+
         </Grid>
         <ListView x:Name="ItemsListview" Grid.Row="9" Grid.Column="1" ItemsSource="{Binding Items}" ItemTemplate="{StaticResource MyDataTemplate}" HorizontalContentAlignment="Stretch"  />
         <Label x:Name="TptalPrice" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding TotalPrice}" VerticalAlignment="Top" Width="200" />
+        <Button x:Name="update" Content="Update"  Grid.Row="11" Grid.Column="1" Margin="250,0,0,0" HorizontalAlignment="Left"  Padding="5" Click="update_Click" />
+
     </Grid>
 </Window>

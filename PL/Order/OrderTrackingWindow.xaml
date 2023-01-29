@@ -16,6 +16,6 @@
         <TextBlock Text="{Binding ID}" Grid.Row="0" FontSize="20" />
         <TextBlock Text="{Binding Status}" Grid.Row="1" FontSize="20"/>
         <ListView ItemsSource="{Binding Tuples}"  Grid.Row="2" FontSize="20"/>
-        
+        <Button  Content="תצוגת הזמנה" Width="200"  Margin="0,0,0,0" Click="showOrder_Click"/>
     </Grid>
 </Window>

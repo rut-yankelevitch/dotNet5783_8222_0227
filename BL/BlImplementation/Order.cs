@@ -127,7 +127,6 @@ internal class Order : BlApi.IOrder
                 throw new BO.BLDoesNotExistException("order update failes", ex);
             }
             return returnBOOrder(orderDal);
-
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -196,14 +195,6 @@ internal class Order : BlApi.IOrder
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem = new BO.OrderItem();
         DO.OrderItem item = new DO.OrderItem();
-        try
-        {
-            item = dal.OrderItem.GetByCondition(item=>(item?.OrderID==idOrder&&item?.ProductID==idProduct));
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex);
-        }
         DO.Order order = new DO.Order();
         try
         {
@@ -213,40 +204,21 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order does not exist", ex);
         }
-        if (order.ShipDate != null && order.ShipDate < DateTime.Now)
+        //if (order.ShipDate != null && order.ShipDate < DateTime.Now)
+         if (order.ShipDate < DateTime.Now)
         {
             throw new BO.BLImpossibleActionException("It is not possible to update an order after it has been sent");
         }
+        try
+        {
+            item = dal.OrderItem.GetByCondition(item => (item?.OrderID == idOrder && item?.ProductID == idProduct));
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex);
+        }
         if (amount < 0)
             throw new BO.BLInvalidInputException("invalid amount");
-        try
-        {
-            product = dal.Product.GetByCondition(item2=>item2?.ID==item.ProductID);
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("product does not exist", ex);
-        }
-        product.InStock += item.Amount;
-        item.Amount = amount;
-        try
-        {
-            dal.OrderItem.Update(item);
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException($"{ex.EntityName} does not exist", ex);
-        }
-        product.InStock -= amount;
-        try
-        {
-            dal.Product.Update(product);
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException(" product does not exist", ex);
-        }
-
         if (amount == 0)
         {
             try
@@ -259,14 +231,43 @@ internal class Order : BlApi.IOrder
             }
             throw new Exception("The product remove from the order");
         }
-
-        orderItem.ID = item.ID;
-        orderItem.Amount = amount;
-        orderItem.Price = item.Price;
-        orderItem.TotalPrice = amount * item.Price;
-        orderItem.ProductID = idProduct;
-        orderItem.Name = product.Name;
-        return orderItem;
+        else
+        {
+            try
+            {
+                product = dal.Product.GetByCondition(item2 => item2?.ID == item.ProductID);
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BO.BLDoesNotExistException("product does not exist", ex);
+            }
+            product.InStock += item.Amount;
+            item.Amount = amount;
+            try
+            {
+                dal.OrderItem.Update(item);
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BO.BLDoesNotExistException($"{ex.EntityName} does not exist", ex);
+            }
+            product.InStock -= amount;
+            try
+            {
+                dal.Product.Update(product);
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BO.BLDoesNotExistException(" product does not exist", ex);
+            }
+            orderItem.ID = item.ID;
+            orderItem.Amount = amount;
+            orderItem.Price = item.Price;
+            orderItem.TotalPrice = amount * item.Price;
+            orderItem.ProductID = idProduct;
+            orderItem.Name = product.Name;
+            return orderItem;
+        }
     }
 
 

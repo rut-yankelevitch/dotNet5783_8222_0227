@@ -1,4 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+using PL.Order;
+
+
 namespace PL.Order
 {
     /// <summary>
@@ -24,6 +28,12 @@ namespace PL.Order
             InitializeComponent();
             var temp = bl.Order.TrackingOrder(id);
             TrackingOrder = (temp == null) ? new() : temp;
+        }
+
+        public void showOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderWindow orderWindow = new OrderWindow(TrackingOrder.ID, false);
+            orderWindow.Show();
         }
     }
 }

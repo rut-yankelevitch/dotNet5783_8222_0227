@@ -36,7 +36,12 @@ namespace PL.Order;
         int varInt = order.ID;
         OrderWindow orderWindow = new OrderWindow(varInt,true);
         orderWindow.Show();
-        Close();
     }
+    private void Order_List_Window_Activated(object sender, EventArgs e)
+    {
+        var temp = bl.Order.GetOrderList();
+        Orders = (temp == null) ? new() : new(temp);
+    }
+
 }
 

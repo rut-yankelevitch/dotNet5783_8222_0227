@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,26 +24,32 @@ namespace PL.Order
         public static readonly DependencyProperty OrderDataProperty =
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
 
-
-      public OrderWindow(int id,bool statusWindow)
+        public OrderWindow(int id,bool statusWindow)
         {
-            //StatusWindow=statusWindow;
             InitializeComponent();
+            
             OrderData = bl.Order.GetOrderById(id);
             IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
-
             var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
-            Status.ItemsSource= filterStatus;
-
-
+            ComboBoxStatus.ItemsSource= filterStatus;
+            ComboBoxStatus.IsEnabled= statusWindow;
         }
 
-        private void UpdateStatus_Click(object sender, RoutedEventArgs e)
+        private void update_Click(object sender, RoutedEventArgs e)
         {
-            BO.OrderStatus? status = Status.SelectedItem as BO.OrderStatus?;
+            BO.OrderStatus? status = ComboBoxStatus.SelectedItem as BO.OrderStatus?;
             BO.Order? order;
+            if (status != BO.OrderStatus.SendOrder&& status != BO.OrderStatus.ProvidedOrder)
+            {
 
-                    if (status == BO.OrderStatus.SendOrder)
+                var a = OrderData?.Items?.Select(
+                item => bl.Order.UpdateAmountOfOProductInOrder(OrderData.ID, item!.ProductID, item.Amount));
+            }
+            //foreach (OrderItem? item in OrderData?.Items!)
+            //{
+            //   bl.Order.UpdateAmountOfOProductInOrder(OrderData.ID, item!.ProductID, item.Amount);
+            //}
+            if (status == BO.OrderStatus.SendOrder)
                     {
                         try
                         {
@@ -72,6 +79,8 @@ namespace PL.Order
                             MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-                }
-            }
+            Close();
+
+        }
+    }
 }
