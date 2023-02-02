@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }"        
+        DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }" 
+        
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
         <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
+        <local:DateTimeConverter x:Key="DateTimeConverter"/>
+        <local:NextStatusConverter x:Key="NextStatusConverter"/>
+        <local:StatusToHiddenConverter x:Key="StatusToHiddenConverter"/>
+
         <DataTemplate  x:Key="MyDataTemplate" >
             <Grid >
                 <Grid.RowDefinitions>
@@ -65,10 +70,11 @@
         <Label x:Name="CustomerName"   Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding CustomerName}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerEmail" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding CustomerEmail}" VerticalAlignment="Top" Width="200" />
         <Label x:Name="CustomerAddress"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding CustomerAddress}" VerticalAlignment="Top" Width="200" />
-        <Label x:Name="OrderDate" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left"  Content="{Binding OrderDate}" VerticalAlignment="Top" Width="200" />
-        <ComboBox x:Name="ComboBoxStatus" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left"    SelectedValue="{Binding Status}"   VerticalAlignment="Top" Width="200" />
-        <Label x:Name="ShipDate" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding ShipDate}" VerticalAlignment="Top" Width="200" />
-        <Label x:Name="DeliveryDate" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding DeliveryDate}" VerticalAlignment="Top" Width="200" />
+        <Label x:Name="OrderDate" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" Content="{Binding OrderDate, Converter={StaticResource DateTimeConverter}}"  VerticalAlignment="Top" Width="200" />
+        <Label Content="{Binding Status}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" />
+        <CheckBox x:Name="NextStatusCheckbox" Grid.Row="5" Grid.Column="1"  Content="{Binding Status, Converter={StaticResource NextStatusConverter}}"  IsChecked="False" Visibility="{Binding Status, Converter={StaticResource StatusToHiddenConverter}}" Margin="145,8,-145,24" Grid.RowSpan="2"/>
+        <Label x:Name="ShipDate" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding ShipDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
+        <Label x:Name="DeliveryDate" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding DeliveryDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
         <Grid Name="titel" Grid.Row="8" Grid.Column="1" Background="AliceBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

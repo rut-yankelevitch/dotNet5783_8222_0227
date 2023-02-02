@@ -224,12 +224,15 @@ internal class Order : BlApi.IOrder
             try
             {
                 dal.OrderItem.Delete(item.ID);
+                 int count=dal.OrderItem.GetAll(item=>item?.OrderID==idOrder).Count();
+                if (count == 0)
+                    dal.Order.Delete(idOrder);
             }
             catch (DO.DalDoesNotExistException ex)
             {
                 throw new BO.BLDoesNotExistException("id does not exist", ex);
             }
-            throw new Exception("The product remove from the order");
+            return orderItem;
         }
         else
         {
@@ -241,6 +244,9 @@ internal class Order : BlApi.IOrder
             {
                 throw new BO.BLDoesNotExistException("product does not exist", ex);
             }
+                if (amount > product.InStock)
+                    throw new BO.BLImpossibleActionException("Amount not in stock");
+            
             product.InStock += item.Amount;
             item.Amount = amount;
             try
@@ -258,7 +264,7 @@ internal class Order : BlApi.IOrder
             }
             catch (DO.DalDoesNotExistException ex)
             {
-                throw new BO.BLDoesNotExistException(" product does not exist", ex);
+                throw new BO.BLDoesNotExistException("product does not exist", ex);
             }
             orderItem.ID = item.ID;
             orderItem.Amount = amount;
@@ -307,7 +313,9 @@ internal class Order : BlApi.IOrder
                 DeliveryDate = orderDal.DeliveryrDate,
                 TotalPrice = orderItems.Sum(item => item.TotalPrice),
                 Items = orderItems.ToList(),
-                Status = BO.OrderStatus.ProvidedOrder
+                Status = (((DO.Order)orderDal!).DeliveryrDate != null && ((DO.Order)orderDal!).DeliveryrDate < DateTime.Now) ?
+                                                BO.OrderStatus.ProvidedOrder : ((DO.Order)orderDal!).ShipDate != null && ((DO.Order)orderDal!).ShipDate < DateTime.Now ?
+                                                BO.OrderStatus.SendOrder : BO.OrderStatus.ConfirmedOrder
             };
         }
         catch (DO.DalDoesNotExistException ex)

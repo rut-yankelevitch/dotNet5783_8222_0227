@@ -31,54 +31,55 @@ namespace PL.Order
             OrderData = bl.Order.GetOrderById(id);
             IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
             var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
-            ComboBoxStatus.ItemsSource= filterStatus;
-            ComboBoxStatus.IsEnabled= statusWindow;
         }
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            BO.OrderStatus? status = ComboBoxStatus.SelectedItem as BO.OrderStatus?;
+            BO.OrderStatus? status = (OrderStatus?)OrderData?.Status;
             BO.Order? order;
             if (status != BO.OrderStatus.SendOrder&& status != BO.OrderStatus.ProvidedOrder)
             {
-
-                var a = OrderData?.Items?.Select(
-                item => bl.Order.UpdateAmountOfOProductInOrder(OrderData.ID, item!.ProductID, item.Amount));
+                try
+                {
+                    OrderData?.Items?.ToList().ForEach(item => bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, item!.ProductID, item.Amount));
+                }
+                catch (BO.BLImpossibleActionException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            //foreach (OrderItem? item in OrderData?.Items!)
-            //{
-            //   bl.Order.UpdateAmountOfOProductInOrder(OrderData.ID, item!.ProductID, item.Amount);
-            //}
-            if (status == BO.OrderStatus.SendOrder)
-                    {
-                        try
-                        {
-                            order = bl.Order.UpdateSendOrderByManager(OrderData!.ID);
-                        }
-                        catch (BO.BLDoesNotExistException ex)
-                        {
-                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        catch (BO.BLImpossibleActionException ex)
-                        {
-                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            order = bl.Order.UpdateSupplyOrderByManager(OrderData!.ID);
-                        }
-                        catch (BO.BLDoesNotExistException ex)
-                        {
-                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        catch (BO.BLImpossibleActionException ex)
-                        {
-                            MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
+            
+            if (status == BO.OrderStatus.ConfirmedOrder&& NextStatusCheckbox.IsChecked==true)
+            {
+                try
+                {
+                    order = bl.Order.UpdateSendOrderByManager(OrderData!.ID);
+                }
+                catch (BO.BLDoesNotExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (BO.BLImpossibleActionException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else if(status == BO.OrderStatus.SendOrder&& NextStatusCheckbox.IsChecked==true)
+            {
+                try
+                {
+                    order = bl.Order.UpdateSupplyOrderByManager(OrderData!.ID);
+                }
+                catch (BO.BLDoesNotExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (BO.BLImpossibleActionException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
             Close();
 
         }

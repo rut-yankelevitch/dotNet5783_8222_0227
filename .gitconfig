@@ -1,0 +1,6 @@
+[http]
+	sslVerify = false
+	sslCAInfo = C:\\ProgramData\\NetFree\\CA\\netfree-ca-bundle-curl.crt
+[user]
+	name = RacheliShafran
+	email = r0527197777@gmail.com

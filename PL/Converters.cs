@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using BO;
+
 namespace PL;
 
 public class ConvertZeroToBool : IValueConverter
@@ -119,5 +121,47 @@ public class ConverIntToString : IValueConverter
             return null; //Some default value
         }
         return inStock;
+    }
+}
+
+public class DateTimeConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        DateTime? date = (DateTime?)value;
+        return date!=null ? (date?.ToString("dd, MM,yy",
+                  CultureInfo.InvariantCulture)):"לא קיים תאריך";
+    }
+
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class NextStatusConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus? status = (OrderStatus?)value;
+        return status == BO.OrderStatus.ConfirmedOrder ? BO.OrderStatus.SendOrder : status == BO.OrderStatus.SendOrder ? BO.OrderStatus.ProvidedOrder : null;
+    }
+
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class StatusToHiddenConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus? status = (OrderStatus?)value;
+        return status == BO.OrderStatus.ConfirmedOrder || status == BO.OrderStatus.SendOrder ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

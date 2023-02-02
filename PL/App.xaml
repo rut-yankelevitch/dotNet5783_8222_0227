@@ -12,6 +12,8 @@
         <loc:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
         <loc:ConverIntToString x:Key="ConverIntToString"/>
         <loc:ConverDoubleToString x:Key="ConverDoubleToString"/>
-
+        <loc:DateTimeConverter x:Key="DateTimeConverter"/>
+        <loc:NextStatusConverter x:Key="NextStatusConverter"/>
+        <loc:StatusToHiddenConverter x:Key="StatusToHiddenConverter"/>
     </Application.Resources>
 </Application>
