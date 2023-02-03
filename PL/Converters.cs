@@ -157,10 +157,30 @@ public class StatusToHiddenConverter : IValueConverter
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         BO.OrderStatus? status = (OrderStatus?)value;
+        
         return status == BO.OrderStatus.ConfirmedOrder || status == BO.OrderStatus.SendOrder ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class ConvertStatusToVisible : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        //return ((values[0]!).ToString()!.Length == 6 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 && (values[3]!).ToString()!.Length > 0 && values[4] != null && ((BO.Category)values[4]!) != BO.Category.None) ? true : false;
+       BO.OrderStatus ? status = (OrderStatus?)(values[0]!);
+       string ? statusWindow = (values[1]!).ToString();
+        if (statusWindow == "False" || status == BO.OrderStatus.ProvidedOrder)
+            return Visibility.Hidden;
+        else
+            return Visibility.Visible;
+
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
