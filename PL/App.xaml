@@ -13,8 +13,6 @@
         <loc:ConverIntToString x:Key="ConverIntToString"/>
         <loc:ConverDoubleToString x:Key="ConverDoubleToString"/>
         <loc:DateTimeConverter x:Key="DateTimeConverter"/>
-        <loc:NextStatusConverter x:Key="NextStatusConverter"/>
-        <loc:StatusToHiddenConverter x:Key="StatusToHiddenConverter"/>
         <loc:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
     </Application.Resources>
 </Application>

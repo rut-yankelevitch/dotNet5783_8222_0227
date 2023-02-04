@@ -60,18 +60,31 @@ public class ConvertZeroToBool : IValueConverter
         }
     }
 
-
-    public class ConvertShipDateToTrue : IValueConverter
+public class ConvertShipDateToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value!=null?((((BO.Order?)value)?.ShipDate<DateTime.Now)?false:true):false;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        //return ((values[0]!).ToString()!.Length == 6 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 && (values[3]!).ToString()!.Length > 0 && values[4] != null && ((BO.Category)values[4]!) != BO.Category.None) ? true : false;
+        string? statusWindow = (values[1]!).ToString();
+        return values[0] != null|| statusWindow == "True" ? ((((BO.Order?)values[0])?.ShipDate < DateTime.Now) ? false : true) : false;
     }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+//public class ConvertShipDateToTrue : IValueConverter
+//    {
+//        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+//        {
+//            return value!=null?((((BO.Order?)value)?.ShipDate<DateTime.Now)?false:true):false;
+//        }
+//        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
 public class ConvertInputToTrue : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -152,20 +165,20 @@ public class NextStatusConverter : IValueConverter
     }
 }
 
-public class StatusToHiddenConverter : IValueConverter
-{
-    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        BO.OrderStatus? status = (OrderStatus?)value;
+//public class StatusToHiddenConverter : IValueConverter
+//{
+//    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        BO.OrderStatus? status = (OrderStatus?)value;
         
-        return status == BO.OrderStatus.ConfirmedOrder || status == BO.OrderStatus.SendOrder ? Visibility.Visible : Visibility.Hidden;
-    }
+//        return status == BO.OrderStatus.ConfirmedOrder || status == BO.OrderStatus.SendOrder ? Visibility.Visible : Visibility.Hidden;
+//    }
 
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
+//    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
 public class ConvertStatusToVisible : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
