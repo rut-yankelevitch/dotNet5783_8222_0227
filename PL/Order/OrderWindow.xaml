@@ -35,7 +35,7 @@
 				<TextBox.IsEnabled>
 					<MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
 						<Binding ElementName="StatusWindow"  Path="Text"   />
-						<Binding RelativeSource="RelativeSource Mode= FindAncestor,AncestorType={x:Type Window},AncestorLevel=1" Path="DataContext"  />
+						<Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="DataContext"  />
 					</MultiBinding>
 				</TextBox.IsEnabled>
 				</TextBox>

@@ -65,8 +65,23 @@ public class ConvertShipDateToTrue : IMultiValueConverter
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         //return ((values[0]!).ToString()!.Length == 6 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 && (values[3]!).ToString()!.Length > 0 && values[4] != null && ((BO.Category)values[4]!) != BO.Category.None) ? true : false;
-        string? statusWindow = (values[1]!).ToString();
-        return values[0] != null|| statusWindow == "True" ? ((((BO.Order?)values[0])?.ShipDate < DateTime.Now) ? false : true) : false;
+        string? statusWindow = (values[0]!).ToString();
+        //if(values[1] != null && statusWindow == "True")
+        //{
+        //    if(((((BO.Order?)values[1])?.ShipDate < DateTime.Now)))
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
+        //else
+        //{
+        //    return false;
+        //}
+        return values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
