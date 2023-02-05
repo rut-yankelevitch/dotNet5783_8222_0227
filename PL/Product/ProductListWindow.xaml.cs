@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BO;
-using DalApi;
 
 namespace PL.Product
 {
@@ -25,15 +24,25 @@ namespace PL.Product
         DependencyProperty.Register("Products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
 
         public Category Category { get; set; } = Category.None;
+        private int status;
+        private BO.Cart? cart;
+
 
         /// <summary>
         ///ProductListWindow constructor
         /// </summary>
-        public ProductListWindow()
+        public ProductListWindow(int status = 0)
         {
             InitializeComponent();
             changeProductList();
+            cart = new();
+            this.status = status;   
+            if(status== 1)
+            {
+                addProductButton.Visibility= Visibility.Hidden;
+            }
         }
+
         private void Product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
 
         /// <summary>
@@ -60,10 +69,19 @@ namespace PL.Product
         {
             BO.ProductForList? product = ((BO.ProductForList)((DataGrid)sender).SelectedItem);
             int varInt = product!.ID;
-            ProductWindow productWindow = new ProductWindow(varInt);
-            productWindow.Show();
-            //Close();
+            if (this.status == 0)
+            {
+                ProductWindow productWindow = new ProductWindow(varInt);
+                productWindow.Show();
+            }
+            else
+            {
+                ProductItemWindow productItemWindow = new (varInt, cart);
+                productItemWindow.Show();   
+
+            }
         }
+
         private void changeProductList()
         {
             var temp = Category == Category.None ?

@@ -35,6 +35,7 @@ VerticalAlignment="Top" Width="auto">
         </Grid>
         <DataGrid CanUserAddRows="False" Name="Product" Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="Product_MouseDoubleClick" >
             <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Name"  Width="3*" Binding="{Binding Path=Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Path=Price}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category}" IsReadOnly="True"/>
