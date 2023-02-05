@@ -1,18 +1,19 @@
-﻿<Application x:Class="PL.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:loc="clr-namespace:PL;assembly=PL"
-             StartupUri="MainWindow.xaml">
+﻿    <Application x:Class="PL.App"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:localy="clr-namespace:PL"             StartupUri="MainWindow.xaml">
+
     <Application.Resources>
-        <loc:Categorys x:Key="Categorys"/>
-        <loc:EnumToStringConverter x:Key ="EnumToStringConverter"/>
-        <loc:ConvertZeroToBool x:Key="ConvertZeroToBool"/>
-        <loc:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-        <loc:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
-        <loc:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
-        <loc:ConverIntToString x:Key="ConverIntToString"/>
-        <loc:ConverDoubleToString x:Key="ConverDoubleToString"/>
-        <loc:DateTimeConverter x:Key="DateTimeConverter"/>
-        <loc:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+        <localy:Categorys x:Key="Categorys"/>
+        <localy:EnumToStringConverter x:Key ="EnumToStringConverter"/>
+        <localy:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
+        <localy:NextStatusConverter x:Key ="NextStatusConverter"/>
+        <localy:ConvertZeroToBool x:Key="ConvertZeroToBool"/>
+        <localy:ConverBoolToString x:Key="ConverBoolToString"/>
+        <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
+        <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
+        <localy:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
+        <localy:ConverIntToString x:Key="ConverIntToString"/>
+        <localy:ConverDoubleToString x:Key="ConverDoubleToString"/>
+        <localy:DateTimeConverter x:Key="DateTimeConverter"/>
+        <localy:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
     </Application.Resources>
 </Application>

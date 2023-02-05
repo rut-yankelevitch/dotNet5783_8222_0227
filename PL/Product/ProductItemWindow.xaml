@@ -3,34 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
+        xmlns:local="clr-namespace:PL;assembly=PL" 
+        xmlns:localy="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding ProductData1, RelativeSource={RelativeSource Mode=Self} }"
         Background="Bisque"
         Title="ProductItem" Height="450" Width="800">
-    <Window.Resources>
-        <local:ConvertZeroToBool x:Key="ConvertZeroToBool" />
-        <local:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
-        <local:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-        <local:ConverBoolToString x:Key="ConverBoolToString"/>
-
-
-    </Window.Resources>
-
 
     <Grid>
-        <TextBox x:Name="idInput" HorizontalAlignment="Left"  SelectionLength="6" Margin="170,95,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"   IsEnabled="{Binding ID ,Converter={StaticResource ConvertZeroToBool}}"/>
-        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" IsEnabled="{Binding ID ,Converter={StaticResource ConvertZeroToBool}}"/>
-        <TextBox x:Name="nameInput" HorizontalAlignment="Left" Margin="170,205,0,0" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120"  IsEnabled="{Binding ID ,Converter={StaticResource ConvertZeroToBool}}"/>
-        <TextBox x:Name="priceInput" HorizontalAlignment="Left" Margin="170,260,0,0" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString}}" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="instockInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="amountInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="{Binding Amount,Converter={StaticResource ConverIntToString}}" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="idInput" HorizontalAlignment="Left"   Margin="170,95,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="category" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Text="{Binding Category }" Width="120" />
+        <TextBlock x:Name="nameInput" HorizontalAlignment="Left" Margin="170,205,0,0" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120" />
+        <TextBlock x:Name="priceInput" HorizontalAlignment="Left" Margin="170,260,0,0" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString}}" VerticalAlignment="Top" Width="120" />
+        <TextBlock x:Name="instockInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="{Binding Instock,Converter={StaticResource ConverBoolToString}}" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="lbId" Content="id" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbCategory" Content="category" HorizontalAlignment="Left" Margin="100,145,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbName" Content="name" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbAmount" Content="amount" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="add_to_cart_remove_from_cart" Content="add to cart "  HorizontalAlignment="Left" Margin="503,308,0,0" VerticalAlignment="Top" Height="40" Width="95"  />
+        <Label x:Name="lbAmount" Content="amount" HorizontalAlignment="Left" Margin="100,365,0,0" VerticalAlignment="Top"/>
+        <!--<Button x:Name="btn_decrease" HorizontalAlignment="Left" Margin="150,350,0,0"  Width="20"  Height="20" Content="-"  Click="btn_decrease_Click"  />
+        <TextBox x:Name="amountInput" HorizontalAlignment="Left" Margin="180,365,0,0" Height="30" Width="30"  TextWrapping="Wrap" Text="{Binding Amount,Converter={StaticResource ConverIntToString}, Mode=TwoWay}" VerticalAlignment="Top" TextChanged="amountInput_TextChanged" />
+        <Button  x:Name="btn_increase"   HorizontalAlignment="Left" Margin="220,350,0,0" Width="20"  Height="20"  Content="+" Click="btn_increase_Click" />-->
+        <local:NumericUpDownControl x:Name="gradeNumUpDown" />
+        <Button x:Name="add_to_cart_remove_from_cart" Content="add to cart "  HorizontalAlignment="Left" Margin="503,308,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="add_to_cart_remove_from_cart_Click"  />
     </Grid>
 </Window>

@@ -5,8 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Activated="Product_List_Window_Activated" 
-
-        xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="ListOfProduct" Height="640" Width="800">

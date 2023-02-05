@@ -10,10 +10,10 @@
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
-        <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
+        <!--<local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
         <local:DateTimeConverter x:Key="DateTimeConverter"/>
         <local:NextStatusConverter x:Key="NextStatusConverter"/>
-		<local:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+		<local:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>-->
 
 
 		<DataTemplate  x:Key="MyDataTemplate" >
