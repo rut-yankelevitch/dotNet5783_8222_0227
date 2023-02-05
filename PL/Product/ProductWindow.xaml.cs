@@ -15,6 +15,7 @@ namespace PL.Product
         BlApi.IBl bl = BlApi.Factory.Get();
 
 
+
         public BO.Product ProductData
         {
             get { return (BO.Product)GetValue(ProductDataProperty); }

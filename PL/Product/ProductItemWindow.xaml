@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL;assembly=PL" 
         xmlns:localy="clr-namespace:PL"
+        
         mc:Ignorable="d"
         DataContext="{Binding ProductData1, RelativeSource={RelativeSource Mode=Self} }"
         Background="Bisque"

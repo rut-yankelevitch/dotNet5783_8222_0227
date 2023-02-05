@@ -15,6 +15,7 @@ namespace PL
         }
 
 
+
         private void ShowProductsBotton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();

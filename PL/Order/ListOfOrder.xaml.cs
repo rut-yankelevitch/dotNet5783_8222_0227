@@ -13,6 +13,7 @@ namespace PL.Order;
     public partial class ListOfOrder : Window
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
+
         public ObservableCollection<BO.OrderForList?> Orders
         {
             get { return (ObservableCollection<BO.OrderForList?>)GetValue(OrdersProperty); }

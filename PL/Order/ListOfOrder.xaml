@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
             <RowDefinition Height="*" />
+            
         </Grid.RowDefinitions>
         <StackPanel>
             <Grid Name="titel" Grid.Row="0" Background="AliceBlue">

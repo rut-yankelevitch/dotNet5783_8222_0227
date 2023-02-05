@@ -16,6 +16,7 @@ namespace PL.Order
 
         private BlApi.IBl bl = BlApi.Factory.Get();
 
+
         public ObservableCollection<BO.ProductItem> ProductsItem
         {
             get { return (ObservableCollection<BO.ProductItem>)GetValue(ProductsItemProperty); }

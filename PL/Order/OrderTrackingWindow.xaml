@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding TrackingOrder, RelativeSource={RelativeSource Mode=Self} }"
+        
         Title="OrderTrackingWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
