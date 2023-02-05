@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL" xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         DataContext="{Binding OrderData, RelativeSource={RelativeSource Mode=Self} }" 
+     
         
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
     <Window.Resources >
-        <local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
+        <!--<local:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
         <local:DateTimeConverter x:Key="DateTimeConverter"/>
         <local:NextStatusConverter x:Key="NextStatusConverter"/>
-		<local:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+		<local:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>-->
 
 
 		<DataTemplate  x:Key="MyDataTemplate" >
@@ -39,7 +40,6 @@
 					</MultiBinding>
 				</TextBox.IsEnabled>
 				</TextBox>
-				
 				<!--<TextBox Grid.Column="3" HorizontalAlignment="Center"  Text="{Binding Path=Amount}" IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1},Path=DataContext,Converter={StaticResource ConvertShipDateToTrue}}"  />-->
 				<!--<syncfusion:UpDown Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="95,11,0,0" NullValueText="Enter your weight:" Grid.Row="6" UseNullOption="True" Value="50.25" VerticalAlignment="Top" Width="120"/>-->
 				<TextBlock Grid.Column="4" HorizontalAlignment="Center"  Text="{Binding  Path=TotalPrice}" />
@@ -113,7 +113,7 @@
 			<Button.Visibility>
 				<MultiBinding  Converter="{StaticResource ConvertStatusToVisible}">
 					<Binding  Path="Status"  />
-					<Binding ElementName="StatusWindow"  Path="Text"   />
+					<Binding  Path="StatusWindow2" />
 				</MultiBinding>
 			</Button.Visibility>
 		</Button>

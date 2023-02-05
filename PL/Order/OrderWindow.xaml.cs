@@ -23,22 +23,24 @@ namespace PL.Order
         // Using a DependencyProperty as the backing store for OrderData.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OrderDataProperty =
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
-        //public bool StatusWindow
-        //{
-        //    get { return (bool)GetValue(StatusWindowProperty); }
-        //    set { SetValue(StatusWindowProperty, value); }
-        //}
+        public bool StatusWindow2
+        {
+            get { return (bool)GetValue(StatusWindowProperty); }
+            set { SetValue(StatusWindowProperty, value); }
+        }
 
-        //// Using a DependencyProperty as the backing store for OrderData.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty StatusWindowProperty =
-        //    DependencyProperty.Register("StatusWindow", typeof(bool), typeof(Window), new PropertyMetadata(false));
+        // Using a DependencyProperty as the backing store for OrderData.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StatusWindowProperty =
+            DependencyProperty.Register("StatusWindow2", typeof(bool), typeof(Window), new PropertyMetadata(false));
 
 
 
         public OrderWindow(int id,bool statusWindow)
         {
             InitializeComponent();
+            StatusWindow2=statusWindow;
             //ooo
+
             StatusWindow.Text = statusWindow.ToString();
             //ooo
             OrderData = bl.Order.GetOrderById(id);

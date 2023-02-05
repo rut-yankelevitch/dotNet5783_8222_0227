@@ -5,8 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Activated="Product_List_Window_Activated" 
-
-        xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="ListOfProduct" Height="640" Width="800">
@@ -35,6 +33,7 @@ VerticalAlignment="Top" Width="auto">
         </Grid>
         <DataGrid CanUserAddRows="False" Name="Product" Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="Product_MouseDoubleClick" >
             <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Name"  Width="3*" Binding="{Binding Path=Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Path=Price}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category}" IsReadOnly="True"/>

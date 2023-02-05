@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using BO;
 using PL.Order;
+using PL.Product;
 
 namespace PL
 {
@@ -34,11 +35,9 @@ namespace PL
             manager.Show();
             Close();
         }
-
-
         private void ShowCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new CatalogWindow();
+            ProductListWindow catalog = new (1);
             catalog.Show();
         }
     }
