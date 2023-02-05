@@ -15,6 +15,7 @@ namespace PL
         /// <summary>
         /// MainWindow constractor
         /// </summary>
+        /// 
         public MainWindow()
         {
             InitializeComponent();

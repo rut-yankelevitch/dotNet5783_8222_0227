@@ -29,6 +29,7 @@ namespace PL.Order
             set { SetValue(StatusWindowProperty, value); }
         }
 
+
         // Using a DependencyProperty as the backing store for OrderData.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StatusWindowProperty =
             DependencyProperty.Register("StatusWindow2", typeof(bool), typeof(Window), new PropertyMetadata(false));

@@ -16,6 +16,7 @@ namespace PL.Order
         {
             get { return (BO.OrderTracking)GetValue(TrackingOrderProperty); }
             set { SetValue(TrackingOrderProperty, value); }
+
         }
 
         // Using a DependencyProperty as the backing store for OrderTracking.  This enables animation, styling, binding, etc...

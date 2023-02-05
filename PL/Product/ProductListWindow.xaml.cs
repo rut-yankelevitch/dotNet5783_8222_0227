@@ -13,6 +13,7 @@ namespace PL.Product
     public partial class ProductListWindow : Window
     {
         private BlApi.IBl bl =BlApi.Factory.Get();
+
         public ObservableCollection<BO.ProductForList?> Products
         {
             get { return (ObservableCollection<BO.ProductForList?>)GetValue(ProductsProperty); }
