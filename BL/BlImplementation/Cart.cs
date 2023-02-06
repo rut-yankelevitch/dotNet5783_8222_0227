@@ -87,7 +87,7 @@ internal class Cart : ICart
                                     Name = orderItem.Name,
                                     ProductID = orderItem.ProductID,
                                     Price = orderItem.Price,
-                                    Amount = orderItem?.ProductID == productId ? amount : orderItem.Amount,
+                                    Amount =( orderItem?.ProductID == productId) ? amount : orderItem.Amount,
                                     TotalPrice = orderItem?.ProductID == productId ? amount * orderItem.Price : orderItem.TotalPrice
                                 };
                 cart.Items=cartItems.ToList();
@@ -122,7 +122,10 @@ internal class Cart : ICart
             int id = dal.Order.Add(
                 new DO.Order
                 {
-                    OrderDate= DateTime.Now,
+                    CustomerName = cart.CustomerName,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerAdress = cart.CustomerAddress,
+                    OrderDate = DateTime.Now,
                     ShipDate = null,
                     DeliveryrDate = null
                 });

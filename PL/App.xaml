@@ -16,5 +16,11 @@
         <localy:ConverDoubleToString x:Key="ConverDoubleToString"/>
         <localy:DateTimeConverter x:Key="DateTimeConverter"/>
         <localy:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+        <localy:ConvertZeroToHidden2 x:Key="ConvertZeroToHidden2"/>
+        <localy:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
+
+
+
+
     </Application.Resources>
 </Application>

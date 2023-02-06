@@ -77,9 +77,9 @@ namespace PL.Cart
         }
         private void ShowCartButton_Click(Object sender ,RoutedEventArgs e)
         {
-
+            CartWindow? productItemWindow = new(MyCart!);
+            productItemWindow.Show();
         }
-
     }
 }
 

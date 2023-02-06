@@ -48,14 +48,15 @@ VerticalAlignment="Top" Width="auto">
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Amount">
+                    
+                    <!--<GridViewColumn Width="Auto" Header="Amount">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="20,10" Text="{Binding Amount}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                        
-                    </GridViewColumn>
+                        </GridViewColumn.CellTemplate>-->
+                    <!--</GridViewColumn>-->
+
                     <GridViewColumn Width="Auto" Header="Category">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -82,6 +83,6 @@ VerticalAlignment="Top" Width="auto">
                 <DataGridTextColumn Header="Instock" Width="2*" Binding="{Binding Path=Instock}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <Button Grid.Row="2" x:Name="ShowCartButton" Content="🛒" FontSize="35" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
+        <Button Grid.Row="2" x:Name="ShowCartButton" Content="🛒" Foreground="red" Background="White"  FontSize="35" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
     </Grid>
 </Window>

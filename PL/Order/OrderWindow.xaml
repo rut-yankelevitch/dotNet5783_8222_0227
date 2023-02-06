@@ -114,7 +114,7 @@
 			<Button.Visibility>
 				<MultiBinding  Converter="{StaticResource ConvertStatusToVisible}">
 					<Binding  Path="Status"  />
-					<Binding  Path="StatusWindow2" />
+                    <Binding  ElementName="StatusWindow"  Path="Text"/>
 				</MultiBinding>
 			</Button.Visibility>
 		</Button>

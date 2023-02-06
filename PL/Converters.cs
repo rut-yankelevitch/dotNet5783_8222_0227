@@ -31,6 +31,29 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    public class ConvertZeroToHidden2 : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)value! == 0 ? Visibility.Hidden : Visibility.Visible;
+        }
+        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class ConvertZeroStringToHidden : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value!.ToString()! == "0" ? Visibility.Hidden : Visibility.Visible;
+        }
+        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
 
     public class ConvertZeroToHidden : IValueConverter
@@ -85,7 +108,6 @@ namespace PL
         {
             throw new NotImplementedException();
         }
-
     }
     public class ConvertInputToTrue : IMultiValueConverter
     {
@@ -184,4 +206,18 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    //public class ConvertAmount : IValueConverter
+    //{
+    //    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        return value==0? : null;
+    //    }
+
+    //    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+
 }

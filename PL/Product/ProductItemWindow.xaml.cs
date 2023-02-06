@@ -35,7 +35,7 @@ namespace PL.Product
                 else
                     num = value;
 
-                amountInput.Text =  num.ToString();
+                amountInput.Text = num.ToString();
             }
         }
         public int MinValue { get; set; }
@@ -65,34 +65,50 @@ namespace PL.Product
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
             MinValue = 0;
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductData!.ID);
-            ProductData.Amount = product==null?0:product.Amount;
+            ProductData.Amount = product == null ? 0 : product.Amount;
+            Value = ProductData.Amount;
 
         }
 
-        private void add_to_cart_remove_from_cart_Click(object sender, RoutedEventArgs e)
+        private void add_to_cart_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)((Button)sender).Content == "add to cart")
+            //if ((string)((Button)sender).Content == "add to cart")
+            //{
+            if (ProductData.Amount == 0)
             {
-                if (ProductData.Amount ==0)
+                if (Value != 0)
                 {
-                    if (Value != 0)
+                    try
                     {
                         cart = bl.cart.AddProductToCart(cart!, ProductData.ID);
-
-                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID,Value);
-                        ((Button)sender).Content = "remove from cart";
+                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
+                        //((Button)sender).Content = "remove from cart";
                         Close();
                     }
-                }
-                else
-                {
-                    bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID,Value);
+                    catch (BO.BLDoesNotExistException ex)
+                    {
+                        MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             else
             {
-                bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
-                ((Button)sender).Content = "add to cart";
+                bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
+                Close();
+            }
+            //}
+            //else
+            //{
+            //    bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
+            //    ((Button)sender).Content = "add to cart";
+            //}
+        }
+        private void remove_from_cart_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductData.Amount != 0)
+            {
+                    cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
+                    Close();
             }
         }
         private void btn_increase_Click(object sender, RoutedEventArgs e)

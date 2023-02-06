@@ -8,9 +8,9 @@
 
     <StackPanel Orientation="Horizontal" >
 
-        <Button x:Name="cmdDown" Margin="1" Content="˅" Click="cmdDown_Click" />
+        <Button x:Name="cmdDown" Margin="1" Content="-" Click="cmdDown_Click" />
         <TextBox x:Name="textNumber" Margin="1" Width="50"  TextChanged="txtNum_TextChanged" />
-        <Button x:Name="cmdUp" Margin="1" Content="˄" Click="cmdUp_Click" />
+        <Button x:Name="cmdUp" Margin="1" Content="+" Click="cmdUp_Click" />
     </StackPanel>
 
 </UserControl>

@@ -27,6 +27,8 @@
         <TextBox x:Name="amountInput" HorizontalAlignment="Left" Margin="180,365,0,0" Height="30" Width="30"  TextWrapping="Wrap" Text="{Binding Amount,Converter={StaticResource ConverIntToString}, Mode=TwoWay}" VerticalAlignment="Top"  />
         <Button  x:Name="btn_increase"   HorizontalAlignment="Left" Margin="220,350,0,0" Width="20"  Height="20"  Content="+" Click="btn_increase_Click" />
         <!--<local:NumericUpDownControl x:Name="gradeNumUpDown" />-->
-        <Button x:Name="add_to_cart_remove_from_cart" Content="add to cart"  HorizontalAlignment="Left" Margin="503,308,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="add_to_cart_remove_from_cart_Click"  />
+        <Button x:Name="add_to_cart" Content="add to cart"  HorizontalAlignment="Left" Margin="503,283,0,0" VerticalAlignment="Top" Height="40" Width="95" Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroStringToHidden }}" Click="add_to_cart_Click"  />
+        <Button x:Name="remove_from_cart" Content="remove from cart"  HorizontalAlignment="Left" Margin="503,360,0,0" VerticalAlignment="Top" Height="40" Width="95" Click="remove_from_cart_Click" Visibility="{Binding Amount,Converter={StaticResource ConvertZeroToHidden2}}" RenderTransformOrigin="0.316,-0.028"  />
+
     </Grid>
 </Window>
