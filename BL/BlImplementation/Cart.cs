@@ -71,15 +71,16 @@ internal class Cart : ICart
 
             if (product.InStock < amount)
                 throw new BLImpossibleActionException("product not exist in stock");
-            cart.TotalPrice -= (amount - result.Amount) * result.Price;
+            cart.TotalPrice -= ( result.Amount) * result.Price;
             if (amount == 0)
             {
                 cart.Items.Remove(result);
+                return cart;
             }
             else
             {
                 var cartItems = from item in cart.Items
-                                let orderItem = (BO.OrderItem)item
+                                let orderItem = (BO.OrderItem?)item
                                 select new BO.OrderItem
                                 {
                                     ID = orderItem.ID,
@@ -89,7 +90,7 @@ internal class Cart : ICart
                                     Amount = orderItem?.ProductID == productId ? amount : orderItem.Amount,
                                     TotalPrice = orderItem?.ProductID == productId ? amount * orderItem.Price : orderItem.TotalPrice
                                 };
-                cart.Items = (List<BO.OrderItem?>)cartItems;
+                cart.Items=cartItems.ToList();
             }
             return cart;
         }

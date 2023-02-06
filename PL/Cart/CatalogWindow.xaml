@@ -82,6 +82,6 @@ VerticalAlignment="Top" Width="auto">
                 <DataGridTextColumn Header="Instock" Width="2*" Binding="{Binding Path=Instock}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <Button Grid.Row="2" x:Name="ShowCartButton" Content="view cart" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
+        <Button Grid.Row="2" x:Name="ShowCartButton" Content="🛒" FontSize="35" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
     </Grid>
 </Window>

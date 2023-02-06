@@ -1,4 +1,5 @@
 ﻿
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -63,7 +64,8 @@ namespace PL.Product
             ProductData = bl.Product.GetProductByIdForCustomer(id);
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
             MinValue = 0;
-            Value = 0;
+            var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductData!.ID);
+            ProductData.Amount = product==null?0:product.Amount;
 
         }
 
@@ -77,7 +79,7 @@ namespace PL.Product
                     {
                         cart = bl.cart.AddProductToCart(cart!, ProductData.ID);
 
-                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID,Value-1);
+                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID,Value);
                         ((Button)sender).Content = "remove from cart";
                         Close();
                     }
