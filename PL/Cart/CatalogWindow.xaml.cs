@@ -6,7 +6,7 @@ using System.Windows.Input;
 using BO;
 using PL.Product;
 
-namespace PL.Order
+namespace PL.Cart
 {
     /// <summary>
     /// Interaction logic for CatalogWindow.xaml
@@ -15,6 +15,7 @@ namespace PL.Order
     {
 
         private BlApi.IBl bl = BlApi.Factory.Get();
+        public Category Category { get; set; }
 
 
         public ObservableCollection<BO.ProductItem> ProductsItem
@@ -27,11 +28,23 @@ namespace PL.Order
         public static readonly DependencyProperty ProductsItemProperty =
             DependencyProperty.Register("ProductsItem", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
 
+        public BO.Cart? MyCart
+        {
+            get { return (BO.Cart)GetValue(CartProperty); }
+            set { SetValue(CartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CartProperty =
+        DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
 
         public CatalogWindow()
         {
-            var temp = bl.Product.GetProductItemForCatalogNoFilter();
+            MyCart = new() { Items = new() };
+            Category =  Category.None;
             InitializeComponent();
+            var temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
@@ -57,11 +70,13 @@ namespace PL.Order
 
         private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductItem? product = Product.SelectedItem as BO.ProductItem;
-            int varInt = product!.ID;
-            ProductWindow productWindow = new ProductWindow(varInt);
-            productWindow.Show();
-            Close();
+            ProductItem? productItem=(ProductItem)(DataContext);
+            MyCart = bl.cart.AddProductToCart(MyCart!, productItem.ID);
+
+        }
+        private void ShowCartButton_Click(Object sender ,RoutedEventArgs e)
+        {
+
         }
     }
 }

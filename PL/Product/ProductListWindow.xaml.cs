@@ -23,25 +23,25 @@ namespace PL.Product
         // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProductsProperty =
         DependencyProperty.Register("Products", typeof(ObservableCollection<BO.ProductForList?>), typeof(Window), new PropertyMetadata(null));
+        
+
 
         public Category Category { get; set; } = Category.None;
-        private int status;
-        private BO.Cart? cart;
+        //private int status;
 
 
         /// <summary>
         ///ProductListWindow constructor
         /// </summary>
-        public ProductListWindow(int status = 0)
+        public ProductListWindow()
         {
             InitializeComponent();
             changeProductList();
-            cart = new();
-            this.status = status;   
-            if(status== 1)
-            {
-                addProductButton.Visibility= Visibility.Hidden;
-            }
+            //this.status = status;   
+            //if(status== 1)
+            //{
+            //    addProductButton.Visibility= Visibility.Hidden;
+            //}
         }
 
         private void Product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
@@ -70,17 +70,17 @@ namespace PL.Product
         {
             BO.ProductForList? product = ((BO.ProductForList)((DataGrid)sender).SelectedItem);
             int varInt = product!.ID;
-            if (this.status == 0)
-            {
+            //if (this.status == 0)
+            //{
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
-            }
-            else
-            {
-                ProductItemWindow productItemWindow = new (varInt, cart);
-                productItemWindow.Show();   
+            //}
+            //else
+            //{
+            //    ProductItemWindow productItemWindow = new(varInt);
+            //    productItemWindow.Show();
 
-            }
+            //}
         }
 
         private void changeProductList()
@@ -91,5 +91,9 @@ namespace PL.Product
             Products = (temp == null) ? new() : new(temp);
         }
 
+        //private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+
+        //}
     }
 }
