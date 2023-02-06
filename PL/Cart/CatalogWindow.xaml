@@ -5,53 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
         
         Title="CatalogWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="7*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" Height="41" Grid.Row="0"
 VerticalAlignment="Top" Width="auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <ComboBox x:Name="categorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
         </Grid>
-        
-        <ListView Grid.Row="1" d:itemSource="{Binding ProductsItem}">
+
+        <ListView Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding ProductsItem}"   MouseDoubleClick="Product_MouseDoubleClick " >
             <ListView.View >
                 <GridView >
                     <GridViewColumn Width="Auto" Header="ID">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding ID}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding ID}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding Name}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding Name}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Price">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding Price}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding Price}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Amount">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding Amount}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding Amount}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                         
@@ -59,14 +59,14 @@ VerticalAlignment="Top" Width="auto">
                     <GridViewColumn Width="Auto" Header="Category">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding Category}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding Category}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Instock">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-5,-1" Text="{Binding Instock}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding Instock}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -82,6 +82,6 @@ VerticalAlignment="Top" Width="auto">
                 <DataGridTextColumn Header="Instock" Width="2*" Binding="{Binding Path=Instock}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>-->
-        <Button Grid.Row="2" x:Name="ShowCartButton" Height="100" Width="200"  Click="ShowCartButton_Click"/>
+        <Button Grid.Row="2" x:Name="ShowCartButton" Content="view cart" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
     </Grid>
 </Window>

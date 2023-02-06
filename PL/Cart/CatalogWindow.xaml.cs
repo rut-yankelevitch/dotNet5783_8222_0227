@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,7 +45,7 @@ namespace PL.Cart
             MyCart = new() { Items = new() };
             Category =  Category.None;
             InitializeComponent();
-            var temp = bl.Product.GetProductItemForCatalogNoFilter();
+            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
@@ -70,14 +71,15 @@ namespace PL.Cart
 
         private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ProductItem? productItem=(ProductItem)(DataContext);
-            MyCart = bl.cart.AddProductToCart(MyCart!, productItem.ID);
-
+            BO.ProductItem? productItem = ((BO.ProductItem)((ListView)sender).SelectedItem);
+            ProductItemWindow? productItemWindow = new(productItem.ID, MyCart);
+            productItemWindow.Show();
         }
         private void ShowCartButton_Click(Object sender ,RoutedEventArgs e)
         {
 
         }
+
     }
 }
 
