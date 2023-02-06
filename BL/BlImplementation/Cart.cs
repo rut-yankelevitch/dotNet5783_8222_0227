@@ -116,7 +116,7 @@ internal class Cart : ICart
             if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
                 throw new BLInvalidInputException("Invalid details");
 
-            if (cart.Items == null)
+            if (cart?.Items?.Count== 0)
                 throw new BLImpossibleActionException("There are no items in the cart.");
 
             int id = dal.Order.Add(

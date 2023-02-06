@@ -30,11 +30,17 @@ namespace PL
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-
-            myCart.CustomerName = NameTxt.Text;
-            myCart.CustomerEmail = EmailTxt.Text;
-            myCart.CustomerAddress = AddressTxt.Text;
-            bl.cart.MakeOrder(myCart);
+            try
+            {
+                myCart.CustomerName = NameTxt.Text;
+                myCart.CustomerEmail = EmailTxt.Text;
+                myCart.CustomerAddress = AddressTxt.Text;
+                bl.cart.MakeOrder(myCart);
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             Close();
         }
     }

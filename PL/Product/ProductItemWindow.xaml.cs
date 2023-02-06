@@ -1,4 +1,5 @@
 ﻿
+using PL.Cart;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -132,6 +133,12 @@ namespace PL.Product
                 amountInput.Text = Value.ToString();
             else
                 Value = val;
+        }
+
+        private void ShowCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            CartWindow? productItemWindow = new(cart!);
+            productItemWindow.Show();
         }
 
 
