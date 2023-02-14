@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,8 @@ namespace PL.Cart
         {
             InitializeComponent();
             myCart = cart;
-            //myCart.Items = cart.Items;
             ProductsItemListview.ItemsSource = myCart.Items;
+
         }
         private void confirmOrderBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -55,5 +56,11 @@ namespace PL.Cart
             }
         }
 
+        private void removeFromCart_Click(object sender, RoutedEventArgs e)
+        {
+            int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
+            bl.cart.UpdateProductAmountInCart(myCart,id,0);
+            ProductsItemListview.ItemsSource = myCart.Items;
+        }
     }
 }
