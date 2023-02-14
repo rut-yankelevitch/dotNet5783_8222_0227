@@ -9,15 +9,18 @@
         <localy:NextStatusConverter x:Key ="NextStatusConverter"/>
         <localy:ConvertZeroToBool x:Key="ConvertZeroToBool"/>
         <localy:ConverBoolToString x:Key="ConverBoolToString"/>
-        <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-        <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
+        <localy:ConvertNullToVisible x:Key="ConvertNullToVisible"/>
+        <localy:ConvertNullToHidden x:Key="ConvertNullToHidden"/>
         <localy:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
         <localy:ConverIntToString x:Key="ConverIntToString"/>
         <localy:ConverDoubleToString x:Key="ConverDoubleToString"/>
         <localy:DateTimeConverter x:Key="DateTimeConverter"/>
         <localy:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
-        <localy:ConvertZeroToHidden2 x:Key="ConvertZeroToHidden2"/>
+        <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
         <localy:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
+        <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
+
+
 
 
 

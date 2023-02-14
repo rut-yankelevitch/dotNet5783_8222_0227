@@ -32,7 +32,7 @@
         <Label x:Name="lbName" Content="name" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="add" Content="add" Visibility="{Binding Converter={StaticResource ConvertZeroToVisible}}"   HorizontalAlignment="Left" Margin="635,359,0,0"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
+        <Button x:Name="add" Content="add" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"   HorizontalAlignment="Left" Margin="635,359,0,0"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
             <Button.IsEnabled>
                 <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
                     <Binding ElementName="idInput" Path="Text"  />
@@ -43,7 +43,7 @@
                 </MultiBinding>
             </Button.IsEnabled>
         </Button>
-        <Button x:Name="update" Content="update" Visibility="{Binding Converter={StaticResource ConvertZeroToHidden}}"  HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
+        <Button x:Name="update" Content="update" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
             <Button.IsEnabled>
                 <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
                     <Binding ElementName="idInput" Path="Text"  />
@@ -54,6 +54,6 @@
                 </MultiBinding>
             </Button.IsEnabled>
         </Button>
-        <Button x:Name="delete_button" Content="delete" Visibility="{Binding Converter={StaticResource ConvertZeroToHidden}}" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
+        <Button x:Name="delete_button" Content="delete" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
     </Grid>
 </Window>

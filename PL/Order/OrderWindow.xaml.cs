@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace PL.Order
 {
@@ -41,9 +42,21 @@ namespace PL.Order
             InitializeComponent();
             StatusWindow2=statusWindow;
             //ooo
+            Visibility v =Visibility.Hidden;
+            if (statusWindow == false||OrderData?.Status==BO.OrderStatus.ProvidedOrder)
+            {
+                NextStatusCheckbox.Visibility = v;
+                update.Visibility = v;
+            }
+            if ((statusWindow == false) || (statusWindow == true && OrderData?.ShipDate < DateTime.Now))
+                DataGrid myCombo = GetVisualChildInDataTemplate<DataGrid>("AmountOfProducts");
 
-            StatusWindow.Text = statusWindow.ToString();
+
+            //values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
+
+            //StatusWindow.Text = statusWindow.ToString();
             //ooo
+
             OrderData = bl.Order.GetOrderById(id);
             IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
             var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);

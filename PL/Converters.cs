@@ -20,7 +20,7 @@ namespace PL
     }
 
 
-    public class ConvertZeroToVisible : IValueConverter
+    public class ConvertNullToVisible : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -31,7 +31,7 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-    public class ConvertZeroToHidden2 : IValueConverter
+    public class ConvertZeroToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -56,11 +56,26 @@ namespace PL
 
 
 
-    public class ConvertZeroToHidden : IValueConverter
+    public class ConvertNullToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? Visibility.Hidden : Visibility.Visible;
+            if(value == null )
+            {
+                return Visibility.Hidden;
+            }
+            return Visibility.Visible;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class ConvertZeroToVisible : IValueConverter
+    {
+        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)value! == 0 ? Visibility.Visible: Visibility.Hidden;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -193,7 +208,9 @@ namespace PL
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            BO.OrderStatus? status = (OrderStatus?)(values[0]!);
+            BO.Order? order = (BO.Order?)(values[0]!);
+            BO.OrderStatus? status = order.Status;
+            //BO.OrderStatus? status = (OrderStatus?)(values[0]!);
             string? statusWindow = (values[1]!).ToString();
             if (statusWindow == "False" || status == BO.OrderStatus.ProvidedOrder)
                 return Visibility.Hidden;

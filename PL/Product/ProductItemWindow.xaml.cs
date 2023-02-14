@@ -83,7 +83,8 @@ namespace PL.Product
                     {
                         cart = bl.cart.AddProductToCart(cart!, ProductData.ID);
                         cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
-                        //((Button)sender).Content = "remove from cart";
+                        CatalogWindow catalog = new(cart);
+                        catalog.Show();
                         Close();
                     }
                     catch (BO.BLDoesNotExistException ex)
@@ -95,6 +96,8 @@ namespace PL.Product
             else
             {
                 bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
+                CatalogWindow catalog = new(cart);
+                catalog.Show();
                 Close();
             }
             //}
@@ -108,8 +111,10 @@ namespace PL.Product
         {
             if (ProductData.Amount != 0)
             {
-                    cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
-                    Close();
+                cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
+                CatalogWindow catalog = new();
+                catalog.Show();
+                Close();
             }
         }
         private void btn_increase_Click(object sender, RoutedEventArgs e)
@@ -139,7 +144,15 @@ namespace PL.Product
         {
             CartWindow? productItemWindow = new(cart!);
             productItemWindow.Show();
+            Close();
         }
+        private void ReturnToCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            CatalogWindow catalog = new();
+            catalog.Show();
+            Close();
+        }
+
 
 
 

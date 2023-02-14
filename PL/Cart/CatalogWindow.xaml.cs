@@ -29,15 +29,15 @@ namespace PL.Cart
         public static readonly DependencyProperty ProductsItemProperty =
             DependencyProperty.Register("ProductsItem", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
 
-        public BO.Cart? MyCart
-        {
-            get { return (BO.Cart)GetValue(CartProperty); }
-            set { SetValue(CartProperty, value); }
-        }
+        public BO.Cart? MyCart;
+        //{
+        //    get { return (BO.Cart)GetValue(CartProperty); }
+        //    set { SetValue(CartProperty, value); }
+        //}
 
-        // Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CartProperty =
-        DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+        //// Using a DependencyProperty as the backing store for products.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty CartProperty =
+        //DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
         public CatalogWindow()
@@ -48,7 +48,15 @@ namespace PL.Cart
             IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
+        }
+        public CatalogWindow(BO.Cart? cart)
+        {
+            MyCart = cart;
+            Category = Category.None;
+            InitializeComponent();
+            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+            ProductsItem = (temp == null) ? new() : new(temp!);
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
         private void categorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -74,11 +82,14 @@ namespace PL.Cart
             BO.ProductItem? productItem = ((BO.ProductItem)((ListView)sender).SelectedItem);
             ProductItemWindow? productItemWindow = new(productItem.ID, MyCart);
             productItemWindow.Show();
+            Close();
         }
         private void ShowCartButton_Click(Object sender ,RoutedEventArgs e)
         {
+
             CartWindow? productItemWindow = new(MyCart!);
             productItemWindow.Show();
+            Close();
         }
     }
 }
