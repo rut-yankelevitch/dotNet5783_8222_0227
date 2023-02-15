@@ -94,7 +94,7 @@ namespace PL.Cart
 
         private void PopularProduct_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)((Button)sender).Content== "Popular Product")
+            if ((string)((Button)sender).Content == "Popular Product")
             {
                 try
                 {
