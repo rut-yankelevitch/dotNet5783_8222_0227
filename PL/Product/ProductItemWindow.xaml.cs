@@ -60,9 +60,9 @@ namespace PL.Product
         public ProductItemWindow(int id, BO.Cart? cart)
         {
             InitializeComponent();
+            ProductData = bl.Product.GetProductByIdForCustomer(id);
             this.cart = cart;
             //productID = id;
-            ProductData = bl.Product.GetProductByIdForCustomer(id);
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
             MinValue = 0;
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductData!.ID);

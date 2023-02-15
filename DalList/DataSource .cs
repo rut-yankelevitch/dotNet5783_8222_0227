@@ -36,12 +36,12 @@ static class DataSource
 
         string[] productImg = new string[]
         {
-            "175672","223264","201845","137688","175672","223264","201845","137688","175672","223264","201845","137688"
+            @"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg",@"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg",@"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg"
         };
 
         for (int i = 0; i < 12; i++)
         {
-            ProductList.Add(new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20) });
+            ProductList.Add(new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20), Image = productImg[i] });
         }
     }
 

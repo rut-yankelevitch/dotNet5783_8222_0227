@@ -88,7 +88,7 @@ VerticalAlignment="Top" Width="auto">
     </Grid>-->
     <Window.Resources>
         <DataTemplate  x:Key="MyDataTemplate">
-                <Grid Width="220" Margin="20" Background="Beige">
+                <Grid Width="220" Margin="20" Background="Beige" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -114,7 +114,7 @@ VerticalAlignment="Top" Width="auto">
     </Window.Resources>            <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
             <ScrollViewer  VerticalScrollBarVisibility="Auto">
-                <ListView Height="300" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
+            <ListView MouseDoubleClick="Product_MouseDoubleClick " Height="300" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
