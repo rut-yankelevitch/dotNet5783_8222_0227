@@ -68,7 +68,6 @@ namespace PL.Product
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductData!.ID);
             ProductData.Amount = product == null ? 0 : product.Amount;
             Value = ProductData.Amount;
-
         }
 
         private void add_to_cart_Click(object sender, RoutedEventArgs e)
