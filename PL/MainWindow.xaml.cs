@@ -3,6 +3,8 @@ using BO;
 using PL.Order;
 using PL.Cart;
 using PL.Product;
+using System;
+using System.Windows.Media.Imaging;
 
 namespace PL
 {
@@ -20,6 +22,11 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            Uri iconUri = new(@"../img/icon.ico",UriKind.RelativeOrAbsolute);
+            Icon = BitmapFrame.Create(iconUri);
+
+
+
         }
 
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)

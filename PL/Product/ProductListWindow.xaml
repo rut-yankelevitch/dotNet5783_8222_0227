@@ -16,8 +16,7 @@
             <RowDefinition Height="7*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="41" Grid.Row="0"
-VerticalAlignment="Top" Width="auto">
+        <Grid Name="UpGrid" Height="41" Grid.Row="0" VerticalAlignment="Top" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

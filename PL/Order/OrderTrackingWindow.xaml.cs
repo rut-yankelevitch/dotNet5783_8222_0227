@@ -36,6 +36,7 @@ namespace PL.Order
             OrderWindow orderWindow = new OrderWindow(TrackingOrder.ID, false);
             orderWindow.Show();
         }
+
     }
 }
 

@@ -11,13 +11,13 @@
     <Grid>
         <ListView ItemsSource="{Binding CartItems}"  Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" x:Name="listOfCart" Background="White" Foreground="#FF041F65" Margin="10,0,68,83" >
             <ListView.View >
-                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information" >
+                <GridView AllowsColumnReorder="true">
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="Name" Width="100"/>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWays}" Header="Price" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay}" Header="Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount, Mode=TwoWay}"  Header="Amount" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice , Mode=TwoWay}" Header="TotalPrice" Width="100"/>
 

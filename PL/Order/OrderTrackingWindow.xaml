@@ -8,7 +8,7 @@
         DataContext="{Binding TrackingOrder, RelativeSource={RelativeSource Mode=Self} }"
         
         Title="OrderTrackingWindow" Height="450" Width="800">
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -16,7 +16,36 @@
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding ID}" Grid.Row="0" FontSize="20" />
         <TextBlock Text="{Binding Status}" Grid.Row="1" FontSize="20"/>
-        <ListView ItemsSource="{Binding Tuples}"  Grid.Row="2" FontSize="20"/>
+        <ListView ItemsSource="{Binding Tuples}"  Grid.Row="2" FontSize="20">
+            
+        </ListView>
         <Button  Content="תצוגת הזמנה" Width="200"  Margin="0,0,0,0" Click="showOrder_Click"/>
+    </Grid>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Order ID:" Grid.Row="0" Grid.Column="0" Margin="15,30,0,0" FontSize="15"/>
+        <TextBlock Text=" Status: " Grid.Row="1" Grid.Column="0"   Margin="15,30,0,0" FontSize="15"/>
+        <TextBlock Text="{Binding ID}" Grid.Row="0" Grid.Column="0"  Margin="90,30,0,0" FontSize="15" />
+        <TextBlock Text="{Binding Status}" Grid.Row="1" Grid.Column="0"  Margin="70,30,0,0" FontSize="15"/>
+        <ListView ItemsSource="{Binding Tuples}" Grid.Row="2" Grid.Column="1"  Background="White" Foreground="#FF041F65"  >
+            <ListView.View >
+                <GridView AllowsColumnReorder="true"  >
+                    <GridViewColumn DisplayMemberBinding="{Binding Path= Item1 }"  Header="Date" Width="185"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path= Item2 }" Header="Order status" Width="198"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="תצוגת הזמנה" Grid.Row="3"  Grid.Column="2" Name="confirmOrderBtn" Margin="15,15,15,15" Click="showOrder_Click"/>
     </Grid>
+
 </Window>

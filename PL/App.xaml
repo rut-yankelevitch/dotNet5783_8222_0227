@@ -7,7 +7,8 @@
         <localy:EnumToStringConverter x:Key ="EnumToStringConverter"/>
         <localy:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
         <localy:NextStatusConverter x:Key ="NextStatusConverter"/>
-        <localy:ConvertZeroToBool x:Key="ConvertZeroToBool"/>
+        <localy:ConvertNullToTrue x:Key="ConvertNullToTrue"/>
+        <localy:ConvertNullToFalse x:Key="ConvertNullToFalse"/>
         <localy:ConverBoolToString x:Key="ConverBoolToString"/>
         <localy:ConvertNullToVisible x:Key="ConvertNullToVisible"/>
         <localy:ConvertNullToHidden x:Key="ConvertNullToHidden"/>
@@ -19,7 +20,6 @@
         <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
         <localy:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
         <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-
 
 
 

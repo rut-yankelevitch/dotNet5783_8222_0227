@@ -7,7 +7,7 @@ using BO;
 namespace PL
 {
 
-    public class ConvertZeroToBool : IValueConverter
+    public class ConvertNullToTrue : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,7 +18,21 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-
+    public class ConvertNullToFalse : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value == null||(string)value=="")
+            {
+                return false;
+            }
+            return  true ;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class ConvertNullToVisible : IValueConverter
     {
@@ -87,7 +101,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value==true?"true":"false";
+            return (bool)value == true ? "true" : "false";
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -208,9 +222,7 @@ namespace PL
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            BO.Order? order = (BO.Order?)(values[0]!);
-            BO.OrderStatus? status = order.Status;
-            //BO.OrderStatus? status = (OrderStatus?)(values[0]!);
+            BO.OrderStatus? status = (OrderStatus?)(values[0]!);
             string? statusWindow = (values[1]!).ToString();
             if (statusWindow == "False" || status == BO.OrderStatus.ProvidedOrder)
                 return Visibility.Hidden;

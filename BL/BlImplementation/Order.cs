@@ -244,7 +244,7 @@ internal class Order : BlApi.IOrder
             {
                 throw new BO.BLDoesNotExistException("product does not exist", ex);
             }
-                if (amount > product.InStock)
+                if (amount > product.InStock+ item.Amount)
                     throw new BO.BLImpossibleActionException("Amount not in stock");
             
             product.InStock += item.Amount;

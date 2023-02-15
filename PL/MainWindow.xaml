@@ -3,15 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
         xmlns:local="clr-namespace:PL"
         
         mc:Ignorable="d"
         Background="White"
-        Title="MainWindow" Height="450" Width="800" >
+        Title="MainWindow" Height="450" Width="800"
+         >
     <Grid >
-        <Button x:Name="ShowOrderTraking" Content=" תצוגת מעקב הזמנות" Background="LightGreen"  HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
-         <Button x:Name="ShowManager" Content=" תצוגת מנהל" Background="LightGreen" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
+        <Button x:Name="ShowOrderTraking" Content=" תצוגת מעקב הזמנות" Background="LightGreen"  IsEnabled= "{Binding ElementName=OrderId, Path=Text, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
+        <Button x:Name="ShowManager" Content=" תצוגת מנהל" Background="LightGreen" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
         <Button x:Name="ShoeCatalog" Content=" תצוגת הזמנה חדשה" Background="LightGreen" HorizontalAlignment="Left" Margin="500,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowCatalog_Click"/>
-        <TextBox x:Name="OrderId" HorizontalAlignment="Left" Margin="118,232,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.392"/>
+        <TextBox x:Name="OrderId" HorizontalAlignment="Left" Margin="118,222,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.392"/>
     </Grid>
 </Window>

@@ -24,7 +24,7 @@ namespace PL.Order
         // Using a DependencyProperty as the backing store for OrderData.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OrderDataProperty =
             DependencyProperty.Register("OrderData", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
-        public bool StatusWindow2
+        public bool StatusWindow
         {
             get { return (bool)GetValue(StatusWindowProperty); }
             set { SetValue(StatusWindowProperty, value); }
@@ -39,27 +39,9 @@ namespace PL.Order
 
         public OrderWindow(int id,bool statusWindow)
         {
-            InitializeComponent();
-            StatusWindow2=statusWindow;
-            //ooo
-            Visibility v =Visibility.Hidden;
-            if (statusWindow == false||OrderData?.Status==BO.OrderStatus.ProvidedOrder)
-            {
-                NextStatusCheckbox.Visibility = v;
-                update.Visibility = v;
-            }
-            if ((statusWindow == false) || (statusWindow == true && OrderData?.ShipDate < DateTime.Now))
-                DataGrid myCombo = GetVisualChildInDataTemplate<DataGrid>("AmountOfProducts");
-
-
-            //values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
-
-            //StatusWindow.Text = statusWindow.ToString();
-            //ooo
-
             OrderData = bl.Order.GetOrderById(id);
-            IEnumerable<BO.OrderStatus> allStatus = (IEnumerable<BO.OrderStatus>)Enum.GetValues(typeof(BO.OrderStatus));
-            var filterStatus = allStatus.Where(status => status == BO.OrderStatus.SendOrder || status == BO.OrderStatus.ProvidedOrder);
+            StatusWindow = statusWindow;
+            InitializeComponent();
         }
 
         private void update_Click(object sender, RoutedEventArgs e)
@@ -70,15 +52,7 @@ namespace PL.Order
             {
                 if (status != BO.OrderStatus.SendOrder && status != BO.OrderStatus.ProvidedOrder)
                 {
-                    //try
-                    //{
                     OrderData?.Items?.ToList().ForEach(item => bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, item!.ProductID, item.Amount));
-                    //}
-                    // catch (BO.BLImpossibleActionException ex)
-                    //{
-                    //    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    //}
-
                 }
 
                 if (status == BO.OrderStatus.ConfirmedOrder && NextStatusCheckbox.IsChecked == true)
