@@ -45,8 +45,8 @@ internal class Product : IProduct
                                select new { ID = orderItemGroup.Key, Items = orderItemGroup };
         popularItems = popularItems.OrderByDescending(p => p.Items.Count()).Take(amount);
 
-        try { 
-        var popularProducts = from popularItem in popularItems
+        try {
+            var popularProducts = from popularItem in popularItems
                                   let DOProduct = dal.Product.GetByCondition(prod => prod?.ID == popularItem?.ID)
                                   select new BO.ProductItem
                                   {
@@ -55,7 +55,7 @@ internal class Product : IProduct
                                       Category = (BO.Category)DOProduct.Category,
                                       Price = DOProduct.Price,
                                       Amount = 0,
-                                      Instock = DOProduct.InStock > 0 ? true : false
+                                      Instock = DOProduct.InStock > 0 ? true : false,
                                       Image=DOProduct.Image
                                   };
             return popularProducts;

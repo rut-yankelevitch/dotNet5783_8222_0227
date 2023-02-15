@@ -1,25 +1,25 @@
 ﻿    <Application x:Class="PL.App"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:localy="clr-namespace:PL"             StartupUri="MainWindow.xaml">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:convert="clr-namespace:PL"             StartupUri="MainWindow.xaml">
         
 
     <Application.Resources>
-        <localy:Categorys x:Key="Categorys"/>
-        <localy:ImageConverter x:Key="ImageConverter"/>
-        <localy:EnumToStringConverter x:Key ="EnumToStringConverter"/>
-        <localy:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
-        <localy:NextStatusConverter x:Key ="NextStatusConverter"/>
-        <localy:ConvertNullToTrue x:Key="ConvertNullToTrue"/>
-        <localy:ConvertNullToFalse x:Key="ConvertNullToFalse"/>
-        <localy:ConverBoolToString x:Key="ConverBoolToString"/>
-        <localy:ConvertNullToVisible x:Key="ConvertNullToVisible"/>
-        <localy:ConvertNullToHidden x:Key="ConvertNullToHidden"/>
-        <localy:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
-        <localy:ConverIntToString x:Key="ConverIntToString"/>
-        <localy:ConverDoubleToString x:Key="ConverDoubleToString"/>
-        <localy:DateTimeConverter x:Key="DateTimeConverter"/>
-        <localy:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
-        <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
-        <localy:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
-        <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
+        <convert:Categorys x:Key="Categorys"/>
+        <convert:ImageConverter x:Key="ImageConverter"/>
+        <convert:EnumToStringConverter x:Key ="EnumToStringConverter"/>
+        <convert:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
+        <convert:NextStatusConverter x:Key ="NextStatusConverter"/>
+        <convert:ConvertNullToTrue x:Key="ConvertNullToTrue"/>
+        <convert:ConvertNullToFalse x:Key="ConvertNullToFalse"/>
+        <convert:ConverBoolToString x:Key="ConverBoolToString"/>
+        <convert:ConvertNullToVisible x:Key="ConvertNullToVisible"/>
+        <convert:ConvertNullToHidden x:Key="ConvertNullToHidden"/>
+        <convert:ConvertInputToTrue x:Key="ConvertInputToTrue"/>
+        <convert:ConverIntToString x:Key="ConverIntToString"/>
+        <convert:ConverDoubleToString x:Key="ConverDoubleToString"/>
+        <convert:DateTimeConverter x:Key="DateTimeConverter"/>
+        <convert:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+        <convert:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
+        <convert:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
+        <convert:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
     </Application.Resources>
 </Application>
