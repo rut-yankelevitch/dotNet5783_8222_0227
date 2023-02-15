@@ -91,6 +91,29 @@ namespace PL.Cart
             productItemWindow.Show();
             Close();
         }
+
+        private void PopularProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if ((string)((Button)sender).Content== "Popular Product")
+            {
+                try
+                {
+                    IEnumerable<BO.ProductItem?> temp = bl.Product.GetPopularProductList();
+                    ProductsItem = (temp == null) ? new() : new(temp!);
+                    ((Button)sender).Content = "to full product catalog";
+                }
+                catch (BO.BLDoesNotExistException ex)
+                {
+                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+                ProductsItem = (temp == null) ? new() : new(temp!);
+                ((Button)sender).Content = "Popular Product";
+            }
+        }
     }
 }
 

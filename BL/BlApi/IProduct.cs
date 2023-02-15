@@ -15,6 +15,13 @@ namespace BlApi
         public IEnumerable<ProductForList?> GetProductListForManagerNoFilter();
 
         /// <summary>
+        /// Definition of a function that returns the list of product for manager
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProductItem?> GetPopularProductList();
+
+
+        /// <summary>
         /// Definition of a function that returns a list of product by category for the manager
         /// </summary>
         /// <param name="category"></param>

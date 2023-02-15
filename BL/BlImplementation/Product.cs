@@ -12,7 +12,7 @@ namespace BlImplementation;
 internal class Product : IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get();
-
+    const int amount = 8;
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
     /// </summary>
@@ -23,12 +23,53 @@ internal class Product : IProduct
         return GetProductListForManager(BO.Filter.FilterByCategory, category);
     }
 
-
     /// <summary>
-    /// Definition of a function that returns the list of product for manager
+    /// a help function that return a list of product by filter
     /// </summary>
+    /// <param name="filter1"></param>
+    /// <param name="filterValue"></param>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
+    public IEnumerable<BO.ProductItem> GetPopularProductList()
+    {
+        IEnumerable<DO.OrderItem?> orderItems;
+        try
+        {
+            orderItems = dal.OrderItem.GetAll();
+        }
+        catch (DalDoesNotExistException ex)
+        {
+            throw new BO.BLDoesNotExistException("order item does not exist", ex);
+        }
+        var popularItems = from orderItem in orderItems
+                               group orderItem by orderItem?.ProductID into orderItemGroup
+                               select new { ID = orderItemGroup.Key, Items = orderItemGroup };
+        popularItems = popularItems.OrderByDescending(p => p.Items.Count()).Take(amount);
+
+        try { 
+        var popularProducts = from popularItem in popularItems
+                                  let DOProduct = dal.Product.GetByCondition(prod => prod?.ID == popularItem?.ID)
+                                  select new BO.ProductItem
+                                  {
+                                      ID = DOProduct.ID,
+                                      Name = DOProduct.Name,
+                                      Category = (BO.Category)DOProduct.Category,
+                                      Price = DOProduct.Price,
+                                      Amount = 0,
+                                      Instock = DOProduct.InStock > 0 ? true : false
+                                  };
+            return popularProducts;
+        }
+        catch (DalDoesNotExistException ex)
+        {
+            throw new BO.BLDoesNotExistException("product does not exist", ex);
+        }
+    }
+
+        /// <summary>
+        /// Definition of a function that returns the list of product for manager
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
     {
         return GetProductListForManager();
     }

@@ -27,21 +27,21 @@ VerticalAlignment="Top" Width="auto">
         <ListView Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding ProductsItem}"   MouseDoubleClick="Product_MouseDoubleClick " >
             <ListView.View >
                 <GridView >
-                    <GridViewColumn Width="Auto" Header="ID">
+                    <GridViewColumn Width="Auto"  >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding ID}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="20,10" Text="{Binding ID}" TextAlignment="Right" Padding="2" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Name">
+                    <GridViewColumn Width="Auto" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="20,10" Text="{Binding Name}" TextAlignment="Right" Padding="2"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Price">
+                    <GridViewColumn Width="Auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="20,10" Text="{Binding Price}" TextAlignment="Right" Padding="2"/>
@@ -83,6 +83,7 @@ VerticalAlignment="Top" Width="auto">
                 <DataGridTextColumn Header="Instock" Width="2*" Binding="{Binding Path=Instock}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>-->
+        <Button Grid.Row="2" x:Name="PopularProduct" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"  Margin="450,10,10,10" Height="50" Width="200" Click="PopularProduct_Click"  />
         <Button Grid.Row="2" x:Name="ShowCartButton" Content="🛒" Foreground="red" Background="White"  FontSize="35" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
     </Grid>
 </Window>

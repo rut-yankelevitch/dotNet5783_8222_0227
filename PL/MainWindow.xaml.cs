@@ -24,9 +24,6 @@ namespace PL
             InitializeComponent();
             Uri iconUri = new(@"../img/icon.ico",UriKind.RelativeOrAbsolute);
             Icon = BitmapFrame.Create(iconUri);
-
-
-
         }
 
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)
@@ -36,7 +33,6 @@ namespace PL
             OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
             orderTracking.Show ();
         }
-
 
         private void ShowManager_Click(object sender, RoutedEventArgs e)
         {
