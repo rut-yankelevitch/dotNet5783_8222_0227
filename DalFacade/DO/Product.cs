@@ -30,6 +30,12 @@ public struct Product
     public int InStock { get; set; }
 
     /// <summary>
+    /// amount available
+    /// </summary>
+    public string? Image { get; set; }
+
+
+    /// <summary>
     /// to string function to the product struct
     /// </summary>
     /// <returns>string with the ordered item details</returns>

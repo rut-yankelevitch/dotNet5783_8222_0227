@@ -4,6 +4,7 @@
 
     <Application.Resources>
         <localy:Categorys x:Key="Categorys"/>
+        <localy:ImageConverter x:Key="ImageConverter"/>
         <localy:EnumToStringConverter x:Key ="EnumToStringConverter"/>
         <localy:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
         <localy:NextStatusConverter x:Key ="NextStatusConverter"/>
@@ -20,10 +21,5 @@
         <localy:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
         <localy:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
         <localy:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-
-
-
-
-
     </Application.Resources>
 </Application>

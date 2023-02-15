@@ -34,6 +34,11 @@ static class DataSource
             666581,858565,747541,125478,852963,741598,458963,458796,745698,147854,147985,364152
            };
 
+        string[] productImg = new string[]
+        {
+            "175672","223264","201845","137688","175672","223264","201845","137688","175672","223264","201845","137688"
+        };
+
         for (int i = 0; i < 12; i++)
         {
             ProductList.Add(new Product { ID = productID[i], Name = nameArray[i], Category = category[i], Price = i + 200, InStock = i * randNum.Next(20) });

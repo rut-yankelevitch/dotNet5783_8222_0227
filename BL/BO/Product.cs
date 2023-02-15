@@ -17,6 +17,7 @@ namespace BO
         public double Price { get; set; }
         public Category Category { get; set; }
         public int InStock { get; set; }
+        public string? Image { get; set; }
         public override string ToString() => this.ToStringProperty();
 
     }

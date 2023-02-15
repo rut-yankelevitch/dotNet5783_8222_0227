@@ -56,6 +56,7 @@ internal class Product : IProduct
                                       Price = DOProduct.Price,
                                       Amount = 0,
                                       Instock = DOProduct.InStock > 0 ? true : false
+                                      Image=DOProduct.Image
                                   };
             return popularProducts;
         }
@@ -126,6 +127,7 @@ internal class Product : IProduct
             product1.Price = product.Price;
             product1.Category = (BO.Category)product.Category;
             product1.InStock = product.InStock;
+            product1.Image = product.Image;
             return product1;
         }
         catch (DO.DalDoesNotExistException ex)
@@ -157,6 +159,7 @@ internal class Product : IProduct
             product1.Price = product.Price;
             product1.Category = (DO.Category)product.Category;
             product1.InStock = product.InStock;
+            product1.Image = product.Image;
             dal.Product.Add(product1);
             return product;
         }
@@ -210,6 +213,7 @@ internal class Product : IProduct
                 product1.Price = product.Price;
                 product1.InStock = product.InStock;
                 product1.Category = (DO.Category)product.Category;
+                product1.Image = product.Image;
 
                 dal.Product.Update(product1);
             }
@@ -275,7 +279,8 @@ internal class Product : IProduct
                    Price = product.Price,
                    Category = (BO.Category)product.Category,
                    Amount = 0,
-                   Instock = product.InStock > 0 ? true : false
+                   Instock = product.InStock > 0 ? true : false,
+                   Image= product.Image
                };
     }
 
@@ -304,6 +309,7 @@ internal class Product : IProduct
         productItem.Price = product1.Price;
         productItem.Category = (BO.Category)product1.Category;
         productItem.Amount = 0;
+        productItem.Image = product1.Image;
         if (product1.InStock > 0)
             productItem.Instock = true;
         else

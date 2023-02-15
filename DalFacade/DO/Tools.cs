@@ -28,7 +28,7 @@ namespace DO
 
                 if ((enumerable is IEnumerable) && !(enumerable is string))
                 {
-                    IEnumerable e = enumerable as IEnumerable;
+                    IEnumerable? e = enumerable as IEnumerable;
                     foreach (var a in e)
                     {
                         str += a.ToStringProperty();
