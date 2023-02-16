@@ -7,89 +7,13 @@
         mc:Ignorable="d"
          DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
         
-        Title="CatalogWindow" Height="450" Width="800">
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="41" Grid.Row="0"
-VerticalAlignment="Top" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <ComboBox x:Name="categorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
-            <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
-        </Grid>
+        Title="CatalogWindow" Height="675" Width="1200">
 
-        <ListView Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding ProductsItem}"   MouseDoubleClick="Product_MouseDoubleClick " >
-            <ListView.View >
-                <GridView >
-                    <GridViewColumn Width="Auto"  >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding ID}" TextAlignment="Right" Padding="2" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding Name}" TextAlignment="Right" Padding="2"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding Price}" TextAlignment="Right" Padding="2"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    
-                    --><!--<GridViewColumn Width="Auto" Header="Amount">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding Amount}" TextAlignment="Right" Padding="2"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>-->
-                    <!--</GridViewColumn>--><!--
-
-                    <GridViewColumn Width="Auto" Header="Category">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding Category}" TextAlignment="Right" Padding="2"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Instock">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="20,10" Text="{Binding Instock}" TextAlignment="Right" Padding="2"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        --><!--<DataGrid  CanUserAddRows="False" x:Name="Product" Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False"  MouseDoubleClick="Product_MouseDoubleClick">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name"  Width="3*" Binding="{Binding Path=Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Path=Price}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Amount" Width="2*" Binding="{Binding Path=Amount}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Instock" Width="2*" Binding="{Binding Path=Instock}" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>--><!--
-        <Button Grid.Row="2" x:Name="PopularProduct" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"  Margin="450,10,10,10" Height="50" Width="200" Click="PopularProduct_Click"  />
-        <Button Grid.Row="2" x:Name="ShowCartButton" Content="🛒" Foreground="red" Background="White"  FontSize="35" Margin="10,10,10,10" Height="50" Width="200"  Click="ShowCartButton_Click"/>
-    </Grid>-->
     <Window.Resources>
         <DataTemplate  x:Key="MyDataTemplate">
-                <Grid Width="220" Margin="20" Background="Beige" >
+            <Grid Width="400" Margin="20" Background="Beige" >
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -108,22 +32,23 @@ VerticalAlignment="Top" Width="auto">
                 <TextBlock Grid.Row="4" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
                 <TextBlock Grid.Row="5" Grid.Column="0" Text=" Instock: " TextAlignment="Left" Padding="2"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ID}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"  TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Price}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Amount}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Category}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Instock}"   TextAlignment="Left" Padding="2" />
+                <Image  Grid.Column="2" Grid.Row="2" Source="{Binding Image,Mode=TwoWay, Converter={StaticResource ImageConverter}}"/>
+
 
             </Grid>
         </DataTemplate>
-    </Window.Resources>            <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
-            <ScrollViewer  VerticalScrollBarVisibility="Auto">
-            <ListView MouseDoubleClick="Product_MouseDoubleClick " Height="300" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                </ListView>
-            </ScrollViewer>
-            <Button Margin="490,20,0,10" HorizontalAlignment="Left" x:Name="PopularProduct" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="PopularProduct_Click"  />
-            <Button  Margin="60,-60,10,10"   HorizontalAlignment="Left"  x:Name="ShowCartButton" Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="ShowCartButton_Click"/>
-
-        </StackPanel>
+    </Window.Resources>    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
+        <ScrollViewer  VerticalScrollBarVisibility="Auto">
+            <ListView MouseDoubleClick="Product_MouseDoubleClick " Height="520" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </ScrollViewer>
+        <Button  x:Name="ShowCartButton" Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="ShowCartButton_Click"/>
+        <Button x:Name="PopularProduct" Margin="-500,-60,10,10" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="PopularProduct_Click"  />
+    </StackPanel>
 </Window>

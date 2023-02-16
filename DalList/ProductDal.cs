@@ -1,6 +1,8 @@
 ﻿using DO;
 using static Dal.DataSource;
 using DalApi;
+using System.Reflection;
+
 namespace Dal;
 
 /// <summary>
@@ -13,10 +15,31 @@ internal class ProductDal:IProduct
     {
         if (CheckIfExist(product.ID))
             throw new DalAlreadyExistException(product.ID, "product");
+        product.Image = CopyFiles(product.Image, "pasport_" + product.ID);
         ProductList.Add(product);   
         return product.ID;
     }
 
+    private string CopyFiles(string sourcePath, string destinationName)
+    {
+        try
+        {
+            int postfixIndex = sourcePath.LastIndexOf('.');
+            string postfix = sourcePath.Substring(postfixIndex);
+            destinationName += postfix;
+
+            string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string destinationFullName = @"img\" + destinationName;
+            System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
+            return destinationFullName;
+        }
+        catch (Exception ex)
+        {
+
+            return @"img\empty_image.jpg";
+        }
+
+    }
 
     /// <summary>
     /// delete a product 

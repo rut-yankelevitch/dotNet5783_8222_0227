@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+
 namespace PL.Product
 {
     /// <summary>
@@ -94,6 +96,7 @@ namespace PL.Product
                 int id;
                 int.TryParse(idInput.Text, out id);
                 bl.Product.DeleteProduct(id);
+                //למחוק את התמונה 
                 ProductListWindow productListWindow = new ProductListWindow();
                 Close();
             }
@@ -114,6 +117,7 @@ namespace PL.Product
             BO.Product product = new BO.Product();
             int varInt;
             double varDouble;
+            String varString;
             int.TryParse(idInput.Text, out varInt);
             product.ID = varInt;
             product.Name = nameInput.Text;
@@ -122,6 +126,8 @@ namespace PL.Product
             product.Category = ((BO.Category)categorySelector.SelectedItem);
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
+            product.Image =(ProductImg.Source).ToString();
+
             try
             {
                 bl.Product.AddProduct(product);
@@ -178,6 +184,17 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void changeImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
+            f.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
+            if (f.ShowDialog() == true)
+            {
+                this.ProductImg.Source = new BitmapImage(new Uri(f.FileName));
+            }
+
         }
     }
 }

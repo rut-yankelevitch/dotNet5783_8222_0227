@@ -5,55 +5,90 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding ProductData, RelativeSource={RelativeSource Mode=Self} }"
+        DataContext="{Binding ProductData, RelativeSource={RelativeSource  Mode=Self} }"
         Background="Bisque"
         Title="Product" Height="450" Width="800">
-    <Grid>
 
-        <TextBox x:Name="idInput" HorizontalAlignment="Left"  SelectionLength="6" Margin="170,95,0,0" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
-        <ComboBox x:Name="categorySelector" HorizontalAlignment="Left" Margin="170,150,0,0" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
-        <TextBox x:Name="nameInput" HorizontalAlignment="Left" Margin="170,205,0,0" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120"  IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
-        <TextBox x:Name="priceInput" HorizontalAlignment="Left" Margin="170,260,0,0" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString} }" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
-        <!--<TextBox.Text>-->
-        <!--<Binding Path="Price">
-                    <Binding.ValidationRules>
-                        <jas:RegexValidationRule
-          RegexText="^[A-Z]{3}\.[0-9]{3}$"
-          ErrorMessage="Invalid product code"
-          RegexOptions="IgnoreCase"
-          />
-                    </Binding.ValidationRules>
-                </Binding>-->
-        <!--</TextBox.Text>
-        </TextBox>-->
-        <TextBox x:Name="instockInput" HorizontalAlignment="Left" Margin="170,315,0,0" TextWrapping="Wrap" Text="{Binding InStock,Converter={StaticResource ConverIntToString}}" VerticalAlignment="Top" Width="120" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
-        <Label x:Name="lbId" Content="id" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbCategory" Content="category" HorizontalAlignment="Left" Margin="100,145,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbName" Content="name" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbPrice" Content="price" HorizontalAlignment="Left" Margin="100,255,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbInstock" Content="in stock" HorizontalAlignment="Left" Margin="100,310,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="add" Content="add" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"   HorizontalAlignment="Left" Margin="635,359,0,0"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
-            <Button.IsEnabled>
-                <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
-                    <Binding ElementName="idInput" Path="Text"  />
-                    <Binding ElementName="nameInput" Path="Text" />
-                    <Binding ElementName="priceInput" Path="Text" />
-                    <Binding ElementName="instockInput" Path="Text" />
-                    <Binding ElementName="categorySelector" Path="SelectedItem" />
-                </MultiBinding>
-            </Button.IsEnabled>
-        </Button>
-        <Button x:Name="update" Content="update" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  HorizontalAlignment="Left" Margin="635,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
-            <Button.IsEnabled>
-                <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
-                    <Binding ElementName="idInput" Path="Text"  />
-                    <Binding ElementName="nameInput" Path="Text" />
-                    <Binding ElementName="priceInput" Path="Text" />
-                    <Binding ElementName="instockInput" Path="Text" />
-                    <Binding ElementName="categorySelector" Path="SelectedItem" />
-                </MultiBinding>
-            </Button.IsEnabled>
-        </Button>
-        <Button x:Name="delete_button" Content="delete" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left" Margin="500,359,0,0" VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
+    <Grid  Margin="20" Background="Beige" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"  />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="ID: " TextAlignment="Left" Padding="2"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text=" Name: " TextAlignment="Left" Padding="2"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text=" Price: " TextAlignment="Left" Padding="2"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text=" In stock: " TextAlignment="Left" Padding="2"/>
+
+            <TextBox x:Name="idInput" HorizontalAlignment="Left"  SelectionLength="6" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
+            <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
+            <TextBox x:Name="nameInput" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120"  IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
+            <TextBox x:Name="priceInput" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString} }" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
+            <TextBox x:Name="instockInput" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{Binding InStock,Converter={StaticResource ConverIntToString}}" VerticalAlignment="Top" Width="120" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
+        </Grid>
+        
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="add" Grid.Row="2" Grid.Column="2" Content="add" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"   HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
+                <Button.IsEnabled>
+                    <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
+                        <Binding ElementName="idInput" Path="Text"  />
+                        <Binding ElementName="nameInput" Path="Text" />
+                        <Binding ElementName="priceInput" Path="Text" />
+                        <Binding ElementName="instockInput" Path="Text" />
+                        <Binding ElementName="categorySelector" Path="SelectedItem" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+            <Button x:Name="update" Content="update" Grid.Row="2" Grid.Column="2" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
+                <Button.IsEnabled>
+                    <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
+                        <Binding ElementName="idInput" Path="Text"  />
+                        <Binding ElementName="nameInput" Path="Text" />
+                        <Binding ElementName="priceInput" Path="Text" />
+                        <Binding ElementName="instockInput" Path="Text" />
+                        <Binding ElementName="categorySelector" Path="SelectedItem" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+            <Button x:Name="delete_button" Content="delete" Grid.Row="2" Grid.Column="1" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
+            <Border   BorderThickness="2" Width="200" Height="200" Grid.Row="1" Grid.Column="0" BorderBrush="Blue">
+                <StackPanel >
+                    <Image x:Name="ProductImg" 
+              Source="{Binding Image, Mode=TwoWay, Converter={StaticResource ImageConverter}}"
+               MinHeight="100" MinWidth="100" Stretch="Fill">
+                    </Image>
+                    <Button x:Name="changeImageButton" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"  Content="add Image" Height="34" Width="200" Margin="0,60,0,0" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
+                </StackPanel >
+            </Border>
+        </Grid>
     </Grid>
+
+    
 </Window>
