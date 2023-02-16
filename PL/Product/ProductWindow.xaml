@@ -79,9 +79,9 @@
             </Button>
             <Button x:Name="delete_button" Content="delete" Grid.Row="2" Grid.Column="1" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
             <Border   BorderThickness="2" Width="200" Height="200" Grid.Row="1" Grid.Column="0" BorderBrush="Blue">
-                <StackPanel >
+                <StackPanel x:Name="imgStackPanel" >
                     <Image x:Name="ProductImg" 
-              Source="{Binding Image, Mode=TwoWay, Converter={StaticResource ImageConverter}}"
+              Source="{Binding Image, Mode=OneWay, Converter={StaticResource ImageConverter}}"
                MinHeight="100" MinWidth="100" Stretch="Fill">
                     </Image>
 

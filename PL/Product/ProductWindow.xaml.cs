@@ -17,7 +17,7 @@ namespace PL.Product
     {
 
         BlApi.IBl bl = BlApi.Factory.Get();
-        string imgName;
+        string? imgName;
         public BO.Product ProductData
         {
             get { return (BO.Product)GetValue(ProductDataProperty); }
@@ -44,6 +44,8 @@ namespace PL.Product
                     try
                     {
                         ProductData = bl.Product.GetProductByIdForManager(id);
+                        imgName = ProductData.Image;
+
                     }
                     catch (BO.BLDoesNotExistException ex)
                     {
@@ -98,8 +100,9 @@ namespace PL.Product
             {
                 int id;
                 int.TryParse(idInput.Text, out id);
+
                 bl.Product.DeleteProduct(id);
-                //למחוק את התמונה 
+                
                 ProductListWindow productListWindow = new ProductListWindow();
                 Close();
             }
@@ -168,10 +171,7 @@ namespace PL.Product
             product.Category = ((BO.Category)categorySelector.SelectedItem);
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
-            if (imgName != null)
-                product.Image = imgName;
-            else
-                product.Image = ProductImg.Source.ToString();
+            product.Image = imgName;
             try
             {
                 bl.Product.UpdateProduct(product);

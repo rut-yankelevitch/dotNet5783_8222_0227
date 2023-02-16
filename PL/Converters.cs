@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using BO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PL
 {
@@ -16,10 +17,21 @@ namespace PL
             {
                 if (!File.Exists((string)value))
                     throw new Exception("");
+                using (var stream = File.OpenRead((string)value))
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    bmp.StreamSource = stream;
+                    bmp.CacheOption = BitmapCacheOption.OnLoad;
+                    bmp.EndInit();
+                    return bmp;
+                    //this.BarcodeImage.Source = bmp;
+                }
+                //BitmapImage b = new BitmapImage(new Uri((string)value, UriKind.RelativeOrAbsolute));
 
-                BitmapImage b = new BitmapImage(new Uri((string)value, UriKind.RelativeOrAbsolute));
-                Console.WriteLine(b.DpiX);
-                return b;
+
+                //Console.WriteLine(b.DpiX);
+                //return b;
             }
             catch (Exception ex)
             {
@@ -35,7 +47,7 @@ namespace PL
             }
             catch
             {
-                return @"images\passport\empty_image.gif";
+                return @"images\empty_image.gif";
             }
         }
 

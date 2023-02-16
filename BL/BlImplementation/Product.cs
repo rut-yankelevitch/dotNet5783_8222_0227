@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using BO;
 using DO;
+using static System.Net.Mime.MediaTypeNames;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -186,8 +187,8 @@ internal class Product : IProduct
             if (orderItem != null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
            DO.Product prod= dal.Product.GetByCondition(product2 => product2?.ID == id);
-            deleteFiles(prod.Image);
             dal.Product.Delete(id);
+            deleteFiles(prod.Image); 
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -210,15 +211,18 @@ internal class Product : IProduct
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0 || product.Image==null)
                 throw new BO.BLInvalidInputException(" Invalid input");
             {
-                DO.Product previousProd= dal.Product.GetByCondition(product2 => product2?.ID == product.ID);
-                deleteFiles(previousProd.Image);
+                DO.Product previousProd = dal.Product.GetByCondition(product2 => product2?.ID == product.ID);
+                string previousImg = previousProd.Image;
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;
                 product1.Name = product.Name;
                 product1.Price = product.Price;
                 product1.InStock = product.InStock;
                 product1.Category = (DO.Category)product.Category;
-                product.Image = copyFiles(product.Image, product.ID.ToString());
+                if (previousImg != product.Image)
+                {
+                    product.Image = copyFiles(product.Image, product.ID.ToString());
+                }
                 product1.Image = product.Image;
                 dal.Product.Update(product1);
             }
