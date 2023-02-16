@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,7 @@ namespace PL.Product
     {
 
         BlApi.IBl bl = BlApi.Factory.Get();
+        string imgName;
         public BO.Product ProductData
         {
             get { return (BO.Product)GetValue(ProductDataProperty); }
@@ -126,7 +129,7 @@ namespace PL.Product
             product.Category = ((BO.Category)categorySelector.SelectedItem);
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
-            product.Image =(ProductImg.Source).ToString();
+            product.Image = imgName;
 
             try
             {
@@ -165,6 +168,10 @@ namespace PL.Product
             product.Category = ((BO.Category)categorySelector.SelectedItem);
             int.TryParse(instockInput.Text, out varInt);
             product.InStock = varInt;
+            if (imgName != null)
+                product.Image = imgName;
+            else
+                product.Image = ProductImg.Source.ToString();
             try
             {
                 bl.Product.UpdateProduct(product);
@@ -193,6 +200,7 @@ namespace PL.Product
             if (f.ShowDialog() == true)
             {
                 this.ProductImg.Source = new BitmapImage(new Uri(f.FileName));
+                imgName = f.FileName;
             }
 
         }

@@ -23,7 +23,7 @@ namespace PL
             }
             catch (Exception ex)
             {
-                return new BitmapImage(new Uri(@"images\passport\empty_image.gif", UriKind.RelativeOrAbsolute));
+                return new BitmapImage(new Uri(@"images\empty_image.gif", UriKind.RelativeOrAbsolute));
             }
         }
 

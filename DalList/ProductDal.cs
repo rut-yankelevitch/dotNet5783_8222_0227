@@ -15,31 +15,8 @@ internal class ProductDal:IProduct
     {
         if (CheckIfExist(product.ID))
             throw new DalAlreadyExistException(product.ID, "product");
-        product.Image = CopyFiles(product.Image, "pasport_" + product.ID);
         ProductList.Add(product);   
         return product.ID;
-    }
-
-    private string CopyFiles(string sourcePath, string destinationName)
-    {
-        try
-        {
-            int postfixIndex = sourcePath.LastIndexOf('.');
-            string postfix = sourcePath.Substring(postfixIndex);
-            destinationName += postfix;
-
-            //string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string destinationFullName = @"img\" + destinationName;
-            //System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
-            System.IO.File.Copy(sourcePath, sourcePath + "\\" + "m", true);
-            return destinationFullName;
-        }
-        catch (Exception ex)
-        {
-
-            return @"img\empty_image.jpg";
-        }
-
     }
 
     /// <summary>
@@ -54,7 +31,6 @@ internal class ProductDal:IProduct
             throw new DalDoesNotExistException(id,"product");
     }
 
-
     /// <summary>
     /// update a product
     /// </summary>
@@ -65,7 +41,8 @@ internal class ProductDal:IProduct
         int count = ProductList.RemoveAll(prod => prod?.ID == product.ID);
         if (count == 0)
                 throw new DalDoesNotExistException(product.ID,"product");
-            ProductList.Add(product);
+
+        ProductList.Add(product);
     }
 
 
@@ -73,7 +50,7 @@ internal class ProductDal:IProduct
     /// get all products
     /// </summary>
     /// <returns>an array of all the products</returns>
-     
+
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? predicate = null) =>
     (predicate == null ? ProductList.Select(item => item) : ProductList.Where(predicate!)) ??
         throw new DO.DalDoesNotExistException("product missing");

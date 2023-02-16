@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography;
 using BO;
 using DO;
@@ -159,7 +160,7 @@ internal class Product : IProduct
             product1.Price = product.Price;
             product1.Category = (DO.Category)product.Category;
             product1.InStock = product.InStock;
-            product1.Image = product.Image;
+            product1.Image = copyFiles(product.Image, product.ID.ToString());
             dal.Product.Add(product1);
             return product;
         }
@@ -184,6 +185,8 @@ internal class Product : IProduct
             DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => ((DO.OrderItem)item!).ProductID == id);
             if (orderItem != null)
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
+           DO.Product prod= dal.Product.GetByCondition(product2 => product2?.ID == id);
+            deleteFiles(prod.Image);
             dal.Product.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -204,17 +207,19 @@ internal class Product : IProduct
     {
         try
         {
-            if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
+            if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0 || product.Image==null)
                 throw new BO.BLInvalidInputException(" Invalid input");
             {
+                DO.Product previousProd= dal.Product.GetByCondition(product2 => product2?.ID == product.ID);
+                deleteFiles(previousProd.Image);
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;
                 product1.Name = product.Name;
                 product1.Price = product.Price;
                 product1.InStock = product.InStock;
                 product1.Category = (DO.Category)product.Category;
+                product.Image = copyFiles(product.Image, product.ID.ToString());
                 product1.Image = product.Image;
-
                 dal.Product.Update(product1);
             }
             return product;
@@ -225,7 +230,37 @@ internal class Product : IProduct
         }
     }
 
- 
+    private string copyFiles(string sourcePath, string destinationName)
+    {
+        try
+        {
+            int postfixIndex = sourcePath.LastIndexOf('.');
+            string postfix = sourcePath.Substring(postfixIndex);
+            destinationName += postfix;
+            string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            destinationPath = destinationPath.Substring(0, destinationPath.Length - 3);
+            string destinationFullName = @"\img\" + destinationName;
+            System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
+            string destinationFullNameDal = @"..\\img\" + destinationName;
+            return destinationFullNameDal;
+        }
+        catch (Exception ex)
+        {
+            return @"img\empty_image.jpg";
+        }
+    }
+    private void deleteFiles(string destinationFullNameDal)
+    {
+        try
+        {
+            System.IO.File.Delete(destinationFullNameDal);
+        }
+        catch (Exception ex)
+        {
+            throw  new BO.BLImpossibleActionException("img not exist");
+        }
+    }
+
     /// <summary>
     /// Definition of a function that returns a list of product by category for the catalog
     /// </summary>
