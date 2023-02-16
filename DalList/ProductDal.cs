@@ -28,9 +28,10 @@ internal class ProductDal:IProduct
             string postfix = sourcePath.Substring(postfixIndex);
             destinationName += postfix;
 
-            string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string destinationFullName = @"img\" + destinationName;
-            System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
+            //System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
+            System.IO.File.Copy(sourcePath, sourcePath + "\\" + "m", true);
             return destinationFullName;
         }
         catch (Exception ex)
