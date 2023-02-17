@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -27,7 +23,6 @@ namespace PL.Product
         // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProductDataProperty =
         DependencyProperty.Register("ProductData", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
-
 
 
         /// <summary>
@@ -57,7 +52,6 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
 
@@ -118,12 +112,12 @@ namespace PL.Product
             }
         }
 
+
         private void add_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product();
             int varInt;
             double varDouble;
-            String varString;
             int.TryParse(idInput.Text, out varInt);
             product.ID = varInt;
             product.Name = nameInput.Text;
@@ -157,6 +151,7 @@ namespace PL.Product
                 ProductListWindow productListWindow = new ProductListWindow();
             }
         }
+
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
@@ -193,13 +188,14 @@ namespace PL.Product
             }
         }
 
+
         private void changeImageButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
             f.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
             if (f.ShowDialog() == true)
             {
-                this.ProductImg.Source = new BitmapImage(new Uri(f.FileName));
+                this.productImg.Source = new BitmapImage(new Uri(f.FileName));
                 imgName = f.FileName;
             }
 

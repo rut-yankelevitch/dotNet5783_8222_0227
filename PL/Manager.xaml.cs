@@ -14,9 +14,7 @@ namespace PL
             InitializeComponent();
         }
 
-
-
-        private void ShowProductsBotton_Click(object sender, RoutedEventArgs e)
+        private void showProductsBotton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();
             productListWindow.Show();
@@ -24,7 +22,7 @@ namespace PL
         }
 
 
-        private void ShowOrdersBotton_Click(object sender, RoutedEventArgs e)
+        private void showOrdersBotton_Click(object sender, RoutedEventArgs e)
         {
            ListOfOrder  listOfOrder = new ListOfOrder();
             listOfOrder.Show();

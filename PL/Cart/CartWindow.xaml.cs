@@ -10,8 +10,8 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-        BO.Cart myCart;
-        private BlApi.IBl bl = BlApi.Factory.Get();
+        readonly BO.Cart myCart;
+        private readonly BlApi.IBl bl = BlApi.Factory.Get();
         public ObservableCollection<BO.OrderItem?> CartItems
         {
             get { return (ObservableCollection<BO.OrderItem?>)GetValue(CartItemsProperty); }
@@ -22,6 +22,7 @@ namespace PL.Cart
         public static readonly DependencyProperty CartItemsProperty =
             DependencyProperty.Register("CartItems", typeof(ObservableCollection<BO.OrderItem?>), typeof(Window), new PropertyMetadata(null));
 
+
         public CartWindow(BO.Cart cart)
         {
             InitializeComponent();
@@ -29,10 +30,13 @@ namespace PL.Cart
             IEnumerable<BO.OrderItem?>? temp = myCart.Items;
             CartItems = (temp == null) ? new() : new(temp!);
         }
+
+
         private void confirmOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             new UserDetailsWindow(myCart).Show();
         }
+
 
         private void btn_increase_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +50,9 @@ namespace PL.Cart
                 CartItems = (temp == null) ? new() : new(temp!);
             }
         }
-    private void btn_decrease_Click(object sender, RoutedEventArgs e)
+
+
+        private void btn_decrease_Click(object sender, RoutedEventArgs e)
         {
             int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
             int amount =((BO.OrderItem)((Button)sender).DataContext).Amount;
@@ -57,12 +63,15 @@ namespace PL.Cart
                 CartItems = (temp == null) ? new() : new(temp!);
             }
         }
-        private void ReturnToCatalog_Click(object sender, RoutedEventArgs e)
+
+
+        private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new();
+            CatalogWindow catalog = new(myCart);
             catalog.Show();
             Close();
         }
+
         private void removeFromCart_Click(object sender, RoutedEventArgs e)
         {
             int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;

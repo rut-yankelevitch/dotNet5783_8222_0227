@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
          DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
-        
         Title="CatalogWindow" Height="675" Width="1200">
 
     <Window.Resources>
@@ -32,15 +30,13 @@
                 <TextBlock Grid.Row="4" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
                 <TextBlock Grid.Row="5" Grid.Column="0" Text=" Instock: " TextAlignment="Left" Padding="2"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ID}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"  TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Price}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Amount}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Category}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Instock}"   TextAlignment="Left" Padding="2" />
-                <Image  Grid.Column="2" Grid.Row="2" Source="{Binding Image,Mode=TwoWay, Converter={StaticResource ImageConverter}}"/>
-
-
+                <Image  Grid.Column="2" Grid.Row="2" Source="{Binding Image,Mode=OneWay, Converter={StaticResource ImageConverter}}"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged"/>
         <ScrollViewer  VerticalScrollBarVisibility="Auto">
-            <ListView MouseDoubleClick="Product_MouseDoubleClick " Height="520" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
+            <ListView MouseDoubleClick="product_MouseDoubleClick " Height="520" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
@@ -48,7 +44,7 @@
                 </ListView.ItemsPanel>
             </ListView>
         </ScrollViewer>
-        <Button  x:Name="ShowCartButton" Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="ShowCartButton_Click"/>
-        <Button x:Name="PopularProduct" Margin="-500,-60,10,10" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="PopularProduct_Click"  />
+        <Button   Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="showCartButton_Click"/>
+        <Button  Margin="-500,-60,10,10" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="popularProduct_Click"  />
     </StackPanel>
 </Window>

@@ -38,7 +38,6 @@ namespace PL
         {
             Manager manager= new Manager();
             manager.Show();
-            Close();
         }
         private void ShowCatalog_Click(object sender, RoutedEventArgs e)
         {

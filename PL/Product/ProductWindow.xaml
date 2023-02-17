@@ -3,20 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding ProductData, RelativeSource={RelativeSource  Mode=Self} }"
         Background="Bisque"
         Title="Product" Height="450" Width="800">
 
     <Grid  Margin="20" Background="Beige" >
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"  />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -55,7 +57,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="add" Grid.Row="2" Grid.Column="2" Content="add" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"   HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
+            <Button Grid.Row="2" Grid.Column="2" Content="add" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"   HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"   Click="add_Click">
                 <Button.IsEnabled>
                     <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
                         <Binding ElementName="idInput" Path="Text"  />
@@ -66,7 +68,7 @@
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
-            <Button x:Name="update" Content="update" Grid.Row="2" Grid.Column="2" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
+            <Button  Content="update" Grid.Row="2" Grid.Column="2" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="update_Click">
                 <Button.IsEnabled>
                     <MultiBinding  Converter="{StaticResource ConvertInputToTrue}">
                         <Binding ElementName="idInput" Path="Text"  />
@@ -77,17 +79,18 @@
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
-            <Button x:Name="delete_button" Content="delete" Grid.Row="2" Grid.Column="1" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
+            <Button  Content="delete" Grid.Row="2" Grid.Column="1" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="40" Width="95"  Click="delete_button_Click"/>
             <Border   BorderThickness="2" Width="200" Height="200" Grid.Row="1" Grid.Column="0" BorderBrush="Blue">
-                <StackPanel x:Name="imgStackPanel" >
-                    <Image x:Name="ProductImg" 
-              Source="{Binding Image, Mode=OneWay, Converter={StaticResource ImageConverter}}"
-               MinHeight="100" MinWidth="100" Stretch="Fill">
+            
+                <StackPanel >
+                    <Image x:Name="productImg" Source="{Binding Image, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                        MinHeight="100" MinWidth="100" Stretch="Fill">
                     </Image>
-
                 </StackPanel >
+        
             </Border>
-            <Button x:Name="changeImageButton"  Grid.Row="2" Grid.Column="0"  Content="add Image" Height="34" Width="150" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
+            <Button   Grid.Row="2" Grid.Column="0"  Content="{Binding Converter={StaticResource ConvertNullToStringAdd}}" Height="34" Width="150" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
+     
         </Grid>
     </Grid>
 

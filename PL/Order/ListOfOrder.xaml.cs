@@ -24,21 +24,24 @@ namespace PL.Order;
         public static readonly DependencyProperty OrdersProperty =
             DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
 
-        public ListOfOrder()
-        {
-            InitializeComponent();
-            var temp = bl.Order.GetOrderList();
-            Orders = (temp == null) ? new() : new(temp);
-        }
+     public ListOfOrder()
+     {
+         InitializeComponent();
+         var temp = bl.Order.GetOrderList();
+         Orders = (temp == null) ? new() : new(temp);
+     }
 
-    public void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+    private void ordersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.OrderForList order = ((BO.OrderForList)OrdersListview.SelectedItem);
+        BO.OrderForList order = (BO.OrderForList)OrdersListview.SelectedItem;
         int varInt = order.ID;
         OrderWindow orderWindow = new OrderWindow(varInt,true);
         orderWindow.Show();
     }
-    private void Order_List_Window_Activated(object sender, EventArgs e)
+
+
+    private void order_List_Window_Activated(object sender, EventArgs e)
     {
         var temp = bl.Order.GetOrderList();
         Orders = (temp == null) ? new() : new(temp);

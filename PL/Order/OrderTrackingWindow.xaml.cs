@@ -31,7 +31,7 @@ namespace PL.Order
             TrackingOrder = (temp == null) ? new() : temp;
         }
 
-        public void showOrder_Click(object sender, RoutedEventArgs e)
+        private void showOrder_Click(object sender, RoutedEventArgs e)
         {
             OrderWindow orderWindow = new OrderWindow(TrackingOrder.ID, false);
             orderWindow.Show();

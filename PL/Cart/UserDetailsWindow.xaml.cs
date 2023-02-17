@@ -1,17 +1,5 @@
-﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+
 
 namespace PL
 {
@@ -20,26 +8,34 @@ namespace PL
     /// </summary>
     public partial class UserDetailsWindow : Window
     {
-        BO.Cart myCart;
-        private BlApi.IBl bl = BlApi.Factory.Get();
+
+        private readonly BlApi.IBl bl = BlApi.Factory.Get();
+        public BO.Cart MyCart
+        {
+            get { return (BO.Cart)GetValue(MyCartProperty); }
+            set { SetValue(MyCartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyCartProperty =
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
         public UserDetailsWindow( BO.Cart cart)
         {
             InitializeComponent();
-            myCart = cart;
+            MyCart = cart;
         }
+
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                myCart.CustomerName = NameTxt.Text;
-                myCart.CustomerEmail = EmailTxt.Text;
-                myCart.CustomerAddress = AddressTxt.Text;
-                bl.cart.MakeOrder(myCart);
+                bl.cart.MakeOrder(MyCart);
             }
             catch (BO.BLImpossibleActionException ex)
             {
-                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show( ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             Close();
         }

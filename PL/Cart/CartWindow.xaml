@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
         Title="CartWindow" Height="450" Width="800">
@@ -12,15 +11,11 @@
         <ListView ItemsSource="{Binding CartItems}"  Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" x:Name="listOfCart" Background="White" Foreground="#FF041F65" Margin="10,0,68,83" >
             <ListView.View >
                 <GridView AllowsColumnReorder="true">
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"   Header="ID" Width="100"/>
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="Name" Width="100"/>
-
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price, Mode=TwoWay}" Header="Price" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount, Mode=TwoWay}"  Header="Amount" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice , Mode=TwoWay}" Header="TotalPrice" Width="100"/>
-
                     <GridViewColumn Header="Update Amount" Width="100" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -30,9 +25,9 @@
                                         <ColumnDefinition   Width="*"/>
                                         <ColumnDefinition   Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" x:Name="decreaseProductBtn"  Content="-" Height="20" Width="15" Margin="10,3,0,0" Click="btn_decrease_Click" />
-                                    <TextBox Grid.Column="1" Height="23"  TextWrapping="Wrap" Width="22" Name="updatedAmount" Margin="5,3,0,0" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                                    <Button Grid.Column="2" x:Name="addProductAmountBtn" Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="btn_increase_Click" />
+                                    <Button Grid.Column="0"  Content="-" Height="20" Width="15" Margin="10,3,0,0" Click="btn_decrease_Click" />
+                                    <TextBox Grid.Column="1" Height="23"  TextWrapping="Wrap" Width="22" Margin="5,3,0,0" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                                    <Button Grid.Column="2"  Content="+" Width="15" Margin="5,3,0,0" VerticalAlignment="Top" Click="btn_increase_Click" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -41,19 +36,17 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid >
-                                    <Button Grid.Column="0" x:Name="removeFromCart"  Content="🗑️" Height="25" Width="30" Margin="35,3,0,0" Click="removeFromCart_Click" />
+                                    <Button Grid.Column="0"   Content="🗑️" Height="25" Width="30" Margin="35,3,0,0" Click="removeFromCart_Click" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--<GridViewColumn DisplayMemberBinding="{Binding  Path=TotalPrice , Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Header="TotalPrice" Width="100"/>-->
                 </GridView>
             </ListView.View>
         </ListView>
         <TextBlock  Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToVisible}}"  Text="העגלה שלכם עדיין ריקה" Margin="170,70,170,150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
         <TextBlock Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToVisible}}"  Text="🛒" Foreground="red" FontSize="100" Margin="180,200,180,80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button Content="confirm order" Name="confirmOrderBtn" Margin="265,372,439,10" Click="confirmOrderBtn_Click"/>
-        <Button Content=" ➜ " Name="ReturnToCatalog" Padding="-12" Margin="100,372,600,10" FontSize="35" Click="ReturnToCatalog_Click"/>
-
+        <Button Content="confirm order"  Margin="265,372,439,10" Click="confirmOrderBtn_Click"/>
+        <Button Content=" ➜ "  Padding="-12" Margin="100,372,600,10" FontSize="35" Click="returnToCatalog_Click"/>
     </Grid>
 </Window>

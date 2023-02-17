@@ -5,10 +5,8 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using BO;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace PL
-{
+namespace PL;
     class ImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -25,17 +23,11 @@ namespace PL
                     bmp.CacheOption = BitmapCacheOption.OnLoad;
                     bmp.EndInit();
                     return bmp;
-                    //this.BarcodeImage.Source = bmp;
                 }
-                //BitmapImage b = new BitmapImage(new Uri((string)value, UriKind.RelativeOrAbsolute));
-
-
-                //Console.WriteLine(b.DpiX);
-                //return b;
             }
             catch (Exception ex)
             {
-                return new BitmapImage(new Uri(@"images\empty_image.gif", UriKind.RelativeOrAbsolute));
+                return new BitmapImage(new Uri(@"..\img\empty_image.gif", UriKind.RelativeOrAbsolute));
             }
         }
 
@@ -47,7 +39,7 @@ namespace PL
             }
             catch
             {
-                return @"images\empty_image.gif";
+                return @"..\img\empty_image.gif";
             }
         }
 
@@ -66,6 +58,21 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
+    public class ConvertNullToStringAdd : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? "Add Img" : "Update Img";
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     public class ConvertNullToFalse : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -82,6 +89,7 @@ public class ConvertNullToTrue : IValueConverter
         }
     }
 
+
     public class ConvertNullToVisible : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
@@ -93,6 +101,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertZeroToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
@@ -104,6 +114,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertZeroStringToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
@@ -115,7 +127,6 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
-
 
 
     public class ConvertNullToHidden : IValueConverter
@@ -133,6 +144,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertZeroToVisible : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
@@ -145,6 +158,7 @@ public class ConvertNullToTrue : IValueConverter
         }
     }
 
+
     public class ConverBoolToString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -156,6 +170,7 @@ public class ConvertNullToTrue : IValueConverter
             return value;
         }
     }
+
 
     public class EnumToStringConverter : IValueConverter
     {
@@ -172,6 +187,7 @@ public class ConvertNullToTrue : IValueConverter
         }
     }
 
+
     public class ConvertShipDateToTrue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -186,6 +202,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class ConvertInputToTrue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -198,6 +216,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class ConverDoubleToString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -217,6 +237,8 @@ public class ConvertNullToTrue : IValueConverter
             return price;
         }
     }
+
+
     public class ConverIntToString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -238,6 +260,7 @@ public class ConvertNullToTrue : IValueConverter
         }
     }
 
+
     public class DateTimeConverter : IValueConverter
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -252,6 +275,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
     public class NextStatusConverter : IValueConverter
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -265,6 +290,7 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
 
     public class ConvertStatusToVisible : IMultiValueConverter
     {
@@ -283,18 +309,4 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
-    //public class ConvertAmount : IValueConverter
-    //{
-    //    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        return value==0? : null;
-    //    }
 
-    //    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-
-}

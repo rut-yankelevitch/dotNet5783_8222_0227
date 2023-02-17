@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Manager" Height="450" Width="800">
     <Grid>
         
-        <Button x:Name="ShowProductsBotton" Content="show products" Background="OrangeRed" HorizontalAlignment="Left" Margin="350,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowProductsBotton_Click"/>
-        <Button x:Name="ShowOrdersBotton" Content="show orders" Background="OrangeRed" HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrdersBotton_Click" />
+        <Button Content="show products" Background="OrangeRed" HorizontalAlignment="Left" Margin="350,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showProductsBotton_Click"/>
+        <Button Content="show orders" Background="OrangeRed" HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showOrdersBotton_Click" />
 
     </Grid>
 </Window>

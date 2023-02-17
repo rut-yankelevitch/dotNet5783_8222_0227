@@ -26,7 +26,7 @@ internal class Product : IProduct
     }
 
     /// <summary>
-    /// a help function that return a list of product by filter
+    /// a help function that return a list of Popular Product
     /// </summary>
     /// <param name="filter1"></param>
     /// <param name="filterValue"></param>
@@ -161,7 +161,7 @@ internal class Product : IProduct
             product1.Price = product.Price;
             product1.Category = (DO.Category)product.Category;
             product1.InStock = product.InStock;
-            product1.Image = copyFiles(product.Image, product.ID.ToString());
+            product1.Image = copyFiles(product.Image!, product.ID.ToString());
             dal.Product.Add(product1);
             return product;
         }
@@ -188,7 +188,7 @@ internal class Product : IProduct
                 throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
            DO.Product prod= dal.Product.GetByCondition(product2 => product2?.ID == id);
             dal.Product.Delete(id);
-            deleteFiles(prod.Image); 
+            deleteFiles(prod.Image!); 
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -212,7 +212,7 @@ internal class Product : IProduct
                 throw new BO.BLInvalidInputException(" Invalid input");
             {
                 DO.Product previousProd = dal.Product.GetByCondition(product2 => product2?.ID == product.ID);
-                string previousImg = previousProd.Image;
+                string previousImg = previousProd.Image!;
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;
                 product1.Name = product.Name;
@@ -234,6 +234,14 @@ internal class Product : IProduct
         }
     }
 
+
+    /// <summary>
+    /// function that update a product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns>copyFiles</returns>
+    /// <exception cref="BO.BLInvalidInputException"></exception>
+    /// <exception cref="BO.BLDoesNotExistException"></exception>
     private string copyFiles(string sourcePath, string destinationName)
     {
         try
@@ -241,8 +249,8 @@ internal class Product : IProduct
             int postfixIndex = sourcePath.LastIndexOf('.');
             string postfix = sourcePath.Substring(postfixIndex);
             destinationName += postfix;
-            string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            destinationPath = destinationPath.Substring(0, destinationPath.Length - 3);
+            string destinationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            destinationPath = destinationPath!.Substring(0, destinationPath.Length - 3);
             string destinationFullName = @"\img\" + destinationName;
             System.IO.File.Copy(sourcePath, destinationPath + "\\" + destinationFullName, true);
             string destinationFullNameDal = @"..\\img\" + destinationName;
@@ -250,9 +258,18 @@ internal class Product : IProduct
         }
         catch (Exception ex)
         {
-            return @"img\empty_image.jpg";
+            return @"..\img\empty_image.jpg";
         }
     }
+
+
+    /// <summary>
+    /// function that update a product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns>deleteFiles</returns>
+    /// <exception cref="BO.BLInvalidInputException"></exception>
+    /// <exception cref="BO.BLDoesNotExistException"></exception>
     private void deleteFiles(string destinationFullNameDal)
     {
         try

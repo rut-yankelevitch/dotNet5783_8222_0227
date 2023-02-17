@@ -14,14 +14,14 @@ namespace PL.Product
         private BlApi.IBl bl = BlApi.Factory.Get();
         //int productID;
         BO.Cart? cart;
-        public BO.ProductItem ProductData
+        public BO.ProductItem ProductItemData
         {
-            get { return (BO.ProductItem)GetValue(ProductDataProperty); }
-            set { SetValue(ProductDataProperty, value); }
+            get { return (BO.ProductItem)GetValue(ProductItemDataProperty); }
+            set { SetValue(ProductItemDataProperty, value); }
         }
         // Using a DependencyProperty as the backing store for ProductData.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ProductDataProperty =
-        DependencyProperty.Register("ProductData", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
+        public static readonly DependencyProperty ProductItemDataProperty =
+        DependencyProperty.Register("ProductItemData", typeof(BO.ProductItem), typeof(Window), new PropertyMetadata(null));
 
         private int num = 0;
         public int Value
@@ -39,10 +39,7 @@ namespace PL.Product
                 amountInput.Text = num.ToString();
             }
         }
-        public int MinValue { get; set; }
-        //  public int MaxValue { get; set; }
-
-
+        private int MinValue { get; set; }
 
         public int MaxValue
         {
@@ -52,36 +49,32 @@ namespace PL.Product
 
         // Using a DependencyProperty as the backing store for MaxValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaxValueProperty =
-            DependencyProperty.Register("MaxValue", typeof(int), typeof(NumericUpDownControl), new PropertyMetadata(100));
-
-
+            DependencyProperty.Register("MaxValue", typeof(int), typeof(Window), new PropertyMetadata(0));
 
 
         public ProductItemWindow(int id, BO.Cart? cart)
         {
             InitializeComponent();
-            ProductData = bl.Product.GetProductByIdForCustomer(id);
+            ProductItemData = bl.Product.GetProductByIdForCustomer(id);
             this.cart = cart;
-            //productID = id;
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
             MinValue = 0;
-            var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductData!.ID);
-            ProductData.Amount = product == null ? 0 : product.Amount;
-            Value = ProductData.Amount;
+            var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
+            ProductItemData.Amount = product == null ? 0 : product.Amount;
+            Value = ProductItemData.Amount;
         }
+
 
         private void add_to_cart_Click(object sender, RoutedEventArgs e)
         {
-            //if ((string)((Button)sender).Content == "add to cart")
-            //{
-            if (ProductData.Amount == 0)
+            if (ProductItemData.Amount == 0)
             {
                 if (Value != 0)
                 {
                     try
                     {
-                        cart = bl.cart.AddProductToCart(cart!, ProductData.ID);
-                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
+                        cart = bl.cart.AddProductToCart(cart!, ProductItemData.ID);
+                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value);
                         CatalogWindow catalog = new(cart);
                         catalog.Show();
                         Close();
@@ -94,37 +87,37 @@ namespace PL.Product
             }
             else
             {
-                bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, Value);
+                bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value);
                 CatalogWindow catalog = new(cart);
                 catalog.Show();
                 Close();
             }
-            //}
-            //else
-            //{
-            //    bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
-            //    ((Button)sender).Content = "add to cart";
-            //}
         }
+
         private void remove_from_cart_Click(object sender, RoutedEventArgs e)
         {
-            if (ProductData.Amount != 0)
+            if (ProductItemData.Amount != 0)
             {
-                cart = bl.cart.UpdateProductAmountInCart(cart!, ProductData.ID, 0);
-                CatalogWindow catalog = new();
+                cart = bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, 0);
+                CatalogWindow catalog = new(cart);
                 catalog.Show();
                 Close();
             }
         }
+
+
         private void btn_increase_Click(object sender, RoutedEventArgs e)
         {
             Value++;
         }
 
+
         private void btn_decrease_Click(object sender, RoutedEventArgs e)
         {
             Value--;
         }
+
+
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (amountInput == null || amountInput.Text == "" || amountInput.Text == "-")
@@ -139,56 +132,21 @@ namespace PL.Product
                 Value = val;
         }
 
-        private void ShowCartButton_Click(object sender, RoutedEventArgs e)
+
+        private void showCartButton_Click(object sender, RoutedEventArgs e)
         {
             CartWindow? productItemWindow = new(cart!);
             productItemWindow.Show();
             Close();
         }
-        private void ReturnToCatalog_Click(object sender, RoutedEventArgs e)
+
+
+        private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new();
+            CatalogWindow catalog = new(cart);
             catalog.Show();
             Close();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //        private void cmdUp_Click(object sender, RoutedEventArgs e)
-        //        {
-        //            Value++;
-        //        }
-
-        //        private void cmdDown_Click(object sender, RoutedEventArgs e)
-        //        {
-        //            Value--;
-        //        }
-
-        //        private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
-        //        {
-        //            if (textNumber == null || textNumber.Text == "" || textNumber.Text == "-")
-        //            {
-        //                Value = null;
-        //                return;
-        //            }
-
-        //            if (!float.TryParse(textNumber.Text, out float val))
-        //                textNumber.Text = Value.ToString();
-        //            else
-        //                Value = val;
-        //        }
-        //    }
-        //}
-
     }
 }
 

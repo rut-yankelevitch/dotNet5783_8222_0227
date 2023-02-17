@@ -37,19 +37,14 @@ namespace PL.Product
         {
             InitializeComponent();
             changeProductList();
-            //this.status = status;   
-            //if(status== 1)
-            //{
-            //    addProductButton.Visibility= Visibility.Hidden;
-            //}
         }
 
-        private void Product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
+        private void product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
 
         /// <summary>
         /// A function is called when a selection is changed in the category selector combobox
         /// </summary>
-        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => changeProductList();
+        private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e) => changeProductList();
 
 
         /// <summary>
@@ -58,29 +53,19 @@ namespace PL.Product
         private void addProductButton_Click(object sender, RoutedEventArgs e) 
         { 
             new ProductWindow().Show();
-            ////
-            //Close();
-            ////
         }
 
         /// <summary>
         /// A function is called when a product is clicked
         /// </summary>
-        private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList? product = ((BO.ProductForList)((DataGrid)sender).SelectedItem);
             int varInt = product!.ID;
-            //if (this.status == 0)
-            //{
+
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
-            //}
-            //else
-            //{
-            //    ProductItemWindow productItemWindow = new(varInt);
-            //    productItemWindow.Show();
 
-            //}
         }
 
         private void changeProductList()
@@ -91,9 +76,5 @@ namespace PL.Product
             Products = (temp == null) ? new() : new(temp);
         }
 
-        //private void Product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-
-        //}
     }
 }

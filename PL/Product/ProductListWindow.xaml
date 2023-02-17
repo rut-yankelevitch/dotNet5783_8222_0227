@@ -4,24 +4,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Activated="Product_List_Window_Activated" 
+        Activated="product_List_Window_Activated" 
         mc:Ignorable="d"
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }"        
         Title="ListOfProduct" Height="640" Width="800">
 
-    
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>  
             <RowDefinition Height="7*"/>  
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="41" Grid.Row="0" VerticalAlignment="Top" Width="auto">
+        
+        <Grid  Height="41" Grid.Row="0" VerticalAlignment="Top" Width="auto">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.ColumnSpan="2"
+            
+            <ComboBox  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged" FontSize="17" Background="#FF17CEB9" Grid.ColumnSpan="2"
              ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -29,16 +32,20 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Label x:Name="lbCategory" Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
+            
+            <Label Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <DataGrid CanUserAddRows="False" Name="Product" Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="Product_MouseDoubleClick" >
+        
+        <DataGrid CanUserAddRows="False"  Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="product_MouseDoubleClick" >
+           
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Name"  Width="3*" Binding="{Binding Path=Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Path=Price}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category}" IsReadOnly="True"/>
             </DataGrid.Columns>
+        
         </DataGrid>
-        <Button x:Name="addProductButton" Content="Add new Product" Grid.Row="3" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
+        <Button Content="Add new Product" Grid.Row="3" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
     </Grid>
 </Window>

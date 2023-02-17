@@ -3,20 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Activated="Order_List_Window_Activated"
-        xmlns:local="clr-namespace:PL"
+        Activated="order_List_Window_Activated"
         mc:Ignorable="d"
         DataContext="{Binding Orders, RelativeSource={RelativeSource Mode=Self} }"
         Title="OrderForListWindow" Height="640" Width="800">
-    <Grid x:Name="mainGrid">
+    
+    <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
             <RowDefinition Height="*" />
-            
         </Grid.RowDefinitions>
+        
         <StackPanel>
-            <Grid Name="titel" Grid.Row="0" Background="AliceBlue">
-                <DataGrid x:Name="OrdersListview" CanUserAddRows="False"  Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False"  MouseDoubleClick="OrdersListview_MouseDoubleClick" >
+            <Grid  Grid.Row="0" Background="AliceBlue">
+                <DataGrid x:Name="OrdersListview" CanUserAddRows="False"  Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False"  MouseDoubleClick="ordersListview_MouseDoubleClick" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Customer name"  Width="2*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>
@@ -27,5 +28,6 @@
                 </DataGrid>
             </Grid>
         </StackPanel>
+        
     </Grid>
 </Window>
