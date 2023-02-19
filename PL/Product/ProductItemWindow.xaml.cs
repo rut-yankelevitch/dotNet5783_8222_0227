@@ -1,5 +1,6 @@
 ﻿
 using PL.Cart;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,16 +31,12 @@ namespace PL.Product
             {
                 if (value > MaxValue)
                     num = MaxValue;
-                //else
-                //if (value < MinValue)
-                //    num = MinValue;
                 else
                     num = value;
 
                 amountInput.Text = num.ToString();
             }
         }
-        //private int MinValue { get; set; }
 
         public int MaxValue
         {
@@ -86,6 +83,11 @@ namespace PL.Product
                     {
                         MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
             ProductItemData.Amount = product == null ? 0 : product.Amount;
             Value = ProductItemData.Amount;
@@ -106,6 +108,10 @@ namespace PL.Product
             catch (BO.BLImpossibleActionException ex)
             {
 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);

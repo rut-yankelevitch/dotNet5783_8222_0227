@@ -7,7 +7,6 @@
         <convert:ImageConverter x:Key="ImageConverter"/>
         <convert:CategoryToStringConverter x:Key ="CategoryToStringConverter"/>
         <convert:StatusToStringConverter x:Key ="StatusToStringConverter"/>
-        <convert:ConvertManagerToTrue x:Key ="ConvertManagerToTrue"/>
         <convert:NextStatusConverter x:Key ="NextStatusConverter"/>
         <convert:ConvertNullToTrue x:Key="ConvertNullToTrue"/>
         <convert:ConvertNullToFalse x:Key="ConvertNullToFalse"/>

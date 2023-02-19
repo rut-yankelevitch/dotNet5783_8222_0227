@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using PL.Cart;
 
 namespace PL
@@ -46,6 +47,10 @@ namespace PL
             catch (BO.BLImpossibleActionException ex)
             {
                 MessageBox.Show( ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             Close();
         }

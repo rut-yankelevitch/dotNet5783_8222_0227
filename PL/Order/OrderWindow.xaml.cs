@@ -92,6 +92,10 @@ namespace PL.Order
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
@@ -145,7 +149,15 @@ namespace PL.Order
                     (sender as TextBox)!.Text = orderItem?.Amount.ToString();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                }
+            }
         }
-
     }
 }

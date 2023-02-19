@@ -215,22 +215,6 @@ public class ConvertDetailsToTrue : IMultiValueConverter
 }
 
 
-
-public class ConvertManagerToTrue : IValueConverter
-{
-    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        string? statusWindow = (value!).ToString();
-        return statusWindow == "True" ? true : false;
-    }
-
-    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-
 public class ConvertInputToTrue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

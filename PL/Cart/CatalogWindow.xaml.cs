@@ -68,7 +68,6 @@ namespace PL.Cart
                     var temp = bl.Product.GetProducItemForCatalogByCategory(category);
                     ProductsItem = (temp == null) ? new() : new(temp!);
                 }
-
             }
         }
 
@@ -102,6 +101,10 @@ namespace PL.Cart
             catch (BO.BLDoesNotExistException ex)
             {
                 MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
