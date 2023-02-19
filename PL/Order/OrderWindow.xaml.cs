@@ -102,21 +102,20 @@ namespace PL.Order
 
         private void amountChange(object sender, RoutedEventArgs e)
         {
+            var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]
+?.GetValue((sender as TextBox)?.DataContext))!;
+            string strHelp = prodId?.ToString()!;
+            strHelp = strHelp ?? "0";
+            int productId;
+            int.TryParse(strHelp, out productId);
+            strHelp = (sender as TextBox)?.Text!;
+            int productAmount;
+            int.TryParse(strHelp, out productAmount);
+
             try
             {
 
-                var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]
-    ?.GetValue((sender as TextBox)?.DataContext))!;
-                string strHelp = prodId?.ToString()!;
-                strHelp=strHelp ?? "0";
-                int productId;
-                int.TryParse(strHelp, out productId);
-                strHelp = (sender as TextBox)?.Text!;
-                int productAmount;
-                int.TryParse(strHelp, out productAmount);
                 bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, productId,productAmount);
-
-
             }
             catch (BO.BLImpossibleActionException ex)
             {
@@ -128,12 +127,6 @@ namespace PL.Order
             }
             catch (BO.BLInvalidInputException ex)
             {
-                var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]
-?.GetValue((sender as TextBox)?.DataContext))!;
-                string strHelp = prodId?.ToString()!;
-                strHelp = strHelp ?? "0";
-                int productId;
-                int.TryParse(strHelp, out productId);
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
