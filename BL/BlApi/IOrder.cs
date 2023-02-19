@@ -47,6 +47,6 @@ namespace BlApi
         /// <param name="idProduct"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public OrderItem UpdateAmountOfOProductInOrder(int idOrder,int idProduct,int amount);
+        public Order? UpdateAmountOfOProductInOrder(int idOrder,int idProduct,int amount);
     }
 }

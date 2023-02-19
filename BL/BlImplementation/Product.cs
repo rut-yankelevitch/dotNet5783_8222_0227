@@ -22,7 +22,7 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductForList> GetProductListForManagerByCategory(BO.Category? category)
     {
-        return GetProductListForManager(BO.Filter.FilterByCategory, category);
+        return GetProductListForManager(BO.Filter.Filter_By_Category, category);
     }
 
     /// <summary>
@@ -34,14 +34,10 @@ internal class Product : IProduct
     public IEnumerable<BO.ProductItem> GetPopularProductList()
     {
         IEnumerable<DO.OrderItem?> orderItems;
-        try
-        {
-            orderItems = dal.OrderItem.GetAll();
-        }
-        catch (DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("order item does not exist", ex);
-        }
+
+        try {orderItems = dal.OrderItem.GetAll();}
+        catch (DalDoesNotExistException ex){throw new BO.BLDoesNotExistException("order item does not exist", ex);}
+
         var popularItems = from orderItem in orderItems
                                group orderItem by orderItem?.ProductID into orderItemGroup
                                select new { ID = orderItemGroup.Key, Items = orderItemGroup };
@@ -90,7 +86,7 @@ internal class Product : IProduct
         Filter filter = filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory:
+            case Filter.Filter_By_Category:
                 products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
                 break;
             case Filter.None:
@@ -120,9 +116,11 @@ internal class Product : IProduct
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Product GetProductByIdForManager(int id)
     {
-        try
-        {
-            DO.Product product = dal.Product.GetByCondition(product2 => product2?.ID == id);
+        DO.Product product;
+
+            try {  product = dal.Product.GetByCondition(product2 => product2?.ID == id); }
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("product does not exist", ex); }
+
             BO.Product product1 = new BO.Product();
             product1.ID = product.ID;
             product1.Name = product.Name;
@@ -131,12 +129,6 @@ internal class Product : IProduct
             product1.InStock = product.InStock;
             product1.Image = product.Image;
             return product1;
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("product does not exist", ex);
-        }
-
     }
 
 
@@ -149,8 +141,6 @@ internal class Product : IProduct
     /// <exception cref="BO.BLAlreadyExistException"></exception>
     public BO.Product AddProduct(BO.Product product)
     {
-        try
-        {
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
             {
                 throw new BO.BLInvalidInputException("Invalid input");
@@ -162,13 +152,11 @@ internal class Product : IProduct
             product1.Category = (DO.Category)product.Category;
             product1.InStock = product.InStock;
             product1.Image = copyFiles(product.Image!, product.ID.ToString());
-            dal.Product.Add(product1);
+
+            try { dal.Product.Add(product1); }
+            catch (DO.DalAlreadyExistException ex) { throw new BO.BLAlreadyExistException("product already exist", ex); }
+
             return product;
-        }
-        catch (DO.DalAlreadyExistException ex)
-        {
-            throw new BO.BLAlreadyExistException("product already exist", ex);
-        }
     }
 
 
@@ -180,20 +168,23 @@ internal class Product : IProduct
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public void DeleteProduct(int id)
     {
-        try
-        {
-            IEnumerable<DO.OrderItem?> orderItems = dal.OrderItem.GetAll();
-            DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => ((DO.OrderItem)item!).ProductID == id);
-            if (orderItem != null)
-                throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
-           DO.Product prod= dal.Product.GetByCondition(product2 => product2?.ID == id);
-            dal.Product.Delete(id);
-            deleteFiles(prod.Image!); 
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("prouct does not exist", ex);
-        }
+        IEnumerable<DO.OrderItem?> orderItems;
+        DO.Product prod;
+        try {  orderItems = dal.OrderItem.GetAll(); }
+        catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("prouct does not exist", ex); }
+
+        DO.OrderItem? orderItem = orderItems.FirstOrDefault(item => ((DO.OrderItem)item!).ProductID == id);
+
+         if (orderItem != null)
+               throw new BO.BLImpossibleActionException($"product {id} exist in order {orderItem?.OrderID}");
+
+        try { prod = dal.Product.GetByCondition(product2 => product2?.ID == id); }
+        catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("prouct does not exist", ex); }
+
+        try { dal.Product.Delete(id); }
+        catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("prouct does not exist", ex); }
+
+        deleteFiles(prod.Image!); 
     }
 
 
@@ -206,12 +197,14 @@ internal class Product : IProduct
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Product UpdateProduct(BO.Product product)
     {
-        try
-        {
+        DO.Product previousProd;
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0 || product.Image==null)
                 throw new BO.BLInvalidInputException(" Invalid input");
             {
-                DO.Product previousProd = dal.Product.GetByCondition(product2 => product2?.ID == product.ID);
+
+                try {previousProd = dal.Product.GetByCondition(product2 => product2?.ID == product.ID); }
+                catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("prouct does not exist", ex); }
+
                 string previousImg = previousProd.Image!;
                 DO.Product product1 = new DO.Product();
                 product1.ID = product.ID;
@@ -224,14 +217,12 @@ internal class Product : IProduct
                     product.Image = copyFiles(product.Image, product.ID.ToString());
                 }
                 product1.Image = product.Image;
-                dal.Product.Update(product1);
-            }
-            return product;
+
+            try { dal.Product.Update(product1); }
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("prouct does not exist", ex); }
+
         }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("product does not exist", ex);
-        }
+        return product;
     }
 
 
@@ -289,7 +280,7 @@ internal class Product : IProduct
     /// <returns></returns>
     public IEnumerable<BO.ProductItem> GetProducItemForCatalogByCategory(BO.Category? category)
     {
-        return GetProductItemForCatalog(BO.Filter.FilterByCategory, category);
+        return GetProductItemForCatalog(BO.Filter.Filter_By_Category, category);
     }
 
 
@@ -316,7 +307,7 @@ internal class Product : IProduct
         Filter filter = filter1;
         switch (filter)
         {
-            case Filter.FilterByCategory:
+            case Filter.Filter_By_Category:
                 products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
                 break;
             case Filter.None:
@@ -352,14 +343,10 @@ internal class Product : IProduct
     {
         BO.ProductItem productItem = new BO.ProductItem();
         DO.Product product1 = new DO.Product();
-        try
-        {
-            product1 = dal.Product.GetByCondition(product2 => product2?.ID == id);
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BO.BLDoesNotExistException("product does not exist", ex);
-        }
+
+        try { product1 = dal.Product.GetByCondition(product2 => product2?.ID == id);}
+        catch (DO.DalDoesNotExistException ex) {throw new BO.BLDoesNotExistException("product does not exist", ex);}
+
         productItem.ID = product1.ID;
         productItem.Name = product1.Name;
         productItem.Price = product1.Price;
@@ -372,75 +359,6 @@ internal class Product : IProduct
             productItem.Instock = false;
         return productItem;
     }
-
-
-
-    /// <summary>
-    /// Definition of a function that returns a list of product by category for the catalog
-    /// </summary>
-    /// <param name="category"></param>
-    ///// <returns></returns>
-    //public IEnumerable<BO.ProductItem> GetListOfProductItemsForCustomerByCategory(BO.Category? category)
-    //{
-    //    return GetListOfProductItemsForCustomer(BO.Filter.FilterByCategory, category);
-    //}
-
-    // /// <summary>
-    //     /// Definition of a function that returns a list of product by category for the catalog
-    //     /// </summary>
-    //     /// <param name="category"></param>
-    //     /// <returns></returns>
-    //public IEnumerable<BO.ProductItem> GetListOfProductItemsForCustomerNoFiler()
-    //{
-    //    return GetListOfProductItemsForCustomer();
-    //}
-
-    /// <summary>
-    /// Definition of a function that returns the list of product for catalog
-    /// </summary>
-    /// <returns></returns>
-    //public IEnumerable<BO.ProductItem> GetProductItemForCatalogNoFilter()
-    //{
-    //    return GetProductItemForCatalog();
-    //}
-
-
-
-    /// <summary>
-    /// a help function that return a list of product by filter
-    /// </summary>
-    /// <param name="filter1"></param>
-    /// <param name="filterValue"></param>
-    /// <returns></returns>
-    //private IEnumerable<BO.ProductItem>GetListOfProductItemsForCustomer(Filter filter1 = BO.Filter.None, object? filterValue = null)
-    //{
-    //    IEnumerable<DO.Product?> products;
-    //    Filter filter = filter1;
-    //    switch (filter)
-    //    {
-    //        case Filter.FilterByCategory:
-    //            products = dal.Product.GetAll(product => product?.Category == (filterValue != null ? (DO.Category)filterValue : product?.Category));
-    //            break;
-    //        case Filter.None:
-    //            products = dal.Product.GetAll();
-    //            break;
-    //        default:
-    //            products = dal.Product.GetAll();
-    //            break;
-    //    }
-    //    return from pro in products
-    //          let product = (DO.Product)pro!
-    //           select new ProductItem
-    //          {
-    //              ID = product.ID,
-    //              Name = product.Name,
-    //              Price = product.Price,
-    //              Category = (BO.Category)product.Category,
-    //              Amount = product.InStock,
-    //              Instock = product.InStock > 0 ? true : false
-    //          };
-    //}
-
 }
 
 

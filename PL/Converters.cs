@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using BO;
@@ -47,7 +46,6 @@ namespace PL;
     }
 
 
-
 public class ConvertNullToTrue : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -61,24 +59,11 @@ public class ConvertNullToTrue : IValueConverter
     }
 
 
-    public class ConvertNullToStringAdd : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null ? "Add Img" : "Update Img";
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
     public class ConvertNullToFalse : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value == null||(string)value=="")
+            if(value==null||(string)value=="")
             {
                 return false;
             }
@@ -108,7 +93,8 @@ public class ConvertNullToTrue : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int)value! == 0 ? Visibility.Hidden : Visibility.Visible;
+         int.TryParse(value!.ToString(), out int result);
+        return result == 0 ? Visibility.Hidden : Visibility.Visible;
         }
         public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -117,20 +103,21 @@ public class ConvertNullToTrue : IValueConverter
     }
 
 
-    public class ConvertZeroStringToHidden : IValueConverter
+public class ConvertMinAmountToTrue : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value!.ToString()! == "0" ? Visibility.Hidden : Visibility.Visible;
-        }
-        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        int.TryParse(value!.ToString(), out int result);
+        return result >1 ? true : false;
     }
+    public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
-    public class ConvertNullToHidden : IValueConverter
+public class ConvertNullToHidden : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -151,7 +138,8 @@ public class ConvertNullToTrue : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int)value! == 0 ? Visibility.Visible: Visibility.Hidden;
+        int.TryParse(value!.ToString(), out int result); 
+            return result== 0 ? Visibility.Visible: Visibility.Hidden;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -162,7 +150,8 @@ public class ConvertZeroToFalse : IValueConverter
 {
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value! == 0 ?false : true;
+        int.TryParse((value!).ToString(), out int result);
+        return result == 0 ?false : true;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -183,12 +172,12 @@ public class ConverBoolToString : IValueConverter
     }
 
 
-    public class EnumToStringConverter : IValueConverter
+    public class StatusToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BO.Category category = (BO.Category)value;
-            return category.ToString().Replace('_', ' ');
+            BO.OrderStatus status = (BO.OrderStatus)value;
+            return status.ToString().Replace('_', ' ');
 
         }
 
@@ -197,6 +186,21 @@ public class ConverBoolToString : IValueConverter
             return value;
         }
     }
+
+public class CategoryToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Category category = (BO.Category)value;
+        return category.ToString().Replace('_', ' ');
+
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value;
+    }
+}
 public class ConvertDetailsToTrue : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -212,23 +216,22 @@ public class ConvertDetailsToTrue : IMultiValueConverter
 
 
 
-public class ConvertShipDateToTrue : IMultiValueConverter
+public class ConvertManagerToTrue : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            string? statusWindow = (values[0]!).ToString();
-            return values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
-        }
-
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        string? statusWindow = (value!).ToString();
+        return statusWindow == "True" ? true : false;
     }
 
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
-    public class ConvertInputToTrue : IMultiValueConverter
+
+public class ConvertInputToTrue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -306,7 +309,7 @@ public class ConvertShipDateToTrue : IMultiValueConverter
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             BO.OrderStatus? status = (OrderStatus?)value;
-            return status == BO.OrderStatus.ConfirmedOrder ? BO.OrderStatus.SendOrder : status == BO.OrderStatus.SendOrder ? BO.OrderStatus.ProvidedOrder : null;
+            return status == BO.OrderStatus.Confirmed_Order ? BO.OrderStatus.Send_Order : status == BO.OrderStatus.Send_Order ? BO.OrderStatus.Provided_Order : null;
         }
 
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -322,7 +325,7 @@ public class ConvertShipDateToTrue : IMultiValueConverter
         {
             BO.OrderStatus? status = (OrderStatus?)(values[0]!);
             string? statusWindow = (values[1]!).ToString();
-            if (statusWindow == "False" || status == BO.OrderStatus.ProvidedOrder)
+            if (statusWindow == "False" || status == BO.OrderStatus.Provided_Order)
                 return Visibility.Hidden;
             else
                 return Visibility.Visible;
@@ -334,6 +337,21 @@ public class ConvertShipDateToTrue : IMultiValueConverter
         }
     }
 
+
+public class ConvertShipDateToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        string? statusWindow = (values[0]!).ToString();
+        return values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
+    }
+
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
 

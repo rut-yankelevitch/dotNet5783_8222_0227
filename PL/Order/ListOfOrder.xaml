@@ -20,7 +20,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Customer name"  Width="2*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Status" Width="2*" Binding="{Binding Path=Status}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Status" Width="2*" Binding="{Binding Path=Status, Converter={StaticResource StatusToStringConverter}}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Amount of items" Width="*" Binding="{Binding Path=AmountOfItems}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Total price" Width="*" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
                     </DataGrid.Columns>

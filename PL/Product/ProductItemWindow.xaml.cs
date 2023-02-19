@@ -12,7 +12,6 @@ namespace PL.Product
     public partial class ProductItemWindow : Window
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
-        //int productID;
         BO.Cart? cart;
         public BO.ProductItem ProductItemData
         {
@@ -31,15 +30,16 @@ namespace PL.Product
             {
                 if (value > MaxValue)
                     num = MaxValue;
-                else if (value < MinValue)
-                    num = MinValue;
+                //else
+                //if (value < MinValue)
+                //    num = MinValue;
                 else
                     num = value;
 
                 amountInput.Text = num.ToString();
             }
         }
-        private int MinValue { get; set; }
+        //private int MinValue { get; set; }
 
         public int MaxValue
         {
@@ -54,27 +54,22 @@ namespace PL.Product
 
         public ProductItemWindow(int id, BO.Cart? cart)
         {
-            InitializeComponent();
             ProductItemData = bl.Product.GetProductByIdForCustomer(id);
-            this.cart = cart;
-            MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
-            MinValue = 0;
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
             ProductItemData.Amount = product == null ? 0 : product.Amount;
+            InitializeComponent();
+            this.cart = cart;
+            MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
+            //MinValue = 0;
             Value = ProductItemData.Amount;
         }
 
 
         private void add_to_cart_Click(object sender, RoutedEventArgs e)
         {
-            if (ProductItemData.Amount == 0)
-            {
-                if (Value != 0)
-                {
                     try
                     {
-                        cart = bl.cart.AddProductToCart(cart!, ProductItemData.ID);
-                        cart = bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value);
+                        cart = bl.cart.AddProductToCart(cart!, ProductItemData.ID, Value);
                         CatalogWindow catalog = new(cart);
                         catalog.Show();
                         Close();
@@ -83,17 +78,40 @@ namespace PL.Product
                     {
                         MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                }
-            }
-            else
+                    catch (BO.BLImpossibleActionException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (BO.BLInvalidInputException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+            var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
+            ProductItemData.Amount = product == null ? 0 : product.Amount;
+            Value = ProductItemData.Amount;
+        }
+        private void update_to_cart_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
                 bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value);
                 CatalogWindow catalog = new(cart);
                 catalog.Show();
                 Close();
             }
-        }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
 
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
+            ProductItemData.Amount = product == null ? 0 : product.Amount;
+            Value = ProductItemData.Amount;
+        }
         private void remove_from_cart_Click(object sender, RoutedEventArgs e)
         {
             if (ProductItemData.Amount != 0)
@@ -106,16 +124,10 @@ namespace PL.Product
         }
 
 
-        private void btn_increase_Click(object sender, RoutedEventArgs e)
-        {
-            Value++;
-        }
+        private void btn_increase_Click(object sender, RoutedEventArgs e) => Value++;
 
 
-        private void btn_decrease_Click(object sender, RoutedEventArgs e)
-        {
-            Value--;
-        }
+        private void btn_decrease_Click(object sender, RoutedEventArgs e) => Value--;
 
 
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)

@@ -31,7 +31,7 @@ namespace PL.Cart
             MyCart = cart;
             IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
             CartItems = (temp == null) ? new() : new(temp!);
-            totalPrice.Text = (MyCart.TotalPrice).ToString();
+            totalPrice.Text = MyCart.TotalPrice.ToString();
         }
 
 

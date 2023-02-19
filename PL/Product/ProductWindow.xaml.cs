@@ -94,7 +94,6 @@ namespace PL.Product
             {
                 int id;
                 int.TryParse(idInput.Text, out id);
-
                 bl.Product.DeleteProduct(id);
                 
                 ProductListWindow productListWindow = new ProductListWindow();
@@ -106,10 +105,11 @@ namespace PL.Product
                 ProductListWindow productListWindow = new ProductListWindow();
                 Close();
             }
-            catch (Exception ex)
+            catch (BO.BLDoesNotExistException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
 
@@ -145,11 +145,6 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                ProductListWindow productListWindow = new ProductListWindow();
-            }
         }
 
 
@@ -182,10 +177,6 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
 
@@ -195,7 +186,7 @@ namespace PL.Product
             f.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif";
             if (f.ShowDialog() == true)
             {
-                this.productImg.Source = new BitmapImage(new Uri(f.FileName));
+                productImg.Source = new BitmapImage(new Uri(f.FileName));
                 imgName = f.FileName;
             }
 

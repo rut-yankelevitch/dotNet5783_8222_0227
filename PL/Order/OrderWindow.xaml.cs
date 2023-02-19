@@ -55,12 +55,7 @@ namespace PL.Order
             BO.Order? order;
             try
             {
-                if (status != BO.OrderStatus.SendOrder && status != BO.OrderStatus.ProvidedOrder)
-                {
-                    OrderData?.Items?.ToList().ForEach(item => bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, item!.ProductID, item.Amount));
-                }
-
-                if (status == BO.OrderStatus.ConfirmedOrder && NextStatusCheckbox.IsChecked == true)
+                if (status == BO.OrderStatus.Confirmed_Order && nextStatusCheckbox.IsChecked == true)
                 {
                     try
                     {
@@ -75,7 +70,7 @@ namespace PL.Order
                         MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else if (status == BO.OrderStatus.SendOrder && NextStatusCheckbox.IsChecked == true)
+                else if (status == BO.OrderStatus.Send_Order && nextStatusCheckbox.IsChecked == true)
                 {
                     try
                     {
@@ -102,8 +97,7 @@ namespace PL.Order
 
         private void amountChange(object sender, RoutedEventArgs e)
         {
-            var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]
-?.GetValue((sender as TextBox)?.DataContext))!;
+            var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]?.GetValue((sender as TextBox)?.DataContext))!;
             string strHelp = prodId?.ToString()!;
             strHelp = strHelp ?? "0";
             int productId;
@@ -114,16 +108,33 @@ namespace PL.Order
 
             try
             {
-
-                bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, productId,productAmount);
+                var temp = bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, productId,productAmount);
+                if (temp != null)
+                {
+                    OrderData = temp;
+                }
+                else
+                {
+                    Close();
+                }
             }
             catch (BO.BLImpossibleActionException ex)
             {
-                MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                }
             }
             catch (BO.BLDoesNotExistException ex)
             {
                 MessageBox.Show(ex.InnerException?.ToString(),ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                }
             }
             catch (BO.BLInvalidInputException ex)
             {
@@ -131,13 +142,10 @@ namespace PL.Order
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
                 {
-                    (sender as TextBox).Text = orderItem?.Amount.ToString();
+                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
                 }
             }
         }
-
-
-
 
     }
 }

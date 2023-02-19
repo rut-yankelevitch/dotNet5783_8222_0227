@@ -12,15 +12,15 @@ namespace BO
 
     public enum Category
     {
-        VacumCleaner, CofeeMachine, Toaster, Iron, Mixer, Blender, None
+        Vacum_Cleaner, Cofee_Machine, Toaster, Iron, Mixer, Blender, None
     }
 
     public enum OrderStatus
     {
-        ConfirmedOrder, SendOrder, ProvidedOrder, None
+        Confirmed_Order, Send_Order, Provided_Order, None
     }
     public enum Filter
     {
-        FilterByCategory,FilterByBiggerThanPrice,FilterBySmallerThanPrice,None
+        Filter_By_Category,Filter_By_Bigger_Than_Price,Filter_By_Smaller_Than_Price,None
     }
 }

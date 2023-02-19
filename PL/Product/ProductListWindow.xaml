@@ -28,7 +28,7 @@
              ItemsSource="{Binding Source= {StaticResource Categorys}}" SelectedItem="{Binding Category }">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                        <TextBlock Text="{Binding Converter={StaticResource CategoryToStringConverter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
@@ -42,7 +42,7 @@
                 <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Name"  Width="3*" Binding="{Binding Path=Name}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Path=Price}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Path=Category,Converter={StaticResource CategoryToStringConverter}}" IsReadOnly="True"/>
             </DataGrid.Columns>
         
         </DataGrid>

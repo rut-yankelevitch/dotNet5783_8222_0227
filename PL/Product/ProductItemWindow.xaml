@@ -40,17 +40,25 @@
             <TextBlock HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"/>
             <TextBlock HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="120"/>
             <TextBlock HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Text="{Binding Category }" Width="120" />
-            <TextBox x:Name="amountInput" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Height="30" Width="30"  TextWrapping="Wrap" Text="{Binding Amount,Converter={StaticResource ConverIntToString}, Mode=TwoWay}" VerticalAlignment="Top" Margin="45,88,0,0" Grid.RowSpan="2"  />
             <TextBlock  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString}}" VerticalAlignment="Top" Width="120" />
             <TextBlock  HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Instock,Converter={StaticResource ConverBoolToString}}" VerticalAlignment="Top" Width="120"/>
-            <Button   HorizontalAlignment="Left" Margin="14,4,0,55" Grid.Row="3"  Width="25"  Height="25" Content="-"  Click="btn_decrease_Click" RenderTransformOrigin="-10.422,0.489" Grid.Column="1"   />
-            <Button   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Width="25"  Height="25"  Content="+" Click="btn_increase_Click"  Margin="86,4,0,55" />
+            <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,110,60" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition   Width="*"/>
+                    <ColumnDefinition   Width="1.5*"/>
+                    <ColumnDefinition   Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"  Content="-" IsEnabled="{Binding ElementName=amountInput, Path=Text, Converter={StaticResource ConvertMinAmountToTrue }}" Height="20" Width="20" VerticalContentAlignment="Center"   Click="btn_decrease_Click" />
+                <TextBox x:Name="amountInput" Grid.Column="1" Height="20" IsEnabled="False" TextWrapping="Wrap" Width="25"  TextAlignment="Center"  VerticalContentAlignment="Center" Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                <Button Grid.Column="2"  Content="+" Height="20"  Width="20" VerticalContentAlignment="Center" Click="btn_increase_Click"  />
+            </Grid>
+
         </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -60,10 +68,11 @@
 
             <Image  Grid.Column="0" Grid.Row="1" Height="300" Source="{Binding Image,Mode=TwoWay, Converter={StaticResource ImageConverter}}"/>
             <Button Content="🛒" Margin="0,150,0,150" Foreground="red" Grid.Column="2" Grid.Row="1" Background="White"  FontSize="30"  Click="showCartButton_Click"/>
-            <Button Content="add to cart"  HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" Margin="0,280,0,0" VerticalAlignment="Top" Height="65" Width="133" Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroStringToHidden }}" Click="add_to_cart_Click"  />
-            <Button Content="remove from cart" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="73" Width="134" Click="remove_from_cart_Click" Visibility="{Binding Amount,Converter={StaticResource ConvertZeroToHidden}}" RenderTransformOrigin="0.316,-0.028"  />
+            <Button Content="update amount in cart" IsEnabled="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToFalse  }}"  Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToHidden },Mode=OneTime}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" Margin="0,280,0,0" VerticalAlignment="Top" Height="65" Width="133" Click="update_to_cart_Click"  />
+            <Button Content="add to cart" IsEnabled="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToFalse  }}" Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToVisible  }, Mode=OneTime}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" Margin="0,280,0,0" VerticalAlignment="Top" Height="65" Width="133" Click="add_to_cart_Click"  />
+            <Button Content="remove from cart" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="73" Width="134" Click="remove_from_cart_Click" Visibility="{Binding Amount,Converter={StaticResource ConvertZeroToHidden} }" RenderTransformOrigin="0.316,-0.028"  />
             <Button Content="  ➜  "  Grid.Row="0" Grid.Column="2" Width="150" Height="50" FontSize="35" Click="returnToCatalog_Click" RenderTransformOrigin="1.313,-0.104"/>
-      
+
         </Grid>
     </Grid>
 </Window>

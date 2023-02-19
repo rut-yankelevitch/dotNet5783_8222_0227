@@ -40,8 +40,14 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Text=" In stock: " TextAlignment="Left" Padding="2"/>
 
             <TextBox x:Name="idInput" HorizontalAlignment="Left"  SelectionLength="6" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding ID}" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
-            <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
-            <TextBox x:Name="nameInput" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120"  IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
+            <ComboBox x:Name="categorySelector" HorizontalAlignment="Left"  Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="120" SelectedValue="{Binding Category}" IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource CategoryToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+                    <TextBox x:Name="nameInput" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Name }" VerticalAlignment="Top" Width="120"  IsEnabled="{Binding ID ,Converter={StaticResource ConvertNullToTrue}}"/>
             <TextBox x:Name="priceInput" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString} }" VerticalAlignment="Top" Width="120"  PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
             <TextBox x:Name="instockInput" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{Binding InStock,Converter={StaticResource ConverIntToString}}" VerticalAlignment="Top" Width="120" PreviewKeyDown="idInput_onlyNumber_PreviewKeyDown"/>
         </Grid>
@@ -89,10 +95,8 @@
                 </StackPanel >
         
             </Border>
-            <Button   Grid.Row="2" Grid.Column="0"  Content="{Binding Converter={StaticResource ConvertNullToStringAdd}}" Height="34" Width="150" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
-     
+            <Button   Grid.Row="2" Grid.Column="0" Visibility="{Binding Converter={StaticResource ConvertNullToVisible}}"  Content="add image" Height="34" Width="150" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
+            <Button   Grid.Row="2" Grid.Column="0" Visibility="{Binding Converter={StaticResource ConvertNullToHidden}}"  Content="update image"  Height="34" Width="150" Click="changeImageButton_Click" RenderTransformOrigin="0.49,-0.994" />
         </Grid>
     </Grid>
-
-    
 </Window>

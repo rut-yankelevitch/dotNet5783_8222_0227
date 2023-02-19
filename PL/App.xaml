@@ -5,8 +5,9 @@
     <Application.Resources>
         <convert:Categorys x:Key="Categorys"/>
         <convert:ImageConverter x:Key="ImageConverter"/>
-        <convert:EnumToStringConverter x:Key ="EnumToStringConverter"/>
-        <convert:ConvertShipDateToTrue x:Key ="ConvertShipDateToTrue"/>
+        <convert:CategoryToStringConverter x:Key ="CategoryToStringConverter"/>
+        <convert:StatusToStringConverter x:Key ="StatusToStringConverter"/>
+        <convert:ConvertManagerToTrue x:Key ="ConvertManagerToTrue"/>
         <convert:NextStatusConverter x:Key ="NextStatusConverter"/>
         <convert:ConvertNullToTrue x:Key="ConvertNullToTrue"/>
         <convert:ConvertNullToFalse x:Key="ConvertNullToFalse"/>
@@ -19,11 +20,12 @@
         <convert:DateTimeConverter x:Key="DateTimeConverter"/>
         <convert:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
         <convert:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
-        <convert:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
+        <convert:ConvertMinAmountToTrue x:Key="ConvertMinAmountToTrue"/>
         <convert:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
-        <convert:ConvertNullToStringAdd x:Key="ConvertNullToStringAdd"/>
         <convert:ConvertZeroToFalse x:Key="ConvertZeroToFalse"/>
         <convert:ConvertDetailsToTrue x:Key="ConvertDetailsToTrue"/>
+        <convert:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
+
 
 
     </Application.Resources>
