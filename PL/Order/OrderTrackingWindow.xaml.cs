@@ -11,7 +11,8 @@ namespace PL.Order
     public partial class OrderTrackingWindow : Window
     {
 
-        private BlApi.IBl bl = BlApi.Factory.Get();
+        private readonly BlApi.IBl bl = BlApi.Factory.Get();
+
         public BO.OrderTracking TrackingOrder
         {
             get { return (BO.OrderTracking)GetValue(TrackingOrderProperty); }
@@ -26,17 +27,17 @@ namespace PL.Order
 
         public OrderTrackingWindow(int id)
         {
-            InitializeComponent();
-            var temp = bl.Order.TrackingOrder(id);
-            TrackingOrder = (temp == null) ? new() : temp;
+                InitializeComponent();
+                var temp = bl.Order.TrackingOrder(id);
+                TrackingOrder = (temp == null) ? new() : temp;
         }
+
 
         private void showOrder_Click(object sender, RoutedEventArgs e)
         {
             OrderWindow orderWindow = new OrderWindow(TrackingOrder.ID, false);
             orderWindow.Show();
         }
-
     }
 }
 

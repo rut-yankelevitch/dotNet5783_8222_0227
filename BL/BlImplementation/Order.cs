@@ -77,6 +77,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
+
             DO.Order orderDal = dal.Order.GetByCondition(ord => ord?.ID == id);
             if (orderDal.ShipDate != null && orderDal.ShipDate < DateTime.Now)
                 throw new BO.BLImpossibleActionException("order send");
@@ -204,7 +205,6 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BLDoesNotExistException("order does not exist", ex);
         }
-        //if (order.ShipDate != null && order.ShipDate < DateTime.Now)
          if (order.ShipDate < DateTime.Now)
         {
             throw new BO.BLImpossibleActionException("It is not possible to update an order after it has been sent");

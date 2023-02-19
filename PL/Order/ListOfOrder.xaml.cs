@@ -2,7 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PL.Order;
@@ -10,41 +9,56 @@ namespace PL.Order;
 /// <summary>
 /// Interaction logic for ListOfOrder.xaml
 /// </summary>
-    public partial class ListOfOrder : Window
+public partial class ListOfOrder : Window
+{
+    private readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+    public ObservableCollection<BO.OrderForList?> Orders
     {
-        private BlApi.IBl bl = BlApi.Factory.Get();
+        get { return (ObservableCollection<BO.OrderForList?>)GetValue(OrdersProperty); }
+        set { SetValue(OrdersProperty, value); }
+    }
 
-        public ObservableCollection<BO.OrderForList?> Orders
+    // Using a DependencyProperty as the backing store for orders.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty OrdersProperty =
+        DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
+
+
+    public ListOfOrder()
+    {
+        InitializeComponent();
+        try
         {
-            get { return (ObservableCollection<BO.OrderForList?>)GetValue(OrdersProperty); }
-            set { SetValue(OrdersProperty, value); }
+            var temp = bl.Order.GetOrderList();
+            Orders = (temp == null) ? new() : new(temp);
         }
-
-        // Using a DependencyProperty as the backing store for orders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OrdersProperty =
-            DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
-
-     public ListOfOrder()
-     {
-         InitializeComponent();
-         var temp = bl.Order.GetOrderList();
-         Orders = (temp == null) ? new() : new(temp);
-     }
+        catch (BO.BLDoesNotExistException ex)
+        {
+            MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 
 
     private void ordersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.OrderForList order = (BO.OrderForList)OrdersListview.SelectedItem;
         int varInt = order.ID;
-        OrderWindow orderWindow = new OrderWindow(varInt,true);
+        OrderWindow orderWindow = new OrderWindow(varInt, true);
         orderWindow.Show();
     }
 
 
     private void order_List_Window_Activated(object sender, EventArgs e)
     {
-        var temp = bl.Order.GetOrderList();
-        Orders = (temp == null) ? new() : new(temp);
+        try
+        {
+            var temp = bl.Order.GetOrderList();
+            Orders = (temp == null) ? new() : new(temp);
+        }
+        catch (BO.BLDoesNotExistException ex)
+        {
+            MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
 }

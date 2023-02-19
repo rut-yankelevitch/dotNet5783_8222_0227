@@ -16,9 +16,10 @@ namespace PL.Cart
     {
 
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
-        public Category Category { get; set; }
-        public BO.Cart? MyCart;
 
+        public Category Category { get; set; }
+
+        public BO.Cart MyCartInCatalog;
 
         public ObservableCollection<BO.ProductItem> ProductsItem
         {
@@ -33,20 +34,20 @@ namespace PL.Cart
 
         public CatalogWindow()
         {
-            MyCart = new() { Items = new() };
-            Category =  Category.None;
-            InitializeComponent();
-            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-            ProductsItem = (temp == null) ? new() : new(temp!);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+                InitializeComponent();
+                MyCartInCatalog = new() { Items = new() };
+                Category = Category.None;
+                IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+                ProductsItem = (temp == null) ? new() : new(temp!);
+                categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
 
         public CatalogWindow(BO.Cart? cart)
         {
-            MyCart = cart;
-            Category = Category.None;
             InitializeComponent();
+            MyCartInCatalog = cart!;
+            Category = Category.None;
             IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
             categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -75,7 +76,7 @@ namespace PL.Cart
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem? productItem = ((BO.ProductItem)((ListView)sender).SelectedItem);
-            ProductItemWindow? productItemWindow = new(productItem.ID, MyCart);
+            ProductItemWindow? productItemWindow = new(productItem.ID, MyCartInCatalog);
             productItemWindow.Show();
             Close();
         }
@@ -83,33 +84,34 @@ namespace PL.Cart
 
         private void showCartButton_Click(Object sender ,RoutedEventArgs e)
         {
-            CartWindow? productItemWindow = new(MyCart!);
+            CartWindow? productItemWindow = new(MyCartInCatalog!);
             productItemWindow.Show();
             Close();
         }
 
 
-        private void popularProduct_Click(object sender, RoutedEventArgs e)
+        private void toPopularProduct_Click(object sender, RoutedEventArgs e)
         {
-            if ((string)((Button)sender).Content == "Popular Product")
+            try
             {
-                try
-                {
-                    IEnumerable<BO.ProductItem?> temp = bl.Product.GetPopularProductList();
-                    ProductsItem = (temp == null) ? new() : new(temp!);
-                    ((Button)sender).Content = "to full product catalog";
-                }
-                catch (BO.BLDoesNotExistException ex)
-                {
-                    MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                IEnumerable<BO.ProductItem?> temp = bl.Product.GetPopularProductList();
+                ProductsItem = (temp == null) ? new() : new(temp!);
+                ((Button)sender).Visibility = Visibility.Hidden;
+                toFullCatalog_Button.Visibility = Visibility.Visible;
             }
-            else
+            catch (BO.BLDoesNotExistException ex)
             {
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void toFullCatalog_Click(object sender, RoutedEventArgs e)
+        {
                 IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
                 ProductsItem = (temp == null) ? new() : new(temp!);
-                ((Button)sender).Content = "Popular Product";
-            }
+                ((Button)sender).Visibility = Visibility.Hidden;
+                toPopularProduct_Button.Visibility = Visibility.Visible;
         }
     }
 }

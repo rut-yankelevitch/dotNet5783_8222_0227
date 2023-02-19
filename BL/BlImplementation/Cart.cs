@@ -72,6 +72,7 @@ internal class Cart : ICart
             if (product.InStock < amount)
                 throw new BLImpossibleActionException("product not exist in stock");
             cart.TotalPrice -= ( result.Amount) * result.Price;
+            cart.TotalPrice += amount * result.Price;
             if (amount == 0)
             {
                 cart.Items.Remove(result);
@@ -152,8 +153,9 @@ internal class Cart : ICart
                                  ID = product.ID,
                                  Price = product.Price,
                                  Category = product.Category,
-                                 InStock = product.InStock > item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
-                                 Name = product.Name
+                                 InStock = product.InStock >= item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
+                                 Name = product.Name,
+                                 Image= product.Image
                              }
                          };
 

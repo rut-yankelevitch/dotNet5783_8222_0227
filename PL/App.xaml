@@ -22,5 +22,9 @@
         <convert:ConvertZeroStringToHidden x:Key="ConvertZeroStringToHidden"/>
         <convert:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
         <convert:ConvertNullToStringAdd x:Key="ConvertNullToStringAdd"/>
+        <convert:ConvertZeroToFalse x:Key="ConvertZeroToFalse"/>
+        <convert:ConvertDetailsToTrue x:Key="ConvertDetailsToTrue"/>
+
+
     </Application.Resources>
 </Application>

@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-
+using PL.Cart;
 
 namespace PL
 {
@@ -10,20 +10,30 @@ namespace PL
     {
 
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
-        public BO.Cart MyCart
+
+        public BO.Cart MyCartConfirm
         {
-            get { return (BO.Cart)GetValue(MyCartProperty); }
-            set { SetValue(MyCartProperty, value); }
+            get { return (BO.Cart)GetValue(MyCartConfirmProperty); }
+            set { SetValue(MyCartConfirmProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyCartProperty =
-            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for MyCartConfirm.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyCartConfirmProperty =
+            DependencyProperty.Register("MyCartConfirm", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
 
         public UserDetailsWindow( BO.Cart cart)
         {
             InitializeComponent();
-            MyCart = cart;
+            MyCartConfirm = cart;
+        }
+
+
+        private void return_Click(object sender, RoutedEventArgs e)
+        {
+            CartWindow cart = new(MyCartConfirm);
+            cart.Show();
+            Close();
         }
 
 
@@ -31,7 +41,7 @@ namespace PL
         {
             try
             {
-                bl.cart.MakeOrder(MyCart);
+                bl.cart.MakeOrder(MyCartConfirm);
             }
             catch (BO.BLImpossibleActionException ex)
             {

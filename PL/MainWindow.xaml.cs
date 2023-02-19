@@ -28,10 +28,17 @@ namespace PL
 
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)
         {
-            int orderId;
-            int.TryParse(OrderId.Text, out orderId);
-            OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
-            orderTracking.Show ();
+            try
+            {
+                int orderId;
+                int.TryParse(OrderId.Text, out orderId);
+                OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
+                orderTracking.Show();
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ShowManager_Click(object sender, RoutedEventArgs e)

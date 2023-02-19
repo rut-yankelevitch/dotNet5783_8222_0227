@@ -9,7 +9,6 @@
         Title="OrderForListWindow" Height="640" Width="800">
     
     <Grid>
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
             <RowDefinition Height="*" />
@@ -28,6 +27,5 @@
                 </DataGrid>
             </Grid>
         </StackPanel>
-        
     </Grid>
 </Window>

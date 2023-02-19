@@ -45,6 +45,7 @@
             </ListView>
         </ScrollViewer>
         <Button   Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="showCartButton_Click"/>
-        <Button  Margin="-500,-60,10,10" Content="Popular Product" Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="popularProduct_Click"  />
+        <Button x:Name="toPopularProduct_Button" Content="Popular Product" Visibility="Visible" Margin="-500,-60,10,10"  Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="toPopularProduct_Click"  />
+        <Button x:Name="toFullCatalog_Button" Content="To full product catalog" Visibility="Hidden"  Margin="-500,-60,10,10"  Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="toFullCatalog_Click"  />
     </StackPanel>
 </Window>

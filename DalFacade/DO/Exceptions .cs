@@ -6,8 +6,9 @@
 [Serializable]
 public class DalDoesNotExistException:Exception
 {
-    public int EntityId ;
+    public int EntityId=-1 ;
     public string EntityName;
+    public string Message;
 
     public DalDoesNotExistException(int id, string name):base() 
     { EntityId=id;EntityName=name;}
@@ -18,9 +19,15 @@ public class DalDoesNotExistException:Exception
         public DalDoesNotExistException(int id, string name,string message,Exception innerException):base(message,innerException) 
     { EntityId=id;EntityName=name; }
         public DalDoesNotExistException(string? message):base(message) 
-    { }
+    {
+        Message = message;
+    }
     public override string ToString() 
     {
+        if (EntityId == -1 && EntityName == null)
+        {
+            return Message;
+        }
         if( EntityId==-1)
         {
             return $" {EntityName} are not exist.";

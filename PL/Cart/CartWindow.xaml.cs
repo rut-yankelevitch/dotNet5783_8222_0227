@@ -10,8 +10,10 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-        readonly BO.Cart myCart;
+        public BO.Cart MyCart;
+
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
+
         public ObservableCollection<BO.OrderItem?> CartItems
         {
             get { return (ObservableCollection<BO.OrderItem?>)GetValue(CartItemsProperty); }
@@ -26,58 +28,94 @@ namespace PL.Cart
         public CartWindow(BO.Cart cart)
         {
             InitializeComponent();
-            myCart = cart;
-            IEnumerable<BO.OrderItem?>? temp = myCart.Items;
+            MyCart = cart;
+            IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
             CartItems = (temp == null) ? new() : new(temp!);
+            totalPrice.Text = (MyCart.TotalPrice).ToString();
         }
 
 
         private void confirmOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            new UserDetailsWindow(myCart).Show();
+            new UserDetailsWindow(MyCart).Show();
+            Close();
         }
 
 
         private void btn_increase_Click(object sender, RoutedEventArgs e)
         {
             int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
-            int amountInstock = bl.Product.GetProductByIdForManager(id).InStock;
-            int amount = ((BO.OrderItem)((Button)sender).DataContext).Amount;
-            if (amount < amountInstock)
+            try
             {
-                bl.cart.UpdateProductAmountInCart(myCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount +1);
-                IEnumerable<BO.OrderItem?>? temp = myCart.Items;
+                MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount + 1);
+                IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                 CartItems = (temp == null) ? new() : new(temp!);
+                totalPrice.Text = (MyCart.TotalPrice).ToString();
             }
+            catch(BO.BLImpossibleActionException ex)
+            {
+                 MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show( ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
 
         private void btn_decrease_Click(object sender, RoutedEventArgs e)
         {
-            int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
-            int amount =((BO.OrderItem)((Button)sender).DataContext).Amount;
-            if (amount != 1 )
+            try
             {
-                bl.cart.UpdateProductAmountInCart(myCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount - 1);
-                IEnumerable<BO.OrderItem?>? temp = myCart.Items;
-                CartItems = (temp == null) ? new() : new(temp!);
+                int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
+                int amount = ((BO.OrderItem)((Button)sender).DataContext).Amount;
+                if (amount != 1)
+                {
+                    MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount - 1);
+                    IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
+                    CartItems = (temp == null) ? new() : new(temp!);
+                    totalPrice.Text = (MyCart.TotalPrice).ToString();
+
+                }
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
 
         private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new(myCart);
+            CatalogWindow catalog = new(MyCart);
             catalog.Show();
             Close();
         }
 
+
         private void removeFromCart_Click(object sender, RoutedEventArgs e)
         {
-            int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
-            bl.cart.UpdateProductAmountInCart(myCart,id,0);
-            IEnumerable<BO.OrderItem?>? temp = myCart.Items;
-            CartItems = (temp == null) ? new() : new(temp!);
+            try
+            {
+                int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
+                bl.cart.UpdateProductAmountInCart(MyCart, id, 0);
+                IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
+                CartItems = (temp == null) ? new() : new(temp!);
+                totalPrice.Text = (MyCart.TotalPrice).ToString();
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
     }

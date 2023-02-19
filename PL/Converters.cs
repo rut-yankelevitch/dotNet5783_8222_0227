@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using BO;
@@ -157,9 +158,19 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+public class ConvertZeroToFalse : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (int)value! == 0 ?false : true;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
-
-    public class ConverBoolToString : IValueConverter
+public class ConverBoolToString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -186,9 +197,22 @@ public class ConvertNullToTrue : IValueConverter
             return value;
         }
     }
+public class ConvertDetailsToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ((values[0]!).ToString()!.Length > 0 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 ) ? true : false;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
-    public class ConvertShipDateToTrue : IMultiValueConverter
+
+public class ConvertShipDateToTrue : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -309,4 +333,8 @@ public class ConvertNullToTrue : IValueConverter
             throw new NotImplementedException();
         }
     }
+
+
+
+
 

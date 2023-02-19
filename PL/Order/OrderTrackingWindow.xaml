@@ -8,7 +8,6 @@
         Title="OrderTrackingWindow" Height="450" Width="800">
     
     <Grid>
-        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -35,6 +34,5 @@
             </ListView.View>
         </ListView>
         <Button Content="תצוגת הזמנה" Grid.Row="3"  Grid.Column="2"  Margin="15,15,15,15" Click="showOrder_Click"/>
-    
     </Grid>
 </Window>

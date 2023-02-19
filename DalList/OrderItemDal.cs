@@ -77,5 +77,5 @@ internal class OrderItemDal : IOrderItem
     
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate) =>
         OrderItemList.FirstOrDefault(predicate) ??
-        throw new DalDoesNotExistException("There is no order item that meets the condition");
+        throw new DalDoesNotExistException("Order item is not exist");
 }

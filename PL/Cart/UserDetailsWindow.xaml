@@ -4,16 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        DataContext="{Binding MyCart,  RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding MyCartConfirm,  RelativeSource={RelativeSource Mode=Self}}"
         Title="userDetails" Height="450" Width="800">
     
     <Grid>
         <Label Content="Name" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,80,0,0" VerticalAlignment="Top" Width="71"/>
-        <TextBox  Text="{Binding CustomerName }" HorizontalAlignment="Left" Height="42" Margin="246,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+        <TextBox x:Name="customerName" Text="{Binding CustomerName  ,Mode=TwoWay}" HorizontalAlignment="Left" Height="42" Margin="246,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
         <Label Content="Email" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,148,0,0" VerticalAlignment="Top" Width="71"/>
-        <TextBox  Text="{Binding CustomerEmail }" HorizontalAlignment="Left" Height="42" Margin="246,149,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="191"/>
+        <TextBox x:Name="customerEmail" Text="{Binding CustomerEmail ,Mode=TwoWay}" HorizontalAlignment="Left" Height="42" Margin="246,149,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="191"/>
         <Label Content="Address" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,217,0,0" VerticalAlignment="Top" Width="85"/>
-        <TextBox Text="{Binding CustomerAddress }" HorizontalAlignment="Left" Height="42" Margin="246,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
-        <Button Content="save order" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click"/>
+        <TextBox x:Name="customerAddress" Text="{Binding CustomerAddress ,Mode=TwoWay}" HorizontalAlignment="Left" Height="42" Margin="246,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+        <Button Content="➜"  Height="30" Margin="600,15,0,0" VerticalAlignment="Top" Width="111" Click="return_Click"/>
+        <Button Content="save order" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click">
+            <Button.IsEnabled>
+            <MultiBinding  Converter="{StaticResource ConvertDetailsToTrue}">
+                    <Binding ElementName="customerName" Path="Text" />
+                    <Binding ElementName="customerEmail" Path="Text" />
+                    <Binding ElementName="customerAddress" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
     </Grid>
 </Window>
