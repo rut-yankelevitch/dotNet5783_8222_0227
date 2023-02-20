@@ -25,27 +25,76 @@ internal class Product : IProduct
         return GetProductListForManager(BO.Filter.Filter_By_Category, category);
     }
 
-    /// <summary>
-    /// a help function that return a list of Popular Product
-    /// </summary>
-    /// <param name="filter1"></param>
-    /// <param name="filterValue"></param>
-    /// <returns></returns>
+    ///// <summary>
+    ///// a help function that return a list of Popular Product
+    ///// </summary>
+    ///// <param name="filter1"></param>
+    ///// <param name="filterValue"></param>
+    ///// <returns></returns>
+    //public IEnumerable<BO.ProductItem> GetPopularProductList()
+    //{
+    //    IEnumerable<DO.OrderItem?> orderItems;
+
+    //    try {orderItems = dal.OrderItem.GetAll();}
+    //    catch (DalDoesNotExistException ex){throw new BO.BLDoesNotExistException("order item does not exist", ex);}
+
+    //    var popularItems = from orderItem in orderItems
+    //                           group orderItem by orderItem?.ProductID into orderItemGroup
+    //                           select new { ID = orderItemGroup.Key, Items = orderItemGroup };
+    //    popularItems = popularItems.OrderByDescending(p => p.Items.Count()).Take(amount);
+
+    //    try {
+    //        var popularProducts = from popularItem in popularItems
+    //                              let DOProduct = dal.Product.GetByCondition(prod => prod?.ID == popularItem?.ID)
+    //                              select new BO.ProductItem
+    //                              {
+    //                                  ID = DOProduct.ID,
+    //                                  Name = DOProduct.Name,
+    //                                  Category = (BO.Category)DOProduct.Category,
+    //                                  Price = DOProduct.Price,
+    //                                  Amount = 0,
+    //                                  Instock = DOProduct.InStock > 0 ? true : false,
+    //                                  Image=DOProduct.Image
+    //                              };
+    //        return popularProducts;
+    //    }
+    //    catch (DalDoesNotExistException ex)
+    //    {
+    //        throw new BO.BLDoesNotExistException("product does not exist", ex);
+    //    }
+    //}
+
+
+
     public IEnumerable<BO.ProductItem> GetPopularProductList()
     {
         IEnumerable<DO.OrderItem?> orderItems;
+        IEnumerable<DO.Product?> productList;
 
-        try {orderItems = dal.OrderItem.GetAll();}
-        catch (DalDoesNotExistException ex){throw new BO.BLDoesNotExistException("order item does not exist", ex);}
+        try { orderItems = dal.OrderItem.GetAll(); }
+        catch (DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("order item does not exist", ex); }
 
-        var popularItems = from orderItem in orderItems
-                               group orderItem by orderItem?.ProductID into orderItemGroup
-                               select new { ID = orderItemGroup.Key, Items = orderItemGroup };
-        popularItems = popularItems.OrderByDescending(p => p.Items.Count()).Take(amount);
+         productList = dal.Product.GetAll();
 
-        try {
-            var popularProducts = from popularItem in popularItems
-                                  let DOProduct = dal.Product.GetByCondition(prod => prod?.ID == popularItem?.ID)
+
+        //var popularItems = from orderItem in orderItems
+        //                   group orderItem by orderItem?.ProductID into orderItemGroup
+        //                   select new { ID = orderItemGroup.Key, Items = orderItemGroup };
+        //popularItems = popularItems.OrderByDescending(p => p.Items.Count()).Take(amount);
+
+        var query = from orderItem in orderItems
+                    group orderItem by orderItem?.ProductID into groupedOrderItems
+                    join product in productList on groupedOrderItems.Key equals product?.ID
+                    group new { Product = product, OrderItems = groupedOrderItems } by product?.Category into groupedProducts
+                    select new
+                    {
+                        MostOrderedProduct = groupedProducts.OrderByDescending(gp => gp.OrderItems.Count()).Select(gp => gp.Product).FirstOrDefault()
+                    };
+
+        try
+        {
+            var popularProducts = from popularProduct in query
+                                  let DOProduct = dal.Product.GetByCondition(prod => prod?.ID ==(popularProduct?.MostOrderedProduct)?.ID)
                                   select new BO.ProductItem
                                   {
                                       ID = DOProduct.ID,
@@ -54,7 +103,7 @@ internal class Product : IProduct
                                       Price = DOProduct.Price,
                                       Amount = 0,
                                       Instock = DOProduct.InStock > 0 ? true : false,
-                                      Image=DOProduct.Image
+                                      Image = DOProduct.Image
                                   };
             return popularProducts;
         }
@@ -63,12 +112,11 @@ internal class Product : IProduct
             throw new BO.BLDoesNotExistException("product does not exist", ex);
         }
     }
-
-        /// <summary>
-        /// Definition of a function that returns the list of product for manager
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
+    /// <summary>
+    /// Definition of a function that returns the list of product for manager
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
     {
         return GetProductListForManager();
     }

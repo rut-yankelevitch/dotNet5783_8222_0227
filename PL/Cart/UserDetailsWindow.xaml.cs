@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using PL.Cart;
-
+using System.Net.Mail;
 namespace PL
 {
     /// <summary>
@@ -23,7 +23,7 @@ namespace PL
             DependencyProperty.Register("MyCartConfirm", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
-        public UserDetailsWindow( BO.Cart cart)
+        public UserDetailsWindow(BO.Cart cart)
         {
             InitializeComponent();
             MyCartConfirm = cart;
@@ -42,17 +42,32 @@ namespace PL
         {
             try
             {
+                checkInvalid();
                 bl.cart.MakeOrder(MyCartConfirm);
+                Close();
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Email address is not valid. Please enter a valid email address.");
             }
             catch (BO.BLImpossibleActionException ex)
             {
-                MessageBox.Show( ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            Close();
+
+        }
+
+        private void checkInvalid()
+        {
+
+            string email = MyCartConfirm.CustomerEmail!;
+            MailAddress mailAddress = new MailAddress(email);
         }
     }
+    
 }
+
