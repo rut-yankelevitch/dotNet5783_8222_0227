@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
+using DalApi;
+using DO;
+
 namespace Dal;
 internal class Product : IProduct
 {
@@ -17,87 +11,92 @@ internal class Product : IProduct
     {
         return new DO.Product()
         {
-            ID = p.ToIntNullable("ID") ?? throw new FormatException("id"), //fix to: DalXmlFormatException(id)),
-            Category = p.ToEnumNullable<DO.Category>("Category"),
+            ID = (int)p.Element("ID")!,
+            Category = p.ToEnum<DO.Category>("Category"),
             Name = (string?)p.Element("Name"),
             Image = (string?)p.Element("Image"),
-            Price = (double?)p.Element("Price"),
-            InStock = p.ToIntNullable("InStock")
+            Price = (double)p.Element("Price")!,
+            InStock =(int)p.Element("InStock")!,
         };
     }
-    public IEnumerable<DO.Student?> GetAll(Func<DO.Student?, bool>? filter = null)
-    {
-        XElement? studentsRootElem = XMLTools.LoadListFromXMLElement(s_students);
 
-        //return studentsRootElem.Elements().Select(s => createStudentfromXElement(s)).Where(filter);
+
+    public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
+    {
+        XElement? ProductRootElement = XMLTools.LoadListFromXMLElement(s_product);
+
 
         if (filter != null)
         {
-            return from s in studentsRootElem.Elements()
-                   let doStud = createStudentfromXElement(s)
-                   where filter(doStud)
-                   select (DO.Student?)doStud;
+            return from p in ProductRootElement.Elements()
+                   let prod = createProductfromXElement(p)
+                   where filter(prod)
+                   select prod;
         }
         else
         {
-            return from s in studentsRootElem.Elements()
-                   select createStudentfromXElement(s);
+            return from s in ProductRootElement.Elements()
+                   select createProductfromXElement(s);
         }
-
     }
 
-    public DO.Student GetById(int id)
-    {
-        XElement studentsRootElem = XMLTools.LoadListFromXMLElement(s_students);
 
-        return (from s in studentsRootElem?.Elements()
-                where s.ToIntNullable("ID") == id
-                select (DO.Student?)createStudentfromXElement(s)).FirstOrDefault()
-                ?? throw new Exception("missing id"); // fix to: throw new DalMissingIdException(id);
+    public DO.Product GetByCondition(Func<DO.Product?, bool> predicate)
+    {
+        XElement productRootElement = XMLTools.LoadListFromXMLElement(s_product);
+
+        return (from p in productRootElement?.Elements()
+                let prod = createProductfromXElement(p)
+                where predicate(prod)
+                select prod).FirstOrDefault()
+                ?? throw new DO.DalDoesNotExistException("The requested product was not found");
     }
-    public int Add(DO.Student doStudent)
+
+
+    public int Add(DO.Product doProduct)
     {
-        XElement studentsRootElem = XMLTools.LoadListFromXMLElement(s_students);
+        XElement productRootElement = XMLTools.LoadListFromXMLElement(s_product);
 
-        XElement? stud = (from st in studentsRootElem.Elements()
-                          where st.ToIntNullable("ID") == doStudent.ID //where (int?)st.Element("ID") == doStudent.ID
-                          select st).FirstOrDefault();
-        if (stud != null)
-            throw new Exception("id already exist"); // fix to: throw new DalMissingIdException(id);
+        XElement? product = (from prod in productRootElement.Elements()
+                          where (int)prod.Element("ID")! == doProduct.ID //where (int?)st.Element("ID") == doStudent.ID
+                          select prod).FirstOrDefault();
+        if (product != null)
+            throw new DalAlreadyExistException(doProduct.ID, "product"); 
 
-        XElement studentElem = new XElement("Student",
-                                   new XElement("ID", doStudent.ID),
-                                   new XElement("FirstName", doStudent.FirstName),
-                                   new XElement("LastName", doStudent.LastName),
-                                   new XElement("StudentStatus", doStudent.StudentStatus),
-                                   new XElement("BirthDate", doStudent.BirthDate),
-                                   new XElement("Grade", doStudent.Grade)
+        XElement productElement = new XElement("Product",
+                                   new XElement("ID", doProduct.ID),
+                                   new XElement("Name", doProduct.Name),
+                                   new XElement("Category", doProduct.Category),
+                                   new XElement("Price", doProduct.Price),
+                                   new XElement("InStock", doProduct.InStock),
+                                   new XElement("Image", doProduct.Image)
                                    );
 
-        studentsRootElem.Add(studentElem);
+        productRootElement.Add(productElement);
 
-        XMLTools.SaveListToXMLElement(studentsRootElem, s_students);
+        XMLTools.SaveListToXMLElement(productRootElement, s_product);
 
-        return doStudent.ID; ;
+        return doProduct.ID; ;
     }
+
 
     public void Delete(int id)
     {
-        XElement studentsRootElem = XMLTools.LoadListFromXMLElement(s_students);
+        XElement prroductRootElement = XMLTools.LoadListFromXMLElement(s_product);
 
-        XElement? stud = (from st in studentsRootElem.Elements()
-                          where (int?)st.Element("ID") == id
-                          select st).FirstOrDefault() ?? throw new Exception("missing id"); // fix to: throw new DalMissingIdException(id);
+        XElement? prod = (from p in prroductRootElement.Elements()
+                          where (int)p.Element("ID")! == id
+                          select p).FirstOrDefault() ?? throw new DalDoesNotExistException(id, "product"); 
 
-        stud.Remove(); //<==>   Remove stud from studentsRootElem
+        prod.Remove(); //<==>   Remove product from studentsRootElem
 
-        XMLTools.SaveListToXMLElement(studentsRootElem, s_students);
+        XMLTools.SaveListToXMLElement(prroductRootElement, s_product);
     }
 
-    public void Update(DO.Student doStudent)
+
+    public void Update(DO.Product doProd)
     {
-        Delete(doStudent.ID);
-        Add(doStudent);
+        Delete(doProd.ID);
+        Add(doProd);
     }
-
 }
