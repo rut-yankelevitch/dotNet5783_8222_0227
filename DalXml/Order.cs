@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dal
+namespace Dal;
+
+///////////////////////////////////////////
+//implement ILecturer with XML Serializer
+//////////////////////////////////////////
+internal class Order : IOrder
 {
-    internal class Order
-    {
-    }
+    const string s_order = @"order"; //XML Serializer
+
+    
 }
+

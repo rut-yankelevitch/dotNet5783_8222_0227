@@ -53,7 +53,7 @@ internal class ProductDal:IProduct
 
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? predicate = null) =>
     (predicate == null ? ProductList.Select(item => item) : ProductList.Where(predicate!)) ??
-        throw new DO.DalDoesNotExistException("product missing");
+        throw new DO.DalDoesNotExistException("The requested products were not found.");
 
 
 
@@ -66,7 +66,7 @@ internal class ProductDal:IProduct
     
     public Product GetByCondition(Func<Product?, bool> predicate)=>
         ProductList.FirstOrDefault(predicate)??
-        throw new DalDoesNotExistException("There is no order item that meets the condition");
+        throw new DalDoesNotExistException("The requested product was not found.");
 
 
 

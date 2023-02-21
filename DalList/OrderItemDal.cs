@@ -65,7 +65,7 @@ internal class OrderItemDal : IOrderItem
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predicate = null) =>
         (predicate == null ? OrderItemList.Select(item => item)
                            : OrderItemList.Where(predicate!)) ??
-                             throw new DO.DalDoesNotExistException("orderItem missing");
+                             throw new DO.DalDoesNotExistException("The requested order items were not found");
 
 
     /// <summary>
@@ -77,5 +77,5 @@ internal class OrderItemDal : IOrderItem
     
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate) =>
         OrderItemList.FirstOrDefault(predicate) ??
-        throw new DalDoesNotExistException("Order item is not exist");
+        throw new DalDoesNotExistException("The requested order item was not found");
 }
