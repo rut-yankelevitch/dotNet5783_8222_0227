@@ -206,10 +206,21 @@ namespace PL.Product
         private void onlyNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             string fieldValue = ((TextBox)sender).Text;
-            if (!(int.TryParse(fieldValue, out int result)||double.TryParse(fieldValue,out double result2)))
+            if (((TextBox)sender).Name == "priceInput")
             {
-                MessageBox.Show("The field value is not a valid number. Please enter a valid number.");
-                ((TextBox)sender).Text = "";
+                if (!(fieldValue == "" || int.TryParse(fieldValue, out int result) || double.TryParse(fieldValue, out double result2)))
+                {
+                    MessageBox.Show("The field value is not a valid number. Please enter a valid number.");
+                    ((TextBox)sender).Text = "";
+                }
+            }
+            else
+            {
+                if (!(fieldValue == "" || int.TryParse(fieldValue, out int result3)))
+                {
+                    MessageBox.Show("The field value is not a valid number. Please enter a valid number.");
+                    ((TextBox)sender).Text = "";
+                }
             }
         }
     }

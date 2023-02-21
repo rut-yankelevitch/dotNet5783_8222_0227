@@ -71,6 +71,7 @@
                         <Binding ElementName="priceInput" Path="Text" />
                         <Binding ElementName="instockInput" Path="Text" />
                         <Binding ElementName="categorySelector" Path="SelectedItem" />
+                        <Binding ElementName="productImg" Path="Source" />
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
@@ -82,6 +83,7 @@
                         <Binding ElementName="priceInput" Path="Text" />
                         <Binding ElementName="instockInput" Path="Text" />
                         <Binding ElementName="categorySelector" Path="SelectedItem" />
+                        <Binding ElementName="productImg" Path="Source" />
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
