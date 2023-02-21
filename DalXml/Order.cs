@@ -35,31 +35,28 @@ internal class Order : IOrder
     public int Add(DO.Order order)
     {
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
-
+        
         if (listOrders.FirstOrDefault(ord => ord?.ID == order.ID) != null)
             throw new Exception("id already exist"); //new DalAlreadyExistIdException(pr.ID, "Product");
-
-        listLecturers.Add(lecturer);
-
-        XMLTools.SaveListToXMLSerializer(listLecturers, s_lecturers);
-
-        return lecturer.ID;
+        listOrders.Add(order);
+        XMLTools.SaveListToXMLSerializer(listOrders, s_order);
+        return order.ID;
     }
 
     public void Delete(int id)
     {
-        List<DO.Lecturer?> listLecturers = XMLTools.LoadListFromXMLSerializer<DO.Lecturer>(s_lecturers);
+        List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
 
-        if (listLecturers.RemoveAll(lec => lec?.ID == id) == 0)
-            throw new Exception("missing id"); //new DalMissingIdException(id, "Lecturer");
-
-        XMLTools.SaveListToXMLSerializer(listLecturers, s_lecturers);
+        if (listOrders.RemoveAll(ord => ord?.ID == id) == 0)
+            throw new DalDoesNotExistException(id, "order");
+        XMLTools.SaveListToXMLSerializer(listOrders, s_order);
     }
-    public void Update(DO.Lecturer lecturer)
+
+
+    public void Update(DO.Order order)
     {
-        Delete(lecturer.ID);
-        Add(lecturer);
+        Delete(order.ID);
+        Add(order);
     }
-
 }
 

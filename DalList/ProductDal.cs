@@ -38,11 +38,8 @@ internal class ProductDal:IProduct
     /// <exception cref="Exception">if the product didnt exist</exception>
     public void Update(Product product)
     {
-        int count = ProductList.RemoveAll(prod => prod?.ID == product.ID);
-        if (count == 0)
-                throw new DalDoesNotExistException(product.ID,"product");
-
-        ProductList.Add(product);
+        Delete(product.ID);
+        Add(product);
     }
 
 

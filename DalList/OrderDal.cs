@@ -43,10 +43,8 @@ internal class OrderDal : IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public void Update(Order order)
     {
-        int count = OrderList.RemoveAll(ord => ord?.ID == order.ID);
-        if (count == 0)
-            throw new DalDoesNotExistException(order.ID, "order");
-        OrderList.Add(order);
+        Delete(order.ID);
+        Add(order);
     }
 
 
