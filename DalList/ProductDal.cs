@@ -51,7 +51,7 @@ internal class ProductDal:IProduct
     /// </summary>
     /// <returns>an array of all the products</returns>
 
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? predicate = null) =>
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? predicate) =>
     (predicate == null ? ProductList.Select(item => item) : ProductList.Where(predicate!)) ??
         throw new DO.DalDoesNotExistException("The requested products were not found.");
 

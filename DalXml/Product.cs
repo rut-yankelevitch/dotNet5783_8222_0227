@@ -21,21 +21,21 @@ internal class Product : IProduct
     }
 
 
-    public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null)
+    public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? predicate)
     {
-        XElement? ProductRootElement = XMLTools.LoadListFromXMLElement(s_product);
+        XElement? productRootElement = XMLTools.LoadListFromXMLElement(s_product);
 
 
-        if (filter != null)
+        if (predicate != null)
         {
-            return from p in ProductRootElement.Elements()
+            return from p in productRootElement.Elements()
                    let prod = createProductfromXElement(p)
-                   where filter(prod)
+                   where predicate(prod)
                    select prod;
         }
         else
         {
-            return from s in ProductRootElement.Elements()
+            return from s in productRootElement.Elements()
                    select createProductfromXElement(s);
         }
     }

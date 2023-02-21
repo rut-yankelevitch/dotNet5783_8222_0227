@@ -67,7 +67,7 @@ internal class OrderDal : IOrder
     /// <exception cref="Exception">if the order doesnt exist</exception>
     public Order GetByCondition(Func<Order?, bool> predicate)=>
         OrderList.FirstOrDefault(predicate) ??
-        throw new DalDoesNotExistException("The requested orders was not found.");
+        throw new DalDoesNotExistException("The requested order was not found.");
 }
 
 

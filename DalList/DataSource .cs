@@ -92,8 +92,8 @@ static class DataSource
         foreach (Order o in OrderList)
         {
             int randA = randNum.Next(12);
-            double price = new double();
-            double price2 = new double();
+            double price;
+            double price2;
             int randB;
 
             foreach (Product p in ProductList)
