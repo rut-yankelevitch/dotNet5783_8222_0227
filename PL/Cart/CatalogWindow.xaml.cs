@@ -34,12 +34,12 @@ namespace PL.Cart
 
         public CatalogWindow()
         {
-                InitializeComponent();
-                MyCartInCatalog = new() { Items = new() };
-                Category = Category.None;
-                IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-                ProductsItem = (temp == null) ? new() : new(temp!);
-                categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            InitializeComponent();
+            MyCartInCatalog = new() { Items = new() };
+            Category = Category.None;
+            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+            ProductsItem = (temp == null) ? new() : new(temp!);
+            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
 
@@ -54,22 +54,22 @@ namespace PL.Cart
         }
 
 
-        private void categorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            {
-                BO.Category? category = categorySelector.SelectedItem as BO.Category?;
-                if(category == Category.None)
-                {
-                    var temp = bl.Product.GetProductItemForCatalogNoFilter();
-                    ProductsItem = (temp == null) ? new() : new(temp!);
-                }
-                else
-                {
-                    var temp = bl.Product.GetProducItemForCatalogByCategory(category);
-                    ProductsItem = (temp == null) ? new() : new(temp!);
-                }
-            }
-        }
+        //private void categorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        //{
+        //    {
+        //        BO.Category? category = categorySelector.SelectedItem as BO.Category?;
+        //        if(category == Category.None)
+        //        {
+        //            var temp = bl.Product.GetProductItemForCatalogNoFilter();
+        //            ProductsItem = (temp == null) ? new() : new(temp!);
+        //        }
+        //        else
+        //        {
+        //            var temp = bl.Product.GetProducItemForCatalogByCategory(category);
+        //            ProductsItem = (temp == null) ? new() : new(temp!);
+        //        }
+        //    }
+        //}
 
 
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -81,7 +81,7 @@ namespace PL.Cart
         }
 
 
-        private void showCartButton_Click(Object sender ,RoutedEventArgs e)
+        private void showCartButton_Click(Object sender, RoutedEventArgs e)
         {
             CartWindow? productItemWindow = new(MyCartInCatalog!);
             productItemWindow.Show();
@@ -111,10 +111,10 @@ namespace PL.Cart
 
         private void toFullCatalog_Click(object sender, RoutedEventArgs e)
         {
-                IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-                ProductsItem = (temp == null) ? new() : new(temp!);
-                ((Button)sender).Visibility = Visibility.Hidden;
-                toPopularProduct_Button.Visibility = Visibility.Visible;
+            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+            ProductsItem = (temp == null) ? new() : new(temp!);
+            ((Button)sender).Visibility = Visibility.Hidden;
+            toPopularProduct_Button.Visibility = Visibility.Visible;
         }
     }
 }

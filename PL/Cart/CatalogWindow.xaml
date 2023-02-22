@@ -8,39 +8,78 @@
         Title="CatalogWindow" Height="675" Width="1200">
 
     <Window.Resources>
+        <Style TargetType="Label">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFD62899" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style  TargetType="TextBlock">
+            <Setter Property="Background" Value="LightCyan"/>
+            <Style.Triggers >
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFD62899" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <DataTemplate  x:Key="MyDataTemplate">
-            <Grid Width="400" Margin="20" Background="Beige" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="ID: " TextAlignment="Left" Padding="2"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text=" Name: " TextAlignment="Left" Padding="2"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text=" Price: " TextAlignment="Left" Padding="2"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
-                <TextBlock Grid.Row="5" Grid.Column="0" Text=" Instock: " TextAlignment="Left" Padding="2"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ID}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}"  TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Price}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Category,Converter={StaticResource CategoryToStringConverter}}"   TextAlignment="Left" Padding="2" />                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Instock}"   TextAlignment="Left" Padding="2" />
-                <Image  Grid.Column="2" Grid.Row="2" Source="{Binding Image,Mode=OneWay, Converter={StaticResource ImageConverter}}"/>
-            </Grid>
+            <Border BorderBrush="#FFD62899"  BorderThickness="2">
+                <Grid Width="260" Height="300" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="3.5*" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.5*" />
+                        <!--<RowDefinition Height="*" />
+                        <RowDefinition Height="*" />-->
+                    </Grid.RowDefinitions>
+                    <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="ID: " TextAlignment="Left" Padding="2"/>-->
+                    <!--<TextBlock Grid.Row="1" Grid.Column="0" Text=" Name: " TextAlignment="Left" Padding="2"/>-->
+                    <!--<TextBlock Grid.Row="4" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text=" Instock: " TextAlignment="Left" Padding="2"/>-->
+                    <Label Grid.Row="0"  Content="{Binding Category,Converter={StaticResource CategoryToStringConverter}}" FontSize="15"   Padding="2" />
+                    <Image   Grid.Row="1" Source="{Binding Image,Mode=OneWay, Converter={StaticResource ImageConverter}}"/>
+                    <!--<TextBlock Grid.Row="0"  Text="{Binding ID}"   TextAlignment="Left" Padding="2" />-->
+                    <Label Grid.Row="2"  Content="{Binding Name}"   Padding="2"  HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
+                    <Label Grid.Row="3" Content=" Price: " FontSize="15"  Padding="2"/>
+                    <Label Grid.Row="3" Margin="45,0,0,0" FontSize="15" Content="{Binding Price}"  Padding="2" />
+                    <Label Grid.Row="4"   Content="{Binding Instock,Converter={StaticResource ConvertFalseToNotInStock}}"  Padding="2" />
+                </Grid>
+            </Border>
         </DataTemplate>
-    </Window.Resources>    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
-        <ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged">
+    </Window.Resources>
+
+    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <!--<ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource CategoryToStringConverter}}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ScrollViewer  VerticalScrollBarVisibility="Auto">
+            </ComboBox>-->
+        <ItemsControl x:Name="categorySelector" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate >
+                    <TextBlock Margin="4,0,4,0"  Text="{Binding Converter={StaticResource CategoryToStringConverter}}" TextDecorations="Underline"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+       
+       
+       
+
+        <ScrollViewer  VerticalScrollBarVisibility="Auto">
             <ListView MouseDoubleClick="product_MouseDoubleClick " Height="520" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>

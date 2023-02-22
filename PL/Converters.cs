@@ -7,100 +7,100 @@ using System.Windows.Media.Imaging;
 using BO;
 
 namespace PL;
-    class ImageConverter : IValueConverter
+class ImageConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        try
         {
-            try
+            if (!File.Exists((string)value))
+                throw new Exception("");
+            using (var stream = File.OpenRead((string)value))
             {
-                if (!File.Exists((string)value))
-                    throw new Exception("");
-                using (var stream = File.OpenRead((string)value))
-                {
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    bmp.StreamSource = stream;
-                    bmp.CacheOption = BitmapCacheOption.OnLoad;
-                    bmp.EndInit();
-                    return bmp;
-                }
-            }
-            catch (Exception ex)
-            {
-                return new BitmapImage(new Uri(@"..\img\empty_image.gif", UriKind.RelativeOrAbsolute));
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.StreamSource = stream;
+                bmp.CacheOption = BitmapCacheOption.OnLoad;
+                bmp.EndInit();
+                return bmp;
             }
         }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        catch (Exception ex)
         {
-            try
-            {
-                return ((BitmapImage)value).UriSource.AbsolutePath;
-            }
-            catch
-            {
-                return @"..\img\empty_image.gif";
-            }
+            return new BitmapImage(new Uri(@"..\img\empty_image.gif", UriKind.RelativeOrAbsolute));
         }
-
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            return ((BitmapImage)value).UriSource.AbsolutePath;
+        }
+        catch
+        {
+            return @"..\img\empty_image.gif";
+        }
+    }
+
+}
 
 
 public class ConvertNullToTrue : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null ? true : false;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return value == null ? true : false;
     }
-
-
-    public class ConvertNullToFalse : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if(value==null||(string)value=="")
-            {
-                return false;
-            }
-            return  true ;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
+}
 
 
-    public class ConvertNullToVisible : IValueConverter
+public class ConvertNullToFalse : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        if (value == null || (string)value == "")
         {
-            return value == null ? Visibility.Visible : Visibility.Hidden;
+            return false;
         }
-        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return true;
     }
-
-
-    public class ConvertZeroToHidden : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-         int.TryParse(value!.ToString(), out int result);
+        throw new NotImplementedException();
+    }
+}
+
+
+public class ConvertNullToVisible : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value == null ? Visibility.Visible : Visibility.Hidden;
+    }
+    public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+public class ConvertZeroToHidden : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        int.TryParse(value!.ToString(), out int result);
         return result == 0 ? Visibility.Hidden : Visibility.Visible;
-        }
-        public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
     }
+    public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
 public class ConvertMinAmountToTrue : IValueConverter
@@ -108,7 +108,7 @@ public class ConvertMinAmountToTrue : IValueConverter
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
         int.TryParse(value!.ToString(), out int result);
-        return result >1 ? true : false;
+        return result > 1 ? true : false;
     }
     public object ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -118,40 +118,40 @@ public class ConvertMinAmountToTrue : IValueConverter
 
 
 public class ConvertNullToHidden : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        if (value == null)
         {
-            if(value == null )
-            {
-                return Visibility.Hidden;
-            }
-            return Visibility.Visible;
+            return Visibility.Hidden;
         }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return Visibility.Visible;
     }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
-    public class ConvertZeroToVisible : IValueConverter
+public class ConvertZeroToVisible : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
-        {
-        int.TryParse(value!.ToString(), out int result); 
-            return result== 0 ? Visibility.Visible: Visibility.Hidden;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        int.TryParse(value!.ToString(), out int result);
+        return result == 0 ? Visibility.Visible : Visibility.Hidden;
     }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 public class ConvertZeroToFalse : IValueConverter
 {
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
         int.TryParse((value!).ToString(), out int result);
-        return result == 0 ?false : true;
+        return result == 0 ? false : true;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -160,32 +160,32 @@ public class ConvertZeroToFalse : IValueConverter
 }
 
 public class ConverBoolToString : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (bool)value == true ? "true" : "false";
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
+        return (bool)value == true ? "true" : "false";
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value;
+    }
+}
+
+
+public class StatusToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus status = (BO.OrderStatus)value;
+        return status.ToString().Replace('_', ' ');
+
     }
 
-
-    public class StatusToStringConverter : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            BO.OrderStatus status = (BO.OrderStatus)value;
-            return status.ToString().Replace('_', ' ');
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
+        return value;
     }
+}
 
 public class CategoryToStringConverter : IValueConverter
 {
@@ -205,7 +205,7 @@ public class ConvertDetailsToTrue : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        return ((values[0]!).ToString()!.Length > 0 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 ) ? true : false;
+        return ((values[0]!).ToString()!.Length > 0 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0) ? true : false;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -216,110 +216,110 @@ public class ConvertDetailsToTrue : IMultiValueConverter
 
 
 public class ConvertInputToTrue : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((values[0]!).ToString()!.Length == 6 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 && (values[3]!).ToString()!.Length > 0 && values[4] != null && ((BO.Category)values[4]!) != BO.Category.None && values[5]!=null) ? true : false;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        return ((values[0]!).ToString()!.Length == 6 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0 && (values[3]!).ToString()!.Length > 0 && values[4] != null && ((BO.Category)values[4]!) != BO.Category.None && values[5] != null) ? true : false;
     }
 
-
-    public class ConverDoubleToString : IValueConverter
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double valueDouble = (double)value;
-            return valueDouble.ToString();
-        }
+        throw new NotImplementedException();
+    }
+}
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string text = (string)value;
-            double price;
-            if (!double.TryParse(text, out price))
-            {
-                return null; //Some default value
-            }
-            return price;
-        }
+
+public class ConverDoubleToString : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        double valueDouble = (double)value;
+        return valueDouble.ToString();
     }
 
-
-    public class ConverIntToString : IValueConverter
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        string text = (string)value;
+        double price;
+        if (!double.TryParse(text, out price))
         {
-            int valueInt = (int)value;
-            return valueInt.ToString();
+            return null; //Some default value
         }
+        return price;
+    }
+}
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string text = (string)value;
-            int inStock;
-            if (!int.TryParse(text, out inStock))
-            {
 
-                return null; //Some default value
-            }
-            return inStock;
-        }
+public class ConverIntToString : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        int valueInt = (int)value;
+        return valueInt.ToString();
     }
 
-
-    public class DateTimeConverter : IValueConverter
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        string text = (string)value;
+        int inStock;
+        if (!int.TryParse(text, out inStock))
         {
-            DateTime? date = (DateTime?)value;
-            return date != null ? (date?.ToString("dd, MM,yy",
-                      CultureInfo.InvariantCulture)) : "לא קיים תאריך";
-        }
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            return null; //Some default value
         }
+        return inStock;
+    }
+}
+
+
+public class DateTimeConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        DateTime? date = (DateTime?)value;
+        return date != null ? (date?.ToString("dd, MM,yy",
+                  CultureInfo.InvariantCulture)) : "לא קיים תאריך";
     }
 
-
-    public class NextStatusConverter : IValueConverter
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            BO.OrderStatus? status = (OrderStatus?)value;
-            return status == BO.OrderStatus.Confirmed_Order ? BO.OrderStatus.Send_Order : status == BO.OrderStatus.Send_Order ? BO.OrderStatus.Provided_Order : null;
-        }
+        throw new NotImplementedException();
+    }
+}
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+
+public class NextStatusConverter : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus? status = (OrderStatus?)value;
+        return status == BO.OrderStatus.Confirmed_Order ? BO.OrderStatus.Send_Order : status == BO.OrderStatus.Send_Order ? BO.OrderStatus.Provided_Order : null;
     }
 
-
-    public class ConvertStatusToVisible : IMultiValueConverter
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            BO.OrderStatus? status = (OrderStatus?)(values[0]!);
-            string? statusWindow = (values[1]!).ToString();
-            if (statusWindow == "False" || status == BO.OrderStatus.Provided_Order)
-                return Visibility.Hidden;
-            else
-                return Visibility.Visible;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
+}
+
+
+public class ConvertStatusToVisible : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus? status = (OrderStatus?)(values[0]!);
+        string? statusWindow = (values[1]!).ToString();
+        if (statusWindow == "False" || status == BO.OrderStatus.Provided_Order)
+            return Visibility.Hidden;
+        else
+            return Visibility.Visible;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
 public class ConvertShipDateToTrue : IMultiValueConverter
@@ -338,5 +338,15 @@ public class ConvertShipDateToTrue : IMultiValueConverter
 }
 
 
+public class ConvertFalseToNotInStock : IValueConverter
+{
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (bool)value == false ? "The item not In Stock" : "";
+    }
 
-
+    public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
