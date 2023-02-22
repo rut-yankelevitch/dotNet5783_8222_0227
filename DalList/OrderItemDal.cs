@@ -1,6 +1,7 @@
 ﻿using DO;
 using static Dal.DataSource;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 /// <summary>
@@ -15,6 +16,7 @@ internal class OrderItemDal : IOrderItem
     /// <param name="orderItem">the new order item </param>
     /// <returns>the id of the new order item</returns>
     /// <exception cref="Exception">if the order id or the product id doesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem orderItem)
     {
         if (OrderList.FirstOrDefault(order => order?.ID == orderItem.OrderID) == null)
@@ -29,12 +31,12 @@ internal class OrderItemDal : IOrderItem
     }
 
 
-
     /// <summary>
     /// delete a order item
     /// </summary>
     /// <param name="id">the order item id</param>
     /// <exception cref="Exception">if the order item didnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         int count = OrderItemList.RemoveAll(ordItem => ordItem?.ID == id);
@@ -48,6 +50,7 @@ internal class OrderItemDal : IOrderItem
     /// </summary>
     /// <param name="orderItem">the new details of the order item</param>
     /// <exception cref="Exception">if the order cdoesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem orderItem)
     {
         Delete(orderItem.ID);
@@ -59,7 +62,7 @@ internal class OrderItemDal : IOrderItem
     /// get all the order items by condition
     /// </summary>
     /// <returns>an array of all the order items</returns>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predicate = null) =>
         (predicate == null ? OrderItemList.Select(item => item)
                            : OrderItemList.Where(predicate!)) ??
@@ -72,7 +75,7 @@ internal class OrderItemDal : IOrderItem
     /// <param name="predicate">the order id</param>
     /// <returns>the orderItem</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate) =>
         OrderItemList.FirstOrDefault(predicate) ??
         throw new DalDoesNotExistException("The requested order item was not found");

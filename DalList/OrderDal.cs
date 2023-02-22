@@ -2,6 +2,7 @@
 using System.Drawing;
 using static Dal.DataSource;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 /// <summary>
@@ -15,6 +16,7 @@ internal class OrderDal : IOrder
     /// </summary>
     /// <param name="order">the new order</param>
     /// <returns>the insert new order id</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order order)
     {
         order.ID = IDOrder;
@@ -28,6 +30,7 @@ internal class OrderDal : IOrder
     /// </summary>
     /// <param name="id">the id of the order</param>
     /// <exception cref="Exception">if the order didnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {       
         int count = OrderList.RemoveAll(order => order?.ID == id);
@@ -41,6 +44,7 @@ internal class OrderDal : IOrder
     /// </summary>
     /// <param name="order">the updated order details</param>
     /// <exception cref="Exception">if the order doesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order order)
     {
         Delete(order.ID);
@@ -52,6 +56,7 @@ internal class OrderDal : IOrder
     /// get all the orders
     /// </summary>
     /// <returns>an array of orders</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? predicate) =>
        (predicate == null ? OrderList.Select(item => item) : OrderList.Where(predicate)) ??
         throw new DO.DalDoesNotExistException("The requested orders were not found.");
@@ -63,6 +68,7 @@ internal class OrderDal : IOrder
     /// <param name="predicate">the order id</param>
     /// <returns>the order</returns>
     /// <exception cref="Exception">if the order doesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order GetByCondition(Func<Order?, bool> predicate)=>
         OrderList.FirstOrDefault(predicate) ??
         throw new DalDoesNotExistException("The requested order was not found.");

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -15,6 +16,7 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <returns>list of orders</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
 
@@ -51,6 +53,7 @@ internal class Order : BlApi.IOrder
     /// <param name="id"></param>
     /// <returns>order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetOrderById(int id)
     {
         try
@@ -70,6 +73,8 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLMistakeUpdateException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order UpdateSendOrderByManager(int id)
     {
         DO.Order orderDal;
@@ -94,6 +99,7 @@ internal class Order : BlApi.IOrder
     /// <returns>update order</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateSupplyOrderByManager(int id)
     {
         DO.Order orderDal;
@@ -123,6 +129,7 @@ internal class Order : BlApi.IOrder
     /// <param name="id"></param>
     /// <returns>order tracking</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking TrackingOrder(int id)
     {
         DO.Order order = new DO.Order();
@@ -167,6 +174,8 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Order? UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount)
     {
         try
@@ -236,6 +245,7 @@ internal class Order : BlApi.IOrder
     /// <param name="orderDal">a DO.order</param>
     /// <returns>a BO.order</returns>
     /// <exception cref="DoesNotExistedBlException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private BO.Order returnBOOrder(DO.Order orderDal)
     {
         try

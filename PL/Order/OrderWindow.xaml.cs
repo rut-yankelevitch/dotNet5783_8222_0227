@@ -43,7 +43,15 @@ namespace PL.Order
 
         public OrderWindow(int id,bool statusWindow)
         {
-            OrderData = bl.Order.GetOrderById(id);
+            try
+            {
+                OrderData = bl.Order.GetOrderById(id);
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             StatusWindow = statusWindow;
             InitializeComponent();
         }

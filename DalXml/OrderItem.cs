@@ -3,6 +3,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,13 +12,23 @@ namespace Dal;
 ///////////////////////////////////////////
 //implement ILecturer with XML Serializer
 //////////////////////////////////////////
+/// <summary>
+/// A department that performs operations:
+/// adding, updating, repeating and deleting on the orderItem array
+/// </summary>
+
 internal class OrderItem : IOrderItem
 {
     const string s_orderItem = @"OrderItem";
     const string s_product = @"Product";
     const string s_order = @"Order";
-    const string config = @"config";
     //XML Serializer
+
+    /// <summary>
+    /// get all the order items by condition
+    /// </summary>
+    /// <returns>an array of all the order items</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? predicate)
     {
         List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItem);
@@ -34,7 +45,7 @@ internal class OrderItem : IOrderItem
     /// <param name="predicate">the order id</param>
     /// <returns>the orderItem</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem GetByCondition(Func<DO.OrderItem?, bool> predicate)
     {
         List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItem);
@@ -47,11 +58,12 @@ internal class OrderItem : IOrderItem
 
 
     /// <summary>
-    /// get order by id
+    /// add a orderitem to the array
     /// </summary>
-    /// <param name="predicate">the order id</param>
-    /// <returns>the orderItem</returns>
-    /// <exception cref="Exception">if the order item doesnt exist</exception>
+    /// <param name="orderItem">the new order item </param>
+    /// <returns>the id of the new order item</returns>
+    /// <exception cref="Exception">if the order id or the product id doesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem orderItem)
     {
 
@@ -71,6 +83,13 @@ internal class OrderItem : IOrderItem
         return orderItem.ID;
     }
 
+
+    /// <summary>
+    /// delete a order item
+    /// </summary>
+    /// <param name="id">the order item id</param>
+    /// <exception cref="Exception">if the order item didnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<DO.OrderItem?> orderItemsList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItem);
@@ -80,6 +99,14 @@ internal class OrderItem : IOrderItem
 
         XMLTools.SaveListToXMLSerializer(orderItemsList, s_orderItem);
     }
+
+
+    /// <summary>
+    /// update an order item
+    /// </summary>
+    /// <param name="orderItem">the new details of the order item</param>
+    /// <exception cref="Exception">if the order cdoesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem orderItem)
     {
         Delete(orderItem.ID);

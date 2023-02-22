@@ -1,12 +1,21 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using DalApi;
 using DO;
 
 namespace Dal;
+/// <summary>
+/// A department that performs operations: 
+/// adding, updating, repeating and deleting on the product array
+/// </summary>
+
 internal class Product : IProduct
 {
     const string s_product = @"Product";
 
+    /// <summary>
+    /// return DO.Product entity
+    /// </summary>
     static DO.Product? createProductfromXElement(XElement p)
     {
         return new DO.Product()
@@ -20,7 +29,11 @@ internal class Product : IProduct
         };
     }
 
-
+    /// <summary>
+    /// get all products
+    /// </summary>
+    /// <returns>an array of all the products</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? predicate)
     {
         XElement? productRootElement = XMLTools.LoadListFromXMLElement(s_product);
@@ -42,6 +55,13 @@ internal class Product : IProduct
     }
 
 
+    /// <summary>
+    /// get product by predicate
+    /// </summary>
+    /// <param name="predicate">the order id</param>
+    /// <returns>the product</returns>
+    /// <exception cref="Exception">if the product doesnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product GetByCondition(Func<DO.Product?, bool> predicate)
     {
         XElement productRootElement = XMLTools.LoadListFromXMLElement(s_product);
@@ -54,12 +74,18 @@ internal class Product : IProduct
     }
 
 
+    /// <summary>
+    /// add a order to the order array
+    /// </summary>
+    /// <param name="product">the new product</param>
+    /// <returns>the insert new product id</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product doProduct)
     {
         XElement productRootElement = XMLTools.LoadListFromXMLElement(s_product);
 
         XElement? product = (from prod in productRootElement.Elements()
-                          where (int)prod.Element("ID")! == doProduct.ID //where (int?)st.Element("ID") == doStudent.ID
+                          where (int)prod.Element("ID")! == doProduct.ID 
                           select prod).FirstOrDefault();
         if (product != null)
             throw new DalAlreadyExistException(doProduct.ID, "product"); 
@@ -81,6 +107,12 @@ internal class Product : IProduct
     }
 
 
+    /// <summary>
+    /// delete a product 
+    /// </summary>
+    /// <param name="id">the id of the product thet need to be deleted</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement prroductRootElement = XMLTools.LoadListFromXMLElement(s_product);
@@ -94,7 +126,12 @@ internal class Product : IProduct
         XMLTools.SaveListToXMLElement(prroductRootElement, s_product);
     }
 
-
+    /// <summary>
+    /// update a product
+    /// </summary>
+    /// <param name="product">the product new details</param>
+    /// <exception cref="Exception">if the product didnt exist</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product doProd)
     {
         Delete(doProd.ID);
