@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
 using DO;
 
 namespace Dal;
@@ -12,7 +13,7 @@ namespace Dal;
 //////////////////////////////////////////
 internal class Order : IOrder
 {
-    const string s_order = @"order"; //XML Serializer
+    const string s_order = @"..\..\xml\Order.xml";        //XML Serializer
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? predicate)
     {
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
@@ -37,7 +38,8 @@ internal class Order : IOrder
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
         
         if (listOrders.FirstOrDefault(ord => ord?.ID == order.ID) != null)
-            throw new Exception("id already exist"); //new DalAlreadyExistIdException(pr.ID, "Product");
+            throw new DO.DalAlreadyExistException(order.ID, "Order"); 
+        order.ID = (int)((listOrders.Last()?.ID) + 1)!;
         listOrders.Add(order);
         XMLTools.SaveListToXMLSerializer(listOrders, s_order);
         return order.ID;

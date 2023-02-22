@@ -5,7 +5,7 @@ using DO;
 namespace Dal;
 internal class Product : IProduct
 {
-    const string s_product = "product"; //Linq to XML
+    const string s_product = @"..\..\xml\Product.xml";
 
     static DO.Product? createProductfromXElement(XElement p)
     {

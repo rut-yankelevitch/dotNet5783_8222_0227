@@ -1,6 +1,6 @@
 ﻿using DO;
 namespace Dal;
-static class DataSource
+public static class DataSource
 {
     private static readonly Random randNum = new Random();
     private const int startOrderId = 0;
@@ -9,9 +9,9 @@ static class DataSource
     internal static int IDOrder { get => ++idOrder; }
     private static int idOrderItem = startOrderItemId;
     internal static int IDOrderItem { get => ++idOrderItem; }
-    internal static List<Product?> ProductList = new List<Product?>();
-    internal static List<Order?> OrderList = new List<Order?>();
-    internal static List<OrderItem?> OrderItemList = new List<OrderItem?>();
+    public static List<Product?> ProductList = new List<Product?>();
+    public static List<Order?> OrderList = new List<Order?>();
+    public static List<OrderItem?> OrderItemList = new List<OrderItem?>();
 
     static DataSource() => s_Initilize();
 
@@ -92,8 +92,8 @@ static class DataSource
         foreach (Order o in OrderList)
         {
             int randA = randNum.Next(12);
-            double price;
-            double price2;
+            double price=0;
+            double price2=0;
             int randB;
 
             foreach (Product p in ProductList)

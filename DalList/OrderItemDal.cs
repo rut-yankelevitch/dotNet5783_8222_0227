@@ -4,7 +4,7 @@ using DalApi;
 
 namespace Dal;
 /// <summary>
-/// A department that performs operations: 
+/// A department that performs operations:
 /// adding, updating, repeating and deleting on the orderItem array
 /// </summary>
 internal class OrderItemDal : IOrderItem
@@ -50,10 +50,8 @@ internal class OrderItemDal : IOrderItem
     /// <exception cref="Exception">if the order cdoesnt exist</exception>
     public void Update(OrderItem orderItem)
     {
-        int count = OrderItemList.RemoveAll(ordItem => ordItem?.ID == orderItem.ID);
-        if (count == 0)
-            throw new DalDoesNotExistException(orderItem.ID, "orderItem");
-        OrderItemList.Add(orderItem);
+        Delete(orderItem.ID);
+        Add(orderItem);
     }
 
 
@@ -61,7 +59,7 @@ internal class OrderItemDal : IOrderItem
     /// get all the order items by condition
     /// </summary>
     /// <returns>an array of all the order items</returns>
-    
+
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? predicate = null) =>
         (predicate == null ? OrderItemList.Select(item => item)
                            : OrderItemList.Where(predicate!)) ??
@@ -74,7 +72,7 @@ internal class OrderItemDal : IOrderItem
     /// <param name="predicate">the order id</param>
     /// <returns>the orderItem</returns>
     /// <exception cref="Exception">if the order item doesnt exist</exception>
-    
+
     public OrderItem GetByCondition(Func<OrderItem?, bool> predicate) =>
         OrderItemList.FirstOrDefault(predicate) ??
         throw new DalDoesNotExistException("The requested order item was not found");
