@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.csproj", "{612E2280-DAA4-4582-BDD4-19EC957F36E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2974C999-7E7E-4649-AAD9-933D5F2BD73E} = {2974C999-7E7E-4649-AAD9-933D5F2BD73E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D33CDB0-5A71-4862-AEAE-F3526936015A}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,9 +24,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{DF2061A2-ECF5-4E7D-BE48-5D7925BFACC6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{16833CC9-189B-4AA9-BAD2-376108273399}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B4E86D85-832D-4495-BF3F-D17F012261A3} = {B4E86D85-832D-4495-BF3F-D17F012261A3}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{3628D7BB-393C-4C8B-9758-1F9E1B006431}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -45,10 +45,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{AAE28990-470
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{B4E86D85-832D-4495-BF3F-D17F012261A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitializeXmlFiles", "InitializeXmlFiles\InitializeXmlFiles.csproj", "{E8DB3C6F-C8F3-4757-A8F8-5DBF91226CF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeXmlFiles", "InitializeXmlFiles\InitializeXmlFiles.csproj", "{E8DB3C6F-C8F3-4757-A8F8-5DBF91226CF5}"
 	ProjectSection(ProjectDependencies) = postProject
-		{B4E86D85-832D-4495-BF3F-D17F012261A3} = {B4E86D85-832D-4495-BF3F-D17F012261A3}
 		{2974C999-7E7E-4649-AAD9-933D5F2BD73E} = {2974C999-7E7E-4649-AAD9-933D5F2BD73E}
+		{B4E86D85-832D-4495-BF3F-D17F012261A3} = {B4E86D85-832D-4495-BF3F-D17F012261A3}
 		{DF2061A2-ECF5-4E7D-BE48-5D7925BFACC6} = {DF2061A2-ECF5-4E7D-BE48-5D7925BFACC6}
 	EndProjectSection
 EndProject

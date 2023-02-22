@@ -13,9 +13,11 @@ namespace Dal;
 //////////////////////////////////////////
 internal class OrderItem : IOrderItem
 {
-    const string s_orderItem = @"..\..\xml\OrderItem.xml";
-    const string s_product = @"..\..\xml\Product.xml";
-    const string s_order = @"..\.xml\Order.xml";        //XML Serializer
+    const string s_orderItem = @"OrderItem";
+    const string s_product = @"Product";
+    const string s_order = @"Order";
+    const string config = @"config";
+    //XML Serializer
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? predicate)
     {
         List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItem);

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace Dal;
 static class XMLTools
 {
-    const string s_dir = @"..\xml\";
+    const string s_dir = @"..\..\xml\";
     static XMLTools()
     {
         if (!Directory.Exists(s_dir))

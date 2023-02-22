@@ -5,7 +5,7 @@ using DO;
 namespace Dal;
 internal class Product : IProduct
 {
-    const string s_product = @"..\..\xml\Product.xml";
+    const string s_product = @"Product";
 
     static DO.Product? createProductfromXElement(XElement p)
     {
@@ -36,7 +36,8 @@ internal class Product : IProduct
         else
         {
             return from s in productRootElement.Elements()
-                   select createProductfromXElement(s);
+                   let prod= createProductfromXElement(s)
+                   select prod;
         }
     }
 
