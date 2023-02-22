@@ -41,7 +41,6 @@ internal class Order : IOrder
         
         if (listOrders.FirstOrDefault(ord => ord?.ID == order.ID) != null)
             throw new DO.DalAlreadyExistException(order.ID, "Order");
-        (FileStream FileStream = new FileStream("config.xml", FileMode.Open);
         order.ID = (int)((listOrders.Last()?.ID) + 1)!;
         listOrders.Add(order);
         XMLTools.SaveListToXMLSerializer(listOrders, s_order);

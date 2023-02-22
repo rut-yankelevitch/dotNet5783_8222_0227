@@ -65,7 +65,6 @@ internal class OrderItem : IOrderItem
 
         if (productList.FirstOrDefault(product => product?.ID == orderItem.ProductID) == null)
             throw new DalDoesNotExistException(orderItem.ProductID, "product");
-
         orderItem.ID = (int)((orderItemsList.Last()?.ID) + 1)!;
         orderItemsList.Add(orderItem);
         XMLTools.SaveListToXMLSerializer(orderItemsList, s_orderItem);
