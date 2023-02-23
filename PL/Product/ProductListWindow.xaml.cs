@@ -61,11 +61,13 @@ namespace PL.Product
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList? product = ((BO.ProductForList)((DataGrid)sender).SelectedItem);
-            int varInt = product!.ID;
+            if (product != null)
+            {
+                int varInt = product!.ID;
 
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
-
+            }
         }
 
         private void changeProductList()

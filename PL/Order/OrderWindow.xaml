@@ -11,17 +11,17 @@
         <Style TargetType="Label">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#FFD62899" />
+                    <Setter Property="Foreground" Value="Red" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="Button">
+        <!--<Style TargetType="Button">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="#FFD62899" />
                 </Trigger>
             </Style.Triggers>
-        </Style>
+        </Style>-->
 
         <DataTemplate  x:Key="MyDataTemplate" >
             <Grid >
@@ -78,7 +78,7 @@
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" Content=" ➜ "  Height="25" Width="80" Margin="690,0,6,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" FontSize="18" Click="Button_Click" />
-        <Border Grid.Row="1" BorderBrush="#FFD62899" BorderThickness="2" Margin="7" Padding="10">
+        <Border Grid.Row="1" BorderBrush="Red" BorderThickness="2" Margin="7" Padding="10">
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -129,7 +129,7 @@
                 <Label Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Content="{Binding OrderData.DeliveryDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
             </Grid>
         </Border>
-        <Border Grid.Row="2" BorderBrush="#FFD62899" BorderThickness="2" Margin="100,0,120,0" Padding="6">
+        <Border Grid.Row="2" BorderBrush="Red" BorderThickness="2" Margin="100,0,120,0" Padding="6">
             <Grid  Grid.Row="2"  Background="AliceBlue">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

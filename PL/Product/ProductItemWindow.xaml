@@ -7,10 +7,10 @@
         DataContext="{Binding ProductItemData, RelativeSource={RelativeSource Mode=Self} }"
         Title="ProductItem" Height="670" Width="1200">
     <Window.Resources>
-        <ControlTemplate x:Key="CustomButtonTemplate" TargetType="{x:Type Button}">            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>            </Border>        </ControlTemplate>
 
-        <Style TargetType="Button">            <Setter Property="Background" Value="White" />            <Setter Property="BorderBrush" Value="Red"/>            <Style.Triggers>                <Trigger Property="IsMouseOver" Value="True">                    <Setter Property="Foreground" Value="Red" />                    <!--<Setter Property="FontSize" Value="15" />-->                    <Setter Property="FontSize" Value="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource FontSizeConverter}, ConverterParameter=1.5}" />                </Trigger>            </Style.Triggers>        </Style>
-        
+
+        <Style TargetType="TextBlock">            <Setter Property="FontSize" Value="19" />        </Style>
+
     </Window.Resources>
     <Border BorderBrush="red"  Padding="8" Margin="20" BorderThickness="3">
         <Grid  >
@@ -47,14 +47,14 @@
                 <TextBlock HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Text="{Binding Category }" Width="120" />
                 <TextBlock  HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Price ,Converter={StaticResource ConverDoubleToString}}" VerticalAlignment="Top" Width="120" />
                 <TextBlock  HorizontalAlignment="Left" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap" Text="{Binding Instock,Converter={StaticResource ConverBoolToString}}" VerticalAlignment="Top" Width="120"/>
-                <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,110,43" >
+                <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,110,30" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition   Width="*"/>
                         <ColumnDefinition   Width="1.5*"/>
                         <ColumnDefinition   Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0"  Content="-" IsEnabled="{Binding ElementName=amountInput, Path=Text, Converter={StaticResource ConvertMinAmountToTrue }}" Height="20" Width="20" VerticalContentAlignment="Center"   Click="btn_decrease_Click" />
-                    <TextBlock x:Name="amountInput" Grid.Column="1" Height="20"  TextWrapping="Wrap" Width="25"  TextAlignment="Center"   Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                    <TextBlock x:Name="amountInput" Grid.Column="1" Height="30"  TextWrapping="Wrap" Width="25"  TextAlignment="Center"   Text="{Binding Path=Amount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                     <Button Grid.Column="2"  Content="+" Height="20"  Width="20" VerticalContentAlignment="Center" Click="btn_increase_Click"  />
                 </Grid>
 
@@ -72,15 +72,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Image  Grid.Column="0" Grid.Row="1" Height="300" Source="{Binding Image,Mode=TwoWay, Converter={StaticResource ImageConverter}}"/>
-                <Button Content="🛒" Margin="0,150,0,150" Template="{StaticResource CustomButtonTemplate}"
+                <Button Content="🛒" Margin="0,150,0,150" Template="{StaticResource ButtonTemplate}"
                     Foreground="red" Grid.Column="2" Grid.Row="1" Background="White"  FontSize="30"  Click="showCartButton_Click"/>
-                <Button Content="update amount in cart" Template="{StaticResource CustomButtonTemplate}"
+                <Button Content="update amount in cart" Template="{StaticResource ButtonTemplate}"
                    IsEnabled="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToFalse  }}"  Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToHidden },Mode=OneTime}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" Margin="0,280,0,0" VerticalAlignment="Top" Height="65" Width="150" Click="update_to_cart_Click"  />
-                <Button Content="add to cart" Template="{StaticResource CustomButtonTemplate}"
+                <Button Content="add to cart" Template="{StaticResource ButtonTemplate}"
                    IsEnabled="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToFalse  }}" Visibility="{Binding ElementName= amountInput , Path=Text, Converter={StaticResource ConvertZeroToVisible  }, Mode=OneTime}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" Margin="0,240,0,0" VerticalAlignment="Top" Height="65" Width="150" Click="add_to_cart_Click"  />
-                <Button Content="remove from cart" Grid.Column="2" Grid.Row="2"  Template="{StaticResource CustomButtonTemplate}"
+                <Button Content="remove from cart" Grid.Column="2" Grid.Row="2"  Template="{StaticResource ButtonTemplate}"
                   HorizontalAlignment="Left"  VerticalAlignment="Top" Height="73" Width="150" Click="remove_from_cart_Click" Visibility="{Binding Amount,Converter={StaticResource ConvertZeroToHidden} }" RenderTransformOrigin="0.316,-0.028" Margin="0,23,0,0"  />
-                <Button Content="  ➜  "  Grid.Row="0" Grid.Column="2" Width="150" Template="{StaticResource CustomButtonTemplate}"
+                <Button Content="  ➜  "  Grid.Row="0" Grid.Column="2" Width="150" Template="{StaticResource ButtonTemplate}"
                 Height="50" FontSize="35" Click="returnToCatalog_Click" RenderTransformOrigin="1.313,-0.104"/>
 
             </Grid>

@@ -45,8 +45,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock    Text="Total Price" Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" Margin="423,374,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" />
-        <TextBlock    x:Name="totalPrice" Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" Margin="600,374,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" />
+        <TextBlock    Text="Total Price:" Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" Margin="423,360,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" />
+        <TextBlock    x:Name="totalPrice" Text="{Binding MyCart.TotalPrice, Converter={StaticResource }, Mode=TwoWay}" Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToHidden}}" Margin="600,360,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="35" />
         <TextBlock  Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToVisible}}"  Text="העגלה שלכם עדיין ריקה" Margin="170,70,170,150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="35" />
         <TextBlock Visibility="{Binding CartItems.Count , Converter={StaticResource ConvertZeroToVisible}}"  Text="🛒" Foreground="red" FontSize="100" Margin="180,200,180,80" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Button Content="confirm order" IsEnabled="{Binding CartItems.Count, Converter={StaticResource ConvertZeroToFalse}}" Margin="265,372,439,10" Click="confirmOrderBtn_Click"/>

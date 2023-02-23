@@ -36,7 +36,7 @@
             <Label Content="Category" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
         </Grid>
         
-        <DataGrid CanUserAddRows="False"  Grid.Row="1" ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="product_MouseDoubleClick" >
+        <DataGrid CanUserAddRows="False"  Grid.Row="1"  ItemsSource="{Binding Products}" AutoGenerateColumns="False" MouseDoubleClick="product_MouseDoubleClick" >
            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>

@@ -8,9 +8,9 @@
         Title="MainWindow" Height="450" Width="800" >
     
     <Grid >
-        <Button Content=" תצוגת מעקב הזמנות" Background="LightGreen"  IsEnabled= "{Binding ElementName=OrderId, Path=Text, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
-        <Button Content=" תצוגת מנהל" Background="LightGreen" HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
-        <Button Content=" תצוגת הזמנה חדשה" Background="LightGreen" HorizontalAlignment="Left" Margin="500,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowCatalog_Click"/>
+        <Button Content=" תצוגת מעקב הזמנות"  IsEnabled= "{Binding ElementName=OrderId, Path=Text, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
+        <Button Content=" תצוגת מנהל"  HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
+        <Button Content=" תצוגת הזמנה חדשה"  HorizontalAlignment="Left" Margin="500,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowCatalog_Click"/>
         <TextBox x:Name="OrderId" HorizontalAlignment="Left" Margin="118,222,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.392"/>
     </Grid>
     
