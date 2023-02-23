@@ -11,23 +11,46 @@
         <Style TargetType="Label">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#FFD62899" />
+                    <Setter Property="Foreground" Value="red" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-
-        <Style  TargetType="TextBlock">
-            <Setter Property="Background" Value="LightCyan"/>
-            <Style.Triggers >
+        <Style x:Key="caregoryStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="NaN" />
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="FontSize" Value="15" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="category_MouseLeftButtonDown"/>
+            <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FFD62899" />
+                    <Setter Property="Foreground" Value="red" />
+                    <Setter Property="TextDecorations" Value="Underline" />
                 </Trigger>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="16" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="15" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
             </Style.Triggers>
         </Style>
 
         <DataTemplate  x:Key="MyDataTemplate">
-            <Border BorderBrush="#FFD62899"  BorderThickness="2">
+            <Border BorderBrush="red"  BorderThickness="2">
                 <Grid Width="260" Height="300" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.5*" />
@@ -35,16 +58,9 @@
                         <RowDefinition Height="0.5*" />
                         <RowDefinition Height="0.5*" />
                         <RowDefinition Height="0.5*" />
-                        <!--<RowDefinition Height="*" />
-                        <RowDefinition Height="*" />-->
                     </Grid.RowDefinitions>
-                    <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="ID: " TextAlignment="Left" Padding="2"/>-->
-                    <!--<TextBlock Grid.Row="1" Grid.Column="0" Text=" Name: " TextAlignment="Left" Padding="2"/>-->
-                    <!--<TextBlock Grid.Row="4" Grid.Column="0" Text=" Category: " TextAlignment="Left" Padding="2"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text=" Instock: " TextAlignment="Left" Padding="2"/>-->
                     <Label Grid.Row="0"  Content="{Binding Category,Converter={StaticResource CategoryToStringConverter}}" FontSize="15"   Padding="2" />
                     <Image   Grid.Row="1" Source="{Binding Image,Mode=OneWay, Converter={StaticResource ImageConverter}}"/>
-                    <!--<TextBlock Grid.Row="0"  Text="{Binding ID}"   TextAlignment="Left" Padding="2" />-->
                     <Label Grid.Row="2"  Content="{Binding Name}"   Padding="2"  HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
                     <Label Grid.Row="3" Content=" Price: " FontSize="15"  Padding="2"/>
                     <Label Grid.Row="3" Margin="45,0,0,0" FontSize="15" Content="{Binding Price}"  Padding="2" />
@@ -54,33 +70,38 @@
         </DataTemplate>
     </Window.Resources>
 
-    <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
-        <!--<ComboBox HorizontalAlignment="Right" Width="150"  x:Name="categorySelector"  VerticalAlignment="Stretch"  Grid.Column="1" SelectionChanged="categorySelector_SelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource CategoryToStringConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-            </ComboBox>-->
-        <ItemsControl x:Name="categorySelector" >
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate >
-                    <TextBlock Margin="4,0,4,0"  Text="{Binding Converter={StaticResource CategoryToStringConverter}}" TextDecorations="Underline"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
 
-       
-       
-       
 
-        <ScrollViewer  VerticalScrollBarVisibility="Auto">
-            <ListView MouseDoubleClick="product_MouseDoubleClick " Height="520" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="↺" Style="{StaticResource caregoryStyle}" />
+            <TextBlock Grid.Column="1" Text="Vacum Cleaner" Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="2" Text="Cofee Machine" Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="3" Text="Toaster" Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="4" Text="Iron"  Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="5" Text="Mixer"  Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="6" Text="Blender"  Style="{StaticResource caregoryStyle}"/>
+            <TextBlock Grid.Column="7" Text="Popular Product"  Style="{StaticResource caregoryStyle}"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1"   VerticalScrollBarVisibility="Auto">
+            <ListView MouseDoubleClick="product_MouseDoubleClick "  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding ProductsItem}" ItemTemplate="{StaticResource MyDataTemplate}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
@@ -88,8 +109,6 @@
                 </ListView.ItemsPanel>
             </ListView>
         </ScrollViewer>
-        <Button   Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"  Click="showCartButton_Click"/>
-        <Button x:Name="toPopularProduct_Button" Content="Popular Product" Visibility="Visible" Margin="-500,-60,10,10"  Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="toPopularProduct_Click"  />
-        <Button x:Name="toFullCatalog_Button" Content="To full product catalog" Visibility="Hidden"  Margin="-500,-60,10,10"  Foreground="red" Background="White"  FontSize="15"   Height="50" Width="200" Click="toFullCatalog_Click"  />
-    </StackPanel>
+        <Button  Grid.Row="2" Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"   Click="showCartButton_Click"/>
+    </Grid>
 </Window>

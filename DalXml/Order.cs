@@ -97,8 +97,12 @@ internal class Order : IOrder
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
-        Delete(order.ID);
-        Add(order);
+        List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
+        int count = listOrders.RemoveAll(ord => ord?.ID == order.ID);
+        if (count == 0)
+            throw new DalDoesNotExistException(order.ID, "order");
+        listOrders.Add(order);
+        XMLTools.SaveListToXMLSerializer(listOrders, s_order);
     }
 }
 

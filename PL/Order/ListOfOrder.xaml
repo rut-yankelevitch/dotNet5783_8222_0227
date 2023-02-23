@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         DataContext="{Binding Orders, RelativeSource={RelativeSource Mode=Self} }"
         Title="OrderForListWindow" Height="640" Width="800">
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*" />
@@ -18,7 +17,7 @@
             <Grid  Grid.Row="0" Background="AliceBlue">
                 <DataGrid x:Name="OrdersListview" CanUserAddRows="False"  Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False"  MouseDoubleClick="ordersListview_MouseDoubleClick" >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="ID"  Width="*" Binding="{Binding Path=ID}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Customer name"  Width="2*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Status" Width="2*" Binding="{Binding Path=Status, Converter={StaticResource StatusToStringConverter}}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Amount of items" Width="*" Binding="{Binding Path=AmountOfItems}" IsReadOnly="True"/>

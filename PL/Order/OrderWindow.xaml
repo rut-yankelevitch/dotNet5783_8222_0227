@@ -6,106 +6,155 @@
         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self} }" 
         mc:Ignorable="d"
         Title="Order" Height="450" Width="800">
-    
+
     <Window.Resources >
+        <Style TargetType="Label">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFD62899" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFD62899" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <DataTemplate  x:Key="MyDataTemplate" >
             <Grid >
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="{Binding Path=Name}" />
-				<TextBlock x:Name="ProIdTextBox"  Grid.Column="1" HorizontalAlignment="Center"  Text="{Binding Path=ProductID}" />
-				<TextBlock Grid.Column="2" HorizontalAlignment="Center"  Text="{Binding Path=Price}" />
-                <TextBox  Grid.Column="3" HorizontalAlignment="Center"  Text="{Binding Path=Amount}"  TextChanged="amountChange"   >
-                    <TextBox.IsEnabled>
-                        <MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
-                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="StatusWindow"/>
-                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="OrderData"  />
-                        </MultiBinding>
-                    </TextBox.IsEnabled>
-                </TextBox>
+                <TextBlock x:Name="ProIdTextBox"  Grid.Column="1" HorizontalAlignment="Center"  Text="{Binding Path=ProductID}" />
+                <TextBlock Grid.Column="2" HorizontalAlignment="Center"  Text="{Binding Path=Price}" />
+
+                <Grid Grid.Column="3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition   Width="*"/>
+                                    <ColumnDefinition   Width="1.5*"/>
+                                    <ColumnDefinition   Width="*"/>
+                                </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"  Content="-" Height="20" Width="20" VerticalContentAlignment="Center"   Click="decrease_btn" >
+                                    <Button.Visibility>
+                                        <MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="StatusWindow"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="OrderData"  />
+                                              </MultiBinding>
+                                    </Button.Visibility>
+                                </Button>
+                                <TextBlock Grid.Column="1"  Text="{Binding Path=Amount}" Height="20" TextWrapping="Wrap" Width="25"  TextAlignment="Center" Margin="3,0,3,0" />
+                    <Button Grid.Column="2"  Content="+" Height="20"  Width="20" VerticalContentAlignment="Center"  VerticalAlignment="Top" Click="increase_btn" >
+                                  <Button.Visibility>
+                                      <MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
+                                          <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="StatusWindow"/>
+                                          <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="OrderData"  />
+                                      </MultiBinding>
+                                  </Button.Visibility>
+                                 </Button>
+                </Grid>
                 <TextBlock Grid.Column="4" HorizontalAlignment="Center"  Text="{Binding  Path=TotalPrice}" />
-			</Grid>
+            </Grid>
         </DataTemplate>
     </Window.Resources>
-    
+
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-		<Label Content="Order ID" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Customer Name"  Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Customer Email"  Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Customer Address"  Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Order Date"  Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Status"  Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Ship Date"  Grid.Row="6" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Delivery Date"   Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Items"  Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Content="Total Price"  Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
-        <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.ID}" VerticalAlignment="Top" Width="200" />
-        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.CustomerName}" VerticalAlignment="Top" Width="200" />
-        <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.CustomerEmail}" VerticalAlignment="Top" Width="200" />
-        <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding OrderData.CustomerAddress}" VerticalAlignment="Top" Width="200" />
-        <Label Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" Content="{Binding OrderData.OrderDate, Converter={StaticResource DateTimeConverter}}"  VerticalAlignment="Top" Width="200" />
-        <Label Content="{Binding OrderData.Status}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" />
-        <CheckBox x:Name="nextStatusCheckbox" Grid.Row="5" Grid.Column="1"  Content="{Binding OrderData.Status, Converter={StaticResource NextStatusConverter}}"  IsChecked="False"  Margin="145,8,-145,24" Grid.RowSpan="2">
-            <CheckBox.Visibility>
-			<MultiBinding  Converter="{StaticResource ConvertStatusToVisible}">
-                    <Binding   Path="OrderData.Status"  />
-                    <Binding  Path="StatusWindow" />
-                </MultiBinding>
-		</CheckBox.Visibility>
-			</CheckBox>
-        <Label Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding OrderData.ShipDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
-        <Label Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding OrderData.DeliveryDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
-        <Grid  Grid.Row="8" Grid.Column="1" Background="AliceBlue">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Name" HorizontalAlignment="Center"  Grid.Column="0" />
-            <Label Content="Product ID" HorizontalAlignment="Center"  Grid.Column="1" />
-            <Label Content="Price" HorizontalAlignment="Center"  Grid.Column="2" />
-            <Label Content="Amount" HorizontalAlignment="Center"  Grid.Column="3" />
-            <Label Content="TotalPrice" HorizontalAlignment="Center"  Grid.Column="4" />
 
-        </Grid>
-        <ListView x:Name="listOfProduct" Grid.Row="9" Grid.Column="1" ItemsSource="{Binding OrderData.Items}" ItemTemplate="{StaticResource MyDataTemplate}" HorizontalContentAlignment="Stretch"  />
-        <Label  Grid.Row="10" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding OrderData.TotalPrice}" VerticalAlignment="Top" Width="200" />
-        <Button  Content="Update"  Grid.Row="11" Grid.Column="1"   Margin="250,0,0,0" HorizontalAlignment="Left"   Padding="5" Click="update_Click" >
-            <Button.Visibility>
-				<MultiBinding  Converter="{StaticResource ConvertStatusToVisible}">
-                    <Binding   Path="OrderData.Status"   />
-                    <Binding  Path="StatusWindow" />
-                </MultiBinding>
-			</Button.Visibility>
-		</Button>
+        <Button Grid.Row="0" Content=" ➜ "  Height="25" Width="80" Margin="690,0,6,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" FontSize="18" Click="Button_Click" />
+        <Border Grid.Row="1" BorderBrush="#FFD62899" BorderThickness="2" Margin="7" Padding="10">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Order ID:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Customer Name:"  Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Customer Email:"  Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Customer Address:"  Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Order Date:"  Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Status:"  Grid.Row="1" Grid.Column="3"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Ship Date:"  Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Content="Delivery Date:"   Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+                <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.ID}" VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.CustomerName}" VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"   Content="{Binding OrderData.CustomerEmail}" VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding OrderData.CustomerAddress}" VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Left" Content="{Binding OrderData.OrderDate, Converter={StaticResource DateTimeConverter}}"  VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="1" Grid.Column="4" Content="{Binding OrderData.Status, Converter= {StaticResource StatusToStringConverter} }"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" />
+                <Button    Grid.Row="1" Grid.Column="4" Width="100" Height="25" Content="provide order"  Click="update_Click" Margin="101,0,7,0" >
+                    <Button.Visibility>
+                        <MultiBinding  Converter="{StaticResource ConvertSendStatusToVisible}">
+                            <Binding   Path="OrderData.Status"   Mode="TwoWay"  />
+                            <Binding  Path="StatusWindow" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="4" Width="100" Height="25" Content="Send order"  Click="update_Click" Margin="101,0,7,0" >
+                    <Button.Visibility>
+                        <MultiBinding  Converter="{StaticResource ConvertConfirmStatusToVisible}">
+                            <Binding   Path="OrderData.Status"  Mode="TwoWay" />
+                            <Binding  Path="StatusWindow" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                </Button>
+
+                <Label Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left"  Content="{Binding OrderData.ShipDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
+                <Label Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Content="{Binding OrderData.DeliveryDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Top" Width="200" />
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" BorderBrush="#FFD62899" BorderThickness="2" Margin="100,0,120,0" Padding="6">
+            <Grid  Grid.Row="2"  Background="AliceBlue">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+
+                <Grid  Grid.Row="0"  Background="AliceBlue">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Name" HorizontalAlignment="Center"  Grid.Column="0" />
+                    <Label Content="Product ID" HorizontalAlignment="Center"  Grid.Column="1" />
+                    <Label Content="Price" HorizontalAlignment="Center"  Grid.Column="2" />
+                    <Label Content="Amount" HorizontalAlignment="Center"  Grid.Column="3" />
+                    <Label Content="TotalPrice" HorizontalAlignment="Center"  Grid.Column="4" />
+
+                </Grid>
+                <ListView x:Name="listOfProduct" Grid.Row="1"  ItemsSource="{Binding OrderData.Items}" ItemTemplate="{StaticResource MyDataTemplate}" HorizontalContentAlignment="Stretch"  />
+            </Grid>
+        </Border>
+        <Label Content="Total Price:"  Grid.Row="3"  FontSize="15"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="40" Width="110" />
+        <Label  Grid.Row="3" Margin="100,0,0,0"   FontSize="15" HorizontalAlignment="Left" Content="{Binding OrderData.TotalPrice}" VerticalAlignment="Top" Width="200" />
     </Grid>
 </Window>

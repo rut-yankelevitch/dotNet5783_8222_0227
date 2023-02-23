@@ -39,7 +39,6 @@ namespace PL.Cart
             Category = Category.None;
             IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
 
@@ -50,26 +49,34 @@ namespace PL.Cart
             Category = Category.None;
             IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
-            categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
 
-        //private void categorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        //{
-        //    {
-        //        BO.Category? category = categorySelector.SelectedItem as BO.Category?;
-        //        if(category == Category.None)
-        //        {
-        //            var temp = bl.Product.GetProductItemForCatalogNoFilter();
-        //            ProductsItem = (temp == null) ? new() : new(temp!);
-        //        }
-        //        else
-        //        {
-        //            var temp = bl.Product.GetProducItemForCatalogByCategory(category);
-        //            ProductsItem = (temp == null) ? new() : new(temp!);
-        //        }
-        //    }
-        //}
+        private void category_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            {
+                string categoryString = (string)((TextBlock)sender).Text;
+                if (categoryString == "Popular Product")
+                    toPopularProduct_Click(sender, e);
+                else
+                {
+                    string categoryString2 = categoryString == "↺" ? "None" : categoryString.Replace(' ', '_');
+
+                    BO.Category category = (BO.Category)Enum.Parse(typeof(Category), categoryString2);
+
+                    if (category == Category.None)
+                    {
+                        var temp = bl.Product.GetProductItemForCatalogNoFilter();
+                        ProductsItem = (temp == null) ? new() : new(temp!);
+                    }
+                    else
+                    {
+                        var temp = bl.Product.GetProducItemForCatalogByCategory(category);
+                        ProductsItem = (temp == null) ? new() : new(temp!);
+                    }
+                }
+            }
+        }
 
 
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -95,8 +102,6 @@ namespace PL.Cart
             {
                 IEnumerable<BO.ProductItem?> temp = bl.Product.GetPopularProductList();
                 ProductsItem = (temp == null) ? new() : new(temp!);
-                ((Button)sender).Visibility = Visibility.Hidden;
-                toFullCatalog_Button.Visibility = Visibility.Visible;
             }
             catch (BO.BLDoesNotExistException ex)
             {
@@ -107,15 +112,5 @@ namespace PL.Cart
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-        private void toFullCatalog_Click(object sender, RoutedEventArgs e)
-        {
-            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-            ProductsItem = (temp == null) ? new() : new(temp!);
-            ((Button)sender).Visibility = Visibility.Hidden;
-            toPopularProduct_Button.Visibility = Visibility.Visible;
-        }
     }
 }
-

@@ -41,7 +41,7 @@ namespace PL.Order
             DependencyProperty.Register("StatusWindow2", typeof(bool), typeof(Window), new PropertyMetadata(false));
 
 
-        public OrderWindow(int id,bool statusWindow)
+        public OrderWindow(int id, bool statusWindow)
         {
             try
             {
@@ -60,14 +60,13 @@ namespace PL.Order
         private void update_Click(object sender, RoutedEventArgs e)
         {
             BO.OrderStatus? status = (OrderStatus?)OrderData?.Status;
-            BO.Order? order;
             try
             {
-                if (status == BO.OrderStatus.Confirmed_Order && nextStatusCheckbox.IsChecked == true)
+                if (status == BO.OrderStatus.Confirmed_Order)
                 {
                     try
                     {
-                        order = bl.Order.UpdateSendOrderByManager(OrderData!.ID);
+                        OrderData = bl.Order.UpdateSendOrderByManager(OrderData!.ID);
                     }
                     catch (BO.BLDoesNotExistException ex)
                     {
@@ -77,12 +76,13 @@ namespace PL.Order
                     {
                         MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    (sender as Button)!.Visibility = Visibility.Hidden;
                 }
-                else if (status == BO.OrderStatus.Send_Order && nextStatusCheckbox.IsChecked == true)
+                else if (status == BO.OrderStatus.Send_Order)
                 {
                     try
                     {
-                        order = bl.Order.UpdateSupplyOrderByManager(OrderData!.ID);
+                        OrderData = bl.Order.UpdateSupplyOrderByManager(OrderData!.ID);
                     }
                     catch (BO.BLDoesNotExistException ex)
                     {
@@ -92,9 +92,8 @@ namespace PL.Order
                     {
                         MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
+                    (sender as Button)!.Visibility = Visibility.Hidden;
                 }
-                Close();
             }
             catch (BO.BLImpossibleActionException ex)
             {
@@ -107,20 +106,10 @@ namespace PL.Order
         }
 
 
-        private void amountChange(object sender, RoutedEventArgs e)
+        private void amountChange(int productId,int productAmount)
         {
-            var prodId = (TypeDescriptor.GetProperties((sender as TextBox)?.DataContext!)["ProductID"]?.GetValue((sender as TextBox)?.DataContext))!;
-            string strHelp = prodId?.ToString()!;
-            strHelp = strHelp ?? "0";
-            int productId;
-            int.TryParse(strHelp, out productId);
-            strHelp = (sender as TextBox)?.Text!;
-            int productAmount;
-            int.TryParse(strHelp, out productAmount);
 
-            try
-            {
-                var temp = bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, productId,productAmount);
+                var temp = bl.Order.UpdateAmountOfOProductInOrder(OrderData!.ID, productId, productAmount);
                 if (temp != null)
                 {
                     OrderData = temp;
@@ -129,6 +118,22 @@ namespace PL.Order
                 {
                     Close();
                 }
+        }
+
+        private void decrease_btn(object sender, RoutedEventArgs e)
+        {
+            var prodId = (TypeDescriptor.GetProperties((sender as Button)?.DataContext!)["ProductID"]?.GetValue((sender as Button)?.DataContext))!;
+            string strHelp = prodId?.ToString()!;
+            strHelp = strHelp ?? "0";
+            int productId;
+            int.TryParse(strHelp, out productId);
+            var amount = (TypeDescriptor.GetProperties((sender as Button)?.DataContext!)["Amount"]?.GetValue((sender as Button)?.DataContext))!;
+            strHelp = amount?.ToString() ?? "0";
+            int productAmount;
+            int.TryParse(strHelp, out productAmount);
+            try
+            {
+                amountChange( productId, productAmount - 1);
             }
             catch (BO.BLImpossibleActionException ex)
             {
@@ -136,16 +141,16 @@ namespace PL.Order
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
                 {
-                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                    (sender as TextBlock)!.Text = orderItem?.Amount.ToString();
                 }
             }
             catch (BO.BLDoesNotExistException ex)
             {
-                MessageBox.Show(ex.InnerException?.ToString(),ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
                 {
-                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                    (sender as TextBlock)!.Text = orderItem?.Amount.ToString();
                 }
             }
             catch (BO.BLInvalidInputException ex)
@@ -154,7 +159,7 @@ namespace PL.Order
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
                 {
-                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                    (sender as TextBlock)!.Text = orderItem?.Amount.ToString();
                 }
             }
             catch (Exception ex)
@@ -163,9 +168,70 @@ namespace PL.Order
                 var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
                 if (orderItem != null)
                 {
-                    (sender as TextBox)!.Text = orderItem?.Amount.ToString();
+                    (sender as TextBlock)!.Text = orderItem?.Amount.ToString();
                 }
             }
+
+
+        }
+        private void increase_btn(object sender, RoutedEventArgs e)
+        {
+            var prodId = (TypeDescriptor.GetProperties((sender as Button)?.DataContext!)["ProductID"]?.GetValue((sender as Button)?.DataContext))!;
+            string strHelp = prodId?.ToString()!;
+            strHelp = strHelp ?? "0";
+            int productId;
+            int.TryParse(strHelp, out productId);
+            var amountTextBlock = (TypeDescriptor.GetProperties((sender as Button)?.DataContext!)["Amount"]?.GetValue((sender as Button)?.DataContext))!;
+            strHelp = amountTextBlock?.ToString() ?? "0";
+            int productAmount;
+            int.TryParse(strHelp, out productAmount);
+            try
+            {
+                amountChange( productId, productAmount + 1);
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    amountTextBlock = orderItem?.Amount.ToString();
+                }
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    amountTextBlock = orderItem?.Amount.ToString();
+                }
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    amountTextBlock = orderItem?.Amount.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var orderItem = OrderData?.Items!.FirstOrDefault<BO.OrderItem>(prod => prod.ProductID == productId);
+                if (orderItem != null)
+                {
+                    amountTextBlock = orderItem?.Amount.ToString();
+                }
+            }
+
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

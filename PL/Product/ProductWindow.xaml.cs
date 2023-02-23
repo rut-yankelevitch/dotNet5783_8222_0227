@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,7 +34,9 @@ namespace PL.Product
             try
             {
                 InitializeComponent();
-                categorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+                var categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>()
+                                      .Where(c => c != BO.Category.None);
+                categorySelector.ItemsSource = categories;
                 if (id != -1)
                 {
                     try
@@ -64,7 +67,7 @@ namespace PL.Product
                 int id;
                 int.TryParse(idInput.Text, out id);
                 bl.Product.DeleteProduct(id);
-                
+
                 ProductListWindow productListWindow = new ProductListWindow();
                 Close();
             }
@@ -194,4 +197,3 @@ namespace PL.Product
         }
     }
 }
-

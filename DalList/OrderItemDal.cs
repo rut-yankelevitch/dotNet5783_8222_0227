@@ -53,8 +53,10 @@ internal class OrderItemDal : IOrderItem
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem orderItem)
     {
-        Delete(orderItem.ID);
-        Add(orderItem);
+        int count = OrderItemList.RemoveAll(ord => ord?.ID == orderItem.ID);
+        if (count == 0)
+            throw new DalDoesNotExistException(orderItem.ID, "orderItem");
+        OrderItemList.Add(orderItem);
     }
 
 

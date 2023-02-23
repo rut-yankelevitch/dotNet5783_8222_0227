@@ -20,7 +20,8 @@
         <convert:ConverIntToString x:Key="ConverIntToString"/>
         <convert:ConverDoubleToString x:Key="ConverDoubleToString"/>
         <convert:DateTimeConverter x:Key="DateTimeConverter"/>
-        <convert:ConvertStatusToVisible x:Key="ConvertStatusToVisible"/>
+        <convert:ConvertSendStatusToVisible x:Key="ConvertSendStatusToVisible"/>
+        <convert:ConvertConfirmStatusToVisible x:Key="ConvertConfirmStatusToVisible"/>
         <convert:ConvertZeroToHidden x:Key="ConvertZeroToHidden"/>
         <convert:ConvertMinAmountToTrue x:Key="ConvertMinAmountToTrue"/>
         <convert:ConvertZeroToVisible x:Key="ConvertZeroToVisible"/>
@@ -28,6 +29,8 @@
         <convert:ConvertDetailsToTrue x:Key="ConvertDetailsToTrue"/>
         <convert:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
         <convert:ConvertFalseToNotInStock x:Key="ConvertFalseToNotInStock"/>
+        <convert:FontSizeConverter x:Key="FontSizeConverter"/>
+
 
 
 

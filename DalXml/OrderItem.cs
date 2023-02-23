@@ -109,8 +109,12 @@ internal class OrderItem : IOrderItem
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem orderItem)
     {
-        Delete(orderItem.ID);
-        Add(orderItem);
+        List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderItem);
+        int count = listOrderItems.RemoveAll(ord => ord?.ID == orderItem.ID);
+        if (count == 0)
+            throw new DalDoesNotExistException(orderItem.ID, "orderItem");
+        listOrderItems.Add(orderItem);
+        XMLTools.SaveListToXMLSerializer(listOrderItems, s_orderItem);
     }
 }
 

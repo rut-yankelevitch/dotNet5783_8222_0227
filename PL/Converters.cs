@@ -277,8 +277,7 @@ public class DateTimeConverter : IValueConverter
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         DateTime? date = (DateTime?)value;
-        return date != null ? (date?.ToString("dd, MM,yy",
-                  CultureInfo.InvariantCulture)) : "לא קיים תאריך";
+        return date != null ? (date?.ToString("dd/ MM/yy", CultureInfo.InvariantCulture)) : "לא קיים תאריך";
     }
 
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -303,13 +302,30 @@ public class NextStatusConverter : IValueConverter
 }
 
 
-public class ConvertStatusToVisible : IMultiValueConverter
+public class ConvertConfirmStatusToVisible : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         BO.OrderStatus? status = (OrderStatus?)(values[0]!);
         string? statusWindow = (values[1]!).ToString();
-        if (statusWindow == "False" || status == BO.OrderStatus.Provided_Order)
+        if (statusWindow == "False" || status != BO.OrderStatus.Confirmed_Order)
+            return Visibility.Hidden;
+        else
+            return Visibility.Visible;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class ConvertSendStatusToVisible : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.OrderStatus? status = (OrderStatus?)(values[0]!);
+        string? statusWindow = (values[1]!).ToString();
+        if (statusWindow == "False" || status != BO.OrderStatus.Send_Order)
             return Visibility.Hidden;
         else
             return Visibility.Visible;
@@ -327,7 +343,7 @@ public class ConvertShipDateToTrue : IMultiValueConverter
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         string? statusWindow = (values[0]!).ToString();
-        return values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? false : true) : false;
+        return values[1] != null && statusWindow == "True" ? ((((BO.Order?)values[1])?.ShipDate < DateTime.Now) ? Visibility.Hidden : Visibility.Visible) : Visibility.Hidden;
     }
 
 
@@ -346,6 +362,21 @@ public class ConvertFalseToNotInStock : IValueConverter
     }
 
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class FontSizeConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        double fontSize = (double)value;
+        double factor = double.Parse((string)parameter, CultureInfo.InvariantCulture);
+        return fontSize * factor;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
