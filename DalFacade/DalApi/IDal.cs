@@ -25,5 +25,17 @@ public interface IDal
     /// A property that returns the IProduct entity
     /// </summary>
     public IProduct Product { get;}
-    }
+
+    /// <summary>
+    /// A property that returns the IUser entity
+    /// </summary>
+    public IUser User { get; }
+
+
+    /// <summary>
+    /// A property that returns the ICartItem entity
+    /// </summary>
+    public ICartItem CartItem { get; }
+
+}
 

@@ -36,11 +36,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{F9CB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{AAE28990-4708-4C0B-A8A8-EAF2B22A730B}"
 	ProjectSection(SolutionItems) = preProject
+		xml\CartItem.xml = xml\CartItem.xml
 		xml\config.xml = xml\config.xml
 		xml\dal-config.xml = xml\dal-config.xml
 		xml\Order.xml = xml\Order.xml
 		xml\OrderItem.xml = xml\OrderItem.xml
 		xml\Product.xml = xml\Product.xml
+		xml\User.xml = xml\User.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{B4E86D85-832D-4495-BF3F-D17F012261A3}"
@@ -52,7 +54,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitializeXmlFiles", "Initi
 		{DF2061A2-ECF5-4E7D-BE48-5D7925BFACC6} = {DF2061A2-ECF5-4E7D-BE48-5D7925BFACC6}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{06B28295-AE30-49E0-A492-478ED81F6DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simulator.csproj", "{06B28295-AE30-49E0-A492-478ED81F6DFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

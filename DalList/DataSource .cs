@@ -69,7 +69,7 @@ public static class DataSource
 
             DateTime? orderDate1 = helpE;
             DateTime? shipDate1 = null;
-            DateTime? deliveryrDate1 = null;
+            DateTime? deliveryDate1 = null;
 
             if (i < 16)
             {
@@ -80,9 +80,9 @@ public static class DataSource
             if (i < 8)
             {
                 helpC = new TimeSpan(randNum.Next(1, 10), 0, 0, 0, 0);
-                deliveryrDate1 = shipDate1 + helpC;
+                deliveryDate1 = shipDate1 + helpC;
             }
-            OrderList.Add(new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = emailArray[i % 15], CustomerAdress = citiArray[i % 15], OrderDate = orderDate1, ShipDate = shipDate1, DeliveryrDate = deliveryrDate1 });
+            OrderList.Add(new Order { ID = IDOrder, CustomerName = nameArray[i % 15], CustomerEmail = emailArray[i % 15], CustomerAdress = citiArray[i % 15], OrderDate = orderDate1, ShipDate = shipDate1, DeliveryDate = deliveryDate1 });
         }
     }
 

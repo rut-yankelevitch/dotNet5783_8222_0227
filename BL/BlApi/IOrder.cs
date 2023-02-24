@@ -48,5 +48,8 @@ namespace BlApi
         /// <param name="amount"></param>
         /// <returns></returns>
         public Order? UpdateAmountOfOProductInOrder(int idOrder,int idProduct,int amount);
+
+        public int? SelectOrder();
+
     }
 }

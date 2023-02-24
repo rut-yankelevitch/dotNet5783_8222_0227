@@ -67,3 +67,21 @@ public class DalConfigException : Exception
     public DalConfigException(string msg) : base(msg) { }
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
+
+[Serializable]
+public class XMLFileLoadCreateException : Exception
+{
+    string path;
+    public XMLFileLoadCreateException(string path, Exception ex) :base() { this.path = path; }
+    public override string ToString() =>  $"fail to load xml file: {path}";
+
+}
+
+[Serializable]
+public class XMLFileNullExeption : Exception
+{
+    public override string Message =>
+                    "XML file is empty";
+
+}
+

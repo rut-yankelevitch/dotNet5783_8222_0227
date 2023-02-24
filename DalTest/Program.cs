@@ -147,7 +147,7 @@ namespace DalTest
                         order.CustomerAdress = Console.ReadLine();
                         order.OrderDate = DateTime.Now;
                         order.ShipDate = DateTime.MinValue;
-                        order.DeliveryrDate = DateTime.MinValue;
+                        order.DeliveryDate = DateTime.MinValue;
                         int insertId = dalList!.Order.Add(order);
                         Console.WriteLine("insert id: " + insertId);
                         break;
@@ -199,7 +199,7 @@ namespace DalTest
                         if (readString != "")
                         {
                             DateTime.TryParse(readString, out helpDateTime);
-                            order.DeliveryrDate = helpDateTime;
+                            order.DeliveryDate = helpDateTime;
                         }
                         dalList!.Order.Update(order);
                         break;

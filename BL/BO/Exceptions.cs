@@ -56,4 +56,14 @@ namespace BO
     {
         public BLImpossibleActionException(string? message) : base(message) { }
     }
+
+    /// <summary>
+    /// Throws No properties found in object
+    /// </summary>
+
+    public class BLNoPropertiesInObject : Exception
+    {
+        public override string Message =>
+                        "No properties found in object";
+    }
 }

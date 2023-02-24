@@ -33,8 +33,8 @@ internal class Order : IOrder
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
 
        return ((predicate == null)?
-             listOrders.Select(lec => lec).OrderBy(lec => lec?.ID):
-             listOrders.Where(predicate).OrderBy(lec => lec?.ID)) ?? throw new DO.DalDoesNotExistException("The requested orders were not found");;
+             listOrders.Select(ord => ord).OrderBy(ord => ord?.ID):
+             listOrders.Where(predicate).OrderBy(ord => ord?.ID)) ?? throw new DO.DalDoesNotExistException("The requested orders were not found");;
     }
 
 

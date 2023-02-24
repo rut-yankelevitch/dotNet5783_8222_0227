@@ -13,7 +13,7 @@ namespace BlApi
         /// <param name="cart"></param>
         /// <param name="idProduct"></param>
         /// <returns>cart</returns>
-        public Cart AddProductToCart(Cart cart, int idProduct,int amount);
+        public Cart AddProductToCart(Cart cart, int idProduct,int amount,bool isRegistered);
 
         /// <summary>
         /// Definition of a function that update the amount of product in the cart
@@ -22,13 +22,16 @@ namespace BlApi
         /// <param name="idProduct"></param>
         /// <param name="amount"></param>
         /// <returns>cart</returns>
-        public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount);
+        public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount, bool isRegistered);
 
         /// <summary>
         /// Definition of a function that confirms an order
         /// </summary>
         /// <param name="cart"></param>
-        public void MakeOrder(Cart cart);
+        public void MakeOrder(Cart cart, bool isRegistered);
+
+        public Cart GetCart(int userId);
+
 
     }
 }

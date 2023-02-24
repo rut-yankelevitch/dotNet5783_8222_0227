@@ -58,8 +58,8 @@ static class XMLTools
         }
         catch (Exception ex)
         {
-            //new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
-            throw new Exception($"fail to load xml file: {filePath}", ex);
+            throw new DO.XMLFileLoadCreateException(filePath, ex);
+            //throw new Exception($"fail to load xml file: {filePath}", ex);
         }
     }
     #endregion
@@ -77,8 +77,8 @@ static class XMLTools
         }
         catch (Exception ex)
         {
-            // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
-            throw new Exception($"fail to create xml file: {filePath}", ex);
+            throw new DO.XMLFileLoadCreateException(filePath, ex);
+            //throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
 
@@ -94,8 +94,8 @@ static class XMLTools
         }
         catch (Exception ex)
         {
-            // DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
-            throw new Exception($"fail to load xml file: {filePath}", ex);
+            throw new DO.XMLFileLoadCreateException(filePath, ex);
+            //throw new Exception($"fail to load xml file: {filePath}", ex);
         }
     }
     #endregion

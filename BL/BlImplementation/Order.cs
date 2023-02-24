@@ -33,7 +33,7 @@ internal class Order : BlApi.IOrder
                                     CustomerName = ((DO.Order)order!).CustomerName,
                                     AmountOfItems = amount,
                                     TotalPrice = totalPrice,
-                                    Status = (((DO.Order)order!).DeliveryrDate != null && ((DO.Order)order!).DeliveryrDate < DateTime.Now) ?
+                                    Status = (((DO.Order)order!).DeliveryDate != null && ((DO.Order)order!).DeliveryDate < DateTime.Now) ?
                                                 BO.OrderStatus.Provided_Order : ((DO.Order)order!).ShipDate != null && ((DO.Order)order!).ShipDate < DateTime.Now ?
                                                 BO.OrderStatus.Send_Order : BO.OrderStatus.Confirmed_Order
                                 };
@@ -107,13 +107,13 @@ internal class Order : BlApi.IOrder
         try { orderDal = dal.Order.GetByCondition(ord => ord?.ID == id); }
         catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("order does not exist", ex); }
 
-        if (orderDal.DeliveryrDate != null && orderDal.DeliveryrDate < DateTime.Now)
+        if (orderDal.DeliveryDate != null && orderDal.DeliveryDate < DateTime.Now)
             throw new BO.BLImpossibleActionException("order Delivery");
 
         if (orderDal.ShipDate == null || orderDal.ShipDate > DateTime.Now)
             throw new BO.BLImpossibleActionException("It is not possible to update a delivery date before a shipping date");
 
-        orderDal.DeliveryrDate = DateTime.Now;
+        orderDal.DeliveryDate = DateTime.Now;
 
         try { dal.Order.Update(orderDal); }
         catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("order update failes", ex); }
@@ -140,7 +140,7 @@ internal class Order : BlApi.IOrder
         catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("order doesnot exist", ex); }
 
         orderTracking.ID = order.ID;
-        if (order.DeliveryrDate != null && order.DeliveryrDate < DateTime.Now)
+        if (order.DeliveryDate != null && order.DeliveryDate < DateTime.Now)
             orderTracking.Status = BO.OrderStatus.Provided_Order;
         else
         {
@@ -154,9 +154,9 @@ internal class Order : BlApi.IOrder
         {
             tList.Add(new Tuple<DateTime?, string>(order.ShipDate, "the order has been sent"));
         }
-        if (order.DeliveryrDate != null)
+        if (order.DeliveryDate != null)
         {
-            tList.Add(new Tuple<DateTime?, string>(order.DeliveryrDate, "the order provided"));
+            tList.Add(new Tuple<DateTime?, string>(order.DeliveryDate, "the order provided"));
         }
         orderTracking.Tuples = tList;
         return orderTracking;
@@ -273,10 +273,10 @@ internal class Order : BlApi.IOrder
                 CustomerEmail = orderDal.CustomerEmail,
                 OrderDate = orderDal.OrderDate,
                 ShipDate = orderDal.ShipDate,
-                DeliveryDate = orderDal.DeliveryrDate,
+                DeliveryDate = orderDal.DeliveryDate,
                 TotalPrice = orderItems.Sum(item => item.TotalPrice),
                 Items = orderItems.ToList(),
-                Status = (((DO.Order)orderDal!).DeliveryrDate != null && ((DO.Order)orderDal!).DeliveryrDate < DateTime.Now) ?
+                Status = (((DO.Order)orderDal!).DeliveryDate != null && ((DO.Order)orderDal!).DeliveryDate < DateTime.Now) ?
                                                 BO.OrderStatus.Provided_Order : ((DO.Order)orderDal!).ShipDate != null && ((DO.Order)orderDal!).ShipDate < DateTime.Now ?
                                                 BO.OrderStatus.Send_Order : BO.OrderStatus.Confirmed_Order
             };
@@ -288,5 +288,30 @@ internal class Order : BlApi.IOrder
         }
 
     }
-
+    public int? SelectOrder()
+    {
+        DateTime? minDate = DateTime.MaxValue;
+        int? minOrderId = -1;
+        List<DO.Order?>? oList = dal.Order.GetAll( o =>  o?.DeliveryDate == null)?.ToList();
+        foreach (var item in oList!)
+        {
+            if (item?.ShipDate == null)
+            {
+                if (item?.OrderDate < minDate)
+                {
+                    minDate = item?.OrderDate;
+                    minOrderId = item?.ID;
+                }
+            }
+            else
+            {
+                if (item?.ShipDate < minDate)
+                {
+                    minDate = item?.ShipDate;
+                    minOrderId = item?.ID;
+                }
+            }
+        }
+        return minDate == DateTime.MaxValue ? null : minOrderId;
+    }
 }

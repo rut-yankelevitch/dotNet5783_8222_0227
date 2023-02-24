@@ -51,5 +51,10 @@ namespace PL
             CatalogWindow catalog = new ();
             catalog.Show();
         }
+
+        private void simultorBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new SimulatorWindow(bl).Show();
+        }
     }
 }

@@ -15,6 +15,7 @@ public class Program
         List<Product?> PrdouctList = DataSource.ProductList;
         List<DO.Order?> OrderList = DataSource.OrderList;
         List<OrderItem?> OrderItemList = DataSource.OrderItemList;
+        List<DO.User> UserList = new() { new DO.User() { Name = "Sara", Password = "1234", Email = "S@gmail.com", Address = "aaa", ID = 200000 } };
 
         StreamWriter wProduct = new(@"..\..\..\..\xml\Product.xml");
         XmlSerializer serProduct = new(typeof(List<Product?>));
@@ -30,5 +31,10 @@ public class Program
         XmlSerializer serOrderItem = new(typeof(List<OrderItem?>));
         serOrderItem.Serialize(wOrderItem, OrderItemList);
         wOrderItem.Close();
+
+        StreamWriter wUser = new(@"..\..\..\..\xml\User.xml");
+        XmlSerializer serUser = new(typeof(List<DO.User>));
+        serUser.Serialize(wUser, UserList);
+        wUser.Close();
     }
 }

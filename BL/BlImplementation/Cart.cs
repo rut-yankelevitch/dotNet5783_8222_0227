@@ -14,8 +14,9 @@ internal class Cart : ICart
     /// <returns>update cart</returns>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
-    public BO.Cart AddProductToCart(BO.Cart cart, int idProduct, int amount)
+    public BO.Cart AddProductToCart(BO.Cart cart, int idProduct, int amount, bool isRegistered = false)
     {
+        if (isRegistered) addToCartDal(cart, idProduct);
 
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem1 = new BO.OrderItem();
@@ -56,8 +57,11 @@ internal class Cart : ICart
     /// <exception cref="BO.InvalidInputBlException"></exception>
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
-    public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productId, int amount)
+    public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productId, int amount, bool isRegistered = false)
     {
+        if (isRegistered)
+            updateAmountDal(cart, productId, amount);
+
         DO.Product product;
         if (cart.Items == null)
             throw new BO.BLImpossibleActionException("There are no items in the cart");
@@ -106,8 +110,11 @@ internal class Cart : ICart
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
-    public void MakeOrder(BO.Cart cart)
+    public void MakeOrder(BO.Cart cart , bool isRegistered = false)
     {
+        if (isRegistered)
+            confirmOrderDal(cart);
+
         int id;
         if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
             throw new BLInvalidInputException("Invalid details");
@@ -125,7 +132,7 @@ internal class Cart : ICart
                         CustomerAdress = cart?.CustomerAddress,
                         OrderDate = DateTime.Now,
                         ShipDate = null,
-                        DeliveryrDate = null
+                        DeliveryDate = null
                     });
         }
         catch (DO.DalDoesNotExistException ex)
@@ -171,5 +178,67 @@ internal class Cart : ICart
             catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
         });
     }
+
+    public BO.Cart GetCart(int userId)
+    {
+        BO.Cart cart = new();
+        try
+        {
+            if (userId < 0) throw new BLInvalidInputException("invalid id");
+
+            IEnumerable<DO.CartItem?> cartItems = dal.CartItem.GetAll(o => o?.UserID == userId);
+            List<BO.OrderItem> orderItems = new();
+            DO.Product pro = new();
+            BO.OrderItem oItem = new();
+            foreach (var item in cartItems)
+            {
+                oItem = Tools.cast<BO.OrderItem, DO.CartItem>((DO.CartItem)item!);
+                pro = dal.Product.GetByCondition(o => o?.ID == item?.ProductID);
+                oItem.Name = pro.Name;
+                oItem.Price = pro.Price;
+                oItem.TotalPrice = oItem.Price * oItem.Amount;
+                orderItems.Add(oItem);
+            }
+            //IEnumerable<DO.OrderItem> orderItems = from item in cartItems
+            //                                       select dal.OrderItem.Get(o => o.ProductID == item.ProductID);
+            //IEnumerable<BO.OrderItem> BOItems = from item in orderItems
+            //                                    select BlUtils.cast<BO.OrderItem, DO.Product>(item);
+            cart.UserID = userId;
+            cart.Items = orderItems!;
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
+        }
+        return cart;
+    }
+
+
+    private void addToCartDal(BO.Cart? cart, int productID)
+    {
+        DO.CartItem cartItem = new();
+        cartItem.ProductID = productID;
+        cartItem.Amount = 1;
+        cartItem.UserID = cart?.UserID ?? throw new BO.BLImpossibleActionException("null id");
+        dal.CartItem.Add(cartItem);
+    }
+
+
+    private void confirmOrderDal(BO.Cart? cart)
+    {
+        dal.CartItem.Delete(c => c.UserID == cart.UserID);
+    }
+
+
+    private void updateAmountDal(BO.Cart cart, int productID, int newAmount)
+    {
+        DO.CartItem cartItem = new();
+        cartItem.ProductID = productID;
+        cartItem.Amount = newAmount;
+        cartItem.ID = dal.CartItem.GetByCondition(c => c?.ProductID == productID && c?.UserID == cart.UserID).ID;
+        cartItem.UserID = cart?.UserID ?? throw new BO.BLImpossibleActionException("null id");
+        dal.CartItem.Update(cartItem);
+    }
+
 
 }

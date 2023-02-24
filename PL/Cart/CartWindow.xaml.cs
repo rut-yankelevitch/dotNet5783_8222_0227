@@ -11,7 +11,7 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-        //public BO.Cart MyCart;
+        public BO.Cart MyCart;
 
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
 
@@ -25,15 +25,17 @@ namespace PL.Cart
         public static readonly DependencyProperty CartItemsProperty =
             DependencyProperty.Register("CartItems", typeof(ObservableCollection<BO.OrderItem?>), typeof(Window), new PropertyMetadata(null));
 
-        public BO.Cart MyCart
+
+
+        public double TotalPrice
         {
-            get { return (BO.Cart)GetValue(MyCartProperty); }
-            set { SetValue(MyCartProperty, value); }
+            get { return (double)GetValue(TotalPriceProperty); }
+            set { SetValue(TotalPriceProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyCartConfirm.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyCartProperty =
-            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for TotalPrice.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TotalPriceProperty =
+            DependencyProperty.Register("TotalPrice", typeof(double), typeof(Window), new PropertyMetadata(0.0));
 
 
 
@@ -43,7 +45,7 @@ namespace PL.Cart
             MyCart = cart;
             IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
             CartItems = (temp == null) ? new() : new(temp!);
-            //totalPrice.Text = MyCart.TotalPrice.ToString();
+            TotalPrice = (double)MyCart?.TotalPrice!;
         }
 
 
@@ -62,17 +64,17 @@ namespace PL.Cart
                 MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount + 1);
                 IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                 CartItems = (temp == null) ? new() : new(temp!);
-                //totalPrice.Text = (MyCart.TotalPrice).ToString();
+                TotalPrice = (double)MyCart?.TotalPrice!;
             }
-            catch(BO.BLImpossibleActionException ex)
+            catch (BO.BLImpossibleActionException ex)
             {
-                 MessageBox.Show(ex.Message,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (BO.BLDoesNotExistException ex)
             {
-                MessageBox.Show( ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, ex.InnerException?.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -90,7 +92,7 @@ namespace PL.Cart
                     MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount - 1);
                     IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                     CartItems = (temp == null) ? new() : new(temp!);
-                    //totalPrice.Text = (MyCart.TotalPrice).ToString();
+                    TotalPrice = (double)MyCart.TotalPrice;
 
                 }
             }
@@ -125,7 +127,7 @@ namespace PL.Cart
                 bl.cart.UpdateProductAmountInCart(MyCart, id, 0);
                 IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                 CartItems = (temp == null) ? new() : new(temp!);
-                //totalPrice.Text = (MyCart.TotalPrice).ToString();
+                TotalPrice = (double)MyCart.TotalPrice;
             }
             catch (BO.BLImpossibleActionException ex)
             {

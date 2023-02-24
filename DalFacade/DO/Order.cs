@@ -43,7 +43,7 @@ public struct Order
     /// <summary>
     /// the delivery date
     /// </summary>
-    public DateTime? DeliveryrDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
     /// to string function to the order struct
