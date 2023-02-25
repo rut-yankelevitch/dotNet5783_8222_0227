@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement IorderItem with XML Serializer
 //////////////////////////////////////////
 /// <summary>
 /// A department that performs operations:

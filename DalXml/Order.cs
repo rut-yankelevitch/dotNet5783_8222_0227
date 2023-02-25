@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿using System.Runtime.CompilerServices;
 using DalApi;
 using DO;
 
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement Iorder with XML Serializer
 //////////////////////////////////////////
 ///
 ////// <summary>

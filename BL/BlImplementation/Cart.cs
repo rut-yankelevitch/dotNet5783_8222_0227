@@ -103,7 +103,6 @@ internal class Cart : ICart
     /// </summary>
     /// <param name="cart"></param>
     /// <exception cref="BO.InvalidInputBlException"></exception>
-    /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
     public void MakeOrder(BO.Cart cart)

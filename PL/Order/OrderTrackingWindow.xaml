@@ -16,17 +16,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!--<Style TargetType="Button">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="blue" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="Turquoise "/>
-                    <Setter Property="FontSize" Value="13" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
-
 
     </Window.Resources>
     <Grid>

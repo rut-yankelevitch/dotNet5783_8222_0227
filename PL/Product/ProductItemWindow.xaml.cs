@@ -57,7 +57,6 @@ namespace PL.Product
             InitializeComponent();
             this.cart = cart;
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
-            //MinValue = 0;
             Value = ProductItemData.Amount;
         }
 

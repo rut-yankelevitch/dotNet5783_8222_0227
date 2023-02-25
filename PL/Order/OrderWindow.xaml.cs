@@ -1,14 +1,10 @@
 ﻿using BO;
-using DO;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
+
 
 namespace PL.Order
 {
