@@ -13,79 +13,15 @@
     <Name>Electrolux Dyson</Name>
     <Category>VacumCleaner</Category>
     <Price>201</Price>
-    <InStock>0</InStock>
+    <InStock>2</InStock>
     <Image>..\img\223264.jpg</Image>
-  </Product>
-  <Product>
-    <ID>845555</ID>
-    <Name>co</Name>
-    <Category>Toaster</Category>
-    <Price>55</Price>
-    <InStock>52</InStock>
-    <Image>..\\img\845555.jpg</Image>
-  </Product>
-  <Product>
-    <ID>458796</ID>
-    <Name>TEFAL iron</Name>
-    <Category>Toaster</Category>
-    <Price>207</Price>
-    <InStock>7</InStock>
-    <Image>..\img\137688.jpg</Image>
-  </Product>
-  <Product>
-    <ID>147854</ID>
-    <Name>braun blender</Name>
-    <Category>Iron</Category>
-    <Price>209</Price>
-    <InStock>142</InStock>
-    <Image>..\img\223264.jpg</Image>
-  </Product>
-  <Product>
-    <ID>364152</ID>
-    <Name> Hemilton coffee machine</Name>
-    <Category>Blender</Category>
-    <Price>211</Price>
-    <InStock>185</InStock>
-    <Image>..\img\137688.jpg</Image>
-  </Product>
-  <Product>
-    <ID>147985</ID>
-    <Name>Nespresso coffee machine</Name>
-    <Category>Blender</Category>
-    <Price>210</Price>
-    <InStock>136</InStock>
-    <Image>..\\img\147985.jpg</Image>
-  </Product>
-  <Product>
-    <ID>747541</ID>
-    <Name>Bosch Dyson</Name>
-    <Category>Mixer</Category>
-    <Price>202</Price>
-    <InStock>4</InStock>
-    <Image>..\img\201845.jpg</Image>
-  </Product>
-  <Product>
-    <ID>125478</ID>
-    <Name>SAMURAI mixer</Name>
-    <Category>CofeeMachine</Category>
-    <Price>203</Price>
-    <InStock>48</InStock>
-    <Image>..\img\137688.jpg</Image>
-  </Product>
-  <Product>
-    <ID>745698</ID>
-    <Name>elextrolux blender</Name>
-    <Category>Iron</Category>
-    <Price>208</Price>
-    <InStock>46</InStock>
-    <Image>..\img\175672.jpg</Image>
   </Product>
   <Product>
     <ID>852963</ID>
     <Name>Bosch toaster</Name>
     <Category>CofeeMachine</Category>
     <Price>204</Price>
-    <InStock>30</InStock>
+    <InStock>16</InStock>
     <Image>..\img\175672.jpg</Image>
   </Product>
   <Product>
@@ -93,7 +29,7 @@
     <Name>elextrolux toaster</Name>
     <Category>CofeeMachine</Category>
     <Price>205</Price>
-    <InStock>63</InStock>
+    <InStock>5</InStock>
     <Image>..\img\223264.jpg</Image>
   </Product>
   <Product>
@@ -101,7 +37,63 @@
     <Name>Bosch iron</Name>
     <Category>Toaster</Category>
     <Price>206</Price>
-    <InStock>57</InStock>
-    <Image>..\\img\458963.jpeg</Image>
+    <InStock>78</InStock>
+    <Image>..\img\201845.jpg</Image>
+  </Product>
+  <Product>
+    <ID>458796</ID>
+    <Name>TEFAL iron</Name>
+    <Category>Toaster</Category>
+    <Price>207</Price>
+    <InStock>28</InStock>
+    <Image>..\img\137688.jpg</Image>
+  </Product>
+  <Product>
+    <ID>745698</ID>
+    <Name>elextrolux blender</Name>
+    <Category>Iron</Category>
+    <Price>208</Price>
+    <InStock>64</InStock>
+    <Image>..\img\175672.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147854</ID>
+    <Name>braun blender</Name>
+    <Category>Iron</Category>
+    <Price>209</Price>
+    <InStock>63</InStock>
+    <Image>..\img\223264.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147985</ID>
+    <Name>Nespresso coffee machine</Name>
+    <Category>Blender</Category>
+    <Price>210</Price>
+    <InStock>180</InStock>
+    <Image>..\img\201845.jpg</Image>
+  </Product>
+  <Product>
+    <ID>364152</ID>
+    <Name> Hemilton coffee machine</Name>
+    <Category>Blender</Category>
+    <Price>211</Price>
+    <InStock>55</InStock>
+    <Image>..\img\137688.jpg</Image>
+  </Product>
+  <Product>
+    <ID>125478</ID>
+    <Name>SAMURAI mixer</Name>
+    <Category>CofeeMachine</Category>
+    <Price>203</Price>
+    <InStock>38</InStock>
+    <Image>..\img\137688.jpg</Image>
+  </Product>
+  <Product>
+    <ID>747541</ID>
+    <Name>Bosch Dyson</Name>
+    <Category>Mixer</Category>
+    <Price>202</Price>
+    <InStock>160</InStock>
+    <Image>..\img\201845.jpg</Image>
   </Product>
 </ArrayOfProduct>
