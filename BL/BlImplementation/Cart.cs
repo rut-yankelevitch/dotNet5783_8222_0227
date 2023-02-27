@@ -40,7 +40,7 @@ internal class Cart : ICart
         orderItem1.TotalPrice = orderItem1.Price * orderItem1.Amount;
         cart.Items?.Add(orderItem1);
         cart.TotalPrice += orderItem1.TotalPrice;
-        if (isRegistered) addToCartDal(cart, idProduct,amount);
+        if (isRegistered) addToCartDal(cart, idProduct, amount);
         return cart;
     }
 
@@ -109,16 +109,16 @@ internal class Cart : ICart
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
-    public void MakeOrder(BO.Cart cart , bool isRegistered = false)
+    public void MakeOrder(BO.Cart cart, bool isRegistered = false)
     {
         lock (dal)
         {
-        int id;
-        if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
-            throw new BLInvalidInputException("Invalid details");
+            int id;
+            if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
+                throw new BLInvalidInputException("Invalid details");
 
-        if (cart?.Items?.Count == 0)
-            throw new BLImpossibleActionException("There are no items in the cart.");
+            if (cart?.Items?.Count == 0)
+                throw new BLImpossibleActionException("There are no items in the cart.");
             if (isRegistered)
                 confirmOrderDal(cart);
             try
@@ -188,7 +188,7 @@ internal class Cart : ICart
             List<BO.OrderItem> orderItems = new();
             DO.Product pro = new();
             BO.OrderItem oItem = new();
-            DO.User user = new(); ;
+            DO.User user = new(); 
             foreach (var item in cartItems)
             {
                 oItem = Tools.cast<BO.OrderItem, DO.CartItem>((DO.CartItem)item!);
@@ -201,10 +201,10 @@ internal class Cart : ICart
             }
             try
             {
-               user= dal.User.GetByCondition(us => us?.ID == userId);
+                user = dal.User.GetByCondition(us => us?.ID == userId);
             }
-            catch(DO.DalDoesNotExistException ex)
-            {throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);}
+            catch (DO.DalDoesNotExistException ex)
+            { throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex); }
             cart.UserID = user.ID;
             cart.Items = orderItems!;
             cart.CustomerName = user.Name;
@@ -219,7 +219,7 @@ internal class Cart : ICart
     }
 
 
-    private void addToCartDal(BO.Cart? cart, int productID,int amount)
+    private void addToCartDal(BO.Cart? cart, int productID, int amount)
     {
         DO.CartItem cartItem = new();
         cartItem.ProductID = productID;

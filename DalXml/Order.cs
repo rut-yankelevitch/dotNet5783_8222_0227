@@ -12,7 +12,7 @@ using DO;
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement IOrder with XML Serializer
 //////////////////////////////////////////
 ///
 ////// <summary>
@@ -32,9 +32,9 @@ internal class Order : IOrder
     {
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
 
-       return ((predicate == null)?
-             listOrders.Select(ord => ord).OrderBy(ord => ord?.ID):
-             listOrders.Where(predicate).OrderBy(ord => ord?.ID)) ?? throw new DO.DalDoesNotExistException("The requested orders were not found");;
+        return ((predicate == null) ?
+              listOrders.Select(ord => ord).OrderBy(ord => ord?.ID) :
+              listOrders.Where(predicate).OrderBy(ord => ord?.ID)) ?? throw new DO.DalDoesNotExistException("The requested orders were not found"); ;
     }
 
 
@@ -45,7 +45,7 @@ internal class Order : IOrder
     /// <returns>the order</returns>
     /// <exception cref="Exception">if the order doesnt exist</exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public DO.Order GetByCondition(Func<DO.Order?,bool>predicate)
+    public DO.Order GetByCondition(Func<DO.Order?, bool> predicate)
     {
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
 
@@ -63,7 +63,7 @@ internal class Order : IOrder
     public int Add(DO.Order order)
     {
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_order);
-        
+
         if (listOrders.FirstOrDefault(ord => ord?.ID == order.ID) != null)
             throw new DO.DalAlreadyExistException(order.ID, "Order");
         order.ID = XMLTools.getNextID(@"NextorderID");

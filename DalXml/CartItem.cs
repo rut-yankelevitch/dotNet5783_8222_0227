@@ -66,7 +66,7 @@ public class CartItem : ICartItem
     }
 
 
-    public void Delete(Func< DO.CartItem, bool> f)
+    public void Delete(Func<DO.CartItem, bool> f)
     {
         List<DO.CartItem?> listCartItem = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
         listCartItem.RemoveAll(cItem => f((DO.CartItem)cItem!));

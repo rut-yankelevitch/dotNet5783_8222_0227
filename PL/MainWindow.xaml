@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Background="White"
         Title="MainWindow" Height="450" Width="800" >
-    
+
     <Grid >
         <Button Content=" תצוגת מעקב הזמנות"  IsEnabled= "{Binding ElementName=OrderId, Path=Text, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
         <Button Content=" תצוגת מנהל"  HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
@@ -15,5 +15,5 @@
         <Button Content="Simulator" Name="simultorBtn" HorizontalAlignment="Left" Height="37" Margin="594,342,0,0" VerticalAlignment="Top" Width="109" Click="simultorBtn_Click"/>
 
     </Grid>
-    
+
 </Window>

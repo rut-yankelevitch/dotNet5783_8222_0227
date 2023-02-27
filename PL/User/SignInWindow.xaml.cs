@@ -76,13 +76,15 @@ namespace PL.User
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            BO.Cart cart=new();
+            BO.Cart cart=new();;
             int? userId;
+            int userId2;
             try 
             { 
                 userId = bl.User.IsRegistered(User.Email, User.Password);
                 cart = bl.Cart.GetCart(userId);
-                new CatalogWindow(cart, User.ID, true).Show();
+                userId2= (int)userId!;
+                new CatalogWindow(cart, userId2, true).Show();
             }
             catch (BO.BLDoesNotExistException ex)
             {

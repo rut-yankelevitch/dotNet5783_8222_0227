@@ -38,7 +38,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public OrderTracking TrackingOrder (int id);
+        public OrderTracking TrackingOrder(int id);
 
         /// <summary>
         /// bonus:Definition of a function that updates the quantity of a product in the order
@@ -47,7 +47,7 @@ namespace BlApi
         /// <param name="idProduct"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public Order? UpdateAmountOfOProductInOrder(int idOrder,int idProduct,int amount);
+        public Order? UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount);
 
         public int? SelectOrder();
 

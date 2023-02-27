@@ -22,7 +22,7 @@ public static class DataSource
         initProductArray();
         initOrderArray();
         initOrderItemArray();
-    
+
     }
 
 
@@ -93,8 +93,8 @@ public static class DataSource
         foreach (Order o in OrderList)
         {
             int randA = randNum.Next(12);
-            double price=0;
-            double price2=0;
+            double price = 0;
+            double price2 = 0;
             int randB;
 
             foreach (Product p in ProductList)

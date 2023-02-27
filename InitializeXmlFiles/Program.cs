@@ -15,13 +15,7 @@ public class Program
         List<Product?> PrdouctList = DataSource.ProductList;
         List<DO.Order?> OrderList = DataSource.OrderList;
         List<OrderItem?> OrderItemList = DataSource.OrderItemList;
-        List<DO.CartItem?>CartItemList = new(){ new DO.CartItem() { ID = 1, Amount = 1, ProductID = 747541, UserID = 1 } };
 
-
-        StreamWriter wCartItem = new(@"..\..\..\..\xml\CartItem.xml");
-        XmlSerializer serCartItem = new(typeof(List<DO.CartItem?>));
-        serCartItem.Serialize(wCartItem, CartItemList);
-        wCartItem.Close();
 
         StreamWriter wProduct = new(@"..\..\..\..\xml\Product.xml");
         XmlSerializer serProduct = new(typeof(List<Product?>));
@@ -37,6 +31,5 @@ public class Program
         XmlSerializer serOrderItem = new(typeof(List<OrderItem?>));
         serOrderItem.Serialize(wOrderItem, OrderItemList);
         wOrderItem.Close();
-
     }
 }

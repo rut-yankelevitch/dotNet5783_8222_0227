@@ -10,12 +10,12 @@ namespace BO
     /// Throws class for non-existent items
     /// </summary>
     [Serializable]
-    public class BLDoesNotExistException:Exception
+    public class BLDoesNotExistException : Exception
     {
-        public BLDoesNotExistException(string message, Exception innerException):base(message,innerException) 
+        public BLDoesNotExistException(string message, Exception innerException) : base(message, innerException)
         { }
-    
-        public override string ToString()=> base.ToString()+$"Entity is not exist";
+
+        public override string ToString() => base.ToString() + $"Entity is not exist";
     }
 
 
@@ -25,9 +25,9 @@ namespace BO
     [Serializable]
     public class BLAlreadyExistException : Exception
     {
-            public BLAlreadyExistException(string message, Exception innerException) : base(message, innerException)
-            { }
-            public override string ToString() => base.ToString() + $"Entity is already exist";
+        public BLAlreadyExistException(string message, Exception innerException) : base(message, innerException)
+        { }
+        public override string ToString() => base.ToString() + $"Entity is already exist";
     }
 
 

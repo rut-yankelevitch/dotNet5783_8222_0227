@@ -67,7 +67,7 @@ namespace DalTest
                         Console.WriteLine("Enter id product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        product = dalList!.Product.GetByCondition(item=>item?.ID==readInt);
+                        product = dalList!.Product.GetByCondition(item => item?.ID == readInt);
                         Console.WriteLine(product);
                         break;
                     case Options.GET_ALL:
@@ -155,7 +155,7 @@ namespace DalTest
                         Console.WriteLine("enter order id: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        order = dalList!.Order.GetByCondition(item=>item?.ID==readInt);
+                        order = dalList!.Order.GetByCondition(item => item?.ID == readInt);
                         Console.WriteLine(order);
                         break;
                     case Options.GET_ALL:
@@ -176,7 +176,7 @@ namespace DalTest
 
                         readString = Console.ReadLine();
                         if (readString != "")
-                            order.CustomerName =readString ;
+                            order.CustomerName = readString;
                         readString = Console.ReadLine();
                         if (readString != "")
                             order.CustomerEmail = readString;
@@ -255,11 +255,11 @@ namespace DalTest
                         Console.WriteLine("enter order item id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        orderItem = dalList!.OrderItem.GetByCondition(item=>item?.ID==readInt);
+                        orderItem = dalList!.OrderItem.GetByCondition(item => item?.ID == readInt);
                         Console.WriteLine(orderItem);
                         break;
                     case Options.GET_ALL:
-                       IEnumerable<OrderItem?> ordersItems = dalList!.OrderItem.GetAll();
+                        IEnumerable<OrderItem?> ordersItems = dalList!.OrderItem.GetAll();
                         foreach (OrderItem? ordItem in ordersItems)
                             Console.WriteLine(ordItem);
                         break;
@@ -308,7 +308,7 @@ namespace DalTest
                         Console.WriteLine("enter order id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        IEnumerable<OrderItem?> orderItems = dalList!.OrderItem.GetAll(item=>item?.OrderID==readInt);
+                        IEnumerable<OrderItem?> orderItems = dalList!.OrderItem.GetAll(item => item?.OrderID == readInt);
                         foreach (OrderItem? ordItem in orderItems)
                             Console.WriteLine(ordItem);
                         break;
@@ -321,7 +321,7 @@ namespace DalTest
                         int prodId;
                         readString = Console.ReadLine();
                         int.TryParse(readString, out prodId);
-                        orderItem = dalList!.OrderItem.GetByCondition(item=>item?.OrderID==orderId&&item?.ProductID==prodId);
+                        orderItem = dalList!.OrderItem.GetByCondition(item => item?.OrderID == orderId && item?.ProductID == prodId);
                         Console.WriteLine(orderItem);
                         break;
                     default:
@@ -333,13 +333,13 @@ namespace DalTest
                 Console.WriteLine(ex.Message);
             }
         }
-            /// <summary>
-            /// The main program
-            /// </summary>
-            /// <param name="args"></param>
-            public static void Main(string[] args)
+        /// <summary>
+        /// The main program
+        /// </summary>
+        /// <param name="args"></param>
+        public static void Main(string[] args)
         {
-           
+
 
             ManagementProgram managementProgram;
             Console.WriteLine("Shop menu: \n 0-exit \n 1-product \n 2- order\n 3- order item .");

@@ -15,14 +15,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!--<Style TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#FFD62899" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
-
         <DataTemplate  x:Key="MyDataTemplate" >
             <Grid >
                 <Grid.RowDefinitions>

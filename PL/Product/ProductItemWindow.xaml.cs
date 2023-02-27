@@ -50,7 +50,7 @@ namespace PL.Product
             DependencyProperty.Register("MaxValue", typeof(int), typeof(Window), new PropertyMetadata(0));
 
 
-        public ProductItemWindow(int id, BO.Cart? cart,bool isRegisted)
+        public ProductItemWindow(int id, BO.Cart? cart, bool isRegisted)
         {
             ProductItemData = bl.Product.GetProductByIdForCustomer(id);
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
@@ -58,7 +58,6 @@ namespace PL.Product
             InitializeComponent();
             this.cart = cart;
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
-            //MinValue = 0;
             Value = ProductItemData.Amount;
             this.isRegisted = isRegisted;
 
@@ -67,29 +66,29 @@ namespace PL.Product
 
         private void add_to_cart_Click(object sender, RoutedEventArgs e)
         {
-                    try
-                    {
-                        cart = bl.Cart.AddProductToCart(cart!, ProductItemData.ID, Value,isRegisted);
-                        CatalogWindow catalog = new(cart,(int)cart.UserID!,isRegisted);
+            try
+            {
+                cart = bl.Cart.AddProductToCart(cart!, ProductItemData.ID, Value, isRegisted);
+                CatalogWindow catalog = new(cart, (int)cart.UserID!, isRegisted);
                 catalog.Show();
-                        Close();
-                    }
-                    catch (BO.BLDoesNotExistException ex)
-                    {
-                        MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    catch (BO.BLImpossibleActionException ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    catch (BO.BLInvalidInputException ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                Close();
+            }
+            catch (BO.BLDoesNotExistException ex)
+            {
+                MessageBox.Show(ex.InnerException?.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLImpossibleActionException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.BLInvalidInputException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
             ProductItemData.Amount = product == null ? 0 : product.Amount;
@@ -99,7 +98,7 @@ namespace PL.Product
         {
             try
             {
-                bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value,isRegisted);
+                bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value, isRegisted);
                 CatalogWindow catalog = new(cart, (int)cart?.UserID!, isRegisted);
                 catalog.Show();
                 Close();
@@ -125,8 +124,8 @@ namespace PL.Product
         {
             if (ProductItemData.Amount != 0)
             {
-                cart = bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, 0,isRegisted);
-                CatalogWindow catalog = new(cart,(int)cart?.UserID!, isRegisted);
+                cart = bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, 0, isRegisted);
+                CatalogWindow catalog = new(cart, (int)cart?.UserID!, isRegisted);
                 catalog.Show();
                 Close();
             }
@@ -156,7 +155,7 @@ namespace PL.Product
 
         private void showCartButton_Click(object sender, RoutedEventArgs e)
         {
-            CartWindow? cartWindow = new(cart!,isRegisted);
+            CartWindow? cartWindow = new(cart!, isRegisted);
             cartWindow.Show();
             Close();
         }

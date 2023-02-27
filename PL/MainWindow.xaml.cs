@@ -63,7 +63,7 @@ namespace PL
 
         private void simultorBtn_Click(object sender, RoutedEventArgs e)
         {
-            new SimulatorWindow(bl).Show();
+            //new SimulatorWindow(bl).Show();
         }
 
     }
