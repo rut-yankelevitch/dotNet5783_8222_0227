@@ -17,36 +17,12 @@
     <Image>..\img\137688.jpg</Image>
   </Product>
   <Product>
-    <ID>852963</ID>
-    <Name>Bosch toaster</Name>
-    <Category>CofeeMachine</Category>
-    <Price>204</Price>
-    <InStock>28</InStock>
-    <Image>..\img\175672.jpg</Image>
-  </Product>
-  <Product>
-    <ID>458963</ID>
-    <Name>Bosch iron</Name>
-    <Category>Toaster</Category>
-    <Price>206</Price>
-    <InStock>84</InStock>
-    <Image>..\img\201845.jpg</Image>
-  </Product>
-  <Product>
     <ID>745698</ID>
     <Name>elextrolux blender</Name>
     <Category>Iron</Category>
     <Price>208</Price>
     <InStock>128</InStock>
     <Image>..\img\175672.jpg</Image>
-  </Product>
-  <Product>
-    <ID>147854</ID>
-    <Name>braun blender</Name>
-    <Category>Iron</Category>
-    <Price>209</Price>
-    <InStock>117</InStock>
-    <Image>..\img\223264.jpg</Image>
   </Product>
   <Product>
     <ID>147985</ID>
@@ -95,5 +71,29 @@
     <Price>207</Price>
     <InStock>19</InStock>
     <Image>..\img\137688.jpg</Image>
+  </Product>
+  <Product>
+    <ID>852963</ID>
+    <Name>Bosch toaster</Name>
+    <Category>CofeeMachine</Category>
+    <Price>204</Price>
+    <InStock>27</InStock>
+    <Image>..\img\175672.jpg</Image>
+  </Product>
+  <Product>
+    <ID>458963</ID>
+    <Name>Bosch iron</Name>
+    <Category>Toaster</Category>
+    <Price>206</Price>
+    <InStock>82</InStock>
+    <Image>..\img\201845.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147854</ID>
+    <Name>braun blender</Name>
+    <Category>Iron</Category>
+    <Price>209</Price>
+    <InStock>116</InStock>
+    <Image>..\img\223264.jpg</Image>
   </Product>
 </ArrayOfProduct>
