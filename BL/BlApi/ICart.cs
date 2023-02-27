@@ -30,7 +30,7 @@ namespace BlApi
         /// <param name="cart"></param>
         public void MakeOrder(Cart cart, bool isRegistered);
 
-        public Cart GetCart(int userId);
+        public Cart GetCart(int? userId);
 
 
     }

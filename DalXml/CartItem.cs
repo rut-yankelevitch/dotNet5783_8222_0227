@@ -20,7 +20,8 @@ public class CartItem : ICartItem
 
         if (listCartItems.FirstOrDefault(cItem => cItem?.ID == cartItem.ID) != null)
             throw new DO.DalAlreadyExistException(cartItem.ID, "CartItem");
-        cartItem.ID = (int)((listCartItems.Last()==null)? (listCartItems.Last()?.ID)+1!:1)!;
+        cartItem.ID = XMLTools.getNextID(@"NextCartItemId");
+
         listCartItems.Add(cartItem);
         XMLTools.SaveListToXMLSerializer(listCartItems, s_cartItem);
         return cartItem.ID;

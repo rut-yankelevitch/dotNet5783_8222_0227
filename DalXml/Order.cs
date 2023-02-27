@@ -66,7 +66,8 @@ internal class Order : IOrder
         
         if (listOrders.FirstOrDefault(ord => ord?.ID == order.ID) != null)
             throw new DO.DalAlreadyExistException(order.ID, "Order");
-        order.ID = (int)((listOrders.Last()?.ID) + 1)!;
+        order.ID = XMLTools.getNextID(@"NextorderID");
+
         listOrders.Add(order);
         XMLTools.SaveListToXMLSerializer(listOrders, s_order);
         return order.ID;

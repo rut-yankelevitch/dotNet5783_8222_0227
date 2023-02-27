@@ -16,8 +16,6 @@ internal class Cart : ICart
     /// <exception cref="BO.BLDoesNotExistException"></exception>
     public BO.Cart AddProductToCart(BO.Cart cart, int idProduct, int amount, bool isRegistered = false)
     {
-        if (isRegistered) addToCartDal(cart, idProduct);
-
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem1 = new BO.OrderItem();
         if (amount == 0)
@@ -42,6 +40,7 @@ internal class Cart : ICart
         orderItem1.TotalPrice = orderItem1.Price * orderItem1.Amount;
         cart.Items?.Add(orderItem1);
         cart.TotalPrice += orderItem1.TotalPrice;
+        if (isRegistered) addToCartDal(cart, idProduct,amount);
         return cart;
     }
 
@@ -59,8 +58,6 @@ internal class Cart : ICart
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productId, int amount, bool isRegistered = false)
     {
-        if (isRegistered)
-            updateAmountDal(cart, productId, amount);
 
         DO.Product product;
         if (cart.Items == null)
@@ -80,8 +77,8 @@ internal class Cart : ICart
         if (amount == 0)
         {
             cart.Items.Remove(result);
-            return cart;
         }
+
         else
         {
             var cartItems = from item in cart.Items
@@ -97,6 +94,8 @@ internal class Cart : ICart
                             };
             cart.Items = cartItems.ToList();
         }
+        if (isRegistered)
+            updateAmountDal(cart, productId, amount);
         return cart;
     }
 
@@ -112,84 +111,84 @@ internal class Cart : ICart
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
     public void MakeOrder(BO.Cart cart , bool isRegistered = false)
     {
-        if (isRegistered)
-            confirmOrderDal(cart);
-
+        lock (dal)
+        {
         int id;
         if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")
             throw new BLInvalidInputException("Invalid details");
 
         if (cart?.Items?.Count == 0)
             throw new BLImpossibleActionException("There are no items in the cart.");
+            if (isRegistered)
+                confirmOrderDal(cart);
+            try
+            {
+                id = dal.Order.Add(
+                        new DO.Order
+                        {
+                            CustomerName = cart?.CustomerName,
+                            CustomerEmail = cart?.CustomerEmail,
+                            CustomerAdress = cart?.CustomerAddress,
+                            OrderDate = DateTime.Now,
+                            ShipDate = null,
+                            DeliveryDate = null
+                        });
+            }
+            catch (DO.DalDoesNotExistException ex)
+            {
+                throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
+            }
 
-        try
-        {
-            id = dal.Order.Add(
-                    new DO.Order
-                    {
-                        CustomerName = cart?.CustomerName,
-                        CustomerEmail = cart?.CustomerEmail,
-                        CustomerAdress = cart?.CustomerAddress,
-                        OrderDate = DateTime.Now,
-                        ShipDate = null,
-                        DeliveryDate = null
-                    });
-        }
-        catch (DO.DalDoesNotExistException ex)
-        {
-            throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);
-        }
+            IEnumerable<DO.Product?> products = dal.Product.GetAll();
 
-        IEnumerable<DO.Product?> products = dal.Product.GetAll();
-
-        //return a list of tuples that everyone ave a orderItem to add and a updated product
-        var result = from item in cart?.Items
-                     join prod in products on item.ProductID equals prod?.ID into empdept
-                     from ed in empdept.DefaultIfEmpty()
-                     let product = ed ?? throw new BLImpossibleActionException("product does not exist")
-                     let orderItem = item!
-                     select new
-                     {
-                         orderItem = new DO.OrderItem
+            //return a list of tuples that everyone ave a orderItem to add and a updated product
+            var result = from item in cart?.Items
+                         join prod in products on item.ProductID equals prod?.ID into empdept
+                         from ed in empdept.DefaultIfEmpty()
+                         let product = ed ?? throw new BLImpossibleActionException("product does not exist")
+                         let orderItem = item!
+                         select new
                          {
-                             OrderID = id,
-                             ProductID = item.ProductID,
-                             Amount = item.Amount > 0 ? item.Amount : throw new BLImpossibleActionException("invalid amount"),
-                             Price = item.Price
-                         },
-                         prod = new DO.Product
-                         {
-                             ID = product.ID,
-                             Price = product.Price,
-                             Category = product.Category,
-                             InStock = product.InStock >= item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
-                             Name = product.Name,
-                             Image = product.Image
-                         }
-                     };
+                             orderItem = new DO.OrderItem
+                             {
+                                 OrderID = id,
+                                 ProductID = item.ProductID,
+                                 Amount = item.Amount > 0 ? item.Amount : throw new BLImpossibleActionException("invalid amount"),
+                                 Price = item.Price
+                             },
+                             prod = new DO.Product
+                             {
+                                 ID = product.ID,
+                                 Price = product.Price,
+                                 Category = product.Category,
+                                 InStock = product.InStock >= item?.Amount ? product.InStock - item?.Amount ?? 0 : throw new BLImpossibleActionException("amount not in stock "),
+                                 Name = product.Name,
+                                 Image = product.Image
+                             }
+                         };
 
-        //for each tuple we update the product list and add a orderItem to the order Item list
-        result.ToList().ForEach(res =>
-        {
-            try { dal.Product.Update(res.prod); }
-            catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
+            //for each tuple we update the product list and add a orderItem to the order Item list
+            result.ToList().ForEach(res =>
+            {
+                try { dal.Product.Update(res.prod); }
+                catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
 
-            try { dal.OrderItem.Add(res.orderItem); }
-            catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
-        });
+                try { dal.OrderItem.Add(res.orderItem); }
+                catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
+            });
+        }
     }
 
-    public BO.Cart GetCart(int userId)
+    public BO.Cart GetCart(int? userId)
     {
         BO.Cart cart = new();
         try
         {
-            if (userId < 0) throw new BLInvalidInputException("invalid id");
-
             IEnumerable<DO.CartItem?> cartItems = dal.CartItem.GetAll(o => o?.UserID == userId);
             List<BO.OrderItem> orderItems = new();
             DO.Product pro = new();
             BO.OrderItem oItem = new();
+            DO.User user = new(); ;
             foreach (var item in cartItems)
             {
                 oItem = Tools.cast<BO.OrderItem, DO.CartItem>((DO.CartItem)item!);
@@ -198,13 +197,19 @@ internal class Cart : ICart
                 oItem.Price = pro.Price;
                 oItem.TotalPrice = oItem.Price * oItem.Amount;
                 orderItems.Add(oItem);
+                cart.TotalPrice += oItem.TotalPrice;
             }
-            //IEnumerable<DO.OrderItem> orderItems = from item in cartItems
-            //                                       select dal.OrderItem.Get(o => o.ProductID == item.ProductID);
-            //IEnumerable<BO.OrderItem> BOItems = from item in orderItems
-            //                                    select BlUtils.cast<BO.OrderItem, DO.Product>(item);
-            cart.UserID = userId;
+            try
+            {
+               user= dal.User.GetByCondition(us => us?.ID == userId);
+            }
+            catch(DO.DalDoesNotExistException ex)
+            {throw new BLDoesNotExistException($"{ex.EntityName} dosent exsit", ex);}
+            cart.UserID = user.ID;
             cart.Items = orderItems!;
+            cart.CustomerName = user.Name;
+            cart.CustomerEmail = user.Email;
+            cart.CustomerAddress = user.Address;
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -214,11 +219,11 @@ internal class Cart : ICart
     }
 
 
-    private void addToCartDal(BO.Cart? cart, int productID)
+    private void addToCartDal(BO.Cart? cart, int productID,int amount)
     {
         DO.CartItem cartItem = new();
         cartItem.ProductID = productID;
-        cartItem.Amount = 1;
+        cartItem.Amount = amount;
         cartItem.UserID = cart?.UserID ?? throw new BO.BLImpossibleActionException("null id");
         dal.CartItem.Add(cartItem);
     }
@@ -232,13 +237,15 @@ internal class Cart : ICart
 
     private void updateAmountDal(BO.Cart cart, int productID, int newAmount)
     {
-        DO.CartItem cartItem = new();
-        cartItem.ProductID = productID;
-        cartItem.Amount = newAmount;
-        cartItem.ID = dal.CartItem.GetByCondition(c => c?.ProductID == productID && c?.UserID == cart.UserID).ID;
-        cartItem.UserID = cart?.UserID ?? throw new BO.BLImpossibleActionException("null id");
-        dal.CartItem.Update(cartItem);
+        DO.CartItem cartItem = dal.CartItem.GetByCondition(c => c?.ProductID == productID && c?.UserID == cart.UserID);
+        if (newAmount == 0)
+        {
+            dal.CartItem.Delete(cartItem.ID);
+        }
+        else
+        {
+            cartItem.Amount = newAmount;
+            dal.CartItem.Update(cartItem);
+        }
     }
-
-
 }

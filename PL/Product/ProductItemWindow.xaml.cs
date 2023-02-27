@@ -14,6 +14,7 @@ namespace PL.Product
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
         BO.Cart? cart;
+        bool isRegisted;
         public BO.ProductItem ProductItemData
         {
             get { return (BO.ProductItem)GetValue(ProductItemDataProperty); }
@@ -49,7 +50,7 @@ namespace PL.Product
             DependencyProperty.Register("MaxValue", typeof(int), typeof(Window), new PropertyMetadata(0));
 
 
-        public ProductItemWindow(int id, BO.Cart? cart)
+        public ProductItemWindow(int id, BO.Cart? cart,bool isRegisted)
         {
             ProductItemData = bl.Product.GetProductByIdForCustomer(id);
             var product = cart!.Items!.FirstOrDefault(item => item!.ProductID == ProductItemData!.ID);
@@ -59,6 +60,8 @@ namespace PL.Product
             MaxValue = bl.Product.GetProductByIdForManager(id).InStock;
             //MinValue = 0;
             Value = ProductItemData.Amount;
+            this.isRegisted = isRegisted;
+
         }
 
 
@@ -66,9 +69,9 @@ namespace PL.Product
         {
                     try
                     {
-                        cart = bl.cart.AddProductToCart(cart!, ProductItemData.ID, Value);
-                        CatalogWindow catalog = new(cart);
-                        catalog.Show();
+                        cart = bl.Cart.AddProductToCart(cart!, ProductItemData.ID, Value,isRegisted);
+                        CatalogWindow catalog = new(cart,(int)cart.UserID!,isRegisted);
+                catalog.Show();
                         Close();
                     }
                     catch (BO.BLDoesNotExistException ex)
@@ -96,8 +99,8 @@ namespace PL.Product
         {
             try
             {
-                bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value);
-                CatalogWindow catalog = new(cart);
+                bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, Value,isRegisted);
+                CatalogWindow catalog = new(cart, (int)cart?.UserID!, isRegisted);
                 catalog.Show();
                 Close();
             }
@@ -122,8 +125,8 @@ namespace PL.Product
         {
             if (ProductItemData.Amount != 0)
             {
-                cart = bl.cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, 0);
-                CatalogWindow catalog = new(cart);
+                cart = bl.Cart.UpdateProductAmountInCart(cart!, ProductItemData.ID, 0,isRegisted);
+                CatalogWindow catalog = new(cart,(int)cart?.UserID!, isRegisted);
                 catalog.Show();
                 Close();
             }
@@ -153,15 +156,15 @@ namespace PL.Product
 
         private void showCartButton_Click(object sender, RoutedEventArgs e)
         {
-            CartWindow? productItemWindow = new(cart!);
-            productItemWindow.Show();
+            CartWindow? cartWindow = new(cart!,isRegisted);
+            cartWindow.Show();
             Close();
         }
 
 
         private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new(cart);
+            CatalogWindow catalog = new(cart, (int)cart?.UserID!, isRegisted);
             catalog.Show();
             Close();
         }

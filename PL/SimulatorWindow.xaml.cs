@@ -141,7 +141,6 @@ public partial class SimulatorWindow : Window
             Dispatcher.BeginInvoke(stop, sender, e);
         else
         {
-
             this.Close();
         }
     }

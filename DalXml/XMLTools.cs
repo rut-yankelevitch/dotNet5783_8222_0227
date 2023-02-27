@@ -45,6 +45,31 @@ static class XMLTools
         }
     }
 
+
+    public static int getNextID(string element)
+    {
+        string filePath = $"{s_dir}config.xml";
+
+        if (!File.Exists(filePath))
+            throw new Exception($"fail to load xml file: {filePath}");
+
+        XElement rootElem = XElement.Load(filePath);
+        XElement elem = rootElem.Element(element) ?? throw new Exception($"could not find {element} element on {filePath}");
+
+        int id;
+
+        if (!int.TryParse(elem.Value, out id))
+            throw new Exception($"{element} value was invalid");
+
+        elem.Value = (id + 1).ToString();
+
+        try { rootElem.Save(filePath); }
+        catch (Exception ex) { throw new Exception($"fail to save xml file: {filePath}", ex); }
+
+        return id;
+    }
+
+
     public static XElement LoadListFromXMLElement(string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -65,7 +90,6 @@ static class XMLTools
     #endregion
 
     #region SaveLoadWithXMLSerializer
-    //static readonly bool s_writing = false;
     public static void SaveListToXMLSerializer<T>(List<T?> list, string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";

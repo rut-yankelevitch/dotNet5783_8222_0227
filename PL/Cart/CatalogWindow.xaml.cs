@@ -20,6 +20,7 @@ namespace PL.Cart
         public Category Category { get; set; }
 
         public BO.Cart MyCartInCatalog;
+        bool isRegisted;
 
         public ObservableCollection<BO.ProductItem> ProductsItem
         {
@@ -32,20 +33,29 @@ namespace PL.Cart
             DependencyProperty.Register("ProductsItem", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
 
 
-        public CatalogWindow()
-        {
-            InitializeComponent();
-            MyCartInCatalog = new() { Items = new() };
-            Category = Category.None;
-            IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-            ProductsItem = (temp == null) ? new() : new(temp!);
-        }
+        //public CatalogWindow()
+        //{
+        //    InitializeComponent();
+        //    MyCartInCatalog = new() { Items = new() };
+        //    Category = Category.None;
+        //    IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
+        //    ProductsItem = (temp == null) ? new() : new(temp!);
+        //}
 
 
-        public CatalogWindow(BO.Cart? cart)
+        public CatalogWindow(BO.Cart? cart=null,int userId= 0, bool isRegisted=false)
         {
             InitializeComponent();
-            MyCartInCatalog = cart!;
+            if (cart == null)
+            {
+                MyCartInCatalog = new() { Items = new() };
+            }
+            else
+            {
+                MyCartInCatalog = cart!;
+            }
+            this.isRegisted = isRegisted;
+            MyCartInCatalog.UserID = userId;
             Category = Category.None;
             IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
             ProductsItem = (temp == null) ? new() : new(temp!);
@@ -82,7 +92,7 @@ namespace PL.Cart
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem? productItem = ((BO.ProductItem)((ListView)sender).SelectedItem);
-            ProductItemWindow? productItemWindow = new(productItem.ID, MyCartInCatalog);
+            ProductItemWindow? productItemWindow = new(productItem.ID, MyCartInCatalog,isRegisted);
             productItemWindow.Show();
             Close();
         }
@@ -90,7 +100,7 @@ namespace PL.Cart
 
         private void showCartButton_Click(Object sender, RoutedEventArgs e)
         {
-            CartWindow? productItemWindow = new(MyCartInCatalog!);
+            CartWindow? productItemWindow = new(MyCartInCatalog!,isRegisted);
             productItemWindow.Show();
             Close();
         }

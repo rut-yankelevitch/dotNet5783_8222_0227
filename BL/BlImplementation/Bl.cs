@@ -19,6 +19,14 @@ namespace BlImplementation
         /// <summary>
         /// A method that returns the cart entity
         /// </summary>
-        public ICart cart {get;}= new BlImplementation.Cart();
+        public ICart Cart {get;}= new BlImplementation.Cart();
+
+        /// <summary>
+        /// A method that returns the user entity
+        /// </summary>
+        public IUser User { get; } = new BlImplementation.User();
+
+
+
     }
 }

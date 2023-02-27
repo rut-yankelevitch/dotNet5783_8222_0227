@@ -184,10 +184,10 @@ internal class Order : BlApi.IOrder
             BO.OrderItem orderItem = new BO.OrderItem();
             DO.OrderItem item = new DO.OrderItem();
             DO.Order order = new DO.Order();
-            BO.Order BOOrder= new BO.Order();
+            BO.Order BOOrder = new BO.Order();
 
             try { order = dal.Order.GetByCondition(order2 => order2?.ID == idOrder); }
-            catch (DO.DalDoesNotExistException ex){throw new BO.BLDoesNotExistException("order does not exist", ex);}
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("order does not exist", ex); }
 
             if (order.ShipDate < DateTime.Now)
             {
@@ -195,7 +195,7 @@ internal class Order : BlApi.IOrder
             }
 
             try { item = dal.OrderItem.GetByCondition(item => (item?.OrderID == idOrder && item?.ProductID == idProduct)); }
-            catch (DO.DalDoesNotExistException ex){  throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex);}
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex); }
 
             try { product = dal.Product.GetByCondition(item2 => item2?.ID == item.ProductID); }
             catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("product does not exist", ex); }
@@ -208,7 +208,7 @@ internal class Order : BlApi.IOrder
 
             product.InStock += item.Amount;
             item.Amount = amount;
-
+            lock (dal) { 
             try { dal.OrderItem.Update(item); }
             catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException($"{ex.EntityName}  are does not exist", ex); }
             product.InStock -= amount;
@@ -223,12 +223,13 @@ internal class Order : BlApi.IOrder
 
             BOOrder = returnBOOrder(order);
 
-                if (BOOrder?.Items!.Count == 0)
-                {
+            if (BOOrder?.Items!.Count == 0)
+            {
                 try { dal.Order.Delete(idOrder); }
                 catch (DO.DalDoesNotExistException ex) { throw new BO.BLDoesNotExistException("id does not exist", ex); }
                 return null;
-                }
+            }
+        }
 
             return BOOrder; 
         }

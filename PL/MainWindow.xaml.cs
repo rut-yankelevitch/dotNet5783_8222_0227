@@ -5,6 +5,7 @@ using PL.Cart;
 using PL.Product;
 using System;
 using System.Windows.Media.Imaging;
+using PL.User;
 
 namespace PL
 {
@@ -48,13 +49,22 @@ namespace PL
         }
         private void ShowCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new ();
-            catalog.Show();
+                if (MessageBox.Show("Do you want to sign?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    new SignInWindow().Show();
+                }
+                else
+                {
+                CatalogWindow catalog = new();
+                catalog.Show();
+            }
+
         }
 
         private void simultorBtn_Click(object sender, RoutedEventArgs e)
         {
             new SimulatorWindow(bl).Show();
         }
+
     }
 }

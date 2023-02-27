@@ -13,7 +13,7 @@ public class User : IUser
 
         if (listUsers.FirstOrDefault(use => use?.ID == user.ID) != null)
             throw new DO.DalAlreadyExistException(user.ID, "User");
-        //user.ID = (int)((listUsers.Last() == null) ? (listUsers.Last()?.ID) + 1! : 1)!;
+        user.ID =XMLTools.getNextID(@"NextUserId");
         listUsers.Add(user);
         XMLTools.SaveListToXMLSerializer(listUsers, s_user);
         return user.ID;

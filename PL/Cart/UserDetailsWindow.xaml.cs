@@ -11,6 +11,7 @@ namespace PL
     {
 
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
+        bool isRegisted;
 
         public BO.Cart MyCartConfirm
         {
@@ -23,16 +24,17 @@ namespace PL
             DependencyProperty.Register("MyCartConfirm", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
-        public UserDetailsWindow(BO.Cart cart)
+        public UserDetailsWindow(BO.Cart cart,bool isRegisted)
         {
-            InitializeComponent();
             MyCartConfirm = cart;
+            InitializeComponent();
+            this.isRegisted=isRegisted;
         }
 
 
         private void return_Click(object sender, RoutedEventArgs e)
         {
-            CartWindow cart = new(MyCartConfirm);
+            CartWindow cart = new(MyCartConfirm,isRegisted);
             cart.Show();
             Close();
         }
@@ -43,7 +45,7 @@ namespace PL
             try
             {
                 checkInvalid();
-                bl.cart.MakeOrder(MyCartConfirm);
+                bl.Cart.MakeOrder(MyCartConfirm,isRegisted);
                 Close();
             }
             catch (FormatException)

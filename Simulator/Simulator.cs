@@ -18,7 +18,7 @@ public static class Simulator
     private static BO.Order order = new();
     private static Thread? myThread { get; set; }
 
-    private static bool doWork = true;
+    private volatile static bool doWork = true;
 
     private static Stopwatch? myStopWatch { get; set; }
 

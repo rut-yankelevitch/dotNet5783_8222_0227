@@ -31,6 +31,11 @@ namespace BO
     }
 
 
+
+
+
+
+
     /// <summary>
     /// Throws class for mistake update
     /// </summary>
@@ -65,5 +70,15 @@ namespace BO
     {
         public override string Message =>
                         "No properties found in object";
+    }
+
+    /// <summary>
+    /// Invalid Password
+    /// </summary>
+
+    public class BLInvalidPassword : Exception
+    {
+        public override string Message =>
+                        "worng password";
     }
 }

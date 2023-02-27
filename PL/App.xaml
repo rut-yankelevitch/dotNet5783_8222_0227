@@ -34,6 +34,9 @@
         <convert:ConvertShipDateToTrue x:Key="ConvertShipDateToTrue"/>
         <convert:ConvertFalseToNotInStock x:Key="ConvertFalseToNotInStock"/>
         <convert:FontSizeConverter x:Key="FontSizeConverter"/>
+        <convert:ConvertTrueToHidden x:Key="ConvertTrueToHidden"/>
+        <convert:ConvertTrueToVisible x:Key="ConvertTrueToVisible"/>
+        <convert:ConvertBoolToOposite x:Key="ConvertBoolToOposite"/>
 
 
 

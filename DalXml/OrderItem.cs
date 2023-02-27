@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement IOrderItem with XML Serializer
 //////////////////////////////////////////
 /// <summary>
 /// A department that performs operations:
@@ -77,7 +77,8 @@ internal class OrderItem : IOrderItem
 
         if (productList.FirstOrDefault(product => product?.ID == orderItem.ProductID) == null)
             throw new DalDoesNotExistException(orderItem.ProductID, "product");
-        orderItem.ID = (int)((orderItemsList.Last()?.ID) + 1)!;
+        orderItem.ID = XMLTools.getNextID(@"NextorderItemID");
+
         orderItemsList.Add(orderItem);
         XMLTools.SaveListToXMLSerializer(orderItemsList, s_orderItem);
         return orderItem.ID;

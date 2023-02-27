@@ -19,6 +19,12 @@ namespace BlApi
         /// <summary>
         /// A property that returns the ICart entity
         /// </summary>
-        public ICart cart { get; }
+        public ICart Cart { get; }
+
+        /// <summary>
+        /// A property that returns the IUser entity
+        /// </summary>
+        public IUser User { get; }
+
     }
 }

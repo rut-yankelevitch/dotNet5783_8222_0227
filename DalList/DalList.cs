@@ -28,6 +28,8 @@ namespace Dal
         public IOrder Order { get;} = new Dal.OrderDal();
         public IProduct Product { get;}= new Dal.ProductDal();
         public IOrderItem OrderItem {get;}= new Dal.OrderItemDal();
+        public IUser User { get; } = new Dal.UserDal();
+        public ICartItem CartItem { get; } = new Dal.CartItemDal();
 
     }
 }

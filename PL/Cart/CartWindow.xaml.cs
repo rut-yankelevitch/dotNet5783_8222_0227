@@ -12,7 +12,8 @@ namespace PL.Cart
     public partial class CartWindow : Window
     {
         public BO.Cart MyCart;
-
+        bool isRegisted;
+        int userId;
         private readonly BlApi.IBl bl = BlApi.Factory.Get();
 
         public ObservableCollection<BO.OrderItem?> CartItems
@@ -24,7 +25,6 @@ namespace PL.Cart
         // Using a DependencyProperty as the backing store for ProductsItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CartItemsProperty =
             DependencyProperty.Register("CartItems", typeof(ObservableCollection<BO.OrderItem?>), typeof(Window), new PropertyMetadata(null));
-
 
 
         public double TotalPrice
@@ -39,10 +39,12 @@ namespace PL.Cart
 
 
 
-        public CartWindow(BO.Cart cart)
+        public CartWindow(BO.Cart cart,bool isRegister)
         {
             InitializeComponent();
             MyCart = cart;
+            userId = (int)MyCart.UserID!;
+            this.isRegisted = isRegister;
             IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
             CartItems = (temp == null) ? new() : new(temp!);
             TotalPrice = (double)MyCart?.TotalPrice!;
@@ -51,7 +53,7 @@ namespace PL.Cart
 
         private void confirmOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            new UserDetailsWindow(MyCart).Show();
+            new UserDetailsWindow(MyCart,isRegisted).Show();
             Close();
         }
 
@@ -61,7 +63,7 @@ namespace PL.Cart
             int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
             try
             {
-                MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount + 1);
+                MyCart = bl.Cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount + 1,isRegisted);
                 IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                 CartItems = (temp == null) ? new() : new(temp!);
                 TotalPrice = (double)MyCart?.TotalPrice!;
@@ -89,7 +91,7 @@ namespace PL.Cart
                 int amount = ((BO.OrderItem)((Button)sender).DataContext).Amount;
                 if (amount != 1)
                 {
-                    MyCart = bl.cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount - 1);
+                    MyCart = bl.Cart.UpdateProductAmountInCart(MyCart, id, ((BO.OrderItem)((Button)sender).DataContext).Amount - 1,isRegisted);
                     IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                     CartItems = (temp == null) ? new() : new(temp!);
                     TotalPrice = (double)MyCart.TotalPrice;
@@ -113,7 +115,7 @@ namespace PL.Cart
 
         private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalog = new(MyCart);
+            CatalogWindow catalog = new(MyCart,userId,isRegisted);
             catalog.Show();
             Close();
         }
@@ -124,7 +126,7 @@ namespace PL.Cart
             try
             {
                 int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
-                bl.cart.UpdateProductAmountInCart(MyCart, id, 0);
+                bl.Cart.UpdateProductAmountInCart(MyCart, id, 0,isRegisted);
                 IEnumerable<BO.OrderItem?>? temp = MyCart.Items;
                 CartItems = (temp == null) ? new() : new(temp!);
                 TotalPrice = (double)MyCart.TotalPrice;

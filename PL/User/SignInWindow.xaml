@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.User.SignInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.User"
+        mc:Ignorable="d"
+         DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
+        Title="SignInWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Login" Name="LoginBtn" HorizontalAlignment="Left" Height="45" Margin="305,270,0,0" VerticalAlignment="Top" Width="162" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToHidden}}" Click="login_Click"/>
+        <Button Content="sign In " Name="signIn_btn" HorizontalAlignment="Left" Height="45" Margin="305,270,0,0" VerticalAlignment="Top" Width="162" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToVisible}}" Click="signIn_Click"/>
+
+        <Label Content="Name" HorizontalAlignment="Left" Height="33" Margin="229,99,0,0" VerticalAlignment="Top" Width="44" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToVisible}}" />
+        <TextBox HorizontalAlignment="Left" Height="33" Margin="300,99,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="167" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToVisible}}" Text="{Binding Path=User.Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+        <Label Content="Email" HorizontalAlignment="Left" Height="32" Margin="229,138,0,0" VerticalAlignment="Top" Width="44" RenderTransformOrigin="2.37,0.021"/>
+        <TextBox HorizontalAlignment="Left" Height="33" Margin="300,137,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="167"
+                 Text="{Binding Path=User.Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+        <Label Content="password" HorizontalAlignment="Left" Height="33" Margin="229,175,0,0" VerticalAlignment="Top" Width="66"/>
+        <TextBox HorizontalAlignment="Left" Height="33" Margin="300,175,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="167"
+                 Text="{Binding Path=User.Password, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+        <Label Content="address" HorizontalAlignment="Left" Height="33" Margin="229,217,0,0" VerticalAlignment="Top" Width="66" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToVisible}}" />
+        <TextBox HorizontalAlignment="Left" Height="33" Margin="300,217,0,0" Visibility="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertTrueToVisible}}" Text="{Binding Path=User.Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap"  VerticalAlignment="Top" Width="167"/>
+
+        <Button Content="login" Name="loginBtn" HorizontalAlignment="Left" Height="25" Margin="382,57,0,0" VerticalAlignment="Top" Width="83" IsEnabled="{Binding Path=IsLogin, Mode=TwoWay}" Click="ToLogin_Click"/>
+        <Button Content="sign in " Name="signInBtn" HorizontalAlignment="Left" Height="25" Margin="300,57,0,0" VerticalAlignment="Top" Width="83" IsEnabled="{Binding Path=IsLogin, Mode=TwoWay, Converter={StaticResource ConvertBoolToOposite}}" Click="ToSignIn_Click"/>
+
+    </Grid>
+</Window>

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<orderID>1</orderID>
-	<orderItemID>1</orderItemID>
+  <NextorderID>36</NextorderID>
+  <NextorderItemID>49</NextorderItemID>
+  <NextUserId>5</NextUserId>
+  <NextCartItemId>25</NextCartItemId>
 </config>
