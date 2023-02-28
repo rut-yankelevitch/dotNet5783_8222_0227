@@ -1,10 +1,8 @@
 ﻿using System.Data;
-using System.Net;
 using System.Reflection;
-using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
 using BO;
 using DO;
-using static System.Net.Mime.MediaTypeNames;
 using IProduct = BlApi.IProduct;
 namespace BlImplementation;
 
@@ -14,18 +12,26 @@ namespace BlImplementation;
 internal class Product : IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get();
-    const int amount = 8;
+
+
     /// <summary>
     /// Definition of a function that returns a list of product by category for the manager
     /// </summary>
     /// <param name="category"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetProductListForManagerByCategory(BO.Category? category)
     {
         return GetProductListForManager(BO.Filter.Filter_By_Category, category);
     }
 
 
+    /// <summary>
+    /// get the popular product by category
+    /// </summary>
+    /// <returns>BO.ProductItem</returns>
+    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetPopularProductList()
     {
         IEnumerable<DO.OrderItem?> orderItems;
@@ -66,10 +72,13 @@ internal class Product : IProduct
             throw new BO.BLDoesNotExistException("product does not exist", ex);
         }
     }
+
+
     /// <summary>
     /// Definition of a function that returns the list of product for manager
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetProductListForManagerNoFilter()
     {
         return GetProductListForManager();
@@ -82,6 +91,7 @@ internal class Product : IProduct
     /// <param name="filter1"></param>
     /// <param name="filterValue"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetProductListForManager(Filter filter1 = BO.Filter.None, object? filterValue = null)
     {
         IEnumerable<DO.Product?> products;
@@ -116,6 +126,7 @@ internal class Product : IProduct
     /// <param name="id"></param>
     /// <returns>product</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetProductByIdForManager(int id)
     {
         DO.Product product;
@@ -141,6 +152,7 @@ internal class Product : IProduct
     /// <returns>product</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLAlreadyExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product AddProduct(BO.Product product)
     {
             if (product.ID < 1 || product.Name == "" || product.Price < 1 || product.InStock < 0 || (int)product.Category > 5 || (int)product.Category < 0)
@@ -168,6 +180,7 @@ internal class Product : IProduct
     /// <param name="id"></param>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteProduct(int id)
     {
         IEnumerable<DO.OrderItem?> orderItems;
@@ -197,6 +210,7 @@ internal class Product : IProduct
     /// <returns>update product</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product UpdateProduct(BO.Product product)
     {
         DO.Product previousProd;
@@ -235,6 +249,7 @@ internal class Product : IProduct
     /// <returns>copyFiles</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private string copyFiles(string sourcePath, string destinationName)
     {
         try
@@ -263,6 +278,7 @@ internal class Product : IProduct
     /// <returns>deleteFiles</returns>
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private void deleteFiles(string destinationFullNameDal)
     {
         try
@@ -275,11 +291,13 @@ internal class Product : IProduct
         }
     }
 
+
     /// <summary>
     /// Definition of a function that returns a list of product by category for the catalog
     /// </summary>
     /// <param name="category"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetProducItemForCatalogByCategory(BO.Category? category)
     {
         return GetProductItemForCatalog(BO.Filter.Filter_By_Category, category);
@@ -290,11 +308,11 @@ internal class Product : IProduct
     /// Definition of a function that returns the list of product for catalog
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem?> GetProductItemForCatalogNoFilter()
     {
        return GetProductItemForCatalog();
     }
-
 
 
     /// <summary>
@@ -303,6 +321,7 @@ internal class Product : IProduct
     /// <param name="filter1"></param>
     /// <param name="filterValue"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private IEnumerable<BO.ProductItem> GetProductItemForCatalog(Filter filter1 = BO.Filter.None, object? filterValue = null)
     {
         IEnumerable<DO.Product?> products;
@@ -334,13 +353,13 @@ internal class Product : IProduct
     }
 
 
-
     /// <summary>
     /// function that returns a product by id for the customer
     /// </summary>
     /// <param name="id"></param>
     /// <returns>product</returns>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetProductByIdForCustomer(int id)
     {
         BO.ProductItem productItem = new BO.ProductItem();

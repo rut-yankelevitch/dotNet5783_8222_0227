@@ -9,11 +9,21 @@ namespace PL
     /// </summary>
     public partial class Manager : Window
     {
+
+        /// <summary>
+        /// constructor
+        /// </summary>
         public Manager()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        ///  show Products window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showProductsBotton_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow productListWindow = new ProductListWindow();
@@ -22,6 +32,11 @@ namespace PL
         }
 
 
+        /// <summary>
+        /// show Orders window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showOrdersBotton_Click(object sender, RoutedEventArgs e)
         {
            ListOfOrder  listOfOrder = new ListOfOrder();

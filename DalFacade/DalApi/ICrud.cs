@@ -1,5 +1,4 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// icrud generic interface that defines functions on the data entities
 /// </summary>
 /// <typeparam name="T"></typeparam>
@@ -40,6 +39,5 @@ public interface ICrud<T>where T:struct
     /// <returns></returns>
     public T GetByCondition(Func<T?, bool> predicate);
     
-	
-
 }
+

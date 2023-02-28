@@ -37,6 +37,8 @@
         <convert:ConvertTrueToHidden x:Key="ConvertTrueToHidden"/>
         <convert:ConvertTrueToVisible x:Key="ConvertTrueToVisible"/>
         <convert:ConvertBoolToOposite x:Key="ConvertBoolToOposite"/>
+        <convert:ConvertTimeToString x:Key="ConvertTimeToString"/>
+
 
 
 

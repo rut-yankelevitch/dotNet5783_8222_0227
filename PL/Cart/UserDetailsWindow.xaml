@@ -14,8 +14,8 @@
         <TextBox x:Name="customerEmail" Text="{Binding CustomerEmail ,Mode=TwoWay}" HorizontalAlignment="Left" Height="42" Margin="246,149,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="191"/>
         <Label Content="Address" FontSize="20" HorizontalAlignment="Left" Height="43" Margin="127,217,0,0" VerticalAlignment="Top" Width="85"/>
         <TextBox x:Name="customerAddress" Text="{Binding CustomerAddress ,Mode=TwoWay}" HorizontalAlignment="Left" Height="42" Margin="246,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
-        <Button Content="➜"  Height="30" Margin="600,15,0,0" VerticalAlignment="Top" Width="111" Click="return_Click"/>
-        <Button Content="save order" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click">
+        <Button Content="➜"  Height="30" Margin="600,15,0,0" Template="{StaticResource ButtonTemplate }" VerticalAlignment="Top" Width="111" Click="return_Click"/>
+        <Button Content="save order" Template="{StaticResource ButtonTemplate }" HorizontalAlignment="Left" Height="30" Margin="299,319,0,0" VerticalAlignment="Top" Width="111" Click="saveBtn_Click">
             <Button.IsEnabled>
             <MultiBinding  Converter="{StaticResource ConvertDetailsToTrue}">
                     <Binding ElementName="customerName" Path="Text" />

@@ -6,94 +6,94 @@
     <Category>VacumCleaner</Category>
     <Price>200</Price>
     <InStock>0</InStock>
-    <Image>..\img\175672.jpg</Image>
-  </Product>
-  <Product>
-    <ID>125478</ID>
-    <Name>SAMURAI mixer</Name>
-    <Category>CofeeMachine</Category>
-    <Price>203</Price>
-    <InStock>18</InStock>
-    <Image>..\img\137688.jpg</Image>
-  </Product>
-  <Product>
-    <ID>745698</ID>
-    <Name>elextrolux blender</Name>
-    <Category>Iron</Category>
-    <Price>208</Price>
-    <InStock>128</InStock>
-    <Image>..\img\175672.jpg</Image>
-  </Product>
-  <Product>
-    <ID>147985</ID>
-    <Name>Nespresso coffee machine</Name>
-    <Category>Blender</Category>
-    <Price>210</Price>
-    <InStock>80</InStock>
-    <Image>..\img\201845.jpg</Image>
-  </Product>
-  <Product>
-    <ID>364152</ID>
-    <Name> Hemilton coffee machine</Name>
-    <Category>Blender</Category>
-    <Price>211</Price>
-    <InStock>187</InStock>
-    <Image>..\img\137688.jpg</Image>
+    <Image>..\img\666581.jpg</Image>
   </Product>
   <Product>
     <ID>858565</ID>
     <Name>Electrolux Dyson</Name>
     <Category>VacumCleaner</Category>
     <Price>201</Price>
-    <InStock>5</InStock>
-    <Image>..\img\223264.jpg</Image>
-  </Product>
-  <Product>
-    <ID>741598</ID>
-    <Name>elextrolux toaster</Name>
-    <Category>CofeeMachine</Category>
-    <Price>205</Price>
-    <InStock>59</InStock>
-    <Image>..\img\223264.jpg</Image>
-  </Product>
-  <Product>
-    <ID>747541</ID>
-    <Name>Bosch Dyson</Name>
-    <Category>Mixer</Category>
-    <Price>202</Price>
-    <InStock>6</InStock>
-    <Image>..\img\201845.jpg</Image>
-  </Product>
-  <Product>
-    <ID>458796</ID>
-    <Name>TEFAL iron</Name>
-    <Category>Toaster</Category>
-    <Price>207</Price>
-    <InStock>19</InStock>
-    <Image>..\img\137688.jpg</Image>
+    <InStock>8</InStock>
+    <Image>..\img\858565.jpg</Image>
   </Product>
   <Product>
     <ID>852963</ID>
     <Name>Bosch toaster</Name>
     <Category>CofeeMachine</Category>
     <Price>204</Price>
-    <InStock>27</InStock>
-    <Image>..\img\175672.jpg</Image>
+    <InStock>36</InStock>
+    <Image>..\img\852963.jpg</Image>
   </Product>
   <Product>
     <ID>458963</ID>
     <Name>Bosch iron</Name>
     <Category>Toaster</Category>
     <Price>206</Price>
-    <InStock>82</InStock>
-    <Image>..\img\201845.jpg</Image>
+    <InStock>108</InStock>
+    <Image>..\img\458963.jpg</Image>
+  </Product>
+  <Product>
+    <ID>458796</ID>
+    <Name>TEFAL iron</Name>
+    <Category>Toaster</Category>
+    <Price>207</Price>
+    <InStock>105</InStock>
+    <Image>..\img\458796.jpg</Image>
+  </Product>
+  <Product>
+    <ID>745698</ID>
+    <Name>elextrolux blender</Name>
+    <Category>Iron</Category>
+    <Price>208</Price>
+    <InStock>48</InStock>
+    <Image>..\img\745698.jpg</Image>
   </Product>
   <Product>
     <ID>147854</ID>
     <Name>braun blender</Name>
     <Category>Iron</Category>
     <Price>209</Price>
-    <InStock>116</InStock>
-    <Image>..\img\223264.jpg</Image>
+    <InStock>162</InStock>
+    <Image>..\img\147854.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147985</ID>
+    <Name>Nespresso coffee machine</Name>
+    <Category>Blender</Category>
+    <Price>210</Price>
+    <InStock>10</InStock>
+    <Image>..\img\147985.jpg</Image>
+  </Product>
+  <Product>
+    <ID>364152</ID>
+    <Name> Hemilton coffee machine</Name>
+    <Category>Blender</Category>
+    <Price>211</Price>
+    <InStock>132</InStock>
+    <Image>..\img\364152.jpg</Image>
+  </Product>
+  <Product>
+    <ID>125478</ID>
+    <Name>SAMURAI mixer</Name>
+    <Category>CofeeMachine</Category>
+    <Price>203</Price>
+    <InStock>42</InStock>
+    <Image>..\img\125478.jpg</Image>
+  </Product>
+  <Product>
+    <ID>741598</ID>
+    <Name>elextrolux toaster</Name>
+    <Category>CofeeMachine</Category>
+    <Price>205</Price>
+    <InStock>87</InStock>
+    <Image>..\\img\741598.jpeg</Image>
+  </Product>
+  <Product>
+    <ID>747541</ID>
+    <Name>Bosch Dyson</Name>
+    <Category>Mixer</Category>
+    <Price>202</Price>
+    <InStock>34</InStock>
+    <Image>..\img\747541.jpg</Image>
   </Product>
 </ArrayOfProduct>

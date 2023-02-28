@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -74,7 +73,6 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLMistakeUpdateException"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public BO.Order UpdateSendOrderByManager(int id)
     {
         DO.Order orderDal;
@@ -175,7 +173,6 @@ internal class Order : BlApi.IOrder
     /// <exception cref="BO.BLInvalidInputException"></exception>
     /// <exception cref="Exception"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
-
     public BO.Order? UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount)
     {
         try
@@ -290,6 +287,9 @@ internal class Order : BlApi.IOrder
         }
 
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? SelectOrder()
     {
         DateTime? minDate = DateTime.MaxValue;

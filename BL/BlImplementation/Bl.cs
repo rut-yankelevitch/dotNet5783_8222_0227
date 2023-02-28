@@ -25,8 +25,5 @@ namespace BlImplementation
         /// A method that returns the user entity
         /// </summary>
         public IUser User { get; } = new BlImplementation.User();
-
-
-
     }
 }

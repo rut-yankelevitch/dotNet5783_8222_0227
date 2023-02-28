@@ -46,6 +46,6 @@
             </DataGrid.Columns>
         
         </DataGrid>
-        <Button Content="Add new Product" Grid.Row="3" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
+        <Button Content="Add new Product" Template="{StaticResource ButtonTemplate }" Grid.Row="3" HorizontalAlignment="Left" Margin="635,20,20,20" Padding="5" Click="addProductButton_Click"/>
     </Grid>
 </Window>

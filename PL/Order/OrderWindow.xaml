@@ -37,7 +37,7 @@
                                     <ColumnDefinition   Width="1.5*"/>
                                     <ColumnDefinition   Width="*"/>
                                 </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0"  Content="-" Height="20" Width="20" VerticalContentAlignment="Center"   Click="decrease_btn" >
+                    <Button Grid.Column="0"  Content="-" Template="{StaticResource ButtonTemplate }" Height="20" Width="20" VerticalContentAlignment="Center"   Click="decrease_btn" >
                                     <Button.Visibility>
                                         <MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
                                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="StatusWindow"/>
@@ -46,7 +46,7 @@
                                     </Button.Visibility>
                                 </Button>
                                 <TextBlock Grid.Column="1"  Text="{Binding Path=Amount}" Height="20" TextWrapping="Wrap" Width="25"  TextAlignment="Center" Margin="3,0,3,0" />
-                    <Button Grid.Column="2"  Content="+" Height="20"  Width="20" VerticalContentAlignment="Center"  VerticalAlignment="Top" Click="increase_btn" >
+                    <Button Grid.Column="2"  Content="+" Height="20"  Width="20" Template="{StaticResource ButtonTemplate }" VerticalContentAlignment="Center"  VerticalAlignment="Top" Click="increase_btn" >
                                   <Button.Visibility>
                                       <MultiBinding  Converter="{StaticResource ConvertShipDateToTrue}">
                                           <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="StatusWindow"/>
@@ -69,7 +69,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Content=" ➜ "  Height="25" Width="80" Margin="690,0,6,0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" FontSize="18" Click="Button_Click" />
+        <Button Grid.Row="0" Content=" ➜ "  Height="25" Width="80" Margin="690,0,6,0" Template="{StaticResource ButtonTemplate }" HorizontalContentAlignment="Center" HorizontalAlignment="Left" FontSize="18" Click="Button_Click" />
         <Border Grid.Row="1" BorderBrush="Red" BorderThickness="2" Margin="7" Padding="10">
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -100,7 +100,7 @@
                 <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Content="{Binding OrderData.CustomerAddress}" VerticalAlignment="Top" Width="200" />
                 <Label Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Left" Content="{Binding OrderData.OrderDate, Converter={StaticResource DateTimeConverter}}"  VerticalAlignment="Top" Width="200" />
                 <Label Grid.Row="1" Grid.Column="4" Content="{Binding OrderData.Status, Converter= {StaticResource StatusToStringConverter} }"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" />
-                <Button    Grid.Row="1" Grid.Column="4" Width="100" Height="25" Content="provide order"  Click="update_Click" Margin="101,0,7,0" >
+                <Button    Grid.Row="1" Grid.Column="4" Template="{StaticResource ButtonTemplate }" Width="100" Height="25" Content="provide order"  Click="update_Click" Margin="101,0,7,0" >
                     <Button.Visibility>
                         <MultiBinding  Converter="{StaticResource ConvertSendStatusToVisible}">
                             <Binding   Path="OrderData.Status"   Mode="TwoWay"  />

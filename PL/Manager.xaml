@@ -6,9 +6,9 @@
         mc:Ignorable="d"
         Title="Manager" Height="450" Width="800">
     <Grid>
-        
-        <Button Content="show products"  HorizontalAlignment="Left" Margin="350,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showProductsBotton_Click"/>
-        <Button Content="show orders"  HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showOrdersBotton_Click" />
+
+        <Button Content="show products" Template="{StaticResource ButtonTemplate }" HorizontalAlignment="Left" Margin="350,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showProductsBotton_Click"/>
+        <Button Content="show orders" Template="{StaticResource ButtonTemplate }" HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="showOrdersBotton_Click" />
 
     </Grid>
 </Window>

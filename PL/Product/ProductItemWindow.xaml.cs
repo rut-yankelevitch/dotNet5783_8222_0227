@@ -44,12 +44,17 @@ namespace PL.Product
             get { return (int)GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
-
         // Using a DependencyProperty as the backing store for MaxValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaxValueProperty =
             DependencyProperty.Register("MaxValue", typeof(int), typeof(Window), new PropertyMetadata(0));
 
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cart"></param>
+        /// <param name="isRegisted"></param>
         public ProductItemWindow(int id, BO.Cart? cart, bool isRegisted)
         {
             ProductItemData = bl.Product.GetProductByIdForCustomer(id);
@@ -63,7 +68,11 @@ namespace PL.Product
 
         }
 
-
+        /// <summary>
+        /// add order item to cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void add_to_cart_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -94,6 +103,12 @@ namespace PL.Product
             ProductItemData.Amount = product == null ? 0 : product.Amount;
             Value = ProductItemData.Amount;
         }
+
+        /// <summary>
+        /// update cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void update_to_cart_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -120,6 +135,13 @@ namespace PL.Product
             ProductItemData.Amount = product == null ? 0 : product.Amount;
             Value = ProductItemData.Amount;
         }
+
+
+        /// <summary>
+        /// remove product from cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void remove_from_cart_Click(object sender, RoutedEventArgs e)
         {
             if (ProductItemData.Amount != 0)
@@ -131,13 +153,27 @@ namespace PL.Product
             }
         }
 
+        /// <summary>
+        /// increase amount in product in cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void btn_increase_Click(object sender, RoutedEventArgs e) => Value++;
 
-
+        /// <summary>
+        /// decrese amount in product in cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_decrease_Click(object sender, RoutedEventArgs e) => Value--;
 
 
+       /// <summary>
+       /// update amount in text
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (amountInput == null || amountInput.Text == "" || amountInput.Text == "-")
@@ -153,6 +189,11 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// show window cart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showCartButton_Click(object sender, RoutedEventArgs e)
         {
             CartWindow? cartWindow = new(cart!, isRegisted);
@@ -161,6 +202,11 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// return to catalog window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
             CatalogWindow catalog = new(cart, (int)cart?.UserID!, isRegisted);

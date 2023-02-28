@@ -23,7 +23,11 @@ namespace PL
         public static readonly DependencyProperty MyCartConfirmProperty =
             DependencyProperty.Register("MyCartConfirm", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
-
+        /// <summary>
+        /// UserDetailsWindow constructor
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="isRegisted"></param>
         public UserDetailsWindow(BO.Cart cart,bool isRegisted)
         {
             MyCartConfirm = cart;
@@ -32,6 +36,11 @@ namespace PL
         }
 
 
+        /// <summary>
+        ///return to the cartWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void return_Click(object sender, RoutedEventArgs e)
         {
             CartWindow cart = new(MyCartConfirm,isRegisted);
@@ -40,12 +49,22 @@ namespace PL
         }
 
 
+        /// <summary>
+        /// save the order
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
+            int? id;
             try
             {
                 checkInvalid();
-                bl.Cart.MakeOrder(MyCartConfirm,isRegisted);
+                id = bl.Cart.MakeOrder(MyCartConfirm,isRegisted);
+                MessageBox.Show($"order number:{id}",
+                "See you next time",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
                 Close();
             }
             catch (FormatException)
@@ -63,6 +82,10 @@ namespace PL
 
         }
 
+
+        /// <summary>
+        /// check Invalid email
+        /// </summary>
         private void checkInvalid()
         {
 

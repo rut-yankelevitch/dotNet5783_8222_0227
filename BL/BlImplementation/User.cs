@@ -1,24 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using BO;
-using DalApi;
+﻿using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
 public class User : BlApi.IUser
 {
     private DalApi.IDal dal = DalApi.Factory.Get();
+
+    /// <summary>
+    /// add user 
+    /// </summary>
+    /// <param name="u"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BLAlreadyExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? AddUser(BO.User u)
     {
         // if (IsRegistered(u.Email, u.Password)) throw new BlUserExistsException();
-        try { return dal.User.Add(BlUtils.cast<DO.User, BO.User>(u)); }
+        try { return dal.User.Add(castBoUserToDoUser(u)); }
+
+
         catch (DO.DalAlreadyExistException ex) { throw new BO.BLAlreadyExistException("user already exist", ex); }
     }
 
+    /// <summary>
+    /// the function check if the email and the password are exist in user
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="pass"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BLInvalidPassword"></exception>
+    /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? IsRegistered(string email, string pass)
     {
         try
@@ -34,10 +46,26 @@ public class User : BlApi.IUser
         }
     }
 
-
-
+    /// <summary>
+    /// the function update the datails of user
+    /// </summary>
+    /// <param name="u"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateUser(BO.User u)
     {
-        dal.User.Update(BlUtils.cast<DO.User, BO.User>(u));
+        dal.User.Update(castBoUserToDoUser(u));
+    }
+
+
+    /// <summary>
+    /// cast BoUserToDoUser
+    /// </summary>
+    /// <param name="use"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    private DO.User castBoUserToDoUser(BO.User use)
+    {
+        return new DO.User{ ID = use.ID, Name = use.Name, Email = use.Email, Address = use.Address,Password=use.Password };
+       
     }
 }

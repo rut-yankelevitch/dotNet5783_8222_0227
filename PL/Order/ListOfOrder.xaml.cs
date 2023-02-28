@@ -22,7 +22,9 @@ public partial class ListOfOrder : Window
     public static readonly DependencyProperty OrdersProperty =
         DependencyProperty.Register("Orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(Window), new PropertyMetadata(null));
 
-
+    /// <summary>
+    /// ListOfOrder constructor
+    /// </summary>
     public ListOfOrder()
     {
         InitializeComponent();
@@ -37,16 +39,25 @@ public partial class ListOfOrder : Window
         }
     }
 
-
+    /// <summary>
+    /// show order window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ordersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.OrderForList order = (BO.OrderForList)OrdersListview.SelectedItem;
         int varInt = order.ID;
         OrderWindow orderWindow = new OrderWindow(varInt, true);
         orderWindow.Show();
+        Close();
     }
 
-
+    /// <summary>
+    /// when the window is actived the list of orders is updated
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void order_List_Window_Activated(object sender, EventArgs e)
     {
         try

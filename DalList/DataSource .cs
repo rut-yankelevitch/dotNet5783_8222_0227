@@ -37,8 +37,7 @@ public static class DataSource
 
         string[] productImg = new string[]
         {
-            @"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg",@"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg",@"..\img\175672.jpg",@"..\img\223264.jpg",@"..\img\201845.jpg",@"..\img\137688.jpg"
-        };
+          @"..\img\666581.jpg",@"..\img\858565.jpg",@"..\img\747541.jpg",@"..\img\125478.jpg",@"..\img\852963.jpg",@"..\img\741598.jpg",@"..\img\458963.jpg",@"..\img\458796.jpg",@"..\img\745698.jpg",@"..\img\147854.jpg",@"..\img\147985.jpg",@"..\img\364152.jpg"        };
 
         for (int i = 0; i < 12; i++)
         {

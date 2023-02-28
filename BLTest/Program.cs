@@ -1,8 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BlApi;
 using BO;
-using DalApi;
-
 namespace BLTest
 {
     /// <summary>
@@ -214,11 +212,6 @@ namespace BLTest
                         Console.WriteLine("Enter id product: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out productId);
-
-                        Console.WriteLine("Enter amount of product: ");
-                        readString = Console.ReadLine();
-                        int.TryParse(readString, out readInt);
-                        orderItem = iBl.Order.UpdateAmountOfOProductInOrder(orderId, productId, readInt);
                         break;
                     default:
                         break;
@@ -272,7 +265,7 @@ namespace BLTest
                         Console.WriteLine("Enter product id:");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt);
-                        currentCart= iBl.cart.AddProductToCart(currentCart,readInt);
+                        currentCart= iBl.Cart.AddProductToCart(currentCart,readInt);
                         Console.WriteLine(currentCart);
                         break;
                     case CartOptions.UPDATE:
@@ -282,11 +275,11 @@ namespace BLTest
                         Console.WriteLine("Enter a new amount: ");
                         readString = Console.ReadLine();
                         int.TryParse(readString, out readInt1);
-                       currentCart= iBl.cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
+                       currentCart= iBl.Cart.UpdateProductAmountInCart(currentCart, readInt, readInt1);
                         Console.WriteLine(currentCart);
                         break;
                     case CartOptions.MAKE_ORDER:
-                        iBl.cart.MakeOrder(currentCart);
+                        iBl.Cart.MakeOrder(currentCart);
                         currentCart=new Cart();
                         break;
                     default:

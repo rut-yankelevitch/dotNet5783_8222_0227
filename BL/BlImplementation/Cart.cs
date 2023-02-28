@@ -1,5 +1,7 @@
 ﻿using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
+
 namespace BlImplementation;
 
 internal class Cart : ICart
@@ -14,6 +16,7 @@ internal class Cart : ICart
     /// <returns>update cart</returns>
     /// <exception cref="BO.BLImpossibleActionException"></exception>
     /// <exception cref="BO.BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddProductToCart(BO.Cart cart, int idProduct, int amount, bool isRegistered = false)
     {
         DO.Product product = new DO.Product();
@@ -34,9 +37,9 @@ internal class Cart : ICart
             throw new BO.BLImpossibleActionException("product not exist in stock");
 
         orderItem1.Name = product.Name;
-        orderItem1.ProductID = idProduct;
+        orderItem1.ProductID= idProduct;
         orderItem1.Amount = amount;
-        orderItem1.Price = product.Price;
+        orderItem1.Price=product.Price;
         orderItem1.TotalPrice = orderItem1.Price * orderItem1.Amount;
         cart.Items?.Add(orderItem1);
         cart.TotalPrice += orderItem1.TotalPrice;
@@ -56,6 +59,7 @@ internal class Cart : ICart
     /// <exception cref="BO.InvalidInputBlException"></exception>
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productId, int amount, bool isRegistered = false)
     {
 
@@ -100,7 +104,6 @@ internal class Cart : ICart
     }
 
 
-
     /// <summary>
     /// function that confirms an order
     /// </summary>
@@ -109,7 +112,8 @@ internal class Cart : ICart
     /// <exception cref="ImpossibleActionBlException"></exception>
     /// <exception cref="BO.DoesNotExistedBlException"></exception>
     /// <exception cref="BO.ImpossibleActionBlException"></exception>
-    public void MakeOrder(BO.Cart cart, bool isRegistered = false)
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? MakeOrder(BO.Cart cart, bool isRegistered = false)
     {
         lock (dal)
         {
@@ -121,18 +125,17 @@ internal class Cart : ICart
                 throw new BLImpossibleActionException("There are no items in the cart.");
             if (isRegistered)
                 confirmOrderDal(cart);
+
             try
             {
                 id = dal.Order.Add(
-                        new DO.Order
-                        {
-                            CustomerName = cart?.CustomerName,
-                            CustomerEmail = cart?.CustomerEmail,
-                            CustomerAdress = cart?.CustomerAddress,
-                            OrderDate = DateTime.Now,
-                            ShipDate = null,
-                            DeliveryDate = null
-                        });
+                new DO.Order
+                {
+                    CustomerName = cart?.CustomerName,
+                    CustomerEmail = cart?.CustomerEmail,
+                    CustomerAdress = cart?.CustomerAddress,
+                    OrderDate = DateTime.Now,
+                });
             }
             catch (DO.DalDoesNotExistException ex)
             {
@@ -141,7 +144,6 @@ internal class Cart : ICart
 
             IEnumerable<DO.Product?> products = dal.Product.GetAll();
 
-            //return a list of tuples that everyone ave a orderItem to add and a updated product
             var result = from item in cart?.Items
                          join prod in products on item.ProductID equals prod?.ID into empdept
                          from ed in empdept.DefaultIfEmpty()
@@ -167,7 +169,6 @@ internal class Cart : ICart
                              }
                          };
 
-            //for each tuple we update the product list and add a orderItem to the order Item list
             result.ToList().ForEach(res =>
             {
                 try { dal.Product.Update(res.prod); }
@@ -176,9 +177,18 @@ internal class Cart : ICart
                 try { dal.OrderItem.Add(res.orderItem); }
                 catch (DO.DalDoesNotExistException ex) { throw new BLDoesNotExistException("product update failes", ex); }
             });
+            return id;
         }
     }
 
+
+    /// <summary>
+    /// Definition of a function that return cart
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    /// <exception cref="BLDoesNotExistException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart GetCart(int? userId)
     {
         BO.Cart cart = new();
@@ -191,8 +201,9 @@ internal class Cart : ICart
             DO.User user = new(); 
             foreach (var item in cartItems)
             {
-                oItem = Tools.cast<BO.OrderItem, DO.CartItem>((DO.CartItem)item!);
                 pro = dal.Product.GetByCondition(o => o?.ID == item?.ProductID);
+                oItem.Amount = ((DO.CartItem)item!).Amount;
+                oItem.ProductID = ((DO.CartItem)item!).ProductID!;
                 oItem.Name = pro.Name;
                 oItem.Price = pro.Price;
                 oItem.TotalPrice = oItem.Price * oItem.Amount;
@@ -219,6 +230,14 @@ internal class Cart : ICart
     }
 
 
+    /// <summary>
+    /// add  to User Cart function
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productID"></param>
+    /// <param name="amount"></param>
+    /// <exception cref="BO.BLImpossibleActionException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private void addToCartDal(BO.Cart? cart, int productID, int amount)
     {
         DO.CartItem cartItem = new();
@@ -229,12 +248,24 @@ internal class Cart : ICart
     }
 
 
+    /// <summary>
+    /// confirm Order to registed User  function
+    /// </summary>
+    /// <param name="cart"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private void confirmOrderDal(BO.Cart? cart)
     {
-        dal.CartItem.Delete(c => c.UserID == cart.UserID);
+        dal.CartItem.Delete(c => c.UserID == cart?.UserID);
     }
 
 
+    /// <summary>
+    /// update Amount  To registed User  function
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productID"></param>
+    /// <param name="newAmount"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private void updateAmountDal(BO.Cart cart, int productID, int newAmount)
     {
         DO.CartItem cartItem = dal.CartItem.GetByCondition(c => c?.ProductID == productID && c?.UserID == cart.UserID);

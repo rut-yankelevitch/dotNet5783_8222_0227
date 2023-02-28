@@ -1,7 +1,4 @@
-﻿
-using System.Reflection.Metadata.Ecma335;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using System.Xml.Serialization;
 namespace Dal;
 static class XMLTools
@@ -40,34 +37,11 @@ static class XMLTools
         }
         catch (Exception ex)
         {
-            // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
 
 
-    public static int getNextID(string element)
-    {
-        string filePath = $"{s_dir}config.xml";
-
-        if (!File.Exists(filePath))
-            throw new Exception($"fail to load xml file: {filePath}");
-
-        XElement rootElem = XElement.Load(filePath);
-        XElement elem = rootElem.Element(element) ?? throw new Exception($"could not find {element} element on {filePath}");
-
-        int id;
-
-        if (!int.TryParse(elem.Value, out id))
-            throw new Exception($"{element} value was invalid");
-
-        elem.Value = (id + 1).ToString();
-
-        try { rootElem.Save(filePath); }
-        catch (Exception ex) { throw new Exception($"fail to save xml file: {filePath}", ex); }
-
-        return id;
-    }
 
 
     public static XElement LoadListFromXMLElement(string entity)
@@ -102,7 +76,6 @@ static class XMLTools
         catch (Exception ex)
         {
             throw new DO.XMLFileLoadCreateException(filePath, ex);
-            //throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
 
@@ -119,8 +92,30 @@ static class XMLTools
         catch (Exception ex)
         {
             throw new DO.XMLFileLoadCreateException(filePath, ex);
-            //throw new Exception($"fail to load xml file: {filePath}", ex);
         }
     }
     #endregion
+    public static int getNextID(string element)
+    {
+        string filePath = $"{s_dir}config.xml";
+
+        if (!File.Exists(filePath))
+            throw new Exception($"fail to load xml file: {filePath}");
+
+        XElement rootElem = XElement.Load(filePath);
+        XElement elem = rootElem.Element(element) ?? throw new Exception($"could not find {element} element on {filePath}");
+
+        int id;
+
+        if (!int.TryParse(elem.Value, out id))
+            throw new Exception($"{element} value was invalid");
+
+        elem.Value = (id + 1).ToString();
+
+        try { rootElem.Save(filePath); }
+        catch (Exception ex) { throw new Exception($"fail to save xml file: {filePath}", ex); }
+
+        return id;
+    }
+
 }

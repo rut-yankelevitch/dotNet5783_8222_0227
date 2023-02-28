@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO
+﻿namespace BO
 {
     /// <summary>
     /// Throws class for non-existent items
@@ -31,14 +25,10 @@ namespace BO
     }
 
 
-
-
-
-
-
     /// <summary>
     /// Throws class for mistake update
     /// </summary>
+    [Serializable]
     public class BLMistakeUpdateException : Exception
     {
         public BLMistakeUpdateException(string? message) : base(message) { }
@@ -48,6 +38,7 @@ namespace BO
     /// <summary>
     /// Throws class for invalid input
     /// </summary>
+    [Serializable]
     public class BLInvalidInputException : Exception
     {
         public BLInvalidInputException(string? message) : base(message) { }
@@ -57,25 +48,28 @@ namespace BO
     /// <summary>
     /// Throws class for impossible action
     /// </summary>
+    [Serializable]
     public class BLImpossibleActionException : Exception
     {
         public BLImpossibleActionException(string? message) : base(message) { }
     }
 
+
     /// <summary>
     /// Throws No properties found in object
     /// </summary>
-
+    [Serializable]
     public class BLNoPropertiesInObject : Exception
     {
         public override string Message =>
                         "No properties found in object";
     }
 
+
     /// <summary>
     /// Invalid Password
     /// </summary>
-
+    [Serializable]
     public class BLInvalidPassword : Exception
     {
         public override string Message =>

@@ -12,12 +12,14 @@ namespace BlApi
         /// <returns></returns>
         public IEnumerable<OrderForList?> GetOrderList();
 
+
         /// <summary>
         /// Definition of a function that returns order by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Order GetOrderById(int id);
+
 
         /// <summary>
         /// Definition of a function that update the send order
@@ -26,12 +28,14 @@ namespace BlApi
         /// <returns></returns>
         public Order UpdateSendOrderByManager(int id);
 
+
         /// <summary>
         /// Definition of a function that update the supply order
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Order UpdateSupplyOrderByManager(int id);
+
 
         /// <summary>
         /// Definition of a function that tracks the order
@@ -40,15 +44,18 @@ namespace BlApi
         /// <returns></returns>
         public OrderTracking TrackingOrder(int id);
 
+
         /// <summary>
-        /// bonus:Definition of a function that updates the quantity of a product in the order
+        /// Definition of a function that updates the quantity of a product in the order
         /// </summary>
-        /// <param name="idOrder"></param>
-        /// <param name="idProduct"></param>
-        /// <param name="amount"></param>
         /// <returns></returns>
         public Order? UpdateAmountOfOProductInOrder(int idOrder, int idProduct, int amount);
 
+
+        /// <summary>
+        /// Definition of a function that return the oldest date order 
+        /// </summary>
+        /// <returns>int? id</returns>
         public int? SelectOrder();
 
     }

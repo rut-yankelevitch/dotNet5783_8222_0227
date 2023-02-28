@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using DalApi;
+﻿using DalApi;
 using DO;
 
 namespace Dal;
@@ -13,7 +7,12 @@ public class CartItem : ICartItem
 {
 
     static string s_cartItem = @"CartItem";
-
+    /// <summary>
+    /// add cart item to cart
+    /// </summary>
+    /// <param name="cartItem"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.DalAlreadyExistException"></exception>
     public int Add(DO.CartItem cartItem)
     {
         List<DO.CartItem?> listCartItems = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
@@ -27,6 +26,12 @@ public class CartItem : ICartItem
         return cartItem.ID;
     }
 
+
+    /// <summary>
+    /// delete cart item by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         List<DO.CartItem?> listCartItems = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
@@ -37,6 +42,12 @@ public class CartItem : ICartItem
     }
 
 
+    /// <summary>
+    /// get cart item by condition
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public DO.CartItem GetByCondition(Func<DO.CartItem?, bool> predicate)
     {
         List<DO.CartItem?> listCartItems = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
@@ -46,6 +57,12 @@ public class CartItem : ICartItem
     }
 
 
+    /// <summary>
+    /// get all cart items
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.DalDoesNotExistException"></exception>
     public IEnumerable<DO.CartItem?> GetAll(Func<DO.CartItem?, bool>? predicate)
     {
         List<DO.CartItem?> listCartItems = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
@@ -55,6 +72,12 @@ public class CartItem : ICartItem
               listCartItems.Where(predicate).OrderBy(cItem => cItem?.ID)) ?? throw new DO.DalDoesNotExistException("The requested cartItems were not found"); ;
     }
 
+
+    /// <summary>
+    /// update cart item
+    /// </summary>
+    /// <param name="cartItem"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(DO.CartItem cartItem)
     {
         List<DO.CartItem?> listCartItem = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);
@@ -66,6 +89,10 @@ public class CartItem : ICartItem
     }
 
 
+    /// <summary>
+    /// delete cart items by condition
+    /// </summary>
+    /// <param name="f"></param>
     public void Delete(Func<DO.CartItem, bool> f)
     {
         List<DO.CartItem?> listCartItem = XMLTools.LoadListFromXMLSerializer<DO.CartItem>(s_cartItem);

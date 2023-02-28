@@ -1,5 +1,4 @@
 ﻿namespace DO;
-
 /// <summary>
 /// Throws class for non-existent items
 /// </summary>
@@ -8,7 +7,7 @@ public class DalDoesNotExistException : Exception
 {
     public int EntityId = -1;
     public string EntityName;
-    public string Message;
+    public string? Message;
 
     public DalDoesNotExistException(int id, string name) : base()
     { EntityId = id; EntityName = name; }
@@ -18,10 +17,12 @@ public class DalDoesNotExistException : Exception
 
     public DalDoesNotExistException(int id, string name, string message, Exception innerException) : base(message, innerException)
     { EntityId = id; EntityName = name; }
+   
     public DalDoesNotExistException(string? message) : base(message)
     {
         Message = message;
     }
+    
     public override string ToString()
     {
         if (EntityId == -1 && EntityName == null)
@@ -61,6 +62,9 @@ public class DalAlreadyExistException : Exception
 }
 
 
+/// <summary>
+/// Throws Error loading the dal
+/// </summary>
 [Serializable]
 public class DalConfigException : Exception
 {
@@ -68,6 +72,10 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
+
+/// <summary>
+/// Throws Error create xml files
+/// </summary>
 [Serializable]
 public class XMLFileLoadCreateException : Exception
 {
@@ -77,6 +85,10 @@ public class XMLFileLoadCreateException : Exception
 
 }
 
+
+/// <summary>
+/// Throws Error aml file is null
+/// </summary>
 [Serializable]
 public class XMLFileNullExeption : Exception
 {

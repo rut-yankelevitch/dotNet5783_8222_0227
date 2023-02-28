@@ -27,8 +27,6 @@ namespace PL.Product
 
 
         public Category Category { get; set; } = Category.None;
-        //private int status;
-
 
         /// <summary>
         ///ProductListWindow constructor
@@ -39,7 +37,14 @@ namespace PL.Product
             changeProductList();
         }
 
+
+        /// <summary>
+        /// product List Window Activated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void product_List_Window_Activated(object sender, EventArgs e) => changeProductList(); 
+
 
         /// <summary>
         /// A function is called when a selection is changed in the category selector combobox
@@ -55,6 +60,7 @@ namespace PL.Product
             new ProductWindow().Show();
         }
 
+
         /// <summary>
         /// A function is called when a product is clicked
         /// </summary>
@@ -67,9 +73,14 @@ namespace PL.Product
 
                 ProductWindow productWindow = new ProductWindow(varInt);
                 productWindow.Show();
+                Close();
             }
         }
 
+
+        /// <summary>
+        /// change Product List
+        /// </summary>
         private void changeProductList()
         {
             var temp = Category == Category.None ?

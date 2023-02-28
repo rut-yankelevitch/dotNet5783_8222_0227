@@ -38,7 +38,11 @@ namespace PL.Cart
             DependencyProperty.Register("TotalPrice", typeof(double), typeof(Window), new PropertyMetadata(0.0));
 
 
-
+        /// <summary>
+        /// CartWindow constructor
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="isRegister"></param>
         public CartWindow(BO.Cart cart,bool isRegister)
         {
             InitializeComponent();
@@ -51,6 +55,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// confirm order Btn Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void confirmOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             new UserDetailsWindow(MyCart,isRegisted).Show();
@@ -58,6 +67,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// button btn_increase Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_increase_Click(object sender, RoutedEventArgs e)
         {
             int id = ((BO.OrderItem)((Button)sender).DataContext).ProductID;
@@ -83,6 +97,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// button btn_decrease Click 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_decrease_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -113,14 +132,24 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// button returnToCatalog Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void returnToCatalog_Click(object sender, RoutedEventArgs e)
         {
             CatalogWindow catalog = new(MyCart,userId,isRegisted);
             catalog.Show();
             Close();
         }
+         
 
-
+        /// <summary>
+        ///button removeFromCart Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removeFromCart_Click(object sender, RoutedEventArgs e)
         {
             try

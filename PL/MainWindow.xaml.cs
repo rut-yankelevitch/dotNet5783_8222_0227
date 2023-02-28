@@ -1,8 +1,6 @@
 ﻿using System.Windows;
-using BO;
 using PL.Order;
 using PL.Cart;
-using PL.Product;
 using System;
 using System.Windows.Media.Imaging;
 using PL.User;
@@ -16,6 +14,19 @@ namespace PL
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
 
+
+        public string OrderId
+        {
+            get { return (string)GetValue(OrderIdProperty); }
+            set { SetValue(OrderIdProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OrderId.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OrderIdProperty =
+            DependencyProperty.Register("OrderId", typeof(string), typeof(Window), new PropertyMetadata(null));
+
+
+
         /// <summary>
         /// MainWindow constractor
         /// </summary>
@@ -27,14 +38,21 @@ namespace PL
             Icon = BitmapFrame.Create(iconUri);
         }
 
+
+        /// <summary>
+        /// Show Order Traking window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowOrderTraking_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 int orderId;
-                int.TryParse(OrderId.Text, out orderId);
+                int.TryParse(OrderId, out orderId);
                 OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
                 orderTracking.Show();
+                OrderId = null;
             }
             catch (BO.BLDoesNotExistException ex)
             {
@@ -42,11 +60,24 @@ namespace PL
             }
         }
 
+
+        /// <summary>
+        /// Show Manager window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowManager_Click(object sender, RoutedEventArgs e)
         {
             Manager manager= new Manager();
             manager.Show();
         }
+
+
+        /// <summary>
+        /// ShowCatalog window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowCatalog_Click(object sender, RoutedEventArgs e)
         {
                 if (MessageBox.Show("Do you want to sign?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -61,9 +92,15 @@ namespace PL
 
         }
 
+
+        /// <summary>
+        /// Simultor window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void simultorBtn_Click(object sender, RoutedEventArgs e)
         {
-            //new SimulatorWindow(bl).Show();
+            new SimulatorWindow(bl).Show();
         }
 
     }

@@ -22,7 +22,10 @@ namespace PL.Order
         public static readonly DependencyProperty TrackingOrderProperty =
             DependencyProperty.Register("TrackingOrder", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
 
-
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="id"></param>
         public OrderTrackingWindow(int id)
         {
                 InitializeComponent();
@@ -30,11 +33,16 @@ namespace PL.Order
                 TrackingOrder = (temp == null) ? new() : temp;
         }
 
-
+        /// <summary>
+        /// show order window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showOrder_Click(object sender, RoutedEventArgs e)
         {
             OrderWindow orderWindow = new OrderWindow(TrackingOrder.ID, false);
             orderWindow.Show();
+            Close();    
         }
     }
 }

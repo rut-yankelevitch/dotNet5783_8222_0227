@@ -31,18 +31,12 @@ namespace PL.Cart
         // Using a DependencyProperty as the backing store for ProductsItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProductsItemProperty =
             DependencyProperty.Register("ProductsItem", typeof(ObservableCollection<BO.ProductItem>), typeof(Window), new PropertyMetadata(null));
-
-
-        //public CatalogWindow()
-        //{
-        //    InitializeComponent();
-        //    MyCartInCatalog = new() { Items = new() };
-        //    Category = Category.None;
-        //    IEnumerable<BO.ProductItem?> temp = bl.Product.GetProductItemForCatalogNoFilter();
-        //    ProductsItem = (temp == null) ? new() : new(temp!);
-        //}
-
-
+        /// <summary>
+        /// CatalogWindow constructor
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="userId"></param>
+        /// <param name="isRegisted"></param>
         public CatalogWindow(BO.Cart? cart=null,int userId= 0, bool isRegisted=false)
         {
             InitializeComponent();
@@ -62,6 +56,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// event category_MouseLeftButtonDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void category_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             {
@@ -89,6 +88,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// button product_MouseDouble Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void product_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem? productItem = ((BO.ProductItem)((ListView)sender).SelectedItem);
@@ -98,6 +102,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        /// button showCartButton Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showCartButton_Click(Object sender, RoutedEventArgs e)
         {
             CartWindow? productItemWindow = new(MyCartInCatalog!,isRegisted);
@@ -106,6 +115,11 @@ namespace PL.Cart
         }
 
 
+        /// <summary>
+        ///  toPopularProduct Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toPopularProduct_Click(object sender, RoutedEventArgs e)
         {
             try

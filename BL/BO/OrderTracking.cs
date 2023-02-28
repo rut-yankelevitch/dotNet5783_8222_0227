@@ -1,5 +1,4 @@
-﻿
-namespace BO
+﻿namespace BO
 {
     /// <summary>
     /// A class for a logical entity: order tracking

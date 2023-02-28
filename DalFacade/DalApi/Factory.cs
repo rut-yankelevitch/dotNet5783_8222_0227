@@ -1,8 +1,8 @@
-﻿namespace DalApi;
-using System.Reflection;
+﻿using System.Reflection;
 using DO;
 using static DalApi.DalConfig;
 
+namespace DalApi;
 public static class Factory
 {
     public static IDal Get()

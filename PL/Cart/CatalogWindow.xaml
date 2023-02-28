@@ -109,6 +109,6 @@
                 </ListView.ItemsPanel>
             </ListView>
         </ScrollViewer>
-        <Button  Grid.Row="2" Margin="-50,30,10,10"  Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"   Click="showCartButton_Click"/>
+        <Button  Grid.Row="2" Margin="-50,30,10,10"  Template="{StaticResource ButtonTemplate }" Content="🛒" Foreground="red" Background="White"  FontSize="35"  Height="50" Width="200"   Click="showCartButton_Click"/>
     </Grid>
 </Window>

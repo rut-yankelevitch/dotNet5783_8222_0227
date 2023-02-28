@@ -15,6 +15,7 @@ namespace BlApi
         /// <returns>cart</returns>
         public Cart AddProductToCart(Cart cart, int idProduct, int amount, bool isRegistered);
 
+
         /// <summary>
         /// Definition of a function that update the amount of product in the cart
         /// </summary>
@@ -24,14 +25,18 @@ namespace BlApi
         /// <returns>cart</returns>
         public Cart UpdateProductAmountInCart(Cart cart, int idProduct, int amount, bool isRegistered);
 
+
         /// <summary>
         /// Definition of a function that confirms an order
         /// </summary>
         /// <param name="cart"></param>
-        public void MakeOrder(Cart cart, bool isRegistered);
+        public int? MakeOrder(Cart cart, bool isRegistered);
 
+
+        /// <summary>
+        /// Definition of a function that return cart
+        /// </summary>
+        /// <param name="cart"></param>
         public Cart GetCart(int? userId);
-
-
     }
 }

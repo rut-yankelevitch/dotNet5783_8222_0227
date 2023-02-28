@@ -205,7 +205,12 @@ public class ConvertDetailsToTrue : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        return ((values[0]!).ToString()!.Length > 0 && (values[1]!).ToString()!.Length > 0 && (values[2]!).ToString()!.Length > 0) ? true : false;
+        foreach(var item in values)
+        {
+            if (item.ToString()!.Length == 0)
+                return false;
+        }
+        return true;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -243,7 +248,7 @@ public class ConverDoubleToString : IValueConverter
         double price;
         if (!double.TryParse(text, out price))
         {
-            return null; //Some default value
+            return null; 
         }
         return price;
     }
@@ -424,4 +429,41 @@ public class ConvertBoolToOposite : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
+public class ConvertTimeToString : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        value=(value == null )? "0" : value;
+        int.TryParse(value!.ToString(), out int result);
+        return result >0? $"There are still {result} seconds left" : "Order processed";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class ConverterDouble : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        double input = (double)value;
+        double multiplier = Double.Parse(parameter.ToString(), CultureInfo.InvariantCulture);
+        return input * multiplier;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+
+
+
+
 

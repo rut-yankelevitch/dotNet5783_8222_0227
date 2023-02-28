@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using BlImplementation;
-using BO;
-
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IUser
 {
-    [MethodImpl(MethodImplOptions.Synchronized)]
-
+    /// <summary>
+    /// Definition of a function add User
+    /// </summary>
+    /// <param name="u"></param>
+    /// <returns>int?</returns>
     public int? AddUser(BO.User u);
 
-    [MethodImpl(MethodImplOptions.Synchronized)]
+
+    /// <summary>
+    /// Definition of a function update user 
+    /// </summary>
+    /// <param name="u"></param>
     public void UpdateUser(BO.User u);
 
-    [MethodImpl(MethodImplOptions.Synchronized)]
+
+    /// <summary>
+    /// Definition of a function check if user Is Registered
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="pass"></param>
+    /// <returns>g=int?</returns>
     public int? IsRegistered(string email, string pass);
 
 }

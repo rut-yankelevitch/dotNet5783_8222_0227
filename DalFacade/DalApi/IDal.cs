@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
-
-namespace DalApi;
+﻿namespace DalApi;
 /// <summary>
 /// A main interface that centers all the interfaces of the data layer
 /// </summary>
@@ -16,15 +9,18 @@ public interface IDal
     /// </summary>
     public IOrder Order { get; }
 
+
     /// <summary>
     /// A property that returns the IOrderItem entity
     /// </summary>
     public IOrderItem OrderItem { get; }
 
+
     /// <summary>
     /// A property that returns the IProduct entity
     /// </summary>
     public IProduct Product { get; }
+
 
     /// <summary>
     /// A property that returns the IUser entity
@@ -36,6 +32,5 @@ public interface IDal
     /// A property that returns the ICartItem entity
     /// </summary>
     public ICartItem CartItem { get; }
-
 }
 

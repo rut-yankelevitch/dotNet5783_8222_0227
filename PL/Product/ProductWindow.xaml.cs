@@ -60,6 +60,7 @@ namespace PL.Product
 
         /// <summary>
         /// A function is called when delete button Clicked
+        /// 
         private void delete_button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -88,6 +89,11 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// add product 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void add_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product();
@@ -127,6 +133,11 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// update product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void update_Click(object sender, RoutedEventArgs e)
         {
             BO.Product product = new BO.Product();
@@ -163,6 +174,11 @@ namespace PL.Product
         }
 
 
+        /// <summary>
+        /// change Image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changeImageButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog f = new Microsoft.Win32.OpenFileDialog();
@@ -175,6 +191,13 @@ namespace PL.Product
 
         }
 
+
+
+        /// <summary>
+        /// invalid chack Number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onlyNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             string fieldValue = ((TextBox)sender).Text;
@@ -195,5 +218,19 @@ namespace PL.Product
                 }
             }
         }
+
+
+        /// <summary>
+        /// close the product window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ProductListWindow productListWindow = new ProductListWindow();
+            productListWindow.Show();
+            Close();
+        }
+
     }
 }
