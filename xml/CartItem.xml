@@ -1,1 +1,1 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfCartItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfCartItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><CartItem><ID>6</ID><ProductID>458963</ProductID><UserID>1</UserID><Amount>1</Amount></CartItem><CartItem><ID>7</ID><ProductID>745698</ProductID><UserID>1</UserID><Amount>2</Amount></CartItem></ArrayOfCartItem>

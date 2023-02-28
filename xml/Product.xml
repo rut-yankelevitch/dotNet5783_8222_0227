@@ -17,14 +17,6 @@
     <Image>..\img\858565.jpg</Image>
   </Product>
   <Product>
-    <ID>852963</ID>
-    <Name>Bosch toaster</Name>
-    <Category>CofeeMachine</Category>
-    <Price>204</Price>
-    <InStock>36</InStock>
-    <Image>..\img\852963.jpg</Image>
-  </Product>
-  <Product>
     <ID>458963</ID>
     <Name>Bosch iron</Name>
     <Category>Toaster</Category>
@@ -49,20 +41,28 @@
     <Image>..\img\745698.jpg</Image>
   </Product>
   <Product>
+    <ID>852963</ID>
+    <Name>Bosch toaster</Name>
+    <Category>CofeeMachine</Category>
+    <Price>204</Price>
+    <InStock>35</InStock>
+    <Image>..\img\852963.jpg</Image>
+  </Product>
+  <Product>
     <ID>147854</ID>
     <Name>braun blender</Name>
     <Category>Iron</Category>
-    <Price>209</Price>
-    <InStock>162</InStock>
-    <Image>..\img\147854.jpg</Image>
+    <Price>230</Price>
+    <InStock>32</InStock>
+    <Image>..\\img\147854.jpg</Image>
   </Product>
   <Product>
-    <ID>147985</ID>
-    <Name>Nespresso coffee machine</Name>
-    <Category>Blender</Category>
-    <Price>210</Price>
-    <InStock>10</InStock>
-    <Image>..\img\147985.jpg</Image>
+    <ID>777777</ID>
+    <Name>coffe mechine2022</Name>
+    <Category>CofeeMachine</Category>
+    <Price>250</Price>
+    <InStock>3</InStock>
+    <Image>..\\img\777777.jpg</Image>
   </Product>
   <Product>
     <ID>364152</ID>
@@ -77,23 +77,39 @@
     <Name>SAMURAI mixer</Name>
     <Category>CofeeMachine</Category>
     <Price>203</Price>
-    <InStock>42</InStock>
+    <InStock>39</InStock>
     <Image>..\img\125478.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147985</ID>
+    <Name>Nespresso coffee machine</Name>
+    <Category>Blender</Category>
+    <Price>210</Price>
+    <InStock>10</InStock>
+    <Image>..\img\147985.jpg</Image>
   </Product>
   <Product>
     <ID>741598</ID>
     <Name>elextrolux toaster</Name>
     <Category>CofeeMachine</Category>
     <Price>205</Price>
-    <InStock>87</InStock>
-    <Image>..\\img\741598.jpeg</Image>
+    <InStock>85</InStock>
+    <Image>..\\img\741598.jpg</Image>
   </Product>
   <Product>
     <ID>747541</ID>
     <Name>Bosch Dyson</Name>
     <Category>Mixer</Category>
     <Price>202</Price>
-    <InStock>34</InStock>
+    <InStock>0</InStock>
     <Image>..\img\747541.jpg</Image>
+  </Product>
+  <Product>
+    <ID>888888</ID>
+    <Name>המיקסר הכי מושלם!</Name>
+    <Category>Mixer</Category>
+    <Price>1000</Price>
+    <InStock>29</InStock>
+    <Image>..\\img\888888.jpg</Image>
   </Product>
 </ArrayOfProduct>

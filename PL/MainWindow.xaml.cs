@@ -15,15 +15,15 @@ namespace PL
         private BlApi.IBl bl = BlApi.Factory.Get();
 
 
-        public string OrderId
+        public string OrderIdToTracking
         {
-            get { return (string)GetValue(OrderIdProperty); }
-            set { SetValue(OrderIdProperty, value); }
+            get { return (string)GetValue(OrderIdToTrackingProperty);}
+            set { SetValue(OrderIdToTrackingProperty, value);}
         }
 
         // Using a DependencyProperty as the backing store for OrderId.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OrderIdProperty =
-            DependencyProperty.Register("OrderId", typeof(string), typeof(Window), new PropertyMetadata(null));
+        public static readonly DependencyProperty OrderIdToTrackingProperty =
+            DependencyProperty.Register("OrderIdToTracking", typeof(string), typeof(Window), new PropertyMetadata(null));
 
 
 
@@ -49,10 +49,10 @@ namespace PL
             try
             {
                 int orderId;
-                int.TryParse(OrderId, out orderId);
+                int.TryParse(OrderIdToTracking, out orderId);
                 OrderTrackingWindow orderTracking = new OrderTrackingWindow(orderId);
                 orderTracking.Show();
-                OrderId = null;
+                OrderIdToTracking = null;
             }
             catch (BO.BLDoesNotExistException ex)
             {

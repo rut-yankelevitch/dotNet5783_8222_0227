@@ -10,10 +10,10 @@
     
 
     <Grid >
-        <Button Template="{StaticResource ButtonTemplate }" Content=" תצוגת מעקב הזמנות"  IsEnabled= "{Binding OrderId, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
+        <Button Template="{StaticResource ButtonTemplate }" Content=" תצוגת מעקב הזמנות"  IsEnabled= "{Binding OrderIdToTracking, Converter={StaticResource ConvertNullToFalse  }}" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowOrderTraking_Click"/>
         <Button Template="{StaticResource ButtonTemplate }" Content=" תצוגת מנהל"  HorizontalAlignment="Left" Margin="300,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754" Height="65" Width="155" Click="ShowManager_Click"/>
         <Button Template="{StaticResource ButtonTemplate }" Content=" תצוגת הזמנה חדשה"  HorizontalAlignment="Left" Margin="500,0,0,0" VerticalAlignment="Center" RenderTransformOrigin="3.786,0.754"  Height="65" Width="155" Click="ShowCatalog_Click"/>
-        <TextBox  Text="{Binding OrderId ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="118,222,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.392"/>
+        <TextBox  Text="{Binding OrderIdToTracking ,Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="118,222,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.475,0.392"/>
         <Button  Template="{StaticResource ButtonTemplate }" Content="Simulator" Name="simultorBtn" HorizontalAlignment="Left" Height="37" Margin="594,342,0,0" VerticalAlignment="Top" Width="109" Click="simultorBtn_Click"/>
 
     </Grid>
