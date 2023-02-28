@@ -17,14 +17,6 @@
     <Image>..\img\858565.jpg</Image>
   </Product>
   <Product>
-    <ID>458963</ID>
-    <Name>Bosch iron</Name>
-    <Category>Toaster</Category>
-    <Price>206</Price>
-    <InStock>108</InStock>
-    <Image>..\img\458963.jpg</Image>
-  </Product>
-  <Product>
     <ID>458796</ID>
     <Name>TEFAL iron</Name>
     <Category>Toaster</Category>
@@ -47,14 +39,6 @@
     <Price>204</Price>
     <InStock>35</InStock>
     <Image>..\img\852963.jpg</Image>
-  </Product>
-  <Product>
-    <ID>147854</ID>
-    <Name>braun blender</Name>
-    <Category>Iron</Category>
-    <Price>230</Price>
-    <InStock>32</InStock>
-    <Image>..\\img\147854.jpg</Image>
   </Product>
   <Product>
     <ID>777777</ID>
@@ -105,11 +89,35 @@
     <Image>..\img\747541.jpg</Image>
   </Product>
   <Product>
+    <ID>458963</ID>
+    <Name>Bosch iron</Name>
+    <Category>Toaster</Category>
+    <Price>206</Price>
+    <InStock>106</InStock>
+    <Image>..\img\458963.jpg</Image>
+  </Product>
+  <Product>
+    <ID>147854</ID>
+    <Name>braun blender</Name>
+    <Category>Iron</Category>
+    <Price>230</Price>
+    <InStock>32</InStock>
+    <Image>..\\img\147854.jpg</Image>
+  </Product>
+  <Product>
     <ID>888888</ID>
     <Name>המיקסר הכי מושלם!</Name>
     <Category>Mixer</Category>
-    <Price>1000</Price>
-    <InStock>29</InStock>
+    <Price>1200</Price>
+    <InStock>50</InStock>
     <Image>..\\img\888888.jpg</Image>
+  </Product>
+  <Product>
+    <ID>999999</ID>
+    <Name>blender2023</Name>
+    <Category>Blender</Category>
+    <Price>200</Price>
+    <InStock>100</InStock>
+    <Image>..\\img\999999.jpg</Image>
   </Product>
 </ArrayOfProduct>
